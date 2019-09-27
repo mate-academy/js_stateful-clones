@@ -70,7 +70,65 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const transformedState1 = Object.assign({}, state);
+  const statesHist = [];
+  const action1 = transforms[0].operation;
+  const properties1 = transforms[0].properties;
+
+  if (action1 === 'addProperties') {
+    for (const key in properties1) {
+      transformedState1[key] = properties1[key];
+    }
+  } else if (action1 === 'clear') {
+    for (const key in transformedState1) {
+      delete transformedState1[key];
+    }
+  } else if (action1 === 'removeProperties') {
+    for (let i = 0; i < properties1.length; i++) {
+      delete transformedState1[properties1[i]];
+    }
+  }
+  statesHist.push(transformedState1);
+  const modifiedState2 = Object.assign({}, transformedState1);
+  if (transforms.length > 1) {
+    const action2 = transforms[1].operation;
+    const properties2 = transforms[1].properties;
+    if (action2 === 'addProperties') {
+      for (const key in properties2) {
+        modifiedState2[key] = properties2[key];
+      }
+    } else if (action2 === 'clear') {
+      for (const key in modifiedState2) {
+        delete modifiedState2[key];
+      }
+    } else if (action2 === 'removeProperties' && transforms.length > 2) {
+      for (let i = 0; i < properties2.length; i++) {
+        delete modifiedState2[properties2[i]];
+      }
+    }
+    statesHist.push(modifiedState2);
+  }
+  const modifiedState3 = Object.assign({}, modifiedState2);
+  if (transforms.length > 2) {
+    const action3 = transforms[2].operation;
+    const properties3 = transforms[2].properties;
+    if (action3 === 'addProperties') {
+      for (const key in properties3) {
+        modifiedState3[key] = properties3[key];
+      }
+    } else if (action3 === 'clear') {
+      for (const key in modifiedState3) {
+        delete modifiedState3[key];
+      }
+    } else if (action3 === 'removeProperties' && transforms.length > 2) {
+      for (let i = 0; i < properties3.length; i++) {
+        delete modifiedState3[properties3[i]];
+      }
+    }
+    statesHist.push(modifiedState3);
+  }
+
+  return statesHist;
 }
 
 module.exports = transformStateWithClones;
