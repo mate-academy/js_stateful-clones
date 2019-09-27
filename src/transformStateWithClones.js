@@ -14,7 +14,7 @@
  * `properties`:
  *   if `operation` is `addProperties`, this property contains an object
  *   with `key: value` pairs to add to the state;
- *   if `operation` is `removeProperties`, this property contains an array
+ *   if `operation` is `removeProperties`, this property contains an arraity
  *   with the list of property names to remove from the state;
  *   if `operation is `clear`, this property is not set; you should remove
  *   all the properties from the state instead.
@@ -70,7 +70,28 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const historyTransform = [];
+  const cloneState = Object.assign({}, state);
+  for (let i = 0; i < transforms.length; i++) {
+    switch (transforms[i].operation) {
+      case 'addProperties':
+        for (const key in transforms[i].properties) {
+          cloneState[key] = transforms[i].properties[key];
+        }
+        break;
+      case 'removeProperties':
+        for (let j = 0; j < transforms[i].properties.length; j++) {
+          delete cloneState[transforms[i].properties[j]];
+        }
+        break;
+      default:
+        for (const key in cloneState) {
+          delete cloneState[key];
+        }
+    }
+    historyTransform.push(Object.assign({}, cloneState));
+  }
+  return historyTransform;
 }
 
 module.exports = transformStateWithClones;
