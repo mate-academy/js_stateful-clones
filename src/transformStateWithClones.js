@@ -99,7 +99,6 @@ function transformStateWithClones(state, transforms) {
   return stateLog;
 }
 
-
 module.exports = transformStateWithClones;
 
 
