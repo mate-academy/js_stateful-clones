@@ -4,6 +4,7 @@ const transformStateWithClones = require('./transformStateWithClones');
 
 test('Non-empty initial state, adding and removing properties', () => {
   const state = { foo: 'bar', bar: 'foo' };
+
   expect(transformStateWithClones(state, [
     { operation: 'addProperties', properties: { name: 'Jim', hello: 'world' } },
     { operation: 'removeProperties', properties: ['bar', 'hello'] },
@@ -14,22 +15,27 @@ test('Non-empty initial state, adding and removing properties', () => {
       { foo: 'bar', name: 'Jim' },
       { foo: 'bar', name: 'Jim', another: 'one' },
     ]);
+
   expect(state)
     .toEqual({ foo: 'bar', bar: 'foo' });
 });
 
 test('Non-empty initial state, adding and clearing properties', () => {
   const state = { foo: 'bar', bar: 'foo' };
-  expect(transformStateWithClones(state, [
+
+  const result = transformStateWithClones(state, [
     { operation: 'addProperties', properties: { yet: 'another property' } },
     { operation: 'clear' },
     { operation: 'addProperties', properties: { foo: 'bar', name: 'Jim' } },
-  ]))
+  ]);
+
+  expect(result)
     .toEqual([
       { foo: 'bar', bar: 'foo', yet: 'another property' },
       {},
       { foo: 'bar', name: 'Jim' },
     ]);
+
   expect(state)
     .toEqual({ foo: 'bar', bar: 'foo' });
 });
