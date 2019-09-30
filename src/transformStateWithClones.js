@@ -76,7 +76,7 @@ function transformStateWithClones(state, transforms) {
   for (const value of transforms) {
     switch (value.operation) {
       case 'addProperties':
-        Object.assnpign(cloneObj, value.properties);
+        Object.assign(cloneObj, value.properties);
         break;
       case 'removeProperties':
         for (const key of value.properties) {
