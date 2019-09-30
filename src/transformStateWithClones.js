@@ -89,11 +89,7 @@ function transformStateWithClones(state, transforms) {
         }
         break;
     }
-    iterationArray.push(JSON.stringify(stateCopy));
-  }
-
-  for (let i = 0; i < iterationArray.length; i++) {
-    iterationArray[i] = JSON.parse(iterationArray[i]);
+    iterationArray.push({ ...stateCopy });
   }
 
   return iterationArray;
