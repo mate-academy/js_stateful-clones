@@ -81,8 +81,8 @@ function transformStateWithClones(state, transforms) {
         Object.assign(obj, properties);
         break;
       case 'removeProperties':
-        for (const key in properties) {
-          delete obj[properties[key]];
+        for (const key of properties) {
+          delete obj[key];
         }
         break;
       case 'clear':
