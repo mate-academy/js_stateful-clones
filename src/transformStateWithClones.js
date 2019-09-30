@@ -92,7 +92,7 @@ function transformStateWithClones(state, transforms) {
         break;
     }
 
-    resultArr.push(Object.assign({}, obj));
+    resultArr.push({ ...obj });
   }
   return resultArr;
 }
