@@ -96,17 +96,3 @@ function transformStateWithClones(state, transforms) {
 }
 
 module.exports = transformStateWithClones;
-
-// if (i['operation'] === 'addProperties') {
-//   for (const keys in i['properties']) {
-//     stateCopy[keys] = i['properties'][keys];
-//   }
-// } else if (i['operation'] === 'removeProperties') {
-//   for (const j of i['properties']) {
-//     delete stateCopy[j];
-//   }
-// } else if (i['operation'] === 'clear') {
-//   for (const remover in stateCopy) {
-//     delete stateCopy[remover];
-//   }
-// }
