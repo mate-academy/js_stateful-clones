@@ -74,13 +74,15 @@ function transformStateWithClones(state, transforms) {
   const obj = Object.assign({}, state);
 
   for (const item of transforms) {
-    switch (item.operation) {
+    const { operation, properties } = item; // деструктуризация объекта item
+
+    switch (operation) {
       case 'addProperties':
-        Object.assign(obj, item.properties);
+        Object.assign(obj, properties);
         break;
       case 'removeProperties':
-        for (const key in item.properties) {
-          delete obj[item.properties[key]];
+        for (const key in properties) {
+          delete obj[properties[key]];
         }
         break;
       case 'clear':
