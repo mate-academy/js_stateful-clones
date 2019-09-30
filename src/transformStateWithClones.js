@@ -72,19 +72,22 @@
 function transformStateWithClones(state, transforms) {
   const iterationArray = [];
   const stateCopy = Object.assign({}, state);
-  for (const i of transforms) {
-    if (i['operation'] === 'addProperties') {
-      for (const keys in i['properties']) {
-        stateCopy[keys] = i['properties'][keys];
-      }
-    } else if (i['operation'] === 'removeProperties') {
-      for (const j of i['properties']) {
-        delete stateCopy[j];
-      }
-    } else if (i['operation'] === 'clear') {
-      for (const remover in stateCopy) {
-        delete stateCopy[remover];
-      }
+  for (const keys of transforms) {
+    const { operation, properties } = keys;
+    switch (operation) {
+      case 'addProperties':
+        Object.assign(stateCopy, properties);
+        break;
+      case 'removeProperties':
+        for (const key of properties) {
+          delete stateCopy[key];
+        }
+        break;
+      case 'clear':
+        for (const key in stateCopy) {
+          delete stateCopy[key];
+        }
+        break;
     }
     iterationArray.push(JSON.stringify(stateCopy));
   }
@@ -97,3 +100,17 @@ function transformStateWithClones(state, transforms) {
 }
 
 module.exports = transformStateWithClones;
+
+// if (i['operation'] === 'addProperties') {
+//   for (const keys in i['properties']) {
+//     stateCopy[keys] = i['properties'][keys];
+//   }
+// } else if (i['operation'] === 'removeProperties') {
+//   for (const j of i['properties']) {
+//     delete stateCopy[j];
+//   }
+// } else if (i['operation'] === 'clear') {
+//   for (const remover in stateCopy) {
+//     delete stateCopy[remover];
+//   }
+// }
