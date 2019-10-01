@@ -70,28 +70,38 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  const stateClone = JSON.parse(JSON.stringify(state));
+  const stateClone = { ...state };
   const historyOfStates = [];
+
   transforms.forEach(transform => {
-    if (transform.operation === 'clear') {
-      for (const property in stateClone) {
-        if (stateClone.hasOwnProperty(property)) {
-          delete stateClone[property];
+    const { properties, operation } = transform;
+    switch (operation) {
+      case 'clear': {
+        for (const property in stateClone) {
+          if (stateClone.hasOwnProperty(property)) {
+            delete stateClone[property];
+          }
         }
+        break;
+      }
+
+      case 'removeProperties': {
+        properties.forEach(propertyToDelete => {
+          if (stateClone.hasOwnProperty(propertyToDelete)) {
+            delete stateClone[propertyToDelete];
+          }
+        });
+        break;
+      }
+
+      case 'addProperties': {
+        Object.assign(stateClone, properties);
+        break;
       }
     }
-    if (transform.operation === 'addProperties') {
-      Object.assign(stateClone, transform.properties);
-    }
-    if (transform.operation === 'removeProperties') {
-      transform.properties.forEach(propertyToDelete => {
-        if (stateClone.hasOwnProperty(propertyToDelete)) {
-          delete stateClone[propertyToDelete];
-        }
-      });
-    }
-    historyOfStates.push(JSON.parse(JSON.stringify(stateClone)));
+    historyOfStates.push(Object.assign({}, stateClone));
   });
+
   return historyOfStates;
 }
 
