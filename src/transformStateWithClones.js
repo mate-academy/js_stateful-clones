@@ -1,6 +1,6 @@
 'use strict';
 
-/**
+/* *
  * Implement a function that transforms a state while keeping a history of
  * states:
  *
@@ -71,16 +71,17 @@
  */
 function transformStateWithClones(state, transforms) {
   const requiredArr = [];
-  const assignmentObject = { ...state };
+  let assignmentObject = { ...state };
 
   for (const value of transforms) {
-    switch (value.operation) {
+    const { operation, properties } = value;
+    switch (operation) {
       case 'addProperties':
-        Object.assign(assignmentObject, value.properties);
+        assignmentObject = { ...assignmentObject, ...properties };
         break;
 
       case 'removeProperties':
-        for (const prop of value.properties) {
+        for (const prop of properties) {
           delete assignmentObject[prop];
         }
         break;
