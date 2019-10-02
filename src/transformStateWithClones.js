@@ -92,10 +92,7 @@ function transformStateWithClones(state, transforms) {
         }
         break;
     }
-    allProps.push(JSON.stringify(stateClone));
-  }
-  for (let obj = 0; obj < allProps.length; obj++) {
-    allProps[obj] = JSON.parse(allProps[obj]);
+    allProps.push(Object.assign({}, stateClone));
   }
   return allProps;
 }
