@@ -89,8 +89,7 @@ function transformStateWithClones(state, transforms) {
         delete newState[key];
       };
     };
-    const obj = { ...newState };
-    result.push(obj);
+    result.push({ ...newState });
   });
   return result;
 }
