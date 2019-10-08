@@ -91,6 +91,7 @@ function transformStateWithClones(state, transforms) {
     };
     result.push({ ...newState });
   });
+
   return result;
 }
 
