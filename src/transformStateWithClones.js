@@ -64,32 +64,29 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  const clone = [{}];
-  for (const key in state) {
-    clone[0][key] = state[key];
-  }
+  const clone = [Object.assign({}, state)];
 
   for (const obj of transforms) {
-    if (obj.operation === 'addProperties') {
-      for (const key in obj.properties) {
-        clone[0][key] = obj.properties[key];
-      }
-      clone.push(Object.assign({}, clone[0]));
-    }
+    switch (obj.operation) {
+      case 'addProperties':
+        for (const key in obj.properties) {
+          clone[0][key] = obj.properties[key];
+        }
+        break;
 
-    if (obj.operation === 'removeProperties') {
-      for (const prop of obj.properties) {
-        delete clone[0][prop];
-      }
-      clone.push(Object.assign({}, clone[0]));
-    }
+      case 'removeProperties':
+        for (const prop of obj.properties) {
+          delete clone[0][prop];
+        }
+        break;
 
-    if (obj.operation === 'clear') {
-      for (const key in clone[0]) {
-        delete clone[0][key];
-      }
-      clone.push(Object.assign({}, clone[0]));
+      case 'clear':
+        for (const key in clone[0]) {
+          delete clone[0][key];
+        }
+        break;
     }
+    clone.push(Object.assign({}, clone[0]));
   }
   clone.shift();
 
