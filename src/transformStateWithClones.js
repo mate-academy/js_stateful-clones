@@ -64,7 +64,45 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const stateClone = Object.assign({}, state);
+  const stateSteps = [];
+
+  for (let i = 0; i < transforms.length; i++) {
+    switch (transforms[i].operation) {
+      case 'addProperties':
+        Object.assign(stateClone, transforms[i].properties);
+        break;
+      case 'removeProperties':
+        removeProperties(stateClone, transforms[i].properties);
+        break;
+      case 'clear':
+        removeProperties(stateClone, [], true);
+        break;
+      default:
+        return stateSteps;
+    }
+    stateSteps.push(Object.assign({}, stateClone));
+  }
+  return stateSteps;
+}
+
+/**
+ * This function allows to remove properties from object.
+ *
+ * @param {object} object
+ * @param {array} propToRemove
+ * @param {boolean} removeAll
+ */
+function removeProperties(object, propToRemove = [], removeAll = false) {
+  if (!removeAll) {
+    for (let i = 0; i < propToRemove.length; i++) {
+      delete object[propToRemove[i]];
+    }
+  } else {
+    for (const key in object) {
+      delete object[key];
+    }
+  }
 }
 
 module.exports = transformStateWithClones;
