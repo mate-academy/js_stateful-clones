@@ -93,6 +93,7 @@ function transformStateWithClones(state, transforms) {
     }
     statesArr.push({ ...stateClone });
   }
+
   return statesArr;
 }
 
