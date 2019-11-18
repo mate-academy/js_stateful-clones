@@ -1,4 +1,7 @@
 {
+  "jest": {
+    "testEnvironment": "node"
+  },
   "name": "stateful-clones",
   "version": "1.0.0",
   "description": "Cloning and transforming state",
