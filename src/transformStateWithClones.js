@@ -86,22 +86,19 @@ function transformStateWithClones(state, transforms) {
   }
 
   transforms.map(elem => {
-    if (elem.operation === 'addProperties') {
-      addProperties(clonedState, elem.properties);
-
-      operationLog.push(Object.assign({}, clonedState));
-    }
-
-    if (elem.operation === 'removeProperties') {
-      removeProperties(clonedState, elem.properties);
-
-      operationLog.push(Object.assign({}, clonedState));
-    }
-
-    if (elem.operation === 'clear') {
-      clear(clonedState);
-
-      operationLog.push(Object.assign({}, clonedState));
+    switch (elem.operation) {
+      case 'addProperties':
+        addProperties(clonedState, elem.properties);
+        operationLog.push(Object.assign({}, clonedState));
+        break;
+      case 'removeProperties':
+        removeProperties(clonedState, elem.properties);
+        operationLog.push(Object.assign({}, clonedState));
+        break;
+      case 'clear':
+        clear(clonedState);
+        operationLog.push(Object.assign({}, clonedState));
+        break;
     }
   });
 
