@@ -84,7 +84,7 @@ function transformStateWithClones(state, transforms) {
         transformedArr.push({ ...stateCopy });
         break;
 
-      default:
+      case 'clear':
         for (const key in stateCopy) {
           delete stateCopy[key];
         };
