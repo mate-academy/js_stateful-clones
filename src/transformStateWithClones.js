@@ -66,34 +66,38 @@
 function transformStateWithClones(state, transforms) {
   const result = [];
   const cloneState = Object.assign({}, state);
+  let operation;
 
   for (let i = 0; i < transforms.length; i++) {
-    if (transforms[i].operation === 'addProperties') {
-      const addProp = transforms[i].properties;
+    operation = transforms[i].operation;
 
-      for (const keyAdd in addProp) {
-        cloneState[keyAdd] = addProp[keyAdd];
-      }
+    switch (operation) {
+      case 'addProperties':
+        const addProp = transforms[i].properties;
 
-      result.push(Object.assign({}, cloneState));
-    }
+        for (const keyAdd in addProp) {
+          cloneState[keyAdd] = addProp[keyAdd];
+        }
 
-    if (transforms[i].operation === 'removeProperties') {
-      const removeProp = transforms[i].properties;
+        result.push(Object.assign({}, cloneState));
+        break;
 
-      for (const keyRemove of removeProp) {
-        delete cloneState[keyRemove];
-      }
+      case 'removeProperties':
+        const removeProp = transforms[i].properties;
 
-      result.push(Object.assign({}, cloneState));
-    }
+        for (const keyRemove of removeProp) {
+          delete cloneState[keyRemove];
+        }
 
-    if (transforms[i].operation === 'clear') {
-      for (const key in cloneState) {
-        delete cloneState[key];
-      }
+        result.push(Object.assign({}, cloneState));
+        break;
 
-      result.push(Object.assign({}, cloneState));
+      case 'clear':
+        for (const key in cloneState) {
+          delete cloneState[key];
+        }
+
+        result.push(Object.assign({}, cloneState));
     }
   }
 
