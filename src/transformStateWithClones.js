@@ -64,7 +64,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  let copiedState = Object.assign({}, state);
+  let copiedState = { ...state };
   const arrOfStates = [];
 
   for (let i = 0; i < transforms.length; i++) {
@@ -73,21 +73,21 @@ function transformStateWithClones(state, transforms) {
         copiedState = {
           ...copiedState, ...transforms[i].properties,
         };
-        arrOfStates.push(Object.assign({}, copiedState));
+        arrOfStates.push({ ...copiedState });
         break;
       }
 
       case 'removeProperties': {
-        transforms[i].properties.map(prop => {
+        transforms[i].properties.forEach(prop => {
           delete copiedState[prop];
         });
-        arrOfStates.push(Object.assign({}, copiedState));
+        arrOfStates.push({ ...copiedState });
         break;
       }
 
       case 'clear': {
         copiedState = {};
-        arrOfStates.push(Object.assign({}, copiedState));
+        arrOfStates.push({ ...copiedState });
         break;
       }
     }
