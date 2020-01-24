@@ -80,10 +80,11 @@ function transformStateWithClones(state, transforms) {
         }
         break;
 
-      default:
+      case 'clear':
         for (const key in cloning) {
           delete cloning[key];
         }
+        break;
     }
 
     newArr.push({ ...cloning });
