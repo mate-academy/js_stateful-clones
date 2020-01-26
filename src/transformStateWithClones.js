@@ -22,7 +22,7 @@
  *
  * Sample usage:
  *
- * If `state` is {foo: 'bar', bar: 'foo'}, then
+ * If `state` is {foo: 'bar', name: 'Jim', name: 'Jim', hello: 'world'}}, then 0
  *
  * transformStateWithClones(state, [
  *   {operation: 'addProperties', properties: {name: 'Jim', hello: 'world'}},
@@ -64,7 +64,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  const clone = { ...state };
+  const clone = Object.assign({}, state);
   const history = [];
 
   transforms.forEach((element) => {
