@@ -71,6 +71,7 @@ function transformStateWithClones(state, transforms) {
     switch (item.operation) {
       case 'addProperties' : {
         Object.assign(stateCopy, item.properties);
+
         stateTransformLogs.push({ ...stateCopy });
         break;
       }
@@ -79,6 +80,7 @@ function transformStateWithClones(state, transforms) {
         item.properties.forEach(value => {
           delete stateCopy[value];
         });
+
         stateTransformLogs.push({ ...stateCopy });
         break;
       }
@@ -87,6 +89,7 @@ function transformStateWithClones(state, transforms) {
         Object.keys(stateCopy).forEach(value => {
           delete stateCopy[value];
         });
+
         stateTransformLogs.push({ ...stateCopy });
         break;
       }
