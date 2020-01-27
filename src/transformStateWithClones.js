@@ -65,7 +65,7 @@
  */
 function transformStateWithClones(state, transforms) {
   let object = { ...state };
-  const final = [];
+  const transformedObject = [];
 
   for (const item of transforms) {
     switch (item.operation) {
@@ -73,24 +73,24 @@ function transformStateWithClones(state, transforms) {
         for (const key in item.properties) {
           object[key] = item.properties[key];
         }
-        final.push({ ...object });
+        transformedObject.push({ ...object });
         break;
 
       case 'removeProperties':
         for (const key of item.properties) {
           delete object[key];
         }
-        final.push({ ...object });
+        transformedObject.push({ ...object });
         break;
 
       case 'clear':
         object = {};
-        final.push({ ...object });
+        transformedObject.push({ ...object });
         break;
     }
   }
 
-  return final;
+  return transformedObject;
 }
 
 module.exports = transformStateWithClones;
