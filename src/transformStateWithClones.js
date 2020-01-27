@@ -22,7 +22,7 @@
  *
  * Sample usage:
  *
- * If `state` is {foo: 'bar', bar: 'foo'}, then
+ * If `state` is {foo: 'bar', name: 'Jim', name: 'Jim', hello: 'world'}}, then 0
  *
  * transformStateWithClones(state, [
  *   {operation: 'addProperties', properties: {name: 'Jim', hello: 'world'}},
@@ -64,7 +64,36 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const cloneOfState = { ...state };
+  const history = [];
+
+  transforms.forEach((element) => {
+    switch (element.operation) {
+      case 'addProperties': {
+        Object.assign(cloneOfState, element.properties);
+        history.push({ ...cloneOfState });
+        break;
+      }
+
+      case 'removeProperties': {
+        element.properties.forEach((value) => {
+          delete cloneOfState[value];
+        });
+        history.push({ ...cloneOfState });
+        break;
+      }
+
+      case 'clear': {
+        for (const key in cloneOfState) {
+          delete cloneOfState[key];
+        }
+        history.push({ ...cloneOfState });
+        break;
+      }
+    }
+  });
+
+  return history;
 }
 
 module.exports = transformStateWithClones;
