@@ -66,17 +66,16 @@
 function transformStateWithClones(state, transforms) {
   const statesArr = [];
   const referenceArr = { ...state };
-  let operation;
-  let properties;
 
   for (let i = 0; i < transforms.length; ++i) {
-    ({ operation, properties } = transforms[i]);
+    const { operation, properties } = transforms[i];
 
     switch (operation) {
       case 'addProperties' : {
         for (const key in properties) {
           referenceArr[key] = properties[key];
         }
+
         statesArr[statesArr.length] = Object.assign({}, referenceArr);
         break;
       }
