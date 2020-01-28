@@ -68,10 +68,9 @@ function transformStateWithClones(state, transforms) {
   const newObject = Object.assign({}, state);
 
   for (let i = 0; i < transforms.length; i++) {
-    const operations = transforms[i].operation;
-    const properties = transforms[i].properties;
+    const { operation, properties } = transforms[i];
 
-    switch (operations) {
+    switch (operation) {
       case 'addProperties' :
 
         for (const key in properties) {
