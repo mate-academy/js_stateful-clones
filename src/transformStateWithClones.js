@@ -66,7 +66,6 @@
 function transformStateWithClones(state, transforms) {
   const newArr = [];
   const newObject = Object.assign({}, state);
-  let transitObj = {};
 
   for (let i = 0; i < transforms.length; i++) {
     const operations = transforms[i].operation;
@@ -79,8 +78,7 @@ function transformStateWithClones(state, transforms) {
           newObject[key] = properties[key];
         }
 
-        transitObj = Object.assign({}, newObject);
-        newArr.push(Object.assign({}, transitObj));
+        newArr.push(Object.assign({}, newObject));
         break;
 
       case 'removeProperties' :
