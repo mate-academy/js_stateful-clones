@@ -85,12 +85,12 @@ function transformStateWithClones(state, transforms) {
           delete referenceArr[key];
         }
 
-        statesArr[statesArr.length] = Object.assign({}, referenceArr);
+        statesArr.push(Object.assign({}, referenceArr));
         break;
       }
 
       case 'removeProperties' : {
-        for (let y = 0; y < properties.length; ++y) {
+        for (let y = 0; y < properties.length; y += 1) {
           delete referenceArr[properties[y]];
         }
 
