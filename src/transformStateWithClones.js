@@ -84,6 +84,7 @@ function transformStateWithClones(state, transforms) {
         for (const key in referenceArr) {
           delete referenceArr[key];
         }
+
         statesArr[statesArr.length] = Object.assign({}, referenceArr);
         break;
       }
@@ -92,6 +93,7 @@ function transformStateWithClones(state, transforms) {
         for (let y = 0; y < properties.length; ++y) {
           delete referenceArr[properties[y]];
         }
+
         statesArr[statesArr.length] = Object.assign({}, referenceArr);
         break;
       }
