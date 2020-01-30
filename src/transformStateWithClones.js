@@ -77,8 +77,7 @@ function transformStateWithClones(state, transforms) {
 
     switch (operation) {
       case 'addProperties': {
-        arrObject[currentIndex] = Object.assign({},
-          arrObject[currentIndex - 1]);
+        arrObject[currentIndex] = { ...arrObject[currentIndex - 1] };
 
         for (const key in properties) {
           arrObject[currentIndex][key] = properties[key];
@@ -95,8 +94,7 @@ function transformStateWithClones(state, transforms) {
       }
 
       case 'removeProperties': {
-        arrObject[currentIndex] = Object.assign({},
-          arrObject[currentIndex - 1]);
+        arrObject[currentIndex] = { ...arrObject[currentIndex - 1] };
 
         for (const item of properties) {
           delete arrObject[currentIndex][item];
