@@ -75,18 +75,16 @@ function transformStateWithClones(state, transforms) {
       for (const key in propertiesValue) {
         copyState[key] = propertiesValue[key];
       }
-      resultArr.push({ ...copyState });
     } else if (operationValue === 'removeProperties') {
       for (const key of propertiesValue) {
         delete copyState[key];
       }
-      resultArr.push({ ...copyState });
     } else {
       for (const key in copyState) {
         delete copyState[key];
       }
-      resultArr.push({ ...copyState });
     }
+    resultArr.push({ ...copyState });
   }
 
   return resultArr;
