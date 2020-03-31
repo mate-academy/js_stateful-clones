@@ -64,7 +64,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  const stateClone = { ...state };
+  const stateClone = Object.assign({}, state);
   const result = [];
 
   for (const transformed of transforms) {
