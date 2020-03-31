@@ -63,8 +63,45 @@
  *
  * @return {Object[]}
  */
+function aplyTransform(input, transform) {
+  const state = JSON.parse(JSON.stringify(input));
+
+  switch (transform.operation) {
+    case 'addProperties':
+      for (const key in transform.properties) {
+        state[key] = transform.properties[key];
+      }
+      break;
+    case 'removeProperties':
+      for (let i = 0; i < transform.properties.length; i++) {
+        const key = transform.properties[i];
+
+        delete state[key];
+      }
+      break;
+    case 'clear':
+      for (const key in state) {
+        delete state[key];
+      }
+      break;
+  }
+
+  return state;
+}
+
 function transformStateWithClones(state, transforms) {
   // write code here
+  const res = [];
+
+  for (let i = 0; i < transforms.length; i++) {
+    const transform = transforms[i];
+
+    const lastState = i >= 1 ? res[i - 1] : state;
+
+    res.push(aplyTransform(lastState, transform));
+  }
+
+  return res;
 }
 
 module.exports = transformStateWithClones;
