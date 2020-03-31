@@ -74,23 +74,22 @@ function transformStateWithClones(state, transforms) {
         for (const key in transforms[i].properties) {
           copyState[key] = transforms[i].properties[key];
         }
-        arr.push({ ...copyState });
         break;
 
       case 'removeProperties':
         for (const key in transforms[i].properties) {
           delete copyState[transforms[i].properties[key]];
         }
-        arr.push({ ...copyState });
         break;
 
       case 'clear':
         for (const key in copyState) {
           delete copyState[key];
         }
-        arr.push({ ...copyState });
         break;
     }
+
+    arr.push({ ...copyState });
   }
 
   return arr;
