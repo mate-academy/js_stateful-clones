@@ -65,9 +65,7 @@
  */
 function transformStateWithClones(state, transforms) {
   const result = [];
-  const newObject = {};
-
-  Object.assign(newObject, state);
+  const newObject = { ...state };
 
   for (let i = 0; i < transforms.length; i++) {
     switch (transforms[i].operation) {
