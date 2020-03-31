@@ -86,8 +86,7 @@ function transformStateWithClones(state, transforms) {
         break;
     }
 
-    result[i] = {};
-    Object.assign(result[i], newObject);
+    result[i] = { ...newObject };
   }
 
   return result;
