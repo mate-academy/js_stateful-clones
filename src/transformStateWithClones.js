@@ -64,7 +64,36 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  let stateClone = {...state};
+  let transformStateArray = [];
+
+  for (let i = 0; i < transforms.length; i++) {
+    const operationValue = transforms[i].operation;
+    const propertiesValues = transforms[i].properties;
+    checkedState(operationValue, propertiesValues);
+    transformStateArray[i] = {...stateClone};
+  }
+
+  function checkedState(action, props) {
+    switch (action) {
+      case 'addProperties':
+        for (const key in props) {
+          stateClone[key] = props[key];
+        }
+        break;
+
+      case 'removeProperties':
+        for (const key of props) {
+          delete stateClone[key];
+        }
+       break;
+
+      case 'clear':
+          stateClone = {};
+    }
+  }
+
+  return transformStateArray
 }
 
 module.exports = transformStateWithClones;
