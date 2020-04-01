@@ -68,7 +68,7 @@ function transformStateWithClones(state, transforms) {
   const _cloneDetect = [];
 
   transforms.forEach((item) => {
-    const _operation = item.operation;
+    const {operation} = item;
 
     switch (_operation) {
       case 'addProperties':
