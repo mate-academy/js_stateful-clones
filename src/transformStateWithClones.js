@@ -73,7 +73,6 @@ function transformStateWithClones(state, transforms) {
     switch (operation) {
       case 'addProperties': {
         Object.assign(clone, properties);
-        history.push({ ...clone });
         break;
       }
 
@@ -83,7 +82,6 @@ function transformStateWithClones(state, transforms) {
 
           delete clone[removeKey];
         }
-        history.push({ ...clone });
         break;
       }
 
@@ -91,10 +89,10 @@ function transformStateWithClones(state, transforms) {
         for (const key in clone) {
           delete clone[key];
         }
-        history.push({ ...clone });
         break;
       }
     }
+    history.push({ ...clone });
   });
 
   return history;
