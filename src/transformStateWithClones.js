@@ -68,23 +68,43 @@ function transformStateWithClones(state, transforms) {
   const stateClone = { ...state };
 
   for (const obj of transforms) {
-    if (obj['operation'] === 'addProperties') {
-      for (const key in obj['properties']) {
-        stateClone[key] = obj['properties'][key];
-      }
-    }
+    switch (obj['operation']) {
+      case 'addProperties':
+        for (const key in obj['properties']) {
+          stateClone[key] = obj['properties'][key];
+        }
+        break;
 
-    if (obj['operation'] === 'removeProperties') {
-      for (const key of obj['properties']) {
-        delete stateClone[key];
-      }
-    }
+      case 'removeProperties':
+        for (const key of obj['properties']) {
+          delete stateClone[key];
+        }
+        break;
 
-    if (obj['operation'] === 'clear') {
-      for (const key in stateClone) {
-        delete stateClone[key];
-      }
-    }
+      case 'clear':
+        for (const key in stateClone) {
+          delete stateClone[key];
+        }
+        break;
+    } // end of switch
+
+    // if (obj['operation'] === 'addProperties') {
+    //   for (const key in obj['properties']) {
+    //     stateClone[key] = obj['properties'][key];
+    //   }
+    // }
+
+    // if (obj['operation'] === 'removeProperties') {
+    //   for (const key of obj['properties']) {
+    //     delete stateClone[key];
+    //   }
+    // }
+
+    // if (obj['operation'] === 'clear') {
+    //   for (const key in stateClone) {
+    //     delete stateClone[key];
+    //   }
+    // }
 
     output.push({ ...stateClone });
   }
