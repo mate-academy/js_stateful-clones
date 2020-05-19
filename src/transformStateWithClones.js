@@ -19,20 +19,20 @@ function transformStateWithClones(state, transforms) {
     clear: 'clear',
   };
 
-  for (const key of transforms) {
-    if (key.operation === OPERATION.add) {
-      for (const keyAdd in key.properties) {
-        cloneState[keyAdd] = key.properties[keyAdd];
+  for (const transform of transforms) {
+    if (transform.operation === OPERATION.add) {
+      for (const keyAdd in transform.properties) {
+        cloneState[keyAdd] = transform.properties[keyAdd];
       };
     }
 
-    if (key.operation === OPERATION.remove) {
-      for (const keyRemove in key.properties) {
-        delete cloneState[key.properties[keyRemove]];
+    if (transform.operation === OPERATION.remove) {
+      for (const keyRemove in transform.properties) {
+        delete cloneState[transform.properties[keyRemove]];
       }
     }
 
-    if (key.operation === OPERATION.clear) {
+    if (transform.operation === OPERATION.clear) {
       for (const keyRemove in cloneState) {
         delete cloneState[keyRemove];
       }
