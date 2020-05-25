@@ -66,6 +66,45 @@
  */
 function transformStateWithClones(state, transforms) {
   // write code here
+  const states = [];
+  let stateCopy = { ...state };
+
+  for (const instruction of transforms) {
+    switch (instruction.operation) {
+      case 'addProperties': {
+        for (const property in instruction.properties) {
+          stateCopy[property] = instruction.properties[property];
+        }
+
+        const stateBlockCopy = { ...stateCopy };
+
+        states.push(stateBlockCopy);
+        break;
+      }
+
+      case 'clear': {
+        stateCopy = {};
+
+        const stateBlockCopy = { ...stateCopy };
+
+        states.push(stateBlockCopy);
+        break;
+      }
+
+      case 'removeProperties': {
+        for (const property of instruction.properties) {
+          delete stateCopy[property];
+        }
+
+        const stateBlockCopy = { ...stateCopy };
+
+        states.push(stateBlockCopy);
+        break;
+      }
+    }
+  }
+
+  return states;
 }
 
 module.exports = transformStateWithClones;
