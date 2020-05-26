@@ -76,18 +76,11 @@ function transformStateWithClones(state, transforms) {
           stateCopy[property] = instruction.properties[property];
         }
 
-        const stateBlockCopy = { ...stateCopy };
-
-        states.push(stateBlockCopy);
         break;
       }
 
       case 'clear': {
         stateCopy = {};
-
-        const stateBlockCopy = { ...stateCopy };
-
-        states.push(stateBlockCopy);
         break;
       }
 
@@ -96,12 +89,10 @@ function transformStateWithClones(state, transforms) {
           delete stateCopy[property];
         }
 
-        const stateBlockCopy = { ...stateCopy };
-
-        states.push(stateBlockCopy);
         break;
       }
     }
+    states.push({ ...stateCopy });
   }
 
   return states;
