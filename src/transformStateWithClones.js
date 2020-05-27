@@ -1,5 +1,5 @@
 'use strict';
-/* eslint-disable */
+
 /**
  * Implement a function accepting 2 arguments `state` and `transforms` and
  * returning an array of states of the same length as `transforms`. Each
@@ -65,39 +65,33 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  let stateMutated = [];
+  const stateCloned = [];
+  let stateMutated = Object.assign({}, state);
 
   for (const action in transforms) {
     if (transforms[action].operation === 'addProperties') {
-      stateMutated[action] = Object.assign({}, 
-        state,
+      stateMutated = Object.assign(
+        stateMutated,
         transforms[action].properties
       );
-      
-      // console.log("stateMutated[] = ", stateMutated[action]);
-      // console.log("stateMutated", stateMutated);
     };
 
     if (transforms[action].operation === 'removeProperties') {
       for (const deleteMark in transforms[action].properties) {
-        
-        // delete state[transforms[action].properties[deleteMark]];
+        delete stateMutated[transforms[action].properties[deleteMark]];
       }
     };
 
+    if (transforms[action].operation === 'clear') {
+      for (const i in stateMutated) {
+        delete stateMutated[i];
+      }
+    };
 
-
+    stateCloned[action] = Object.assign({}, stateMutated);
   }
 
-  
+  return stateCloned;
 }
 
-
-
-let stat = {foo: 'bar', bar: 'foo'};
-  console.log("f= ", transformStateWithClones(stat, [
-    {operation: 'addProperties', properties: {name: 'Jim', hello: 'world'}},
-    {operation: 'removeProperties', properties: ['bar', 'hello']},
-    {operation: 'addProperties', properties: {another: 'one'}}
-    ]));
 module.exports = transformStateWithClones;
