@@ -68,16 +68,16 @@ function transformStateWithClones(state, transforms) {
   let actionState = { ...state };
   const actions = [];
 
-  for (const action of transforms) {
-    switch (action.operation) {
+  for (const { operation, properties } of transforms) {
+    switch (operation) {
       case 'addProperties':
         actionState = {
           ...actionState,
-          ...action.properties,
+          ...properties,
         };
         break;
       case 'removeProperties':
-        for (const key of action.properties) {
+        for (const key of properties) {
           delete actionState[key];
         }
         break;
