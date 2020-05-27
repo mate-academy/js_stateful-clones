@@ -68,16 +68,16 @@ function transformStateWithClones(state, transforms) {
   const stateVersions = [];
   const stateDuplicate = { ...state };
 
-  for (const obj of transforms) {
-    switch (obj.operation) {
+  for (const instruction of transforms) {
+    switch (instruction.operation) {
       case 'addProperties':
-        for (const key in obj.properties) {
-          stateDuplicate[key] = obj.properties[key];
+        for (const key in instruction.properties) {
+          stateDuplicate[key] = instruction.properties[key];
         }
         break;
 
       case 'removeProperties':
-        for (const key of obj.properties) {
+        for (const key of instruction.properties) {
           delete stateDuplicate[key];
         }
         break;
