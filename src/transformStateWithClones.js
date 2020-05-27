@@ -65,7 +65,63 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const stateClone = JSON.parse(JSON.stringify(state));
+  const statesArray = [];
+
+  for (const item of transforms) {
+    switch (item.operation) {
+      case 'addProperties':
+        for (const key in item.properties) {
+          stateClone[key] = item.properties[key];
+        };
+        statesArray.push(JSON.parse(JSON.stringify(stateClone)));
+        break;
+
+      case 'removeProperties':
+        for (let i = 0; i < item.properties.length; i++) {
+          if (stateClone.hasOwnProperty(item.properties[i])) {
+            delete stateClone[item.properties[i]];
+          }
+        }
+        statesArray.push(JSON.parse(JSON.stringify(stateClone)));
+        break;
+
+      case 'clear':
+        for (const key in stateClone) {
+          if (stateClone.hasOwnProperty(key)) {
+            delete stateClone[key];
+          }
+        };
+        statesArray.push(JSON.parse(JSON.stringify(stateClone)));
+        break;
+    }
+  }
+
+  return statesArray;
 }
+
+transformStateWithClones({
+  foo: 'bar', bar: 'foo',
+}, [
+  {
+    operation: 'removeProperties', properties: ['another'],
+  },
+  { operation: 'clear' },
+  { operation: 'clear' },
+  { operation: 'clear' },
+  {
+    operation: 'addProperties', properties: { yet: 'another property' },
+  },
+  { operation: 'clear' },
+  {
+    operation: 'addProperties',
+    properties: {
+      foo: 'bar', name: 'Jim',
+    },
+  },
+  {
+    operation: 'removeProperties', properties: ['name', 'hello'],
+  },
+]);
 
 module.exports = transformStateWithClones;
