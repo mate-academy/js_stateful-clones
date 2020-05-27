@@ -76,7 +76,6 @@ function transformStateWithClones(state, transforms) {
         for (const key in properties) {
           transformedState[key] = properties[key];
         }
-
         transformedStates.push({ ...transformedState });
         break;
 
