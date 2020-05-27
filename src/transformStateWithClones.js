@@ -69,20 +69,25 @@ function transformStateWithClones(state, transforms) {
   const stateDuplicate = { ...state };
 
   for (const obj of transforms) {
-    if (obj.operation === 'addProperties') {
-      for (const key in obj.properties) {
-        stateDuplicate[key] = obj.properties[key];
-      }
-    } else if (obj.operation === 'removeProperties') {
-      for (const key in obj.properties) {
-        delete stateDuplicate[obj.properties[key]];
-      }
-    } else if (obj.operation === 'clear') {
-      for (const key in state) {
-        delete stateDuplicate[key];
-      }
-    }
+    switch (obj.operation) {
+      case 'addProperties':
+        for (const key in obj.properties) {
+          stateDuplicate[key] = obj.properties[key];
+        }
+        break;
 
+      case 'removeProperties':
+        for (const key in obj.properties) {
+          delete stateDuplicate[key];
+        }
+        break;
+
+      case 'clear':
+        for (const key in stateDuplicate) {
+          delete stateDuplicate[key];
+        }
+        break;
+    }
     stateVersions.push({ ...stateDuplicate });
   }
 
