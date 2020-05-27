@@ -76,9 +76,7 @@ function transformStateWithClones(state, transforms) {
         filteredArray.push({ ...filteredObject });
         break;
       case 'clear':
-        for (const key in filteredObject) {
-          delete filteredObject[key];
-        }
+        filteredObject = {};
         filteredArray.push({ ...filteredObject });
         break;
       case 'removeProperties':
