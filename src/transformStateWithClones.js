@@ -74,7 +74,6 @@ function transformStateWithClones(state, transforms) {
         for (const key in item.properties) {
           stateClone[key] = item.properties[key];
         };
-        statesArray.push(JSON.parse(JSON.stringify(stateClone)));
         break;
 
       case 'removeProperties':
@@ -83,7 +82,6 @@ function transformStateWithClones(state, transforms) {
             delete stateClone[item.properties[i]];
           }
         }
-        statesArray.push(JSON.parse(JSON.stringify(stateClone)));
         break;
 
       case 'clear':
@@ -92,9 +90,9 @@ function transformStateWithClones(state, transforms) {
             delete stateClone[key];
           }
         };
-        statesArray.push(JSON.parse(JSON.stringify(stateClone)));
         break;
     }
+    statesArray.push(JSON.parse(JSON.stringify(stateClone)));
   }
 
   return statesArray;
