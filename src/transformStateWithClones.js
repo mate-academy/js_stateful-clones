@@ -77,7 +77,7 @@ function transformStateWithClones(state, transforms) {
         break;
 
       case 'removeProperties':
-        for (const key in obj.properties) {
+        for (const key of obj.properties) {
           delete stateDuplicate[key];
         }
         break;
