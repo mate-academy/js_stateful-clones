@@ -71,26 +71,29 @@ function transformStateWithClones(state, transforms) {
   const statesArray = [];
 
   for (const property of transforms) {
-    if (property['operation'] === 'addProperties') {
-      for (const [key, value] of Object.entries(property['properties'])) {
-        interimStates[key] = value;
+    switch (property['operation']) {
+      case 'addProperties': {
+        for (const [key, value] of Object.entries(property['properties'])) {
+          interimStates[key] = value;
+        }
+        break;
       }
-      statesArray.push(JSON.parse(JSON.stringify(interimStates)));
-    }
 
-    if (property['operation'] === 'clear') {
-      for (const key in interimStates) {
-        delete interimStates[key];
+      case 'clear': {
+        for (const key in interimStates) {
+          delete interimStates[key];
+        }
+        break;
       }
-      statesArray.push(JSON.parse(JSON.stringify(interimStates)));
-    }
 
-    if (property.operation === 'removeProperties') {
-      for (const keys of property['properties']) {
-        delete interimStates[keys];
+      case 'removeProperties': {
+        for (const keys of property['properties']) {
+          delete interimStates[keys];
+        }
+        break;
       }
-      statesArray.push(JSON.parse(JSON.stringify(interimStates)));
     }
+    statesArray.push(JSON.parse(JSON.stringify(interimStates)));
   }
 
   return statesArray;
