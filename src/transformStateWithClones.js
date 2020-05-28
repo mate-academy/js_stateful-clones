@@ -65,14 +65,14 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
+  // write code here
   const operationsList = [];
-  let changedState = Object.assign({}, state);
+  let changedState = { ...state };
 
   for (let i = 0; i < transforms.length; i++) {
     switch (transforms[i].operation) {
       case 'addProperties':
-        changedState
-        = Object.assign(changedState, transforms[i].properties);
+        changedState = Object.assign(changedState, transforms[i].properties);
         break;
       case 'clear':
         changedState = {};
