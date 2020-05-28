@@ -2,20 +2,22 @@
 
 /**
  * Implement a function accepting 2 arguments `state` and `transforms` and
- * returning an array of states of the same length as `transforms`. Each
- * element of the resulting array has to represent the state produced by the
+ * returning an statesArray of states of the same length as `transforms`. Each
+ * element of the resulting statesArray has to represent the state produced
+ * by the
  * next operation.
  *
  * You must not reassign `state` to a new object or modify it in any way!
  *
  * `state` is an initial object.
  *
- * `transforms` is an array of objects having the following properties:
+ * `transforms` is an statesArray of objects having the following properties:
  * `operation`: either `addProperties`, `removeProperties` or `clear`;
  * `properties`:
  *   - if `operation` is `addProperties`, this property contains an object
  *   with `key: value` pairs to add to the state;
- *   - if `operation` is `removeProperties`, this property contains an array
+ *   - if `operation` is `removeProperties`, this property contains
+ * an statesArray
  *   with the list of property names to remove from the state; (Not existing
  *   properties should be ignored)
  *   - if `operation is `clear` you should create an empty state object
@@ -65,7 +67,36 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const interimStates = JSON.parse(JSON.stringify(state));
+  const statesArray = [];
+
+  for (const property of transforms) {
+    switch (property['operation']) {
+      case 'addProperties': {
+        for (const [key, value] of Object.entries(property['properties'])) {
+          interimStates[key] = value;
+        }
+        break;
+      }
+
+      case 'clear': {
+        for (const key in interimStates) {
+          delete interimStates[key];
+        }
+        break;
+      }
+
+      case 'removeProperties': {
+        for (const keys of property['properties']) {
+          delete interimStates[keys];
+        }
+        break;
+      }
+    }
+    statesArray.push(JSON.parse(JSON.stringify(interimStates)));
+  }
+
+  return statesArray;
 }
 
 module.exports = transformStateWithClones;
