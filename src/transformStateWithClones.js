@@ -65,8 +65,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  let i = 0;
-  const stateCloned = [];
+  const stateResult = [];
   const stateMutated = Object.assign({}, state);
 
   for (const action of transforms) {
@@ -90,11 +89,10 @@ function transformStateWithClones(state, transforms) {
         break;
     }
 
-    stateCloned[i] = Object.assign({}, stateMutated);
-    i++;
+    stateResult.push(Object.assign({}, stateMutated));
   }
 
-  return stateCloned;
+  return stateResult;
 }
 
 module.exports = transformStateWithClones;
