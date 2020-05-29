@@ -69,8 +69,8 @@ function transformStateWithClones(state, transforms) {
   const clone = { ...state };
 
   for (const transform of transforms) {
-    const operation = transform['operation'];
-    const props = transform['properties'];
+    const operation = transform.operation;
+    const props = transform.properties;
 
     switch (operation) {
       case 'addProperties':
@@ -95,21 +95,4 @@ function transformStateWithClones(state, transforms) {
   return clones;
 }
 
-transformStateWithClones({
-  foo: 'bar', bar: 'foo',
-},
-[
-  {
-    operation: 'addProperties',
-    properties: {
-      name: 'Jim', hello: 'world',
-    },
-  },
-  {
-    operation: 'removeProperties', properties: ['bar', 'hello'],
-  },
-  {
-    operation: 'addProperties', properties: { another: 'one' },
-  },
-]);
 module.exports = transformStateWithClones;
