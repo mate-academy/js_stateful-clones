@@ -65,38 +65,46 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  const finishArray = [];
+  const history = [];
   let copyOfState = { ...state };
+  const OPERATIONS = {
+    add: 'addProperties',
+    remove: 'removeProperties',
+    clear: 'clear',
+  };
 
   for (let i = 0; i < transforms.length; i++) {
-    if (transforms[i].operation === 'addProperties') {
-      copyOfState = Object.assign(copyOfState, transforms[i].properties);
+    switch (true) {
+      case (transforms[i].operation === OPERATIONS.add):
+        copyOfState = Object.assign(copyOfState, transforms[i].properties);
 
-      const copyOfStateAdd = { ...copyOfState };
+        const copyOfStateAdd = { ...copyOfState };
 
-      finishArray.push(Object.assign(copyOfStateAdd));
-    }
+        history.push(copyOfStateAdd);
+        break;
 
-    if (transforms[i].operation === 'removeProperties') {
-      for (let x = 0; x < transforms[i].properties.length; x++) {
-        delete copyOfState[transforms[i].properties[x]];
-      }
+      case (transforms[i].operation === OPERATIONS.remove):
+        for (const property of transforms[i].properties) {
+          delete copyOfState[property];
+        }
 
-      const copyOfStateRemove = { ...copyOfState };
+        const copyOfStateRemove = { ...copyOfState };
 
-      finishArray.push(copyOfStateRemove);
-    }
+        history.push(copyOfStateRemove);
+        break;
 
-    if (transforms[i].operation === 'clear') {
-      copyOfState = {};
+      default:
+        for (const keys in copyOfState) {
+          delete copyOfState[keys];
+        }
 
-      const copyOfStateEmpty = { ...copyOfState };
+        const copyOfStateEmpty = { ...copyOfState };
 
-      finishArray.push(copyOfStateEmpty);
+        history.push(copyOfStateEmpty);
     }
   }
 
-  return finishArray;
+  return history;
 }
 
 module.exports = transformStateWithClones;
