@@ -65,21 +65,21 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  const objectClone = JSON.parse(JSON.stringify(state));
+  const objectClone = { ...state };
   const transformsSteps = [];
 
-  for (const index of transforms) {
-    switch (index.operation) {
+  for (const value of transforms) {
+    switch (value.operation) {
       case 'addProperties':
-        for (const prop in index.properties) {
-          objectClone[prop] = index.properties[prop];
+        for (const prop in value.properties) {
+          objectClone[prop] = value.properties[prop];
         };
         break;
 
       case 'removeProperties':
-        for (const value of index.properties) {
-          if (objectClone.hasOwnProperty(value)) {
-            delete objectClone[value];
+        for (const localValue of value.properties) {
+          if (objectClone.hasOwnProperty(localValue)) {
+            delete objectClone[localValue];
           }
         };
         break;
