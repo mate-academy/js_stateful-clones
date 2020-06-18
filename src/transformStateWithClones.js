@@ -59,13 +59,66 @@
  * {foo: 'bar', bar: 'foo'}.
  *
  *
- * @param {Object} state
+ * @param {Object} fixedState
  * @param {Object[]} transforms
  *
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
   // write code here
+  let objectTransforms = {};
+  let fixedState = {};
+  const arrayRezult = [];
+
+  fixedState = {
+    ...fixedState,
+    ...state,
+  };
+
+  for (const transform of transforms) {
+    objectTransforms = {
+      objectTransforms,
+      ...transform,
+    };
+
+    switch (objectTransforms.operation) {
+      case 'addProperties':
+        for (const key in objectTransforms.properties) {
+          fixedState[key] = objectTransforms.properties[key];
+        }
+
+        arrayRezult.push({
+          ...fixedState,
+        });
+
+        break;
+      case 'removeProperties':
+        for (const property of objectTransforms.properties) {
+          if (fixedState.hasOwnProperty(property)) {
+            delete fixedState[property];
+          }
+        }
+
+        arrayRezult.push({
+          ...fixedState,
+        });
+
+        break;
+      case 'clear':
+        for (const key in fixedState) {
+          delete fixedState[key];
+        }
+
+        arrayRezult.push({
+          ...fixedState,
+        });
+        break;
+      default :
+        break;
+    }
+  }
+
+  return arrayRezult;
 }
 
 module.exports = transformStateWithClones;
