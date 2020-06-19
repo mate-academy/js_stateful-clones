@@ -66,40 +66,31 @@
  */
 function transformStateWithClones(state, transforms) {
   // write code here
-  let objectTransforms = {};
-  let fixedState = {};
-  const arrayRezult = [];
-
-  fixedState = {
-    ...fixedState,
+  const fixedState = {
     ...state,
   };
+  const result = [];
 
   for (const transform of transforms) {
-    objectTransforms = {
-      objectTransforms,
-      ...transform,
-    };
-
-    switch (objectTransforms.operation) {
+    switch (transform.operation) {
       case 'addProperties':
-        for (const key in objectTransforms.properties) {
-          fixedState[key] = objectTransforms.properties[key];
+        for (const key in transform.properties) {
+          fixedState[key] = transform.properties[key];
         }
 
-        arrayRezult.push({
+        result.push({
           ...fixedState,
         });
 
         break;
       case 'removeProperties':
-        for (const property of objectTransforms.properties) {
+        for (const property of transform.properties) {
           if (fixedState.hasOwnProperty(property)) {
             delete fixedState[property];
           }
         }
 
-        arrayRezult.push({
+        result.push({
           ...fixedState,
         });
 
@@ -109,7 +100,7 @@ function transformStateWithClones(state, transforms) {
           delete fixedState[key];
         }
 
-        arrayRezult.push({
+        result.push({
           ...fixedState,
         });
         break;
@@ -118,7 +109,7 @@ function transformStateWithClones(state, transforms) {
     }
   }
 
-  return arrayRezult;
+  return result;
 }
 
 module.exports = transformStateWithClones;
