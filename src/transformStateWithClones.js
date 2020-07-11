@@ -65,59 +65,63 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  // // write code here
+  // const result = [];
+
+  // for (const transform in transforms) {
+  //   switch (transform.operation) {
+  //     case 'addProperties':
+  //       for (const key in transforms.properties) {
+  //         state[key] = transforms.properties[key];
+  //       }
+  //       break;
+
+  //     case 'removeProperties':
+  //       for (const key in transforms.properties) {
+  //         delete state[key];
+  //       }
+  //       break;
+
+  //     default:
+  //       for (const key in state) {
+  //         delete state[key];
+  //       }
+  //       break;
+  //   }
+  //   result.push(state);
+  // }
+
+  // return result;
+
   const result = [];
 
-  result.push(state);
+  for (const object of transforms) {
+    const addObj = {};
 
-  for (let i = 0; i < transforms.length; i++) {
-    let addObj = {};
-
-    switch (transforms[i].operation) {
+    switch (object.operation) {
       case 'addProperties':
-        if (i) {
-          addObj = result[i - 1];
-
-          for (const key in transforms[i].properties) {
-            addObj[key] = transforms[i].properties[key];
-          }
-          result.push(addObj);
-        } else {
-          addObj = result[i];
-
-          for (const key in transforms[i].properties) {
-            addObj[key] = transforms[i].properties[key];
-          }
-          result[i] = addObj;
+        for (const key in object.properties) {
+          state[key] = object.properties[key];
         }
         break;
 
       case 'removeProperties':
-        if (i) {
-          addObj = result[i - 1];
-
-          for (let j = 0; j < transforms[i].properties.length; j++) {
-            delete addObj[transforms[i].properties[j]];
-          }
-          result.push(addObj);
-        } else {
-          addObj = result[i];
-
-          for (let j = 0; j < transforms[i].properties.length; j++) {
-            delete addObj[transforms[i].properties[j]];
-          }
-          result[i] = addObj;
+        for (const key of object.properties) {
+          delete state[key];
         }
         break;
 
       default:
-        if (i) {
-          result.push({});
-        } else {
-          result[i] = {};
+        for (const key in state) {
+          delete state[key];
         }
         break;
     }
+
+    for (const key in state) {
+      addObj[key] = state[key];
+    }
+    result.push(addObj);
   }
 
   return result;
