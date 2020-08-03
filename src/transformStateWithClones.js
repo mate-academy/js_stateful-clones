@@ -67,7 +67,7 @@
 
 function transformStateWithClones(state, transforms) {
   const array = [];
-  const result = { ...state };
+  let result = { ...state };
 
   for (const obj of transforms) {
     if (obj.operation === 'addProperties') {
@@ -83,9 +83,7 @@ function transformStateWithClones(state, transforms) {
     }
 
     if (obj.operation === 'clear') {
-      for (const key in result) {
-        delete result[key];
-      }
+      result = {};
       array.push({ ...result });
     }
   }
