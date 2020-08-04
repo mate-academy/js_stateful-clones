@@ -90,6 +90,10 @@ function transformStateWithClones(state, transforms) {
 
         break;
       }
+
+      default: {
+        return 'Invalid operation';
+      }
     }
     result.push({ ...obj });
   }
