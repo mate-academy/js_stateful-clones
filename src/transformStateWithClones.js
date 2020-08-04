@@ -14,7 +14,7 @@
  * `operation`: either `addProperties`, `removeProperties` or `clear`;
  * `properties`:
  *   - if `operation` is `addProperties`, this property contains an object
- *   with `key: value` pairs to add to the state;
+ *   with `i: value` pairs to add to the state;
  *   - if `operation` is `removeProperties`, this property contains an array
  *   with the list of property names to remove from the state; (Not existing
  *   properties should be ignored)
@@ -65,7 +65,48 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const copy = [];
+  const stateCopy = { ...state };
+
+  for (let i = 0; i < transforms.length; i++) {
+    switch (transforms[i].operation) {
+      case 'addProperties' :
+        Object.assign(stateCopy, transforms[i].properties);
+        break;
+
+      case 'clear' :
+        for (const char in stateCopy) {
+          delete stateCopy[char];
+        }
+        ;
+        break;
+
+      case 'removeProperties' :
+        for (const char of transforms[i].properties) {
+          delete stateCopy[char];
+        }
+        ;
+        break;
+    }
+    copy.push({ ...stateCopy });
+  }
+
+  return copy;
 }
 
 module.exports = transformStateWithClones;
+
+// for (const i of transforms) {
+//   switch (i.operation) {
+//     case 'addProperties' : Object.assign(state, i.properties); break;
+//
+//     case 'clear' :
+//       for (const char in state) {
+//         delete state[char];
+//       } ; break;
+//
+//     case 'removeProperties' :
+//       for (const char of i.properties) {
+//         delete state[char];
+//       } ; break;
+//   }
