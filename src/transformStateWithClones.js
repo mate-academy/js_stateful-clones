@@ -65,7 +65,47 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const arrCopyStates = [];
+  const copyState = Object.assign({}, state);
+
+  for (let i = 0; i < transforms.length; i++) {
+    if (transforms[i].operation === 'addProperties') {
+      addProperties(copyState, transforms[i].properties);
+    } else if (transforms[i].operation === 'removeProperties') {
+      removeProperties(copyState, transforms[i].properties);
+    } else {
+      clear(copyState, transforms[i].properties);
+    }
+    arrCopyStates.push(Object.assign({}, copyState));
+    // eslint-disable-next-line no-console
+    console.log(arrCopyStates);
+  }
+
+  return arrCopyStates;
+}
+
+function addProperties(state, properties) {
+  Object.assign(state, properties);
+
+  return state;
+}
+
+function removeProperties(state, properties) {
+  for (let i = 0; i < properties.length; i++) {
+    if (state.hasOwnProperty(properties[i])) {
+      delete state[properties[i]];
+    }
+  }
+
+  return state;
+}
+
+function clear(state, properties) {
+  for (const stat in state) {
+    delete state[stat];
+  }
+
+  return state;
 }
 
 module.exports = transformStateWithClones;
