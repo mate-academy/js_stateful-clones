@@ -2,20 +2,20 @@
 
 /**
  * Implement a function accepting 2 arguments `state` and `transforms` and
- * returning an array of states of the same length as `transforms`. Each
- * element of the resulting array has to represent the state produced by the
+ * returning an resultArr of states of the same length as `transforms`. Each
+ * element of the resulting resultArr has to represent the state produced by the
  * next operation.
  *
  * You must not reassign `state` to a new object or modify it in any way!
  *
  * `state` is an initial object.
  *
- * `transforms` is an array of objects having the following properties:
+ * `transforms` is an resultArr of objects having the following properties:
  * `operation`: either `addProperties`, `removeProperties` or `clear`;
  * `properties`:
  *   - if `operation` is `addProperties`, this property contains an object
  *   with `key: value` pairs to add to the state;
- *   - if `operation` is `removeProperties`, this property contains an array
+ *   - if `operation` is `removeProperties`, this property contains an resultArr
  *   with the list of property names to remove from the state; (Not existing
  *   properties should be ignored)
  *   - if `operation is `clear` you should create an empty state object
@@ -65,7 +65,42 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const modifiedObject = { ...state };
+  const resultArr = [];
+
+  for (let i = 0; i < transforms.length; i++) {
+    if (transforms[i].operation === 'addProperties') {
+      Object.assign(modifiedObject, transforms[i].properties);
+    } else if (transforms[i].operation === 'removeProperties') {
+      for (const property of transforms[i].properties) {
+        delete modifiedObject[property];
+      }
+    } else if ((transforms[i].operation === 'clear')) {
+      for (const keys in modifiedObject) {
+        delete modifiedObject[keys];
+      }
+    }
+    resultArr.push({ ...modifiedObject });
+  }
+
+  return resultArr;
 }
 
 module.exports = transformStateWithClones;
+
+// function transformState(state, transforms) {
+//   // write code here
+//   for (let i = 0; i < transforms.length; i++) {
+//     if (transforms[i].operation === 'addProperties') {
+//       Object.assign(state, transforms[i].properties);
+//     } else if (transforms[i].operation === 'removeProperties') {
+//       for (const property of transforms[i].properties) {
+//         delete state[property];
+//       }
+//     } else if ((transforms[i].operation === 'clear')) {
+//       for (const keys in state) {
+//         delete state[keys];
+//       }
+//     }
+//   }
+// }
