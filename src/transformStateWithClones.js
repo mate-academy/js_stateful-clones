@@ -60,12 +60,30 @@
  *
  *
  * @param {Object} state
- * @param {Object[]} transforms
+ * @param {Object[]} transform
  *
  * @return {Object[]}
  */
-function transformStateWithClones(state, transforms) {
-  // write code here
+function transformStateWithClones(state, transform) {
+  const array = [];
+  const transformState = { ...state };
+
+  for (const key of transform) {
+    if (key.operation === 'addProperties') {
+      Object.assign(transformState, key.properties);
+    } else if (key.operation === 'removeProperties') {
+      for (const property of key.properties) {
+        delete transformState[property];
+      }
+    } else if (key.operation === 'clear') {
+      for (const prop in transformState) {
+        delete transformState[prop];
+      }
+    }
+    array.push({ ...transformState });
+  }
+
+  return array;
 }
 
 module.exports = transformStateWithClones;
