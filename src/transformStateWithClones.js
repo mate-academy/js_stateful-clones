@@ -81,6 +81,7 @@ function transformStateWithClones(state, transforms) {
           delete obj[prop];
         }
         break;
+        //
 
       case 'clear':
         for (const prop in obj) {
