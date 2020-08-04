@@ -66,7 +66,7 @@
  */
 function transformStateWithClones(state, transforms) {
   const result = [];
-  const newState = { ...state };
+  let newState = { ...state };
 
   for (const task of transforms) {
     switch (task.operation) {
@@ -74,12 +74,9 @@ function transformStateWithClones(state, transforms) {
         Object.assign(newState, task.properties);
         break;
 
-      case 'clear': {
-        for (const key in newState) {
-          delete newState[key];
-        }
+      case 'clear':
+        newState = {};
         break;
-      }
 
       case 'removeProperties': {
         for (const prop of task.properties) {
