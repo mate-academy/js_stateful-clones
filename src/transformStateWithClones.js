@@ -59,12 +59,11 @@
  * {foo: 'bar', bar: 'foo'}.
  *
  *
- * @param {Object} newObj
+ * @param {Object} state
  * @param {Object[]} transforms
  *
  * @return {Object[]}
  */
-
 function transformStateWithClones(state, transforms) {
   const newArr = [];
   const newObj = { ...state };
