@@ -97,7 +97,7 @@ function transformStateWithClones(state, transforms) {
     result.push({ ...copy });
   }
 
-  return result;// write code here
+  return result;
 }
 
 module.exports = transformStateWithClones;
