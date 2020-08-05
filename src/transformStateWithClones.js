@@ -65,7 +65,34 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const obj = { ...state };
+  const arr = [];
+
+  for (const { operation, properties } of transforms) {
+    switch (operation) {
+      case 'addProperties':
+        Object.assign(obj, properties);
+        arr.push({ ...obj });
+        break;
+
+      case 'removeProperties':
+        for (const key in properties) {
+          delete obj[properties[key]];
+        }
+        arr.push({ ...obj });
+        break;
+
+      // eslint-disable-next-line no-fallthrough
+      case 'clear':
+        for (const prop in obj) {
+          delete obj[prop];
+        }
+        arr.push({ ...obj });
+        break;
+    }
+  }
+
+  return arr;
 }
 
 module.exports = transformStateWithClones;
