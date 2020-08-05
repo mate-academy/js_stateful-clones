@@ -66,9 +66,8 @@
  */
 function transformStateWithClones(state, transforms) {
   const finalArr = [];
-  const clone = {};
+  const clone = { ...state };
 
-  Object.assign(clone, state);
   finalArr.push(clone);
 
   let i = 0;
@@ -78,15 +77,11 @@ function transformStateWithClones(state, transforms) {
       for (const key in item.properties) {
         finalArr[i][key] = item.properties[key];
       }
-    }
-
-    if (item.operation === 'clear') {
+    } else if (item.operation === 'clear') {
       for (const key in finalArr[i]) {
         delete finalArr[i][key];
       }
-    }
-
-    if (item.operation === 'removeProperties') {
+    } else if (item.operation === 'removeProperties') {
       for (const char of item.properties) {
         delete finalArr[i][char];
       }
@@ -98,9 +93,7 @@ function transformStateWithClones(state, transforms) {
       break;
     }
 
-    const temporaryClone = {};
-
-    Object.assign(temporaryClone, finalArr[i - 1]);
+    const temporaryClone = { ...finalArr[i - 1] };
 
     finalArr.push(temporaryClone);
   };
