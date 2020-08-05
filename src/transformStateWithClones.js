@@ -84,6 +84,6 @@ const transformStateWithClones = (state, transforms) => {
   }
 
   return transformsResult;
-}
+};
 
 module.exports = transformStateWithClones;
