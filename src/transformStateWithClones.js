@@ -68,47 +68,30 @@ function transformStateWithClones(state, transforms) {
   let currentArray = Object.assign({}, state);
 
   for (let i = 0; i < transforms.length; i++) {
-    if (transforms[i].operation === 'addProperties') {
-      for (const key in transforms[i].properties) {
-        currentArray[key] = transforms[i].properties[key];
-      };
-    }
-
-    if (transforms[i].operation === 'clear') {
-      currentArray = {};
-    }
-
-    if (transforms[i].operation === 'removeProperties') {
-      for (let j = 0; j < transforms[i].properties.length; j++) {
-        if (currentArray.hasOwnProperty(transforms[i].properties[j])) {
-          delete currentArray[transforms[i].properties[j]];
+    switch (transforms[i].operation) {
+      case 'addProperties':
+        for (const key in transforms[i].properties) {
+          currentArray[key] = transforms[i].properties[key];
         }
-      }
-    }
+        transforms[i] = Object.assign({}, currentArray);
+        break;
 
-    transforms[i] = Object.assign({}, currentArray);
+      case 'clear':
+        currentArray = {};
+        transforms[i] = Object.assign({}, currentArray);
+        break;
+
+      case 'removeProperties':
+        for (let j = 0; j < transforms[i].properties.length; j++) {
+          if (currentArray.hasOwnProperty(transforms[i].properties[j])) {
+            delete currentArray[transforms[i].properties[j]];
+          }
+        }
+        transforms[i] = Object.assign({}, currentArray);
+    }
   }
 
   return transforms;
 }
-//       continue;
-//     }
-
-//     if (transforms[i].operation === 'clear') {
-//       Object.keys(state).forEach(key => delete state[key]);
-//       continue;
-//     }
-
-//     if (transforms[i].operation === 'removeProperties') {
-//       for (let j = 0; j < a.length; j++) {
-//         if (state.hasOwnProperty(a[j])) {
-//           delete state[a[j]];
-//         }
-//       }
-//     }
-//   }
-
-//   return state;
-// };
 
 module.exports = transformStateWithClones;
