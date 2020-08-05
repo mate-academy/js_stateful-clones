@@ -71,7 +71,7 @@ function transformStateWithClones(state, transforms) {
     ...state,
   };
 
-  for (let transform of transforms) {
+  for (const transform of transforms) {
     switch (transform.operation) {
       case 'addProperties':
         for (const key in transform.properties) {
