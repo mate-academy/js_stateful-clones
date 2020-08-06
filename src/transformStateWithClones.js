@@ -59,13 +59,41 @@
  * {foo: 'bar', bar: 'foo'}.
  *
  *
- * @param {Object} state
+ * @param {Object} res
  * @param {Object[]} transforms
  *
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const res = [];
+  const copy = {
+    ...state,
+  };
+
+  for (let i = 0; i < transforms.length; i++) {
+    if (transforms[i].operation === 'addProperties') {
+      Object.assign(copy, transforms[i].properties);
+      res.push({ ...copy });
+    } else
+    if (transforms[i].operation === 'removeProperties') {
+      for (const j in copy) {
+        for (let y = 0; y < transforms[i].properties.length; y++) {
+          if (j === transforms[i].properties[y]) {
+            delete copy[j];
+          }
+        }
+      }
+      res.push({ ...copy });
+    } else
+    if (transforms[i].operation === 'clear') {
+      for (const elem in copy) {
+        delete copy[elem];
+      }
+      res.push({ ...copy });
+    }
+  }
+
+  return res;
 }
 
 module.exports = transformStateWithClones;
