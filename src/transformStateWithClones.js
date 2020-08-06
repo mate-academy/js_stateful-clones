@@ -68,10 +68,6 @@ function transformStateWithClones(state, transforms) {
   const finalArr = [];
   const clone = { ...state };
 
-  // finalArr.push(clone);
-
-  // let i = 0;
-
   for (const item of transforms) {
     if (item.operation === 'addProperties') {
       Object.assign(clone, item.properties);
