@@ -75,9 +75,6 @@ function transformStateWithClones(state, transforms) {
       case 'addProperties':
         Object.assign(newState, properties);
 
-        const newObj = { ...newState };
-
-        output.push(newObj);
         break;
 
       case 'removeProperties':
@@ -85,7 +82,6 @@ function transformStateWithClones(state, transforms) {
           delete newState[key];
         };
 
-        output.push({ ...newState });
         break;
 
       case 'clear':
@@ -93,9 +89,10 @@ function transformStateWithClones(state, transforms) {
           delete newState[key];
         };
 
-        output.push({ ...newState });
         break;
     };
+
+    output.push({ ...newState });
   };
 
   return output;
