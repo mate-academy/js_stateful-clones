@@ -68,8 +68,8 @@ function transformStateWithClones(state, transforms) {
   const cloneStates = [];
   const step = Object.assign({}, state);
 
-  for (const obj in transforms) {
-    const currentObj = transforms[obj];
+  for (const obj of transforms) {
+    const currentObj = obj;
 
     if (currentObj.operation === 'addProperties') {
       Object.assign(step, currentObj.properties);
@@ -88,14 +88,5 @@ function transformStateWithClones(state, transforms) {
 
   return cloneStates;
 }
-
-// transformStateWithClones(
-//   { foo: 'bar', bar: 'foo' },
-//   [
-//   {operation: 'addProperties', properties: {name: 'Jim', hello: 'world'}},
-//   {operation: 'removeProperties', properties: ['bar', 'hello']},
-//   {operation: 'addProperties', properties: {another: 'one'}}
-//  ]
-// );
 
 module.exports = transformStateWithClones;
