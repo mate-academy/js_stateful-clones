@@ -65,9 +65,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  const stateCopy = {};
-
-  Object.assign(stateCopy, state);
+  let stateCopy = { ...state };
 
   const result = [];
 
@@ -86,14 +84,10 @@ function transformStateWithClones(state, transforms) {
         break;
 
       case 'clear':
-        const stateKeys = Object.keys(stateCopy);
-
-        for (const key of stateKeys) {
-          delete stateCopy[key];
-        }
+        stateCopy = {};
         break;
     }
-    result.push(Object.assign({}, stateCopy));
+    result.push({ ...stateCopy });
   }
 
   return result;
