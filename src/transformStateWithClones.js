@@ -67,9 +67,9 @@
 function transformStateWithClones(state, transforms) {
   let currentObject = Object.assign({}, state);
 
-  const reTransforms = transforms;
+  const reTransforms = [];
 
-  for (let transform of reTransforms) {
+  for (let transform of transforms) {
     switch (transform.operation) {
       case 'addProperties':
         for (const key in transform.properties) {
@@ -81,7 +81,7 @@ function transformStateWithClones(state, transforms) {
 
       case 'clear':
         currentObject = {};
-        transforms.push({});
+        reTransforms.push({});
         break;
 
       case 'removeProperties':
@@ -91,7 +91,6 @@ function transformStateWithClones(state, transforms) {
         reTransforms.push({ ...currentObject });
     }
   }
-  reTransforms.splice(0, reTransforms.length / 2);
 
   return reTransforms;
 }
