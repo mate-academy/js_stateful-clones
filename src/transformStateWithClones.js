@@ -3,7 +3,10 @@
 /**
  * Implement a function accepting 2 arguments `state` and `transforms` and
  * returning an array of states of the same length as `transforms`. Each
- * element of the resulting array has to represent the state produced by the
+ * eslint-disable-next-line max-len
+ * eslint-disable-next-line max-len
+ * element of the copyStateulting array has to repcopyStateent the
+ * state produced by the
  * next operation.
  *
  * You must not reassign `state` to a new object or modify it in any way!
@@ -24,7 +27,7 @@
  *
  * If `state` is {foo: 'bar', bar: 'foo'}, then
  *
- * transformStateWithClones(state, [
+ * transformStateWithcopyStates(state, [
  *   {operation: 'addProperties', properties: {name: 'Jim', hello: 'world'}},
  *   {operation: 'removeProperties', properties: ['bar', 'hello']},
  *   {operation: 'addProperties', properties: {another: 'one'}}
@@ -42,7 +45,7 @@
  *
  * Then after calling
  *
- * transformStateWithClones(state, [
+ * transformStateWithcopyStates(state, [
  *   {operation: 'addProperties', properties: {yet: 'another property'}}
  *   {operation: 'clear'},
  *   {operation: 'addProperties', properties: {foo: 'bar', name: 'Jim'}}
@@ -65,7 +68,30 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  let copyState = { ...state };
+  const res = [];
+
+  for (const key in transforms) {
+    switch (transforms[key].operation) {
+      case 'addProperties':
+        Object.assign(copyState, transforms[key].properties);
+        break;
+
+      case 'removeProperties':
+
+        for (const prop of transforms[key].properties) {
+          delete copyState[prop];
+        }
+        break;
+
+      case 'clear':
+        copyState = {};
+    }
+
+    res.push({ ...copyState });
+  }
+
+  return res;
 }
 
 module.exports = transformStateWithClones;
