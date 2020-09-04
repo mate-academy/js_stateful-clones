@@ -77,7 +77,7 @@ function transformStateWithClones(state, transforms) {
 
   function addProperties(previousState, properties) {
     const currentState = {
-      ...state,
+      ...previousState,
     };
 
     for (const property in properties) {
@@ -88,7 +88,7 @@ function transformStateWithClones(state, transforms) {
     return currentState;
   };
 
-  function clear(previousState, properties) {
+  function clear() {
     const currentState = {};
 
     arrayOfStates.push(currentState);
