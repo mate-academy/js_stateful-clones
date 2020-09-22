@@ -65,60 +65,32 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  const obj = { ...state };
-  const arr = [];
+  const stateCopy = { ...state };
+  const result = [];
 
-  for (let i = 0; i < transforms.length; i++) {
-    const { operation, properties } = transforms[i];
+  for (const transform of transforms) {
+    const { operation, properties } = transform;
 
     if (operation === 'addProperties') {
       for (const key in properties) {
-        obj[key] = properties[key];
+        stateCopy[key] = properties[key];
       }
     } else if (operation === 'removeProperties') {
-      for (let item = 0; item < properties.length; item++) {
-        const current = properties[item];
-
-        if (obj[current]) {
-          delete obj[current];
+      for (const item of properties) {
+        if (stateCopy[item]) {
+          delete stateCopy[item];
         }
       }
     } else if (operation === 'clear') {
-      for (const member in obj) {
-        delete obj[member];
+      for (const key in stateCopy) {
+        delete stateCopy[key];
       }
     }
 
-    const objTest = { ...obj };
-
-    arr.push(objTest);
+    result.push({ ...stateCopy });
   }
 
-  return arr;
+  return result;
 }
-
-transformStateWithClones({
-  foo: 'bar', name: 'Jim', another: 'one',
-}, [
-  {
-    operation: 'removeProperties', properties: ['another'],
-  },
-  { operation: 'clear' },
-  { operation: 'clear' },
-  { operation: 'clear' },
-  {
-    operation: 'addProperties', properties: { yet: 'another property' },
-  },
-  { operation: 'clear' },
-  {
-    operation: 'addProperties',
-    properties: {
-      foo: 'bar', name: 'Jim',
-    },
-  },
-  {
-    operation: 'removeProperties', properties: ['name', 'hello'],
-  },
-]);
 
 module.exports = transformStateWithClones;
