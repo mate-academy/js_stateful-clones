@@ -77,9 +77,7 @@ function transformStateWithClones(state, transforms) {
       }
     } else if (operation === 'removeProperties') {
       for (const item of properties) {
-        if (stateCopy[item]) {
-          delete stateCopy[item];
-        }
+        delete stateCopy[item];
       }
     } else if (operation === 'clear') {
       for (const key in stateCopy) {
