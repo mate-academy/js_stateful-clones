@@ -66,7 +66,7 @@
  */
 function transformStateWithClones(state, transforms) {
   const stateClone = { ...state };
-  const stateArray = [];
+  const statesArray = [];
 
   for (const object of transforms) {
     if (object.operation === 'addProperties') {
@@ -82,10 +82,10 @@ function transformStateWithClones(state, transforms) {
         delete stateClone[prop];
       }
     }
-    stateArray.push({ ...stateClone });
+    statesArray.push({ ...stateClone });
   }
 
-  return stateArray;
+  return statesArray;
 }
 
 module.exports = transformStateWithClones;
