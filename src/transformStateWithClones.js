@@ -65,20 +65,20 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  const result = [];
+  const states = [];
   const stateCopy = { ...state };
 
-  for (const item of transforms) {
-    switch (item.operation) {
+  for (const transform of transforms) {
+    switch (transform.operation) {
       case 'addProperties': {
-        for (const props in item.properties) {
-          stateCopy[props] = item.properties[props];
+        for (const props in transform.properties) {
+          stateCopy[props] = transform.properties[props];
         }
         break;
       }
 
       case 'removeProperties': {
-        for (const props of item.properties) {
+        for (const props of transform.properties) {
           delete stateCopy[props];
         }
         break;
@@ -91,10 +91,10 @@ function transformStateWithClones(state, transforms) {
         break;
       }
     }
-    result.push({ ...stateCopy });
+    states.push({ ...stateCopy });
   }
 
-  return result;
+  return states;
 }
 
 module.exports = transformStateWithClones;
