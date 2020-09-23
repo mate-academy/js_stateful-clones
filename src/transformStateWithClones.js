@@ -65,7 +65,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  const result = [];
+  const states = [];
   const cloneState = { ...state };
 
   for (const transform of transforms) {
@@ -88,10 +88,10 @@ function transformStateWithClones(state, transforms) {
         }
       }
     }
-    result.push({ ...cloneState });
+    states.push({ ...cloneState });
   }
 
-  return result;
+  return states;
 }
 
 module.exports = transformStateWithClones;
