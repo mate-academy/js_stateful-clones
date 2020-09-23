@@ -76,15 +76,15 @@ function transformStateWithClones(state, transforms) {
       }
 
       case 'removeProperties': {
-        for (const prop in transform.properties) {
-          delete cloneState[transform.properties[prop]];
+        for (const deleteProperty in transform.properties) {
+          delete cloneState[transform.properties[deleteProperty]];
         };
         break;
       }
 
       case 'clear': {
-        for (const prop in cloneState) {
-          delete cloneState[prop];
+        for (const clearProperty in cloneState) {
+          delete cloneState[clearProperty];
         }
       }
     }
