@@ -66,7 +66,7 @@
  */
 function transformStateWithClones(state, transforms) {
   const stateClone = { ...state };
-  const res = [];
+  const states = [];
 
   for (const { operation, properties } of transforms) {
     switch (operation) {
@@ -85,10 +85,10 @@ function transformStateWithClones(state, transforms) {
           delete stateClone[key];
         };
     }
-    res.push({ ...stateClone });
+    states.push({ ...stateClone });
   }
 
-  return res;
+  return states;
 }
 
 module.exports = transformStateWithClones;
