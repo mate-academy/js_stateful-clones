@@ -67,7 +67,7 @@
 function transformStateWithClones(state, transforms) {
   const resultArray = [];
 
-  const newObj = { ...state };
+  let newObj = { ...state };
 
   for (const { operation, properties } of transforms) {
     switch (operation) {
@@ -84,9 +84,7 @@ function transformStateWithClones(state, transforms) {
       }
 
       case 'clear': {
-        for (const keysClear in newObj) {
-          delete newObj[keysClear];
-        }
+        newObj = {};
         break;
       }
     }
