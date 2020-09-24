@@ -70,21 +70,25 @@ function transformStateWithClones(state, transforms) {
   const arrCopyState = [];
 
   for (const prop in transforms) {
-    if (transforms[prop].operation === 'addProperties') {
-      copyState = Object.assign(copyState, transforms[prop].properties);
-    }
+    switch (transforms[prop].operation) {
+      case ('addProperties'): {
+        copyState = Object.assign(copyState, transforms[prop].properties);
+        break;
+      }
 
-    if (transforms[prop].operation === 'removeProperties') {
-      for (const el of transforms[prop].properties) {
-        if (copyState.hasOwnProperty(el)) {
+      case ('removeProperties'): {
+        for (const el of transforms[prop].properties) {
+          if (copyState.hasOwnProperty(el)) {
+            delete copyState[el];
+          }
+        }
+        break;
+      }
+
+      case ('clear'): {
+        for (const el of Object.getOwnPropertyNames(copyState)) {
           delete copyState[el];
         }
-      }
-    }
-
-    if (transforms[prop].operation === 'clear') {
-      for (const el of Object.getOwnPropertyNames(copyState)) {
-        delete copyState[el];
       }
     }
     arrCopyState.push({ ...copyState });
