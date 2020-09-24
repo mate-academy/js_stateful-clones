@@ -79,9 +79,7 @@ function transformStateWithClones(state, transforms) {
         }
         break;
       case 'clear':
-        Object.keys(copyOfState).forEach(function(key) {
-          delete copyOfState[key];
-        });
+        Object.keys(copyOfState).forEach(key => delete copyOfState[key]);
         break;
     }
     finallArr.push({ ...copyOfState });
