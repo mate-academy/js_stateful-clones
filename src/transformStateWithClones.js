@@ -70,7 +70,6 @@ function transformStateWithClones(state, transforms) {
   const aim = { ...state };
 
   for (const { operation, properties } of transforms) {
-
     if (operation === 'addProperties') {
       Object.assign(aim, properties);
       result.push({ ...aim });
