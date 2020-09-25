@@ -2,20 +2,20 @@
 
 /**
  * Implement a function accepting 2 arguments `state` and `transforms` and
- * returning an array of states of the same length as `transforms`. Each
- * element of the arraying array has to represent the state produced by the
+ * returning an arrayResults of states of the same length as `transforms`. Each
+ * element of the arrayResultsing arrayResults has to represent the state produced by the
  * next operation.
  *
  * You must not reassign `state` to a new object or modify it in any way!
  *
  * `state` is an initial object.
  *
- * `transforms` is an array of objects having the following properties:
+ * `transforms` is an arrayResults of objects having the following properties:
  * `operation`: either `addProperties`, `removeProperties` or `clear`;
  * `properties`:
  *   - if `operation` is `addProperties`, this property contains an object
  *   with `key: value` pairs to add to the state;
- *   - if `operation` is `removeProperties`, this property contains an array
+ *   - if `operation` is `removeProperties`, this property contains an arrayResults
  *   with the list of property names to remove from the state; (Not existing
  *   properties should be ignored)
  *   - if `operation is `clear` you should create an empty state object
@@ -24,7 +24,7 @@
  *
  * If `state` is {foo: 'bar', bar: 'foo'}, then
  *
- * transformStateWithClones(state, [
+ * transformStateWithcloneStates(state, [
  *   {operation: 'addProperties', properties: {name: 'Jim', hello: 'world'}},
  *   {operation: 'removeProperties', properties: ['bar', 'hello']},
  *   {operation: 'addProperties', properties: {another: 'one'}}
@@ -42,7 +42,7 @@
  *
  * Then after calling
  *
- * transformStateWithClones(state, [
+ * transformStateWithcloneStates(state, [
  *   {operation: 'addProperties', properties: {yet: 'another property'}}
  *   {operation: 'clear'},
  *   {operation: 'addProperties', properties: {foo: 'bar', name: 'Jim'}}
@@ -64,32 +64,32 @@
  *
  * @return {Object[]}
  */
-function transformStateWithClones(state, transforms) {
+function transformStateWithcloneStates(state, transforms) {
   // write code here
-  const clone = { ...state };
-  const array = [];
+  const cloneState = { ...state };
+  const arrayResults = [];
 
   for (const { operation, properties } of transforms) {
     switch (operation) {
       case 'addProperties':
-        Object.assign(clone, properties);
+        Object.assign(cloneState, properties);
         break;
 
       case 'removeProperties':
         for (const prop of properties) {
-          delete clone[prop];
+          delete cloneState[prop];
         };
         break;
 
       case 'clear':
-        for (const key in clone) {
-          delete clone[key];
+        for (const key in cloneState) {
+          delete cloneState[key];
         };
     }
-    array.push({ ...clone });
+    arrayResults.push({ ...cloneState });
   }
 
-  return array;
+  return arrayResults;
 }
 
-module.exports = transformStateWithClones;
+module.exports = transformStateWithcloneStates;
