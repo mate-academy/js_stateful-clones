@@ -1,3 +1,4 @@
+/* eslint-disable no-proto */
 'use strict';
 
 /**
@@ -65,7 +66,27 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const child = { ...state };
+  const historyArr = [];
+  transforms.forEach(item => {
+    switch (item.operation) {
+      case 'addProperties':
+        Object.assign(child, item.properties);
+        historyArr.push({ ...child });
+        break;
+      case 'removeProperties':
+        item.properties.forEach(elem => delete child[elem]);
+        historyArr.push({ ...child });
+        break;
+      default:
+        for (const key in child) {
+          delete child[key];
+        }
+        historyArr.push({ ...child });
+    }
+  });
+
+  return historyArr;
 }
 
 module.exports = transformStateWithClones;
