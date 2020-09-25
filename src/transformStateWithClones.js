@@ -65,7 +65,35 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const initialObject = Object.assign({}, state);
+  const resultarrayOfStates = [initialObject];
+  for (let objectOfTransforms = 0;
+    objectOfTransforms < transforms.length;
+    objectOfTransforms++) {
+    switch (transforms[objectOfTransforms].operation) {
+      case `addProperties`:
+        resultarrayOfStates
+          .push(Object.assign({},
+            resultarrayOfStates[resultarrayOfStates.length - 1],
+            transforms[objectOfTransforms].properties)); break;
+      case `removeProperties`:
+        resultarrayOfStates
+          .push(Object.assign({},
+            resultarrayOfStates[resultarrayOfStates.length - 1]));
+        for (let prop = 0;
+          prop < transforms[objectOfTransforms].properties.length;
+          prop++) {
+          if (resultarrayOfStates[resultarrayOfStates.length - 1]
+            .hasOwnProperty(transforms[objectOfTransforms]
+              .properties[prop])) { /* eslint-disable */
+            delete resultarrayOfStates[resultarrayOfStates.length - 1][transforms[objectOfTransforms]/* eslint-enable */
+              .properties[prop]];
+          }
+        }; break;
+      case `clear`: resultarrayOfStates.push({}); break;
+    }
+  }
+  return resultarrayOfStates.slice(1,);
 }
 
 module.exports = transformStateWithClones;
