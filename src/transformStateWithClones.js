@@ -65,7 +65,57 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const clones = [];
+  const clone = { ...state };
+
+  for (let i = 0; i < transforms.length; i++) {
+    switch (transforms[i].operation) {
+      case 'addProperties':
+        Object.assign(clone, transforms[i].properties);
+        break;
+
+      case 'removeProperties':
+        for (let j = 0; j < transforms[i].properties.length; j++) {
+          if (clone.hasOwnProperty(transforms[i].properties[j])) {
+            delete clone[transforms[i].properties[j]];
+          }
+        }
+        break;
+
+      default:
+        Object.keys(clone).forEach(key => delete clone[key]);
+    }
+
+    clones.push({ ...clone });
+  }
+
+  return clones;
+
+  // const clones = [];
+  // const clone = { ...state };
+
+  // for (let i = 0; i < transforms.length; i++) {
+  //   if (transforms[i].operation === 'addProperties') {
+  //     Object.assign(clone, transforms[i].properties);
+  //     clones.push({ ...clone });
+  //   }
+
+  //   if (transforms[i].operation === 'removeProperties') {
+  //     for (let j = 0; j < transforms[i].properties.length; j++) {
+  //       if (clone.hasOwnProperty(transforms[i].properties[j])) {
+  //         delete clone[transforms[i].properties[j]];
+  //       }
+  //     }
+  //     clones.push({ ...clone });
+  //   }
+
+  //   if (transforms[i].operation === 'clear') {
+  //     Object.keys(clone).forEach(key => delete clone[key]);
+  //     clones.push({ ...clone });
+  //   }
+  // }
+
+  // return clones;
 }
 
 module.exports = transformStateWithClones;
