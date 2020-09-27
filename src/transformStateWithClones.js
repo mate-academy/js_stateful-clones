@@ -65,43 +65,43 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  const resultObj = [];
+  const states = [];
 
   for (const transform of transforms) {
     switch (transform.operation) {
       case 'addProperties': {
-        if (resultObj.length === 0) {
-          resultObj.push(Object.assign({},
+        if (states.length === 0) {
+          states.push(Object.assign({},
             state, transform.properties));
         } else {
-          resultObj.push(Object.assign({},
-            resultObj[resultObj.length - 1], transform.properties));
+          states.push(Object.assign({},
+            states[states.length - 1], transform.properties));
         }
         break;
       }
 
       case 'clear': {
-        resultObj.push({});
+        states.push({});
         break;
       }
 
       case 'removeProperties': {
-        if (resultObj.length !== 0) {
-          resultObj.push(Object.assign({}, resultObj[resultObj.length - 1]));
+        if (states.length !== 0) {
+          states.push(Object.assign({}, states[states.length - 1]));
         } else {
-          resultObj.push(Object.assign({}, state));
+          states.push(Object.assign({}, state));
         }
 
         for (const property of transform.properties) {
-          if (resultObj[resultObj.length - 1].hasOwnProperty(property)) {
-            delete resultObj[resultObj.length - 1][property];
+          if (states[states.length - 1].hasOwnProperty(property)) {
+            delete states[states.length - 1][property];
           }
         }
       }
     }
   }
 
-  return resultObj;
+  return states;
 }
 
 module.exports = transformStateWithClones;
