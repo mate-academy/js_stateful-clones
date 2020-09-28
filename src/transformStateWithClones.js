@@ -3,8 +3,8 @@
 /**
  * Implement a function accepting 2 arguments `state` and `transforms` and
  * returning an array of states of the same length as `transforms`. Each
- * element of the resulting array has to represent the state produced by the
- * next operation.
+ * element of the stateClonesing array has to represent the state produced
+ * by the next operation.
  *
  * You must not reassign `state` to a new object or modify it in any way!
  *
@@ -66,17 +66,17 @@
  */
 function transformStateWithClones(state, transforms) {
   let currentState = { ...state };
-  const result = [];
+  const stateClones = [];
 
   for (const element of transforms) {
     switch (element.operation) {
       case 'addProperties':
         Object.assign(currentState, element.properties);
-        result.push({ ...currentState });
+        stateClones.push({ ...currentState });
         break;
 
       case 'clear':
-        result.push({});
+        stateClones.push({});
         currentState = {};
         break;
 
@@ -84,12 +84,12 @@ function transformStateWithClones(state, transforms) {
         for (const property of element.properties) {
           delete currentState[property];
         }
-        result.push({ ...currentState });
+        stateClones.push({ ...currentState });
         break;
     }
   }
 
-  return result;
+  return stateClones;
 }
 
 module.exports = transformStateWithClones;
