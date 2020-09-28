@@ -71,8 +71,11 @@ function transformStateWithClones(state, transforms) {
     switch (transform.operation) {
       case 'addProperties': {
         if (states.length <= 0) {
-          states.push(Object.assign({},
-            state, transform.properties));
+          states.push(Object.assign(
+            {},
+            state,
+            transform.properties,
+          ));
         } else {
           states.push(Object.assign(
             {},
