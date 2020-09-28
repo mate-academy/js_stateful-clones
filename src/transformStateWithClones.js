@@ -70,12 +70,15 @@ function transformStateWithClones(state, transforms) {
   for (const transform of transforms) {
     switch (transform.operation) {
       case 'addProperties': {
-        if (states.length === 0) {
+        if (states.length <= 0) {
           states.push(Object.assign({},
             state, transform.properties));
         } else {
-          states.push(Object.assign({},
-            states[states.length - 1], transform.properties));
+          states.push(Object.assign(
+            {},
+            states[states.length - 1],
+            transform.properties
+          ));
         }
         break;
       }
@@ -86,10 +89,16 @@ function transformStateWithClones(state, transforms) {
       }
 
       case 'removeProperties': {
-        if (states.length !== 0) {
-          states.push(Object.assign({}, states[states.length - 1]));
+        if (states.length <= 0) {
+          states.push(Object.assign(
+            {},
+            state
+          ));
         } else {
-          states.push(Object.assign({}, state));
+          states.push(Object.assign(
+            {},
+            states[states.length - 1]
+          ));
         }
 
         for (const property of transform.properties) {
