@@ -68,21 +68,18 @@ function transformStateWithClones(state, transforms) {
   const arrOfState = [];
   const cloneState = { ...state };
 
-  for (const indX of transforms) {
-    let newClone = {};
+  for (const transform of transforms) {
+    // let newClone = {};
 
-    switch (indX.operation) {
+    switch (transform.operation) {
       case 'addProperties':
-
-        const addProperties = indX.properties;
+        const addProperties = transform.properties;
 
         for (const key in addProperties) {
           cloneState[key] = addProperties[key];
         }
-
-        newClone = { ...cloneState };
-
-        arrOfState.push(newClone);
+        // newClone = { ...cloneState };
+        // arrOfState.push(newClone);
         break;
 
       case 'clear':
@@ -90,25 +87,26 @@ function transformStateWithClones(state, transforms) {
           delete cloneState[key];
         }
 
-        newClone = { ...cloneState };
+        // newClone = { ...cloneState };
 
-        arrOfState.push(newClone);
+        // arrOfState.push(newClone);
         break;
 
       case 'removeProperties':
-        const removeProperties = indX.properties;
+        // const removeProperties = transform.properties;
 
-        for (const key of removeProperties) {
-          if (cloneState.hasOwnProperty(key)) {
-            delete cloneState[key];
+        for (const property of transform.properties) {
+          if (cloneState.hasOwnProperty(property)) {
+            delete cloneState[property];
           }
         }
 
-        newClone = { ...cloneState };
+        // newClone = { ...cloneState };
 
-        arrOfState.push(newClone);
+        // arrOfState.push(newClone);
         break;
     }
+    arrOfState.push({ ...cloneState });
   }
 
   return arrOfState;
