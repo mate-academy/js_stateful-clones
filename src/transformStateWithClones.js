@@ -65,31 +65,38 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  let arr = [];
+  const arr = [];
   let currentState = { ...state };
 
   for (const obj of transforms) {
-    if (obj.operation === 'addProperties') {
-      currentState = {
-        ...currentState,
-        ...obj.properties,
-      };
-      arr = [...arr, currentState];
-    }
+    switch (obj.operation) {
+      case 'addProperties':
+        currentState = {
+          ...currentState,
+          ...obj.properties,
+        };
+        arr.push(currentState);
+        break;
 
-    if (obj.operation === 'clear') {
-      currentState = {};
-      arr = [...arr, currentState];
-    }
+      case 'clear':
+        const copyState = { ...currentState };
 
-    if (obj.operation === 'removeProperties') {
-      const newState = { ...currentState };
+        for (const key in copyState) {
+          delete copyState[key];
+        }
+        currentState = copyState;
+        arr.push(currentState);
+        break;
 
-      for (const prop of obj.properties) {
-        delete newState[prop];
-      }
-      arr = [...arr, newState];
-      currentState = newState;
+      case 'removeProperties':
+        const newState = { ...currentState };
+
+        for (const prop of obj.properties) {
+          delete newState[prop];
+        }
+        currentState = newState;
+        arr.push(currentState);
+        break;
     }
   }
 
@@ -97,3 +104,26 @@ function transformStateWithClones(state, transforms) {
 }
 
 module.exports = transformStateWithClones;
+
+// if (obj.operation === 'addProperties') {
+//   currentState = {
+//     ...currentState,
+//     ...obj.properties,
+//   };
+//   arr = [...arr, currentState];
+// }
+
+// if (obj.operation === 'clear') {
+//   currentState = {};
+//   arr = [...arr, currentState];
+// }
+
+// if (obj.operation === 'removeProperties') {
+//   const newState = { ...currentState };
+
+//   for (const prop of obj.properties) {
+//     delete newState[prop];
+//   }
+//   arr = [...arr, newState];
+//   currentState = newState;
+// }
