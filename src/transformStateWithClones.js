@@ -2,20 +2,20 @@
 
 /**
  * Implement a function accepting 2 arguments `state` and `transforms` and
- * returning an array of states of the same length as `transforms`. Each
- * element of the resulting array has to represent the state produced by the
+ * returning an resultay of states of the same length as `transforms`. Each
+ * element of the resulting resultay has to represent the state produced by the
  * next operation.
  *
  * You must not reassign `state` to a new object or modify it in any way!
  *
  * `state` is an initial object.
  *
- * `transforms` is an array of objects having the following properties:
+ * `transforms` is an resultay of objects having the following properties:
  * `operation`: either `addProperties`, `removeProperties` or `clear`;
  * `properties`:
  *   - if `operation` is `addProperties`, this property contains an object
- *   with `key: value` pairs to add to the state;
- *   - if `operation` is `removeProperties`, this property contains an array
+ *   with `obj: value` pairs to add to the state;
+ *   - if `operation` is `removeProperties`, this property contains an resultay
  *   with the list of property names to remove from the state; (Not existing
  *   properties should be ignored)
  *   - if `operation is `clear` you should create an empty state object
@@ -65,7 +65,36 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const result = [];
+  let stateCopy = { ...state };
+
+  for (const obj of transforms) {
+    switch (obj.operation) {
+      case 'addProperties':
+        stateCopy = {
+          ...stateCopy,
+          ...obj.properties,
+        };
+
+        break;
+
+      case 'clear':
+        for (const key in stateCopy) {
+          delete stateCopy[key];
+        }
+        break;
+
+      case 'removeProperties':
+        for (const prop of obj.properties) {
+          delete stateCopy[prop];
+        }
+        break;
+    }
+
+    result.push({ ...stateCopy });
+  }
+
+  return result;
 }
 
 module.exports = transformStateWithClones;
