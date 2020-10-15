@@ -2,20 +2,20 @@
 
 /**
  * Implement a function accepting 2 arguments `state` and `transforms` and
- * returning an array of states of the same length as `transforms`. Each
- * element of the resulting array has to represent the state produced by the
+ * returning an resultay of states of the same length as `transforms`. Each
+ * element of the resulting resultay has to represent the state produced by the
  * next operation.
  *
  * You must not reassign `state` to a new object or modify it in any way!
  *
  * `state` is an initial object.
  *
- * `transforms` is an array of objects having the following properties:
+ * `transforms` is an resultay of objects having the following properties:
  * `operation`: either `addProperties`, `removeProperties` or `clear`;
  * `properties`:
  *   - if `operation` is `addProperties`, this property contains an object
  *   with `obj: value` pairs to add to the state;
- *   - if `operation` is `removeProperties`, this property contains an array
+ *   - if `operation` is `removeProperties`, this property contains an resultay
  *   with the list of property names to remove from the state; (Not existing
  *   properties should be ignored)
  *   - if `operation is `clear` you should create an empty state object
@@ -65,65 +65,36 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  const arr = [];
-  let currentState = { ...state };
+  const result = [];
+  let stateCopy = { ...state };
 
   for (const obj of transforms) {
     switch (obj.operation) {
       case 'addProperties':
-        currentState = {
-          ...currentState,
+        stateCopy = {
+          ...stateCopy,
           ...obj.properties,
         };
-        arr.push(currentState);
+
         break;
 
       case 'clear':
-        const copyState = { ...currentState };
-
-        for (const key in copyState) {
-          delete copyState[key];
+        for (const key in stateCopy) {
+          delete stateCopy[key];
         }
-        currentState = copyState;
-        arr.push(currentState);
         break;
 
       case 'removeProperties':
-        const newState = { ...currentState };
-
         for (const prop of obj.properties) {
-          delete newState[prop];
+          delete stateCopy[prop];
         }
-        currentState = newState;
-        arr.push(currentState);
         break;
     }
+
+    result.push({ ...stateCopy });
   }
 
-  return arr;
+  return result;
 }
 
 module.exports = transformStateWithClones;
-
-// if (obj.operation === 'addProperties') {
-//   currentState = {
-//     ...currentState,
-//     ...obj.properties,
-//   };
-//   arr = [...arr, currentState];
-// }
-
-// if (obj.operation === 'clear') {
-//   currentState = {};
-//   arr = [...arr, currentState];
-// }
-
-// if (obj.operation === 'removeProperties') {
-//   const newState = { ...currentState };
-
-//   for (const prop of obj.properties) {
-//     delete newState[prop];
-//   }
-//   arr = [...arr, newState];
-//   currentState = newState;
-// }
