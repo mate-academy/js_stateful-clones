@@ -65,7 +65,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  const result = [];
+  let result = [];
 
   result[0] = state;
 
