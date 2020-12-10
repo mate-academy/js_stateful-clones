@@ -84,6 +84,7 @@ function transformStateWithClones(state, transforms) {
         for (const erased in stateClone) {
           delete stateClone[erased];
         };
+        break;
     }
     states.push({ ...stateClone });
   }
