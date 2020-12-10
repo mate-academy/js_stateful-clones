@@ -25,9 +25,20 @@
  * If `state` is {foo: 'bar', bar: 'foo'}, then
  *
  * transformStateWithClones(state, [
- *   {operation: 'addProperties', properties: {name: 'Jim', hello: 'world'}},
- *   {operation: 'removeProperties', properties: ['bar', 'hello']},
- *   {operation: 'addProperties', properties: {another: 'one'}}
+ *   {
+ *        operation: 'addProperties',
+ *        properties: {
+ *          name: 'Jim',
+ *          hello: 'world'
+ * }
+ * },
+ *   {
+ *        operation: 'removeProperties',
+ *        properties: ['bar', 'hello']
+ * },
+ *   {
+ *        operation: 'addProperties',
+ *        properties: {another: 'one'}}
  * ])
  *
  * must return
@@ -65,7 +76,31 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const newState = [];
+  const copyState = { ...state };
+
+  for (const objTrans of transforms) {
+    if (objTrans.operation === 'addProperties') {
+      Object.assign(copyState, objTrans.properties);
+      newState.push({ ...copyState });
+    }
+
+    if (objTrans.operation === 'removeProperties') {
+      for (const removeKey of objTrans.properties) {
+        delete copyState[removeKey];
+      }
+      newState.push({ ...copyState });
+    }
+
+    if (objTrans.operation === 'clear') {
+      for (const key in copyState) {
+        delete copyState[key];
+      }
+      newState.push({});
+    }
+  }
+
+  return newState;
 }
 
 module.exports = transformStateWithClones;
