@@ -59,13 +59,40 @@
  * {foo: 'bar', bar: 'foo'}.
  *
  *
- * @param {Object} state
+ * @param {Object} state object to be transformed.
  * @param {Object[]} transforms
+ * transformations that should be performed on the object.
  *
  * @return {Object[]}
+ * array with all intermediate states between transformations.
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const transformed = Object.assign({}, state);
+  const intermediateStates = [];
+
+  for (const i in transforms) {
+    switch (transforms[i].operation) {
+      case 'addProperties':
+        Object.assign(transformed, transforms[i].properties);
+        break;
+
+      case 'removeProperties':
+        for (const key in transforms[i].properties) {
+          delete transformed[transforms[i].properties[key]];
+        }
+        break;
+
+      case 'clear':
+        for (const property in transformed) {
+          delete transformed[property];
+        }
+        break;
+    }
+
+    intermediateStates.push(Object.assign({}, transformed));
+  }
+
+  return intermediateStates;
 }
 
 module.exports = transformStateWithClones;
