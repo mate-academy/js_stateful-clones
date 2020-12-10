@@ -83,8 +83,12 @@ function transformStateWithClones(state, transforms) {
         }
         break;
 
-      default:
+      case 'clear':
         tempState = {};
+        break;
+
+      default:
+        throw Error;
     }
 
     history.push(Object.assign({}, tempState));
