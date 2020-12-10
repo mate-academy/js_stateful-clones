@@ -65,7 +65,35 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const result = [];
+  let subject = {};
+
+  Object.assign(subject, state);
+
+  for (const transform of transforms) {
+    switch (transform.operation) {
+      case 'addProperties':
+        Object.assign(subject, transform.properties);
+        break;
+
+      case 'removeProperties':
+        for (const property of transform.properties) {
+          delete subject[property];
+        }
+        break;
+
+      case 'clear':
+        subject = {};
+        break;
+
+      default:
+        return 'An error occured, please check the inputs';
+    }
+
+    result.push({ ...subject });
+  }
+
+  return result;
 }
 
 module.exports = transformStateWithClones;
