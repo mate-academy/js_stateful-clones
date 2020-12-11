@@ -70,35 +70,31 @@ function transformStateWithClones(state, transforms) {
   };
   const statesArray = [];
 
-  for (let i = 0; i < transforms.length; i++) {
-    if (transforms[i].operation === 'addProperties') {
-      cloneState = {
-        ...cloneState,
-        ...transforms[i].properties,
-      };
-      statesArray.push(cloneState);
-    } else if (transforms[i].operation === 'clear') {
-      cloneState = {
-        ...cloneState,
-      };
-
-      const cloneStateKeys = Object.keys(cloneState);
-
-      for (let k = 0; k < cloneStateKeys.length; k++) {
-        delete cloneState[cloneStateKeys[k]];
-      }
-      statesArray.push(cloneState);
-    } else if (transforms[i].operation === 'removeProperties') {
-      for (let m = 0; m < transforms[i].properties.length; m++) {
+  for (const transform of transforms) {
+    switch (transform.operation) {
+      case 'addProperties':
         cloneState = {
           ...cloneState,
+          ...transform.properties,
         };
+        statesArray.push({ ...cloneState });
+        break;
 
-        if (cloneState.hasOwnProperty(transforms[i].properties[m])) {
-          delete cloneState[transforms[i].properties[m]];
+      case 'clear':
+        for (const key in cloneState) {
+          delete cloneState[key];
         }
-      }
-      statesArray.push(cloneState);
+
+        statesArray.push({ ...cloneState });
+        break;
+
+      case 'removeProperties':
+        for (const property of transform.properties) {
+          delete cloneState[property];
+        }
+
+        statesArray.push({ ...cloneState });
+        break;
     }
   }
 
