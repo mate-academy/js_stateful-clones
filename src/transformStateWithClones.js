@@ -76,9 +76,7 @@ function transformStateWithClones(state, transforms) {
 
       case 'removeProperties':
         for (const prop of object.properties) {
-          if (changes.hasOwnProperty(prop)) {
-            delete changes[prop];
-          }
+          delete changes[prop];
         }
         break;
 
