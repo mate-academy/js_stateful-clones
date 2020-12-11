@@ -65,9 +65,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  let cloneState = {
-    ...state,
-  };
+  let cloneState = { ...state };
   const statesArray = [];
 
   for (const transform of transforms) {
@@ -77,7 +75,7 @@ function transformStateWithClones(state, transforms) {
           ...cloneState,
           ...transform.properties,
         };
-        statesArray.push({ ...cloneState });
+        // statesArray.push({ ...cloneState });
         break;
 
       case 'clear':
@@ -85,7 +83,7 @@ function transformStateWithClones(state, transforms) {
           delete cloneState[key];
         }
 
-        statesArray.push({ ...cloneState });
+        // statesArray.push({ ...cloneState });
         break;
 
       case 'removeProperties':
@@ -93,9 +91,12 @@ function transformStateWithClones(state, transforms) {
           delete cloneState[property];
         }
 
-        statesArray.push({ ...cloneState });
+        // statesArray.push({ ...cloneState });
         break;
+      default:
+        throw new Error('unkown operation');
     }
+    statesArray.push({ ...cloneState });
   }
 
   return statesArray;
