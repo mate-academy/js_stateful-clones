@@ -85,6 +85,8 @@ function transformStateWithClones(state, transforms) {
           delete stateClone[erased];
         };
         break;
+      default:
+        return 'This is default selection';
     }
     states.push({ ...stateClone });
   }
