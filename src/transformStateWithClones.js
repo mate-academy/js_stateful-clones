@@ -79,7 +79,11 @@ function transformStateWithClones(state, transforms) {
         item.properties.forEach(key => delete currentState[key]);
         break;
       case 'clear':
-        Object.keys(currentState).forEach(key => delete currentState[key]);
+        for (const key in currentState) {
+          delete currentState[key];
+        };
+        break;
+      default:
         break;
     }
 
