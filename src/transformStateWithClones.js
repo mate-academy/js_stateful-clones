@@ -82,6 +82,10 @@ function transformStateWithClones(state, transforms) {
       case 'clear' :
         clone = {};
         break;
+
+      default : {
+        throw new Error('Unknown');
+      }
     }
     arrClone.push({ ...clone });
   }
