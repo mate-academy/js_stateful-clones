@@ -66,31 +66,24 @@
  */
 function transformStateWithClones(state, transforms) {
   const resultingArray = [];
+  const objTmp = { ...state };
 
-  for (let i = 0; i < transforms.length; i++) {
-    if (i === 0) {
-      resultingArray[i] = { ...state };
-    } else {
-      resultingArray[i] = { ...resultingArray[i - 1] };
-    }
-
-    for (const key in transforms[i]) {
-      if (key === 'properties') {
-        continue;
+  for (const arrayItem of transforms) {
+    if (arrayItem.operation === 'addProperties') {
+      for (const addprops in arrayItem.properties) {
+        objTmp[addprops] = arrayItem.properties[addprops];
       }
+    } else if (arrayItem.operation === 'removeProperties') {
+      for (const propertiesItem of arrayItem.properties) {
+        delete objTmp[propertiesItem];
+      }
+    } else if (arrayItem.operation === 'clear') {
+      for (const deleteKeys in objTmp) {
+        delete objTmp[deleteKeys];
+      }
+    };
 
-      if (transforms[i][key] === 'addProperties') {
-        for (const addprops in transforms[i]['properties']) {
-          resultingArray[i][addprops] = transforms[i]['properties'][addprops];
-        }
-      } else if (transforms[i][key] === 'removeProperties') {
-        for (let j = 0; j < transforms[i]['properties'].length; j++) {
-          delete resultingArray[i][transforms[i]['properties'][j]];
-        }
-      } else if (transforms[i][key] === 'clear') {
-        resultingArray[i] = {};
-      };
-    }
+    resultingArray.push({ ...objTmp });
   }
 
   return resultingArray;
