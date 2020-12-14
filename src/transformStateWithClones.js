@@ -69,35 +69,34 @@ function transformStateWithClones(state, transforms) {
   const result = [];
   const st = Object.assign({}, state);
 
-  for (const index of transforms) {
-    for (const obj in index) {
-      if (index[obj] === 'addProperties') {
-        for (const prop in index) {
-          if (prop === 'properties') {
-            Object.assign(state, index[prop]);
-          }
+  transforms.forEach(transform => {
+    switch (transform['operation']) {
+      case 'addProperties':
+        Object.assign(state, transform['properties']);
+        result.push({ ...state });
+        break;
+
+      case 'removeProperties':
+        for (const keys of transform['properties']) {
+          delete state[keys];
         }
-        result.push(Object.assign({}, state));
-      } else if (index[obj] === 'removeProperties') {
-        for (const prop in index) {
-          if (prop === 'properties') {
-            for (const delArr of index[prop]) {
-              delete state[delArr];
-            }
-            result.push(Object.assign({}, state));
-          }
-        }
-      } else if (index[obj] === 'clear') {
+        result.push({ ...state });
+        break;
+
+      case 'clear':
         for (const keys in state) {
           delete state[keys];
         }
-        result.push(Object.assign({}, state));
-      }
-    }
-  }
+        result.push({ ...state });
+        break;
 
-  for (const eddit in state) {
-    delete state[eddit];
+      default:
+        throw new Error('not valid operation');
+    }
+  });
+
+  for (const del in state) {
+    delete state[del];
   }
 
   Object.assign(state, st);
