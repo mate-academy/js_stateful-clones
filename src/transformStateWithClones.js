@@ -67,7 +67,7 @@
 
 function transformStateWithClones(state, transforms) {
   const result = [];
-  const st = Object.assign({}, state);
+  const firstState = { ...state };
 
   transforms.forEach(transform => {
     switch (transform['operation']) {
@@ -99,7 +99,7 @@ function transformStateWithClones(state, transforms) {
     delete state[del];
   }
 
-  Object.assign(state, st);
+  Object.assign(state, firstState);
 
   return result;
 }
