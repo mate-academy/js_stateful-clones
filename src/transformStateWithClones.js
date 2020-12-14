@@ -66,16 +66,16 @@
  */
 function transformStateWithClones(state, transforms) {
   const result = [];
-  let newState = Object.assign({}, state);
+  let newState = { ...state };
 
-  for (const item of transforms) {
-    switch (item.operation) {
+  for (const transformation of transforms) {
+    switch (transformation.operation) {
       case 'addProperties':
-        Object.assign(newState, item.properties);
+        Object.assign(newState, transformation.properties);
         break;
 
       case 'removeProperties':
-        for (const key of item.properties) {
+        for (const key of transformation.properties) {
           delete newState[key];
         }
         break;
@@ -87,7 +87,7 @@ function transformStateWithClones(state, transforms) {
       default:
         throw new Error('incorrect property');
     }
-    result.push(Object.assign({}, newState));
+    result.push({ ...newState });
   }
 
   return result;
