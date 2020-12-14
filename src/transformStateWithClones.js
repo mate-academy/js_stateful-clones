@@ -75,7 +75,7 @@ function transformStateWithClones(state, transforms) {
           ...cloneState,
           ...transform.properties,
         };
-        // statesArray.push({ ...cloneState });
+
         break;
 
       case 'clear':
@@ -83,7 +83,6 @@ function transformStateWithClones(state, transforms) {
           delete cloneState[key];
         }
 
-        // statesArray.push({ ...cloneState });
         break;
 
       case 'removeProperties':
@@ -91,7 +90,6 @@ function transformStateWithClones(state, transforms) {
           delete cloneState[property];
         }
 
-        // statesArray.push({ ...cloneState });
         break;
       default:
         throw new Error('unkown operation');
