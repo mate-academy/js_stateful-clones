@@ -85,12 +85,8 @@ function transformStateWithClones(state, transforms) {
         }
         break;
 
-      default:
-        for (const pair of Object.entries(properties)) {
-          const [key, value] = pair;
-
-          clone1[key] = value;
-        }
+      case 'addProperties':
+        Object.assign(clone1, properties);
     }
     result.push(Object.assign({}, clone1));
   }
