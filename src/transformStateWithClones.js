@@ -66,24 +66,22 @@
  */
 function transformStateWithClones(state, transforms) {
   const states = [];
-  let temporalState = { ...state };
+  const temporalState = { ...state };
 
-  for (let i = 0; i < transforms.length; i++) {
-    if (i !== 0) {
-      temporalState = { ...states[i - 1] };
-    }
+  for (const instruction of transforms) {
+    // if (i !== 0) {
+    //   temporalState = { ...states[i - 1] };
+    // }
 
-    switch (transforms[i].operation) {
+    switch (instruction.operation) {
       case 'addProperties':
 
-        for (const key in transforms[i].properties) {
-          temporalState[key] = transforms[i].properties[key];
-        }
+        Object.assign(temporalState, instruction.properties);
         break;
 
       case 'removeProperties' :
 
-        const { properties } = transforms[i];
+        const { properties } = instruction;
 
         for (const y of properties) {
           delete temporalState[y];
@@ -96,7 +94,7 @@ function transformStateWithClones(state, transforms) {
           delete temporalState[key];
         }
     }
-    states.push(temporalState);
+    states.push(Object.assign({}, temporalState));
   }
 
   return states;
