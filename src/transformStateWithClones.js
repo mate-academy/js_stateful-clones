@@ -85,7 +85,7 @@ function transformStateWithClones(state, transforms) {
           delete copy[key];
         }
 
-        // return 'Error';
+        return 'Error';
     }
     copyArr.push(Object.assign({}, copy));
   }
