@@ -66,8 +66,8 @@
  */
 function transformStateWithClones(state, transforms) {
   // write code here
-  const stateArr = [];
-  let newState = Object.assign({}, state);
+  const clonedStates = [];
+  let newState = { ...state };
 
   for (const transform of transforms) {
     switch (transform.operation) {
@@ -83,12 +83,16 @@ function transformStateWithClones(state, transforms) {
 
       case 'clear':
         newState = {};
+        break;
+
+      default:
+        throw new Error('incorrect property');
     }
 
-    stateArr.push(Object.assign({}, newState));
+    clonedStates.push({ ...newState });
   }
 
-  return stateArr;
+  return clonedStates;
 }
 
 module.exports = transformStateWithClones;
