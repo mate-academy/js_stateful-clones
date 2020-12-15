@@ -66,18 +66,12 @@
  */
 function transformStateWithClones(state, transforms) {
   const clones = [];
-  const stateClone = {};
-
-  for (const property in state) {
-    stateClone[property] = state[property];
-  };
+  const stateClone = { ...state };
 
   for (let i = 0; i < transforms.length; i++) {
     switch (transforms[i].operation) {
       case 'addProperties':
-        for (const property in transforms[i].properties) {
-          stateClone[property] = transforms[i].properties[property];
-        }
+        Object.assign(stateClone, transforms[i].properties);
         break;
 
       case 'removeProperties':
@@ -91,13 +85,13 @@ function transformStateWithClones(state, transforms) {
           delete stateClone[property];
         }
         break;
+
+      default:
+        // eslint-disable-next-line no-throw-literal
+        throw 'Unexpected property!';
     }
 
-    clones.push({});
-
-    for (const property in stateClone) {
-      clones[i][property] = stateClone[property];
-    }
+    clones.push({ ...stateClone });
   }
 
   return clones;
