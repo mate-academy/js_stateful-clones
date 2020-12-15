@@ -65,7 +65,36 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const clones = [];
+  const stateClone = { ...state };
+
+  for (let i = 0; i < transforms.length; i++) {
+    switch (transforms[i].operation) {
+      case 'addProperties':
+        Object.assign(stateClone, transforms[i].properties);
+        break;
+
+      case 'removeProperties':
+        for (const property of transforms[i].properties) {
+          delete stateClone[property];
+        }
+        break;
+
+      case 'clear':
+        for (const property in stateClone) {
+          delete stateClone[property];
+        }
+        break;
+
+      default:
+        // eslint-disable-next-line no-throw-literal
+        throw 'Unexpected property!';
+    }
+
+    clones.push({ ...stateClone });
+  }
+
+  return clones;
 }
 
 module.exports = transformStateWithClones;
