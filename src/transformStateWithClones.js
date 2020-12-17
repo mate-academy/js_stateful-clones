@@ -65,32 +65,39 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
-  const obj = { ...state };
-  const arr = [];
+  const stateClone = { ...state };
+  const result = [];
 
-  transforms.forEach((item) => {
-    if (item.operation === 'clear') {
-      for (const k in obj) {
-        delete obj[k];
-      }
-    }
+  transforms.forEach((instruction) => {
+    switch (instruction.operation) {
+      case 'addProperties':
+        Object.assign(stateClone, instruction.properties);
+        result.push({ ...stateClone });
 
-    if (item.operation === 'addProperties') {
-      Object.assign(obj, item.properties);
-    }
+        return stateClone;
 
-    if (item.operation === 'removeProperties') {
-      item.properties.forEach((key) => {
-        if (obj.hasOwnProperty(key)) {
-          delete obj[key];
+      case 'removeProperties':
+        for (const key of instruction.properties) {
+          delete stateClone[key];
         }
-      });
+        result.push({ ...stateClone });
+
+        return stateClone;
+
+      case 'clear':
+        for (const key in stateClone) {
+          delete stateClone[key];
+        }
+        result.push({ ...stateClone });
+
+        return stateClone;
+
+      default:
+        throw new Error('Wrong instructions');
     }
-    arr.push({ ...obj });
   });
 
-  return arr;
-}
+  return result;
+};
 
 module.exports = transformStateWithClones;
