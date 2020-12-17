@@ -65,7 +65,39 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
-}
+  const stateClone = { ...state };
+  const result = [];
+
+  transforms.forEach((instruction) => {
+    switch (instruction.operation) {
+      case 'addProperties':
+        Object.assign(stateClone, instruction.properties);
+        result.push({ ...stateClone });
+
+        return stateClone;
+
+      case 'removeProperties':
+        for (const key of instruction.properties) {
+          delete stateClone[key];
+        }
+        result.push({ ...stateClone });
+
+        return stateClone;
+
+      case 'clear':
+        for (const key in stateClone) {
+          delete stateClone[key];
+        }
+        result.push({ ...stateClone });
+
+        return stateClone;
+
+      default:
+        throw new Error('Wrong instructions');
+    }
+  });
+
+  return result;
+};
 
 module.exports = transformStateWithClones;
