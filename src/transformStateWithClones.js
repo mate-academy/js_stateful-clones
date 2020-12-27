@@ -1,3 +1,5 @@
+/* eslint-disable object-curly-newline */
+/* eslint-disable no-trailing-spaces */
 'use strict';
 
 /**
@@ -65,7 +67,35 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  // масив з клонами
+  const arr = [];
+  // майбутній клон
+  let objClone;
+
+  for (const i of transforms) {
+    // останій обект з масиву (якщо існує), інакше => обєкт state 
+    objClone = arr.length ? { ...arr[arr.length - 1] } : { ...state };
+
+    switch (i.operation) {
+      case 'clear':
+        // "пушим" пустий обект в масив з клонами
+        arr.push({});
+        break;
+
+      case 'addProperties':
+        // "пушим" в масив { objClone + додаткові дані }
+        arr.push({ ...objClone, ...i.properties });
+        break;
+
+      case ('removeProperties'):
+        // видаляємо передані дані з objClone => "пушим" в масив з клонами
+        i.properties.forEach(e => delete objClone[e]);
+        arr.push(objClone);
+        break;
+    }
+  }
+
+  return arr;
 }
 
 module.exports = transformStateWithClones;
