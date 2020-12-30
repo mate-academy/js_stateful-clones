@@ -67,35 +67,30 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // масив з клонами
-  const arr = [];
-  // майбутній клон
-  let objClone;
+  const history = [];
+  const clone = { ...state };
 
-  for (const i of transforms) {
-    // останій обект з масиву (якщо існує), інакше => обєкт state 
-    objClone = arr.length ? { ...arr[arr.length - 1] } : { ...state };
-
-    switch (i.operation) {
+  for (const transform of transforms) {
+    switch (transform.operation) {
       case 'clear':
-        // "пушим" пустий обект в масив з клонами
-        arr.push({});
+        for (const key in clone) {
+          delete clone[key];
+        }
         break;
 
       case 'addProperties':
-        // "пушим" в масив { objClone + додаткові дані }
-        arr.push({ ...objClone, ...i.properties });
+        Object.assign(clone, transform.properties);
         break;
 
       case ('removeProperties'):
-        // видаляємо передані дані з objClone => "пушим" в масив з клонами
-        i.properties.forEach(e => delete objClone[e]);
-        arr.push(objClone);
+        transform.properties.forEach(e => delete clone[e]);
         break;
     }
+
+    history.push({ ...clone });
   }
 
-  return arr;
+  return history;
 }
 
 module.exports = transformStateWithClones;
