@@ -1,3 +1,5 @@
+/* eslint-disable object-curly-newline */
+/* eslint-disable no-trailing-spaces */
 'use strict';
 
 /**
@@ -65,7 +67,30 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const history = [];
+  const clone = { ...state };
+
+  for (const transform of transforms) {
+    switch (transform.operation) {
+      case 'clear':
+        for (const key in clone) {
+          delete clone[key];
+        }
+        break;
+
+      case 'addProperties':
+        Object.assign(clone, transform.properties);
+        break;
+
+      case ('removeProperties'):
+        transform.properties.forEach(e => delete clone[e]);
+        break;
+    }
+
+    history.push({ ...clone });
+  }
+
+  return history;
 }
 
 module.exports = transformStateWithClones;
