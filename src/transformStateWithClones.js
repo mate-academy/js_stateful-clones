@@ -65,31 +65,31 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  let obj = { ...state };
+  let stateClone = { ...state };
 
-  const arr = [];
+  const operationSaver = [];
 
   for (const transform of transforms) {
     switch (transform.operation) {
       case 'addProperties':
-        obj = (Object.assign(obj, transform.properties));
+        stateClone = (Object.assign(stateClone, transform.properties));
         break;
 
       case 'clear':
-        obj = {};
+        stateClone = {};
         break;
 
       case 'removeProperties':
 
         for (const key of transform.properties) {
-          delete obj[key];
+          delete stateClone[key];
         }
         break;
     }
-    arr.push({ ...obj });
+    operationSaver.push({ ...stateClone });
   }
 
-  return arr;
+  return operationSaver;
 }
 
 module.exports = transformStateWithClones;
