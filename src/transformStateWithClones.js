@@ -72,7 +72,7 @@ function transformStateWithClones(state, transforms) {
     let transformed = Object.assign({}, currentStateOfClone);
 
     if (transform.operation === 'addProperties') {
-      transformed = Object.assign(transformed, transform.properties);
+      Object.assign(transformed, transform.properties);
     } else if (transform.operation === 'removeProperties') {
       for (const key of transform.properties) {
         delete transformed[key];
