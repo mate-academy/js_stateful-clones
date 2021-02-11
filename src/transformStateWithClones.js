@@ -43,9 +43,9 @@
  * Then after calling
  *
  * transformStateWithClones(state, [
- *   {operation: 'addProperties', properties: {yet: 'another property'}}
+ *   {operation: 'addProperties', properties: {yet: 'another property'}},
  *   {operation: 'clear'},
- *   {operation: 'addProperties', properties: {foo: 'bar', name: 'Jim'}}
+ *   {operation: 'addProperties', properties: {foo: 'bar', name: 'Jim'}},
  * ])
  *
  * we must get
@@ -61,11 +61,39 @@
  *
  * @param {Object} state
  * @param {Object[]} transforms
- *
- * @return {Object[]}
  */
+
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const result = [];
+  const prom = { ...state };
+
+  for (const change of transforms) {
+    switch (change.operation) {
+      case 'addProperties': {
+        for (const addingProperties in change.properties) {
+          prom[addingProperties] = change.properties[addingProperties];
+        }
+        break;
+      }
+
+      case 'clear': {
+        for (const properties in prom) {
+          delete prom[properties];
+        }
+        break;
+      }
+
+      case 'removeProperties': {
+        for (let j = 0; j < change.properties.length; j++) {
+          delete prom[change.properties[j]];
+        }
+        break;
+      }
+    }
+    result.push({ ...prom });
+  }
+
+  return result;
 }
 
 module.exports = transformStateWithClones;
