@@ -69,22 +69,23 @@ function transformStateWithClones(state, transforms) {
   const operationsHistory = [];
 
   for (const transformation of transforms) {
-    if (transformation.operation === 'addProperties') {
-      operationsHistory.push({ ...Object.assign(stateCopy,
-        transformation.properties) });
-    }
+    switch (transformation.operation) {
+      case 'addProperties':
+        stateCopy = Object.assign(stateCopy,
+          transformation.properties);
+        break;
 
-    if (transformation.operation === 'clear') {
-      stateCopy = {};
-      operationsHistory.push({ ...stateCopy });
-    }
+      case 'clear':
+        stateCopy = {};
+        break;
 
-    if (transformation.operation === 'removeProperties') {
-      for (const key of transformation.properties) {
-        delete stateCopy[key];
-      }
-      operationsHistory.push({ ...stateCopy });
+      case 'removeProperties':
+        for (const key of transformation.properties) {
+          delete stateCopy[key];
+        }
+        break;
     }
+    operationsHistory.push({ ...stateCopy });
   }
 
   return operationsHistory;
