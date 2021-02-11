@@ -66,52 +66,29 @@
  */
 function transformStateWithClones(state, transforms) {
   const resultStates = [];
-  let stateForChange = {
+  const stateForChange = {
     ...state,
   };
 
   for (const transform of transforms) {
     switch (transform.operation) {
       case 'addProperties':
-        const assignedElement
-        = Object.assign({}, stateForChange, transform.properties);
-
-        resultStates.push(assignedElement);
-        Object.assign(stateForChange, assignedElement);
+        Object.assign(stateForChange, transform.properties);
         break;
 
       case 'clear':
-        const clearedElement = {
-          ...stateForChange,
-        };
-
-        for (const key in clearedElement) {
-          delete clearedElement[key];
-        }
-
-        resultStates.push(clearedElement);
-
         for (const key in stateForChange) {
           delete stateForChange[key];
         }
         break;
 
       case 'removeProperties':
-        const removedElement = {
-          ...stateForChange,
-        };
-
-        for (let j = 0; j < transform.properties.length; j++) {
-          delete removedElement[transform.properties[j]];
+        for (let i = 0; i < transform.properties.length; i++) {
+          delete stateForChange[transform.properties[i]];
         }
-
-        resultStates.push(removedElement);
-
-        stateForChange = {
-          ...removedElement,
-        };
         break;
     }
+    resultStates.push({ ...stateForChange });
   }
 
   return resultStates;
