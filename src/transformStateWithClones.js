@@ -71,7 +71,7 @@ function transformStateWithClones(state, transforms) {
   for (const transformation of transforms) {
     switch (transformation.operation) {
       case 'addProperties':
-        stateCopy = Object.assign(stateCopy,
+        Object.assign(stateCopy,
           transformation.properties);
         break;
 
