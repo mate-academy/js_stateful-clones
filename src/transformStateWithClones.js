@@ -3,7 +3,7 @@
 /**
  * Implement a function accepting 2 arguments `state` and `transforms` and
  * returning an array of states of the same length as `transforms`. Each
- * element of the resulting array has to represent the state produced by the
+ * element of the statesing array has to represent the state produced by the
  * next operation.
  *
  * You must not reassign `state` to a new object or modify it in any way!
@@ -64,36 +64,36 @@
  */
 
 function transformStateWithClones(state, transforms) {
-  const result = [];
-  const prom = { ...state };
+  const states = [];
+  const changed = { ...state };
 
-  for (const change of transforms) {
-    switch (change.operation) {
+  for (const transform of transforms) {
+    switch (transform.operation) {
       case 'addProperties': {
-        for (const addingProperties in change.properties) {
-          prom[addingProperties] = change.properties[addingProperties];
+        for (const addingProperties in transform.properties) {
+          changed[addingProperties] = transform.properties[addingProperties];
         }
         break;
       }
 
       case 'clear': {
-        for (const properties in prom) {
-          delete prom[properties];
+        for (const properties in changed) {
+          delete changed[properties];
         }
         break;
       }
 
       case 'removeProperties': {
-        for (let j = 0; j < change.properties.length; j++) {
-          delete prom[change.properties[j]];
+        for (let j = 0; j < transform.properties.length; j++) {
+          delete changed[transform.properties[j]];
         }
         break;
       }
     }
-    result.push({ ...prom });
+    states.push({ ...changed });
   }
 
-  return result;
+  return states;
 }
 
 module.exports = transformStateWithClones;
