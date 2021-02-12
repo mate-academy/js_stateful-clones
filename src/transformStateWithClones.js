@@ -3,7 +3,7 @@
 /**
  * Implement a function accepting 2 arguments `state` and `transforms` and
  * returning an array of states of the same length as `transforms`. Each
- * element of the resulting array has to represent the state produced by the
+ * element of the statesing array has to represent the state produced by the
  * next operation.
  *
  * You must not reassign `state` to a new object or modify it in any way!
@@ -43,9 +43,9 @@
  * Then after calling
  *
  * transformStateWithClones(state, [
- *   {operation: 'addProperties', properties: {yet: 'another property'}}
+ *   {operation: 'addProperties', properties: {yet: 'another property'}},
  *   {operation: 'clear'},
- *   {operation: 'addProperties', properties: {foo: 'bar', name: 'Jim'}}
+ *   {operation: 'addProperties', properties: {foo: 'bar', name: 'Jim'}},
  * ])
  *
  * we must get
@@ -61,11 +61,39 @@
  *
  * @param {Object} state
  * @param {Object[]} transforms
- *
- * @return {Object[]}
  */
+
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const states = [];
+  const changed = { ...state };
+
+  for (const transform of transforms) {
+    switch (transform.operation) {
+      case 'addProperties': {
+        for (const addingProperties in transform.properties) {
+          changed[addingProperties] = transform.properties[addingProperties];
+        }
+        break;
+      }
+
+      case 'clear': {
+        for (const properties in changed) {
+          delete changed[properties];
+        }
+        break;
+      }
+
+      case 'removeProperties': {
+        for (let j = 0; j < transform.properties.length; j++) {
+          delete changed[transform.properties[j]];
+        }
+        break;
+      }
+    }
+    states.push({ ...changed });
+  }
+
+  return states;
 }
 
 module.exports = transformStateWithClones;
