@@ -66,6 +66,71 @@
  */
 function transformStateWithClones(state, transforms) {
   // write code here
-}
+
+  const copyCat = {
+    ...state,
+  };
+  const array = [];
+
+  for (const obj of transforms) {
+    if (obj.operation === 'addProperties') {
+      add(obj.properties);
+    };
+
+    if (obj.operation === 'removeProperties') {
+      remove(obj.properties);
+    };
+
+    if (obj.operation === 'clear') {
+      clear();
+    };
+  };
+  // FUNCTIONS
+  // ADD
+
+  function add(properties) {
+    const arrayCopy = array.slice();
+    let lastObjectOfArray = arrayCopy[arrayCopy.length - 1];
+
+    if (arrayCopy.length === 0) {
+      lastObjectOfArray = {
+        ...copyCat,
+      };
+    };
+
+    const addedObject = Object.assign({}, lastObjectOfArray, properties);
+
+    array.push(addedObject);
+  };
+  // REMOVE
+
+  function remove(properties) {
+    const arrayCopy = array.slice();
+
+    if (arrayCopy.length === 0) {
+      arrayCopy.push(Object.assign({}, copyCat));
+    };
+
+    const lastObjectOfArray = arrayCopy[arrayCopy.length - 1];
+    const copyLastObjectOfArray = {
+      ...lastObjectOfArray,
+    };
+
+    for (const value of properties) {
+      if (copyLastObjectOfArray.hasOwnProperty(value)) {
+        delete copyLastObjectOfArray[value];
+      };
+    };
+
+    array.push(copyLastObjectOfArray);
+  };
+  // CLEAR
+
+  function clear() {
+    array.push({});
+  };
+
+  return array;
+};
 
 module.exports = transformStateWithClones;
