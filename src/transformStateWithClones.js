@@ -76,11 +76,11 @@ function transformStateWithClones(state, transforms) {
         stateChanges.push({ ...newState });
         break;
       case 'removeProperties' :
-        transforms[i].properties.map(prop => delete newState[prop]);
+        transforms[i].properties.forEach(key => delete newState[key]);
         stateChanges.push({ ...newState });
         break;
       case 'clear' :
-        Object.keys(newState).map(prop => delete newState[prop]);
+        Object.keys(newState).forEach(key => delete newState[key]);
         stateChanges.push({ ...newState });
         break;
     }
