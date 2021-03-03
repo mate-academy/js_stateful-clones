@@ -77,7 +77,7 @@ function transformStateWithClones(state, transforms) {
         break;
 
       case 'removeProperties':
-        item.properties.forEach(index => delete stateResult[index]);
+        item.properties.forEach(key => delete stateResult[key]);
         break;
 
       case 'clear':
@@ -85,9 +85,7 @@ function transformStateWithClones(state, transforms) {
         break;
     }
 
-    result.push({
-      ...{}, ...stateResult,
-    });
+    result.push({ ...stateResult });
   }
 
   return result;
