@@ -85,7 +85,6 @@ function transformStateWithClones(state, transforms) {
     }
 
     result.push({
-      ...{},
       ...changedState,
     });
   }
