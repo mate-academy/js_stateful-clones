@@ -84,8 +84,8 @@ function transformStateWithClones(state, transforms) {
       case 'removeProperties':
         const cloneState = { ...lastClone };
 
-        for (const property of key.properties) {
-          delete cloneState[property];
+        for (const keyForProperty of key.properties) {
+          delete cloneState[keyForProperty];
         }
 
         cloneStates.push(cloneState);
