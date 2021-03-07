@@ -72,7 +72,9 @@ function transformStateWithClones(state, transforms) {
   for (const transformation of transforms) {
     switch (transformation.operation) {
       case 'addProperties':
-        Object.assign(stateClone, transformation.properties);
+        for (const key in transformation.properties) {
+          stateClone[key] = transformation.properties[key];
+        }
         break;
 
       case 'removeProperties':
@@ -85,8 +87,7 @@ function transformStateWithClones(state, transforms) {
         stateClone = {};
         break;
     }
-
-    clonesArray.push(Object.assign({}, stateClone));
+    clonesArray.push({ ...stateClone });
   }
 
   return clonesArray;
