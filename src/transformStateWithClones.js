@@ -82,6 +82,7 @@ function transformStateWithClones(state, transforms) {
 
       case 'clear':
         changedState = {};
+        break;
     }
 
     result.push({ ...changedState });
