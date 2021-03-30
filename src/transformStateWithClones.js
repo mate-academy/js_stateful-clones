@@ -65,7 +65,55 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  const operationHandlers = initOperationHandlers();
+  const objectStatesHistory = [];
+  let currentState = { ...state };
+
+  for (const { operation, properties } of transforms) {
+    const newObjectState
+    = operationHandlers[operation](currentState, properties);
+
+    objectStatesHistory.push(newObjectState);
+    currentState = newObjectState;
+  }
+
+  return objectStatesHistory;
+}
+
+/*
+  Didn't know what is the correct way to split logic in JS
+  So here is my guess)
+  */
+function initOperationHandlers() {
+  const clearOperation = 'clear';
+  const addPropsOperation = 'addProperties';
+  const removePropsOperation = 'removeProperties';
+  const handlersMap = new Map();
+
+  handlersMap[clearOperation] = handleClearOperation;
+  handlersMap[addPropsOperation] = handleAddPropsOperation;
+  handlersMap[removePropsOperation] = handleRemovePropsOperation;
+
+  return handlersMap;
+}
+
+function handleClearOperation(state, properties) {
+  return {};
+}
+
+function handleAddPropsOperation(state, properties) {
+  return {
+    ...state,
+    ...properties,
+  };
+}
+
+function handleRemovePropsOperation(state, properties) {
+  const newState = { ...state };
+
+  properties.forEach(key => delete newState[key]);
+
+  return newState;
 }
 
 module.exports = transformStateWithClones;
