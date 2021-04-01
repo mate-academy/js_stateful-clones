@@ -71,7 +71,7 @@ function transformStateWithClones(state, transforms) {
 
   for (const { operation, properties } of transforms) {
     const newObjectState
-    = operationHandlers[operation](currentState, properties);
+    = operationHandlers.get(operation)(currentState, properties);
 
     objectStatesHistory.push(newObjectState);
     currentState = newObjectState;
@@ -90,9 +90,9 @@ function initOperationHandlers() {
   const removePropsOperation = 'removeProperties';
   const handlersMap = new Map();
 
-  handlersMap[clearOperation] = handleClearOperation;
-  handlersMap[addPropsOperation] = handleAddPropsOperation;
-  handlersMap[removePropsOperation] = handleRemovePropsOperation;
+  handlersMap.set(clearOperation, handleClearOperation);
+  handlersMap.set(addPropsOperation, handleAddPropsOperation);
+  handlersMap.set(removePropsOperation, handleRemovePropsOperation);
 
   return handlersMap;
 }
