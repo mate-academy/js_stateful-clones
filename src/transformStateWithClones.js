@@ -1,28 +1,28 @@
 'use strict';
 
 /**
- * Implement a function accepting 2 arguments `state` and `transforms` and
- * returning an array of states of the same length as `transforms`. Each
+ * Implement a function accepting 2 arguments state and transforms and
+ * returning an array of states of the same length as transforms. Each
  * element of the resulting array has to represent the state produced by the
  * next operation.
  *
- * You must not reassign `state` to a new object or modify it in any way!
+ * You must not reassign state to a new object or modify it in any way!
  *
- * `state` is an initial object.
+ * state is an initial object.
  *
- * `transforms` is an array of objects having the following properties:
- * `operation`: either `addProperties`, `removeProperties` or `clear`;
- * `properties`:
- *   - if `operation` is `addProperties`, this property contains an object
- *   with `key: value` pairs to add to the state;
- *   - if `operation` is `removeProperties`, this property contains an array
+ * transforms is an array of objects having the following properties:
+ * operation: either addProperties, removeProperties or clear;
+ * properties:
+ *   - if operation is addProperties, this property contains an object
+ *   with key: value pairs to add to the state;
+ *   - if operation is removeProperties, this property contains an array
  *   with the list of property names to remove from the state; (Not existing
  *   properties should be ignored)
- *   - if `operation is `clear` you should create an empty state object
+ *   - if operation is `clear you should create an empty state object
  *
  * Sample usage:
  *
- * If `state` is {foo: 'bar', bar: 'foo'}, then
+ * If state is {foo: 'bar', bar: 'foo'}, then
  *
  * transformStateWithClones(state, [
  *   {operation: 'addProperties', properties: {name: 'Jim', hello: 'world'}},
@@ -37,7 +37,7 @@
  *   {foo: 'bar', name: 'Jim', another: 'one'}
  * ].
  *
- * The `state` object itself should not be modified and must remain
+ * The state object itself should not be modified and must remain
  * {foo: 'bar', bar: 'foo'}.
  *
  * Then after calling
@@ -55,7 +55,7 @@
  *   {foo: 'bar', name: 'Jim'}
  * ].
  *
- * the `state` variable must still contain
+ * the state variable must still contain
  * {foo: 'bar', bar: 'foo'}.
  *
  *
@@ -66,6 +66,31 @@
  */
 function transformStateWithClones(state, transforms) {
   // write code here
+  const result = [];
+  const tempObj = { ...state };
+
+  for (const obj of transforms) {
+    if (obj.operation === 'addProperties') {
+      for (const key in obj.properties) {
+        tempObj[key] = obj.properties[key];
+      }
+    }
+
+    if (obj.operation === 'removeProperties') {
+      for (const key of obj.properties) {
+        delete tempObj[key];
+      }
+    }
+
+    if (obj.operation === 'clear') {
+      for (const key in tempObj) {
+        delete tempObj[key];
+      }
+    }
+    result.push({ ...tempObj });
+  }
+
+  return result;
 }
 
 module.exports = transformStateWithClones;
