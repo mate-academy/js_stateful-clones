@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * Implement a function accepting 2 arguments `state` and `transforms` and
@@ -65,7 +65,31 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
+  let newObj = { ...state };
+  const newArr = [];
+
+  transforms.map(({ operation, properties }) => {
+    switch (operation) {
+      case 'addProperties':
+        for (const key in properties) {
+          newObj[key] = properties[key];
+        }
+        break;
+
+      case 'removeProperties':
+        for (const key of properties) {
+          delete newObj[key];
+        }
+        break;
+
+      case 'clear':
+        newObj = {};
+        break;
+    }
+    newArr.push({ ...newObj });
+  });
+
+  return newArr;
 }
 
 module.exports = transformStateWithClones;
