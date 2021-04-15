@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * Implement a function accepting 2 arguments `state` and `transforms` and
@@ -66,33 +66,27 @@
  */
 function transformStateWithClones(state, transforms) {
   let newObj = { ...state };
-  let count = 0;
   const newArr = [];
 
   transforms.map(({ operation, properties }) => {
-    if (operation === 'addProperties') {
-      for (const key in properties) {
-        newObj[key] = properties[key];
-      }
-    }
+    switch (operation) {
+      case 'addProperties':
+        for (const key in properties) {
+          newObj[key] = properties[key];
+        }
+        break;
 
-    if (operation === 'removeProperties') {
-      for (const key of properties) {
-        if (newObj.hasOwnProperty(key)) {
+      case 'removeProperties':
+        for (const key of properties) {
           delete newObj[key];
         }
-      }
-    }
+        break;
 
-    if (operation === 'clear') {
-      newObj = {};
+      case 'clear':
+        newObj = {};
+        break;
     }
-    newArr.push({});
-
-    for (const key in newObj) {
-      newArr[count][key] = newObj[key];
-    }
-    count++;
+    newArr.push({ ...newObj });
   });
 
   return newArr;
