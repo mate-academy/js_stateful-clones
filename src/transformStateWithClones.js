@@ -65,7 +65,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  const initialState = { ...state };
+  let initialState = { ...state };
   const changesList = [];
 
   if (transforms.length === 0) {
@@ -75,9 +75,7 @@ function transformStateWithClones(state, transforms) {
   for (const transform of transforms) {
     switch (transform.operation) {
       case 'clear':
-        for (const key in initialState) {
-          delete initialState[key];
-        }
+        initialState = {};
         changesList.push({ ...initialState });
         break;
 
