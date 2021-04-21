@@ -66,10 +66,6 @@
  */
 function transformStateWithClones(state, transforms) {
   // write code here
-
-  const copyCat = {
-    ...state,
-  };
   const array = [];
 
   for (const obj of transforms) {
@@ -89,12 +85,16 @@ function transformStateWithClones(state, transforms) {
   // ADD
 
   function add(properties) {
-    const arrayCopy = array.slice();
-    let lastObjectOfArray = arrayCopy[arrayCopy.length - 1];
+    let stateCopy = {
+      ...state,
+    };
+    let lastObjectOfArray = stateCopy[stateCopy.length - 1];
 
-    if (arrayCopy.length === 0) {
+    stateCopy = array.slice();
+
+    if (stateCopy.length === 0) {
       lastObjectOfArray = {
-        ...copyCat,
+        ...stateCopy,
       };
     };
 
@@ -105,13 +105,13 @@ function transformStateWithClones(state, transforms) {
   // REMOVE
 
   function remove(properties) {
-    const arrayCopy = array.slice();
+    const stateCopy = array.slice();
 
-    if (arrayCopy.length === 0) {
-      arrayCopy.push(Object.assign({}, copyCat));
+    if (stateCopy.length === 0) {
+      stateCopy.push(Object.assign({}, stateCopy));
     };
 
-    const lastObjectOfArray = arrayCopy[arrayCopy.length - 1];
+    const lastObjectOfArray = stateCopy[stateCopy.length - 1];
     const copyLastObjectOfArray = {
       ...lastObjectOfArray,
     };
