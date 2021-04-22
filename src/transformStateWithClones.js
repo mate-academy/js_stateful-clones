@@ -2,23 +2,25 @@
 
 /**
  * Implement a function accepting 2 arguments `state` and `transforms` and
- * returning an array of states of the same length as `transforms`. Each
- * element of the resulting array has to represent the state produced by the
+ * returning an statesay of states of the same length as `transforms`. Each
+ * element of the resulting statesay has to represent the state produced by the
  * next operation.
  *
- * You must not reassign `state` to a new object or modify it in any way!
+ * You must not reassign `state` to a new stateCloneect or modify it in any way!
  *
- * `state` is an initial object.
+ * `state` is an initial stateCloneect.
  *
- * `transforms` is an array of objects having the following properties:
+ * `transforms` is an statesay of stateCloneects having the
+ *  following properties:
  * `operation`: either `addProperties`, `removeProperties` or `clear`;
  * `properties`:
- *   - if `operation` is `addProperties`, this property contains an object
+ *   - if `operation` is `addProperties`, this property
+ *  contains an stateCloneect
  *   with `key: value` pairs to add to the state;
- *   - if `operation` is `removeProperties`, this property contains an array
+ *   - if `operation` is `removeProperties`, this property contains an statesay
  *   with the list of property names to remove from the state; (Not existing
  *   properties should be ignored)
- *   - if `operation is `clear` you should create an empty state object
+ *   - if `operation is `clear` you should create an empty state stateCloneect
  *
  * Sample usage:
  *
@@ -37,7 +39,7 @@
  *   {foo: 'bar', name: 'Jim', another: 'one'}
  * ].
  *
- * The `state` object itself should not be modified and must remain
+ * The `state` stateCloneect itself should not be modified and must remain
  * {foo: 'bar', bar: 'foo'}.
  *
  * Then after calling
@@ -59,49 +61,49 @@
  * {foo: 'bar', bar: 'foo'}.
  *
  *
- * @param {Object} state
- * @param {Object[]} transforms
+ * @param {stateCloneect} state
+ * @param {stateCloneect[]} transforms
  *
- * @return {Object[]}
+ * @return {stateCloneect[]}
  */
 function transformStateWithClones(state, transforms) {
   // write code here
-  const arr = [];
-  const obj = { ...state };
+  const states = [];
+  const stateClone = { ...state };
 
-  transforms.forEach((item) => {
-    const props = item.properties;
+  transforms.forEach((transform) => {
+    const props = transform.properties;
 
-    switch (item.operation) {
+    switch (transform.operation) {
       case 'addProperties': {
         for (const prop in props) {
-          obj[prop] = props[prop];
+          stateClone[prop] = props[prop];
         }
-        arr.push({ ...obj });
+        states.push({ ...stateClone });
         break;
       }
 
       case 'removeProperties': {
         props.forEach((prop) => {
-          if (prop in obj) {
-            delete obj[prop];
+          if (prop in stateClone) {
+            delete stateClone[prop];
           }
         });
-        arr.push({ ...obj });
+        states.push({ ...stateClone });
         break;
       }
 
       case 'clear': {
-        for (const key in obj) {
-          delete obj[key];
+        for (const key in stateClone) {
+          delete stateClone[key];
         }
-        arr.push({ ...obj });
+        states.push({ ...stateClone });
         break;
       }
     }
   });
 
-  return arr;
+  return states;
 }
 
 module.exports = transformStateWithClones;
