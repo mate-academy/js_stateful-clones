@@ -72,7 +72,6 @@ function transformStateWithClones(state, transforms) {
     if (transform.operation === 'addProperties') {
       Object.assign(copyState, transform.properties);
       transrormsHistory.push({ ...copyState });
-      continue;
     }
 
     if (transform.operation === 'clear') {
@@ -80,16 +79,13 @@ function transformStateWithClones(state, transforms) {
         delete copyState[key];
       };
       transrormsHistory.push({ ...copyState });
-      continue;
     }
 
     if (transform.operation === 'removeProperties') {
       for (const key of transform.properties) {
         delete copyState[key];
       };
-
       transrormsHistory.push({ ...copyState });
-      continue;
     }
   }
 
