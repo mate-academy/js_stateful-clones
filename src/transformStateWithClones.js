@@ -83,6 +83,8 @@ function transformStateWithClones(state, transforms) {
           delete temp[keys];
         }
         break;
+      default:
+        break;
     }
     array.push({ ...temp });
   }
