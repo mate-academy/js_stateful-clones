@@ -68,14 +68,10 @@ function transformStateWithClones(state, transforms) {
   const states = [];
   const transientState = Object.assign({}, state);
 
-  for (let i = 0; i < transforms.length; i++) {
-    const { operation, properties } = transforms[i];
-
+  for (const { operation, properties } of transforms) {
     switch (operation) {
       case 'addProperties':
-        for (const key in properties) {
-          transientState[key] = properties[key];
-        }
+        Object.assign(transientState, properties);
         break;
 
       case 'clear':
@@ -85,10 +81,13 @@ function transformStateWithClones(state, transforms) {
         break;
 
       case 'removeProperties':
-        for (let n = 0; n < properties.length; n++) {
-          delete transientState[properties[n]];
+        for (const property of properties) {
+          delete transientState[property];
         }
         break;
+
+      default:
+        return 'Error';
     }
 
     states.push({ ...transientState });
