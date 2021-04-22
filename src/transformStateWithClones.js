@@ -66,28 +66,32 @@
  */
 function transformStateWithClones(state, transforms) {
   const newState = { ...state };
-  const resArr = [];
+  const states = [];
 
-  for (let i = 0; i < transforms.length; i++) {
-    if (transforms[i]['operation'] === 'addProperties') {
-      for (const key in transforms[i]['properties']) {
-        newState[key] = transforms[i]['properties'][key];
-      }
-      resArr.push({ ...newState });
-    } else if (transforms[i]['operation'] === 'removeProperties') {
-      for (const key of transforms[i]['properties']) {
-        delete newState[key];
-      }
-      resArr.push({ ...newState });
-    } else if (transforms[i]['operation'] === 'clear') {
-      for (const key in newState) {
-        delete newState[key];
-      }
-      resArr.push({ ...newState });
+  for (const transform of transforms) {
+    switch (transform.operation) {
+      case 'addProperties':
+        for (const key in transform['properties']) {
+          newState[key] = transform['properties'][key];
+        }
+        states.push({ ...newState });
+        break;
+      case 'removeProperties':
+        for (const key of transform['properties']) {
+          delete newState[key];
+        }
+        states.push({ ...newState });
+        break;
+      case 'clear':
+        for (const key in newState) {
+          delete newState[key];
+        }
+        states.push({ ...newState });
+        break;
     }
   }
 
-  return resArr;
+  return states;
 }
 
 module.exports = transformStateWithClones;
