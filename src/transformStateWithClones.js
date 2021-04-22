@@ -65,72 +65,45 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
-  const array = [];
-
-  for (const obj of transforms) {
-    if (obj.operation === 'addProperties') {
-      add(obj.properties);
-    };
-
-    if (obj.operation === 'removeProperties') {
-      remove(obj.properties);
-    };
-
-    if (obj.operation === 'clear') {
-      clear();
-    };
+  const states = [];
+  let stateClone = {
+    ...state,
   };
-  // FUNCTIONS
-  // ADD
+
+  for (const transform of transforms) {
+    switch (transform.operation) {
+      case 'addProperties':
+        add(transform.properties);
+        break;
+
+      case 'removeProperties':
+        remove(transform.properties);
+        break;
+
+      case 'clear':
+        clear();
+        break;
+    };
+    states.push({ ...stateClone });
+  };
 
   function add(properties) {
-    let stateCopy = {
-      ...state,
-    };
-    let lastObjectOfArray = stateCopy[stateCopy.length - 1];
-
-    stateCopy = array.slice();
-
-    if (stateCopy.length === 0) {
-      lastObjectOfArray = {
-        ...stateCopy,
-      };
-    };
-
-    const addedObject = Object.assign({}, lastObjectOfArray, properties);
-
-    array.push(addedObject);
+    Object.assign(stateClone, properties);
   };
-  // REMOVE
 
   function remove(properties) {
-    const stateCopy = array.slice();
-
-    if (stateCopy.length === 0) {
-      stateCopy.push(Object.assign({}, stateCopy));
-    };
-
-    const lastObjectOfArray = stateCopy[stateCopy.length - 1];
-    const copyLastObjectOfArray = {
-      ...lastObjectOfArray,
-    };
-
-    for (const value of properties) {
-      if (copyLastObjectOfArray.hasOwnProperty(value)) {
-        delete copyLastObjectOfArray[value];
+    for (const property of properties) {
+      if (stateClone.hasOwnProperty(property)) {
+        delete stateClone[property];
       };
     };
-
-    array.push(copyLastObjectOfArray);
   };
-  // CLEAR
 
   function clear() {
-    array.push({});
+    stateClone = {};
   };
 
-  return array;
+  return states;
 };
 
 module.exports = transformStateWithClones;
