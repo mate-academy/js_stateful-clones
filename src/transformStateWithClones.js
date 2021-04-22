@@ -72,23 +72,23 @@ function transformStateWithClones(state, transforms) {
     switch (transform.operation) {
       case 'addProperties':
         Object.assign(trueCopy, transform.properties);
-        result.push({ ...trueCopy });
         break;
+
       case 'removeProperties':
         for (const prop of transform.properties) {
           if (trueCopy.hasOwnProperty(prop)) {
             delete trueCopy[prop];
           }
         }
-        result.push({ ...trueCopy });
         break;
+
       case 'clear':
         for (const key in trueCopy) {
           delete trueCopy[key];
         }
-        result.push({ ...trueCopy });
         break;
     }
+    result.push({ ...trueCopy });
   }
 
   return result;
