@@ -85,6 +85,9 @@ function transformStateWithClones(state, transforms) {
           delete clone[key];
         }
         break;
+
+      default:
+        return null;
     }
     final.push(Object.assign({}, clone));
   }
