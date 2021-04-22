@@ -66,9 +66,7 @@
  */
 function transformStateWithClones(state, transforms) {
   // write code here
-  let result = {};
-
-  result = Object.assign(result, state);
+  let result = Object.assign({}, state);
 
   const massResult = [];
 
