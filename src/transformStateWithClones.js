@@ -73,13 +73,18 @@ function transformStateWithClones(state, transforms) {
       case 'addProperties':
         Object.assign(clonedObject, transform.properties);
         break;
+
       case 'removeProperties':
         for (const element of transform.properties) {
           delete clonedObject[element];
         }
         break;
+
       case 'clear':
         clonedObject = {};
+        break;
+
+      default:
         break;
     }
     finalListObj.push({ ...clonedObject });
