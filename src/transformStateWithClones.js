@@ -66,33 +66,32 @@
  */
 
 function transformStateWithClones(state, transforms) {
-  const statesArr = [];
-  let stateCopObj = Object.assign({}, state);
+  const arrOfStates = [];
+  let copyOfStateObj = Object.assign({}, state);
 
-  transforms.forEach((operationObj) => {
-    if (operationObj.operation === 'addProperties') {
-      for (const key in operationObj.properties) {
-        stateCopObj[key] = operationObj.properties[key];
-      }
-      statesArr.push({ ...stateCopObj });
-    }
-
-    if (operationObj.operation === 'removeProperties') {
-      operationObj.properties.forEach((fieldName) => {
-        if (fieldName in stateCopObj) {
-          delete stateCopObj[fieldName];
+  transforms.forEach(({ properties, operation }) => {
+    switch (operation) {
+      case 'addProperties':
+        for (const key in properties) {
+          copyOfStateObj[key] = properties[key];
         }
-      });
-      statesArr.push({ ...stateCopObj });
+        break;
+      case 'removeProperties':
+        properties.forEach((fieldName) => {
+          if (fieldName in copyOfStateObj) {
+            delete copyOfStateObj[fieldName];
+          }
+        });
+        break;
+      case 'clear':
+        copyOfStateObj = {};
+        break;
+      default: throw new Error('operation is not defined');
     }
-
-    if (operationObj.operation === 'clear') {
-      stateCopObj = {};
-      statesArr.push({ ...stateCopObj });
-    }
+    arrOfStates.push({ ...copyOfStateObj });
   });
 
-  return statesArr;
+  return arrOfStates;
 }
 
 module.exports = transformStateWithClones;
