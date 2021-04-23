@@ -68,9 +68,7 @@ function transformStateWithClones(state, transforms) {
   const transformedClone = [];
   let transformedObject = { ...state };
 
-  for (const transfom of transforms) {
-    const { properties, operation } = transfom;
-
+  for (const { properties, operation } of transforms) {
     switch (operation) {
       case 'addProperties' :
         transformedObject = {
@@ -86,6 +84,8 @@ function transformStateWithClones(state, transforms) {
       case 'clear' :
         transformedObject = {};
         break;
+      default:
+        return null;
     }
     transformedClone.push({ ...transformedObject });
   }
