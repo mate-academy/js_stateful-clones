@@ -65,7 +65,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  const transrormsHistory = [];
+  const transformsHistory = [];
   const copyState = { ...state };
 
   for (const transform of transforms) {
@@ -87,10 +87,10 @@ function transformStateWithClones(state, transforms) {
       default :
         return null;
     }
-    transrormsHistory.push({ ...copyState });
+    transformsHistory.push({ ...copyState });
   }
 
-  return transrormsHistory;
+  return transformsHistory;
 }
 
 module.exports = transformStateWithClones;
