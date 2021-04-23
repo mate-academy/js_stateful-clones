@@ -90,7 +90,7 @@ function transformStateWithClones(state, transforms) {
         for (const key in clone) {
           delete clone[key];
         }
-        states.push(Object.assign({}, clone));
+        states.push(Object.assign({}));
         break;
     }
   }
