@@ -88,9 +88,12 @@ function transformStateWithClones(state, transforms) {
         }
 
         break;
+
+      default:
+        return 'Error';
     }
 
-    statesArray[statesArray.length] = { ...newState };
+    statesArray.push({ ...newState });
   }
 
   return statesArray;
