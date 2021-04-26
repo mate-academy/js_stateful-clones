@@ -65,7 +65,6 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, transforms) {
-  // write code here
   const statesArray = [];
   const newState = { ...state };
 
@@ -90,7 +89,7 @@ function transformStateWithClones(state, transforms) {
         break;
 
       default:
-        return 'Error';
+        throw new Error('Error');
     }
 
     statesArray.push({ ...newState });
