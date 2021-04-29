@@ -29,9 +29,7 @@ function transformStateWithClones(state, transforms) {
         break;
     }
 
-    const clone2 = Object.assign({}, clone);
-
-    result.push(clone2);
+    result.push({ ...clone });
   });
 
   return result;
