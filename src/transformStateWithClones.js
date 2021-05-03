@@ -80,9 +80,7 @@ function transformStateWithClones(state, transforms) {
 
       case 'removeProperties':
         for (const key of properties) {
-          if (copyState.hasOwnProperty(key)) {
-            delete copyState[key];
-          }
+          delete copyState[key];
         }
     }
     resArr.push({ ...copyState });
