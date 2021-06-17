@@ -28,9 +28,9 @@ function transformStateWithClones(state, actions) {
       }
     }
 
-    const FinalCopy = { ...copy };
+    const finalCopy = { ...copy };
 
-    transformedState.push(FinalCopy);
+    transformedState.push(finalCopy);
   }
 
   return transformedState;
