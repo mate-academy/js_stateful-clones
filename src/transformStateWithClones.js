@@ -9,7 +9,7 @@
 function transformStateWithClones(state, actions) {
   // write code here
   const copy = Object.assign({}, state);
-  const result = [];
+  const transformedState = [];
 
   for (const item of actions) {
     if (item.type === 'addProperties') {
@@ -30,10 +30,10 @@ function transformStateWithClones(state, actions) {
 
     const FinalCopy = { ...copy };
 
-    result.push(FinalCopy);
+    transformedState.push(FinalCopy);
   }
 
-  return result;
+  return transformedState;
 }
 
 module.exports = transformStateWithClones;
