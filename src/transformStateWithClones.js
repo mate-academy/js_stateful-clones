@@ -12,9 +12,6 @@ function transformStateWithClones(state, actions) {
   const transformedState = [];
 
   actions.forEach(action => {
-    copiedState = { ...copiedState };
-    transformedState.push(copiedState);
-
     switch (action.type) {
       case 'clear':
         for (const key in copiedState) {
@@ -30,6 +27,7 @@ function transformStateWithClones(state, actions) {
         });
         break;
     }
+    transformedState.push({ ...copiedState });
   });
 
   return transformedState;
