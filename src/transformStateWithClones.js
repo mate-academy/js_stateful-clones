@@ -8,7 +8,7 @@
  */
 
 function transformStateWithClones(state, actions) {
-  let copiedState = { ...state };
+  const copiedState = { ...state };
   const transformedState = [];
 
   actions.forEach(action => {
@@ -19,7 +19,7 @@ function transformStateWithClones(state, actions) {
         };
         break;
       case 'addProperties':
-        copiedState = Object.assign(copiedState, action.extraData);
+        Object.assign(copiedState, action.extraData);
         break;
       case 'removeProperties':
         action.keysToRemove.forEach(key => {
