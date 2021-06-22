@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, action) {
-  const arrayOfObj = [];
+  const arrayOfObject = [];
   const objectOfProparties = { ...state };
 
   for (let i = 0; i < action.length; i++) {
@@ -30,10 +30,10 @@ function transformStateWithClones(state, action) {
         }
         break;
     }
-    arrayOfObj.push({ ...objectOfProparties });
+    arrayOfObject.push({ ...objectOfProparties });
   }
 
-  return arrayOfObj;
+  return arrayOfObject;
 }
 
 module.exports = transformStateWithClones;
