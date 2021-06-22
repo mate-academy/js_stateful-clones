@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateCopy = cloneObject(state);
+  const stateCopy = cloneState(state);
   const stateClones = new Array(actions.length);
   let index = 0;
 
@@ -29,14 +29,14 @@ function transformStateWithClones(state, actions) {
         }
         break;
     }
-    stateClones[index] = cloneObject(stateCopy);
+    stateClones[index] = cloneState(stateCopy);
     index++;
   }
 
   return stateClones;
 }
 
-function cloneObject(original) {
+function cloneState(original) {
   const clone = {};
 
   for (const property in original) {
