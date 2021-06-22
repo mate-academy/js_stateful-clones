@@ -34,7 +34,7 @@ function transformStateWithClones(state, actions) {
     };
   };
 
-  const savingState = (currentState) => {
+  const savegState = (currentState) => {
     arrStore.push({ ...currentState });
   };
 
@@ -43,18 +43,16 @@ function transformStateWithClones(state, actions) {
 
     if (actionType === 'addProperties') {
       addingProperties(actions[key].extraData);
-      savingState(copySate);
     };
 
     if (actionType === 'removeProperties') {
       removingProperties(actions[key].keysToRemove);
-      savingState(copySate);
     };
 
     if (actionType === 'clear') {
       clearingObj(copySate);
-      savingState(copySate);
     };
+    savegState(copySate);
   };
 
   return arrStore;
