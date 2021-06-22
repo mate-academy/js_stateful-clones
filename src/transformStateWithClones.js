@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, action) {
-  const arr = [];
+  const arrOfObj = [];
   const obj = { ...state };
 
   for (let i = 0; i < action.length; i++) {
@@ -31,10 +31,10 @@ function transformStateWithClones(state, action) {
         delete obj[key];
       }
     }
-    arr.push({ ...obj });
+    arrOfObj.push({ ...obj });
   }
 
-  return arr;
+  return arrOfObj;
 }
 
 module.exports = transformStateWithClones;
