@@ -8,32 +8,31 @@
  */
 function transformStateWithClones(state, actions) {
   // write code here
-  let modState = Object.assign({}, state);
-  const resultingArray = [];
+  let copyState = Object.assign({}, state);
+  const resultState = [];
 
   for (const action of actions) {
-    for (const key in action) {
-      switch (action[key]) {
-        case 'clear':
-          modState = {};
-          break;
+    switch (action.type) {
+      case 'clear':
+        copyState = {};
+        break;
 
-        case 'addProperties':
-          Object.assign(modState, action.extraData);
-          break;
+      case 'addProperties':
+        Object.assign(copyState, action.extraData);
+        break;
 
-        case 'removeProperties':
+      case 'removeProperties':
 
-          for (const secondLevelKey in action.keysToRemove) {
-            delete modState[action.keysToRemove[secondLevelKey]];
-          }
-          break;
-      }
+        for (const secondLevelKey of action.keysToRemove) {
+          delete copyState[secondLevelKey];
+        }
+        break;
     }
-    resultingArray.push({ ...modState });
+
+    resultState.push({ ...copyState });
   }
 
-  return resultingArray;
+  return resultState;
 }
 
 module.exports = transformStateWithClones;
