@@ -33,9 +33,4 @@ function transformStateWithClones(state, actions) {
 
   return actionHistory;
 }
-// console.log(function transformStateWithClones({foo: 'bar', bar: 'foo'},[
-//   {type: 'addProperties', extraData: {name: 'Jim', hello: 'world'}},
-//   {type: 'removeProperties', keysToRemove: ['bar', 'hello']},
-//   {type: 'addProperties', extraData: {another: 'one'}}
-// ])
 module.exports = transformStateWithClones;
