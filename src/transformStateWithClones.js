@@ -22,16 +22,11 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-
         currentState = {};
         break;
     }
 
-    const currentStates = {
-      ...currentState,
-    };
-
-    changedStates.push(currentStates);
+    changedStates.push({ ...currentState });
   }
 
   return changedStates;
