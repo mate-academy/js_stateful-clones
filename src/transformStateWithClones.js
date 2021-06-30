@@ -7,46 +7,40 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateClone = {};
+  const stateClone = { ...state };
 
-  Object.assign(stateClone, state);
+  const actionsLog = [];
 
-  const actionsLog = new Array(actions.length);
+  for (const value of actions) {
+    const stateCloneCopy = {};
 
-  for (let i = 0; i < actionsLog.length; i++) {
-    actionsLog[i] = {};
-  }
+    switch (value.type) {
+      case 'addProperties':
+        Object.assign(stateCloneCopy, stateClone);
+        Object.assign(stateCloneCopy, value.extraData);
+        actionsLog.push(stateCloneCopy);
+        Object.assign(stateClone, stateCloneCopy);
+        break;
 
-  for (let i = 0; i < actionsLog.length; i++) {
-    if (actions[i].type === 'addProperties') {
-      if (i === 0) {
-        Object.assign(actionsLog[i], stateClone);
-        Object.assign(actionsLog[i], actions[i].extraData);
-      } else {
-        Object.assign(actionsLog[i], actionsLog[i - 1]);
-        Object.assign(actionsLog[i], actions[i].extraData);
-      }
-    }
+      case 'removeProperties':
+        Object.assign(stateCloneCopy, stateClone);
 
-    if (actions[i].type === 'removeProperties') {
-      if (i === 0) {
-        Object.assign(actionsLog[i], stateClone);
-
-        for (const keys of actions[i].keysToRemove) {
-          delete actionsLog[i][keys];
+        for (const keys of value.keysToRemove) {
+          delete stateCloneCopy[keys];
+          delete stateClone[keys];
         }
-      } else {
-        Object.assign(actionsLog[i], actionsLog[i - 1]);
 
-        for (const keys of actions[i].keysToRemove) {
-          delete actionsLog[i][keys];
+        actionsLog.push(stateCloneCopy);
+        Object.assign(stateClone, stateCloneCopy);
+        break;
+
+      case 'clear':
+        actionsLog.push(stateCloneCopy);
+
+        for (const key in stateClone) {
+          delete stateClone[key];
         }
-      }
-    }
-
-    if (actions[i].type === 'clear') {
-      actionsLog[i] = {};
-    }
+    };
   }
 
   return actionsLog;
