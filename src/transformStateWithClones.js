@@ -18,7 +18,6 @@ function transformStateWithClones(state, actions) {
       case 'addProperties':
         Object.assign(stateCloneCopy, stateClone);
         Object.assign(stateCloneCopy, value.extraData);
-        actionsLog.push(stateCloneCopy);
         Object.assign(stateClone, stateCloneCopy);
         break;
 
@@ -30,17 +29,16 @@ function transformStateWithClones(state, actions) {
           delete stateClone[keys];
         }
 
-        actionsLog.push(stateCloneCopy);
         Object.assign(stateClone, stateCloneCopy);
         break;
 
       case 'clear':
-        actionsLog.push(stateCloneCopy);
-
         for (const key in stateClone) {
           delete stateClone[key];
         }
     };
+
+    actionsLog.push(stateCloneCopy);
   }
 
   return actionsLog;
