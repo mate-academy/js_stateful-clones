@@ -9,6 +9,7 @@
 function transformStateWithClones(state, actions) {
   // write code here
   const copyState = { ...state };
+  let changes = {};
   const result = [];
 
   for (const actionsKeys of actions) {
@@ -16,29 +17,24 @@ function transformStateWithClones(state, actions) {
       case 'addProperties':
         Object.assign(copyState, actionsKeys.extraData);
 
-        const addedProperties = { ...copyState };
-
-        result.push(addedProperties);
+        changes = { ...copyState };
         break;
       case 'removeProperties':
         for (const key of actionsKeys.keysToRemove) {
           delete copyState[key];
         }
 
-        const removedProperties = { ...copyState };
-
-        result.push(removedProperties);
+        changes = { ...copyState };
         break;
       case 'clear':
         for (const key2 in copyState) {
           delete copyState[key2];
         }
 
-        const clearedProperties = { ...copyState };
-
-        result.push(clearedProperties);
+        changes = { ...copyState };
         break;
     }
+    result.push(changes);
   }
 
   return result;
