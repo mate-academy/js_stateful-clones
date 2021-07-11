@@ -22,8 +22,8 @@ function transformStateWithClones(state, actions) {
     }
 
     if (actions[key].type === 'clear') {
-      for (const j in temporary) {
-        delete temporary[j];
+      for (const delKey in temporary) {
+        delete temporary[delKey];
       }
     }
     resultArray.push({ ...temporary });
