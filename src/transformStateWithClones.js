@@ -7,8 +7,6 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // let stateClone =
-  // Object.defineProperties({}, Object.getOwnPropertyDescriptors(state));
   const stateClone = Object.assign({}, state);
   const resultStatesArray = [];
 
