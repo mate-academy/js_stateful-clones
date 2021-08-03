@@ -17,7 +17,7 @@ function transformStateWithClones(state, actions) {
 
     if (action.type === 'removeProperties') {
       for (const keyToRemove of action.keysToRemove) {
-        if (stateCopy.hasOwnProperty(keyToRemove)) {
+        if (stateCopy[keyToRemove]) {
           delete stateCopy[keyToRemove];
         }
       }
@@ -29,7 +29,7 @@ function transformStateWithClones(state, actions) {
       }
     }
 
-    result.push(Object.assign({}, stateCopy));
+    result.push({ ...stateCopy });
   }
 
   return result;
