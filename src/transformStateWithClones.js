@@ -28,6 +28,9 @@ function transformStateWithClones(state, actions) {
         }
         oldVersionsArray.push({ ...cloneOfState });
         break;
+
+      default:
+        break;
     }
   }
 
