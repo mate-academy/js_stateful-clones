@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 'use strict';
 
 /**
@@ -7,7 +8,30 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
+  let modifiedState = { ...state };
+  const modifiedActions = [];
+
+  for (const action of actions) {
+    switch (action.type) {
+      case 'addProperties':
+        Object.assign(modifiedState, action.extraData);
+        break;
+
+      case 'removeProperties':
+        for (const key of action.keysToRemove) {
+          delete modifiedState[key];
+        }
+        break;
+
+      case 'clear':
+        modifiedState = {};
+        break;
+    }
+
+    modifiedActions.push({ ...modifiedState });
+  }
+
+  return modifiedActions;
 }
 
 module.exports = transformStateWithClones;
