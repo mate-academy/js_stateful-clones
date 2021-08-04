@@ -8,16 +8,16 @@
  */
 function transformStateWithClones(state, actions) {
   // write code here
-  let tempState = { ...state };
+  const tempState = { ...state };
   const previousVersions = [];
 
-  for (let i = 0; i < actions.length; i++) {
-    if (actions[i].type === 'addProperties') {
-      Object.assign(tempState, actions[i].extraData);
-    } else if (actions[i].type === 'removeProperties') {
-      for (let j = 0; j < actions[i].keysToRemove.length; j++) {
+  for (const action of actions) {
+    if (action.type === 'addProperties') {
+      Object.assign(tempState, action.extraData);
+    } else if (action.type === 'removeProperties') {
+      for (let j = 0; j < action.keysToRemove.length; j++) {
         for (const key in tempState) {
-          if (key === actions[i].keysToRemove[j]) {
+          if (key === action.keysToRemove[j]) {
             delete tempState[key];
           }
         }
@@ -27,8 +27,9 @@ function transformStateWithClones(state, actions) {
         delete tempState[key];
       }
     }
-    previousVersions[i] = tempState;
-    tempState = { ...previousVersions[i] };
+    // previousVersions[action] = tempState;
+    // tempState = { ...previousVersions[action] };
+    previousVersions.push({ ...tempState });
   }
 
   return previousVersions;
