@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   // write code here
-  const stateClone = { ...state };
+  let stateClone = { ...state };
   const storageActions = [];
 
   for (const typeAction of actions) {
@@ -24,9 +24,7 @@ function transformStateWithClones(state, actions) {
         }
         break;
       case 'clear':
-        for (const key in stateClone) {
-          delete stateClone[key];
-        }
+        stateClone = {};
         break;
     }
     storageActions.push({ ...stateClone });
