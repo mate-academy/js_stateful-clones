@@ -8,7 +8,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const modifiedState = { ...state };
+  let modifiedState = { ...state };
   const modifiedActions = [];
 
   for (const action of actions) {
@@ -24,13 +24,11 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        for (const property in modifiedState) {
-          delete modifiedState[property];
-        }
+        modifiedState = {};
         break;
     }
 
-    modifiedActions.push(Object.assign({}, modifiedState));
+    modifiedActions.push({ ...modifiedState });
   }
 
   return modifiedActions;
