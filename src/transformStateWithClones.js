@@ -26,6 +26,10 @@ function transformStateWithClones(state, actions) {
         for (const key in objectStep) {
           delete objectStep[key];
         }
+        break;
+
+      default:
+        break;
     }
 
     collectionObjects.push(objectStep);
