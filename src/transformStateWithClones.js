@@ -7,11 +7,10 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const arrayOfActionsValue = Object.values(actions);
   const cloneArray = [];
   const newObject = { ...state };
 
-  for (const item of arrayOfActionsValue) {
+  for (const item of actions) {
     switch (item.type) {
       case 'addProperties':
         Object.assign(newObject, item.extraData);
