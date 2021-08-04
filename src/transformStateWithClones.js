@@ -20,10 +20,14 @@ function transformStateWithClones(state, actions) {
         for (const key of action.keysToRemove) {
           delete cloneState[key];
         }
+
         break;
 
       case 'clear':
         cloneState = {};
+        break;
+
+      default:
         break;
     }
 
