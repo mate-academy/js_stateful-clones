@@ -11,7 +11,7 @@ function transformStateWithClones(state, actions) {
   const newState = {
     ...state,
   };
-  const statesArray = [];
+  const setOfStates = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -31,10 +31,10 @@ function transformStateWithClones(state, actions) {
         }
         break;
     }
-    statesArray.push({ ...newState });
+    setOfStates.push({ ...newState });
   }
 
-  return statesArray;
+  return setOfStates;
 }
 
 module.exports = transformStateWithClones;
