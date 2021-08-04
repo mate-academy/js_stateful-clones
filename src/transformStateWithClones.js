@@ -10,12 +10,6 @@ function transformStateWithClones(state, actions) {
   const collectionObjects = [];
   let objectStep = { ...state };
 
-  function createClone(object) {
-    const newObject = { ...object };
-
-    return newObject;
-  }
-
   for (const action of actions) {
     if (action.type === 'addProperties') {
       for (const key in action.extraData) {
@@ -32,7 +26,7 @@ function transformStateWithClones(state, actions) {
     }
 
     collectionObjects.push(objectStep);
-    objectStep = createClone(objectStep);
+    objectStep = Object.assign({}, objectStep);
   }
 
   return collectionObjects;
