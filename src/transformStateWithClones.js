@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   let cloneState = { ...state };
-  const objectOfCloneState = [];
+  const arrayOfCloneState = [];
 
   for (let i = 0; i < actions.length; i++) {
     switch (actions[i].type) {
@@ -31,11 +31,11 @@ function transformStateWithClones(state, actions) {
       default:
         break;
     }
-    objectOfCloneState[i] = cloneState;
-    cloneState = { ...objectOfCloneState[i] };
+    arrayOfCloneState[i] = cloneState;
+    cloneState = { ...arrayOfCloneState[i] };
   }
 
-  return objectOfCloneState;
+  return arrayOfCloneState;
 }
 
 module.exports = transformStateWithClones;
