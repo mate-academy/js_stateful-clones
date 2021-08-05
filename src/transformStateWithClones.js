@@ -23,7 +23,6 @@ function transformStateWithClones(state, actions) {
             delete clone[keys];
           }
         }
-
         array.push({ ...clone });
         break;
 
@@ -31,7 +30,6 @@ function transformStateWithClones(state, actions) {
         for (const key in clone) {
           delete clone[key];
         }
-
         array.push({ ...clone });
     }
   }
