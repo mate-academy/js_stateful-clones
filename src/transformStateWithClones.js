@@ -11,8 +11,8 @@ function transformStateWithClones(state, actions) {
   let stateClone = { ...state };
   const storageActions = [];
 
-  for (const typeAction of actions) {
-    const { type, extraData, keysToRemove } = typeAction;
+  for (const action of actions) {
+    const { type, extraData, keysToRemove } = action;
 
     switch (type) {
       case 'addProperties':
