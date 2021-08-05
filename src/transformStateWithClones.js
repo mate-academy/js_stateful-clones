@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let cloneState = { ...state };
+  const cloneState = { ...state };
   const arrayOfCloneState = [];
 
   for (let i = 0; i < actions.length; i++) {
@@ -31,8 +31,7 @@ function transformStateWithClones(state, actions) {
       default:
         break;
     }
-    arrayOfCloneState[i] = cloneState;
-    cloneState = { ...arrayOfCloneState[i] };
+    arrayOfCloneState.push({ ...cloneState });
   }
 
   return arrayOfCloneState;
