@@ -8,30 +8,33 @@
  */
 function transformStateWithClones(state, actions) {
   const cloneState = { ...state };
+  const listOfActions = [];
 
   for (const action of actions) {
-    for (const key in action) {
-      if (key === 'type') {
-        if (action.type === 'clear') {
-          Object.keys(cloneState).forEach(n => delete cloneState[n]);
-        } else if (action.type === 'addProperties') {
-          if (action.extraData) {
-            Object.assign(cloneState, action.extraData);
-          }
-        } else if (action.type === 'removeProperties') {
-          if (action.keysToRemove) {
-            for (const keyToRemove of action.keysToRemove) {
-              if (keyToRemove in cloneState) {
-                delete cloneState[keyToRemove];
-              }
-            }
+    if (action.type === 'clear') {
+      Object.keys(cloneState).forEach(n => delete cloneState[n]);
+    }
+
+    if (action.type === 'addProperties') {
+      if (action.extraData) {
+        Object.assign(cloneState, action.extraData);
+      }
+    }
+
+    if (action.type === 'removeProperties') {
+      if (action.keysToRemove) {
+        for (const key of action.keysToRemove) {
+          if (key in cloneState) {
+            delete cloneState[key];
           }
         }
       }
     }
+
+    listOfActions.push({ ...cloneState });
   }
 
-  return [cloneState];
+  return listOfActions;
 }
 
 module.exports = transformStateWithClones;
