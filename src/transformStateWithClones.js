@@ -23,8 +23,7 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         stateCopy = {};
         break;
-      default:
-        break;
+      default: return 'ERROR. Check if the input is correct';
     }
     stateLogs.push({ ...stateCopy });
   }
