@@ -21,17 +21,17 @@ function transformStateWithClones(state, actions) {
 
       for (const removeKey of actionKey.keysToRemove) {
         delete remProp[removeKey];
-      }
+      };
 
       newArr.push(remProp);
       newObject = remProp;
     } else if (actionKey.type === 'clear') {
       newArr.push({});
       newObject = {};
-    }
-  }
+    };
+  };
 
   return newArr;
-}
+};
 
 module.exports = transformStateWithClones;
