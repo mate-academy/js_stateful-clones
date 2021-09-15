@@ -7,28 +7,34 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let newObject = state;
+  let copyProp = Object.assign({}, state);
   const newArr = [];
 
   for (const actionKey of actions) {
-    if (actionKey.type === 'addProperties') {
-      const copyProp = Object.assign({}, newObject, actionKey.extraData);
+    switch (actionKey.type) {
+      case 'addProperties':
+        copyProp = {
+          ...copyProp,
+          ...actionKey.extraData,
+        };
+        break;
 
-      newArr.push(copyProp);
-      newObject = copyProp;
-    } else if (actionKey.type === 'removeProperties') {
-      const remProp = Object.assign({}, newObject);
+      case 'removeProperties':
+        for (const removeKey of actionKey.keysToRemove) {
+          delete copyProp[removeKey];
+        };
+        break;
 
-      for (const removeKey of actionKey.keysToRemove) {
-        delete remProp[removeKey];
-      };
-
-      newArr.push(remProp);
-      newObject = remProp;
-    } else if (actionKey.type === 'clear') {
-      newArr.push({});
-      newObject = {};
+      case 'clear':
+        for (const deleteKey in copyProp) {
+          delete copyProp[deleteKey];
+        };
+        break;
     };
+
+    newArr.push({
+      ...copyProp,
+    });
   };
 
   return newArr;
