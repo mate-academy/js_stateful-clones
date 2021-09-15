@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateCopy = { ...state };
+  let stateCopy = { ...state };
   const stateVersions = [];
 
   actions.map(({ type, extraData, keysToRemove }) => {
@@ -16,26 +16,22 @@ function transformStateWithClones(state, actions) {
         for (const key in extraData) {
           stateCopy[key] = extraData[key];
         }
-        stateVersions.push({ ...stateCopy });
         break;
 
       case 'removeProperties':
         for (const key of keysToRemove) {
           delete stateCopy[key];
         }
-        stateVersions.push({ ...stateCopy });
         break;
 
       case 'clear':
-        Object.keys(stateCopy).map(key => {
-          delete stateCopy[key];
-        });
-        stateVersions.push({ ...stateCopy });
+        stateCopy = {};
         break;
 
       default:
         throw new Error('Invalid action type.');
-    }
+    };
+    stateVersions.push({ ...stateCopy });
   });
 
   return stateVersions;
