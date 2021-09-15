@@ -13,8 +13,8 @@ function transformStateWithClones(state, actions) {
   for (let i = 0; i < actions.length; i++) {
     switch (actions[i].type) {
       case 'addProperties':
-        for (const keys in actions[i].extraData) {
-          clone[keys] = actions[i].extraData[keys];
+        for (const key in actions[i].extraData) {
+          clone[key] = actions[i].extraData[key];
         }
         break;
 
@@ -25,8 +25,8 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        for (const keys in clone) {
-          delete clone[keys];
+        for (const key in clone) {
+          delete clone[key];
         }
         break;
     }
