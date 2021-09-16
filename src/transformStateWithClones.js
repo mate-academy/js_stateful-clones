@@ -26,15 +26,12 @@ function transformStateWithClones(state, actions) {
         }
         break;
       case 'clear':
-        for (const key in cloneState) {
-          delete cloneState[key];
-        }
+        cloneState = {};
         break;
     }
 
     historyState.push({ ...cloneState });
   }
-  // console.log("History:", historyState);
 
   return historyState;
 }
