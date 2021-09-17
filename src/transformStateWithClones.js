@@ -29,10 +29,6 @@ function transformStateWithClones(state, actions) {
         return withRemove;
 
       case 'clear':
-        if (Object.keys(currentState).length === 0) {
-          return {};
-        }
-
         for (const key in currentState) {
           delete currentState[key];
         }
