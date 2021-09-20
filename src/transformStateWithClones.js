@@ -7,28 +7,29 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const arr = [];
+  const res = [];
   const obj = { ...state };
   const removeKeys = (keys) => keys.forEach(key => {
     delete obj[key];
   });
 
-  for (let i = 0; i < actions.length; i++) {
-    if (actions[i].type === 'addProperties') {
-      Object.assign(obj, actions[i].extraData);
+  for (const action of actions) {
+    switch (action.type) {
+      case 'addProperties':
+        Object.assign(obj, action.extraData);
+        break;
+      case 'removeProperties':
+        removeKeys(action.keysToRemove);
+        break;
+      case 'clear':
+        removeKeys(Object.keys(obj));
+        break;
     }
 
-    if (actions[i].type === 'removeProperties') {
-      removeKeys(actions[i].keysToRemove);
-    }
-
-    if (actions[i].type === 'clear') {
-      removeKeys(Object.keys(obj));
-    }
-    arr.push({ ...obj });
+    res.push({ ...obj });
   }
 
-  return arr;
+  return res;
 }
 
 module.exports = transformStateWithClones;
