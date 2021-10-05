@@ -29,6 +29,8 @@ function transformStateWithClones(state, actions) {
         getOperationArray(stateClone, stateCloneChanges);
         break;
       }
+
+      default: Console.log('Unknown operation');
     }
   }
 
