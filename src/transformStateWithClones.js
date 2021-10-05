@@ -24,6 +24,9 @@ function transformStateWithClones(state, actions) {
 
       case 'clear':
         stateDublicate = {};
+
+      default:
+        console.log("Some unusual activity")
     }
 
     result.push({ ...stateDublicate });
