@@ -27,6 +27,9 @@ function transformStateWithClones(state, actions) {
         Object.keys(tempObject).forEach(key => {
           delete tempObject[key];
         });
+        break;
+      default:
+        break;
     }
 
     objectsModified.push({
