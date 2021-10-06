@@ -36,9 +36,7 @@ function transformStateWithClones(state, actions) {
         return 'Undefined type of action: ' + action.type;
     }
 
-    changedStates.push({
-      ...currentState,
-    });
+    changedStates.push({ ...currentState });
   }
 
   return changedStates;
