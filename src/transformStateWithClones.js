@@ -7,13 +7,13 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let stateCopy = {
+  const stateCopy = {
     ...state,
   };
   const result = [];
 
-  for (const count in actions) {
-    const { type, extraData, keysToRemove } = actions[count];
+  for (const action of actions) {
+    const { type, extraData, keysToRemove } = action;
 
     switch (type) {
       case 'addProperties':
@@ -29,7 +29,9 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        stateCopy = {};
+        for (const key in stateCopy) {
+          delete stateCopy[key];
+        }
         break;
 
       default:
