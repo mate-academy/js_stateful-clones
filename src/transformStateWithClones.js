@@ -17,23 +17,22 @@ function transformStateWithClones(state, actions) {
     switch (type) {
       case 'addProperties':
         Object.assign(stateClone, extraData);
-        stateChangeLog.push({ ...stateClone });
         break;
       case 'removeProperties':
         for (const item of keysToRemove) {
           delete stateClone[item];
         }
-        stateChangeLog.push({ ...stateClone });
         break;
       case 'clear':
         for (const item in stateClone) {
           delete stateClone[item];
         }
-        stateChangeLog.push({ ...stateClone });
         break;
       default:
         return 'Error';
     }
+
+    stateChangeLog.push({ ...stateClone });
   }
 
   return stateChangeLog;
