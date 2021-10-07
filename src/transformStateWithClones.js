@@ -32,6 +32,7 @@ function transformStateWithClones(state, actions) {
 
       default: statesList.push('No actions done');
     }
+
     statesList.push({ ...stateChanged });
   }
 
