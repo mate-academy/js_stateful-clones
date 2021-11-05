@@ -7,40 +7,38 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const copyOfState = { ...state };
   const anwser = [];
+  let copyOfState = { ...state };
 
   for (const actionObjects of actions) {
-    for (const action in actionObjects) {
-      if (actionObjects[action] === 'addProperties') {
-        for (const data in actionObjects['extraData']) {
-          copyOfState[data] = actionObjects['extraData'][data];
+    const copyBeforePushing = { ...copyOfState };
+
+    switch (actionObjects.type) {
+      case 'addProperties':
+        for (const data in actionObjects.extraData) {
+          copyBeforePushing[data] = actionObjects.extraData[data];
         }
 
-        const copyBeforePushing = { ...copyOfState };
-
         anwser.push(copyBeforePushing);
-      } else if (actionObjects[action] === 'removeProperties') {
-        for (const aKeyToRemove of actionObjects['keysToRemove']) {
-          for (const sts in copyOfState) {
-            if (sts === aKeyToRemove) {
-              delete copyOfState[sts];
-            }
+        copyOfState = copyBeforePushing;
+        break;
+      case 'removeProperties':
+        for (const aKeyToRemove of actionObjects.keysToRemove) {
+          if (aKeyToRemove in copyOfState) {
+            delete copyBeforePushing[aKeyToRemove];
           }
         }
 
-        const copyBeforePushing = { ...copyOfState };
-
         anwser.push(copyBeforePushing);
-      } else if (actionObjects[action] === 'clear') {
-        for (const sts in copyOfState) {
-          delete copyOfState[sts];
+        copyOfState = copyBeforePushing;
+        break; ;
+      case 'clear':
+        for (const stateKey in copyOfState) {
+          delete copyBeforePushing[stateKey];
         }
-
-        const copyBeforePushing = { ...copyOfState };
-
         anwser.push(copyBeforePushing);
-      }
+        copyOfState = copyBeforePushing;
+        break;
     }
   }
 
