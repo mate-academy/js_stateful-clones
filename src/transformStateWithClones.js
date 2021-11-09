@@ -26,8 +26,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        Object.keys(prevStates[index])
-          .forEach(key => delete prevStates[index][key]);
+        prevStates[index] = {};
     }
   };
 
