@@ -7,58 +7,33 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let newObj;
-  let count = 0;
+  const changedState = { ...state };
+  const stateHistory = [];
 
   for (const obj of actions) {
-    for (const key in obj) {
-      if (obj[key] === 'addProperties') {
-        if (count === 0) {
-          newObj = [{}];
-          Object.assign(newObj[0], state);
-          Object.assign(newObj[count], obj.extraData);
-          count++;
-        } else {
-          newObj.push({});
-          Object.assign(newObj[count], newObj[count - 1]);
-          Object.assign(newObj[count], obj.extraData);
-          count++;
+    if (obj.type === 'addProperties') {
+      Object.assign(changedState, obj.extraData);
+      stateHistory.push({ ...changedState });
+    }
+
+    if (obj.type === 'removeProperties') {
+      for (const key of obj.keysToRemove) {
+        if (changedState[key] !== undefined) {
+          delete changedState[key];
         }
       }
+      stateHistory.push({ ...changedState });
+    }
 
-      if (obj[key] === 'removeProperties') {
-        if (count === 0) {
-          newObj = [{}];
-          Object.assign(newObj[0], state);
-        } else {
-          newObj.push({});
-          Object.assign(newObj[count], newObj[count - 1]);
-        }
-
-        for (const props of obj.keysToRemove) {
-          delete newObj[count][props];
-        }
-        count++;
+    if (obj.type === 'clear') {
+      for (const key in changedState) {
+        delete changedState[key];
       }
-
-      if (obj[key] === 'clear') {
-        if (count === 0) {
-          newObj = [{}];
-          Object.assign(newObj[0], state);
-        } else {
-          newObj.push({});
-          Object.assign(newObj[count], newObj[count - 1]);
-        }
-
-        for (const keys in newObj[count]) {
-          delete newObj[count][keys];
-        }
-        count++;
-      }
+      stateHistory.push({});
     }
   }
 
-  return newObj;
+  return stateHistory;
 }
 
 module.exports = transformStateWithClones;
