@@ -12,7 +12,7 @@ function transformStateWithClones(state, actions) {
 
   for (const obj of actions) {
     for (const key in obj) {
-      if (key === 'type' && obj[key] === 'addProperties') {
+      if (obj[key] === 'addProperties') {
         if (count === 0) {
           newObj = [{}];
           Object.assign(newObj[0], state);
@@ -26,7 +26,7 @@ function transformStateWithClones(state, actions) {
         }
       }
 
-      if (key === 'type' && obj[key] === 'removeProperties') {
+      if (obj[key] === 'removeProperties') {
         if (count === 0) {
           newObj = [{}];
           Object.assign(newObj[0], state);
@@ -41,7 +41,7 @@ function transformStateWithClones(state, actions) {
         count++;
       }
 
-      if (key === 'type' && obj[key] === 'clear') {
+      if (obj[key] === 'clear') {
         if (count === 0) {
           newObj = [{}];
           Object.assign(newObj[0], state);
