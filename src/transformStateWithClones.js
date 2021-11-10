@@ -27,7 +27,6 @@ function transformStateWithClones(state, actions) {
 
       case 'clear' :
         transormItem = {};
-        break;
     }
 
     result.push({ ...transormItem });
