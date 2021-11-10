@@ -26,10 +26,8 @@ function transformStateWithClones(state, actions) {
 
         newState = Object.assign({}, lastState);
 
-        for (let i = 0; i < keysToRemove.length; i++) {
-          const key = keysToRemove[i];
-
-          delete newState[key];
+        for (const keyToRemove of keysToRemove) {
+          delete newState[keyToRemove];
         }
         break;
       }
