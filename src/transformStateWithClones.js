@@ -36,7 +36,6 @@ function transformStateWithClones(state, actions) {
 
       case 'clear' : {
         newState = {};
-        break;
       }
     }
     clones.push(newState);
