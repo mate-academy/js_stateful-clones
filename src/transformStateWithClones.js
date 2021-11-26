@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const stateArray = [];
-  const tempState = {};
+  const tempState = { ...state };
   // copy state object to new temporary object
 
   for (const item in state) {
