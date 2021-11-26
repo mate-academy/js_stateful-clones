@@ -8,15 +8,10 @@
  */
 function transformStateWithClones(state, actions) {
   const stateArray = [];
-  const tempState = {};
-  // copy state object to new temporary object
-
-  for (const item in state) {
-    tempState[item] = state[item];
-  }
+  const tempState = { ...state };
 
   for (const action of actions) {
-    switch (action['type']) {
+    switch (action.type) {
       case 'clear':
         for (const key in tempState) {
           delete tempState[key];
@@ -33,7 +28,7 @@ function transformStateWithClones(state, actions) {
       default: break;
     }
 
-    stateArray.push(Object.assign({}, tempState));
+    stateArray.push({ ...tempState });
   }
 
   return stateArray;
