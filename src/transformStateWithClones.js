@@ -16,7 +16,7 @@ function transformStateWithClones(state, actions) {
   }
 
   for (const action of actions) {
-    switch (action['type']) {
+    switch (action.type) {
       case 'clear':
         for (const key in tempState) {
           delete tempState[key];
