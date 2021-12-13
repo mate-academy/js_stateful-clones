@@ -17,21 +17,19 @@ function transformStateWithClones(state, actions) {
           for (let j = 0; j < actions[i].keysToRemove.length; j++) {
             delete clone[actions[i].keysToRemove[j]];
           }
-          arr[i] = { ...clone };
           break;
 
         case 'addProperties':
           Object.assign(clone, actions[i].extraData);
-          arr[i] = { ...clone };
           break;
 
         case 'clear':
           for (const item in clone) {
             delete clone[item];
           }
-          arr[i] = { ...clone };
           break;
       }
+      arr[i] = { ...clone };
     }
   }
 
