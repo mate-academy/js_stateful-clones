@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const stateDublicate = { ...state };
-  const result = [];
+  const previousStates = [];
 
   for (const property of actions) {
     switch (property.type) {
@@ -26,11 +26,16 @@ function transformStateWithClones(state, actions) {
         for (const allProprety in stateDublicate) {
           delete stateDublicate[allProprety];
         }
+        break;
+
+      default:
+        return null;
     }
-    result.push({ ...stateDublicate });
+
+    previousStates.push({ ...stateDublicate });
   }
 
-  return result;
+  return previousStates;
 }
 
 module.exports = transformStateWithClones;
