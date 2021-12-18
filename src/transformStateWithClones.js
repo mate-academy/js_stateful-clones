@@ -9,7 +9,7 @@
 function transformStateWithClones(state, actions) {
   // write code here
   const copyState = { ...state };
-  const result = [];
+  const stateChangeLog = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -32,10 +32,10 @@ function transformStateWithClones(state, actions) {
       default :
         return null;
     }
-    result.push({ ...copyState });
+    stateChangeLog.push({ ...copyState });
   }
 
-  return result;
+  return stateChangeLog;
 }
 
 module.exports = transformStateWithClones;
