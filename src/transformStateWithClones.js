@@ -15,16 +15,17 @@ function transformStateWithClones(state, actions) {
 
     states.push(currentState);
 
-    if (action.type === 'clear') {
-      deleteAllProperties(currentState);
-    }
-
-    if (action.type === 'addProperties') {
-      Object.assign(currentState, action.extraData);
-    }
-
-    if (action.type === 'removeProperties') {
-      deleteProperties(currentState, action.keysToRemove);
+    switch (action.type) {
+      case 'clear':
+        deleteAllProperties(currentState);
+        break;
+      case 'addProperties':
+        Object.assign(currentState, action.extraData);
+        break;
+      case 'removeProperties':
+        deleteProperties(currentState, action.keysToRemove);
+        break;
+      default:
     }
   }
 
