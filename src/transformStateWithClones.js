@@ -26,9 +26,7 @@ function transformStateWithClones(state, actions) {
         copy = {};
         break;
     }
-    // console.log(copy);
-    // console.log({...copy});
-    result.push({...copy});
+    result.push({ ...copy });
   }
 
   return result;
