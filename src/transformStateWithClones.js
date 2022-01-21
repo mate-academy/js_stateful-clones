@@ -11,32 +11,31 @@ function transformStateWithClones(state, actions) {
 
   actions.forEach(action => {
     const { type, extraData, keysToRemove } = action;
+    let newState = { ...stateVersions[stateVersions.length - 1] };
 
     switch (type) {
       case 'addProperties':
-        stateVersions.push({
-          ...stateVersions[stateVersions.length - 1],
+        newState = {
+          ...newState,
           ...extraData,
-        });
+        };
         break;
 
       case 'removeProperties':
-        stateVersions.push({ ...stateVersions[stateVersions.length - 1] });
-
-        Object.keys(stateVersions[stateVersions.length - 1]).forEach(key => {
-          if (keysToRemove.includes(key)) {
-            delete stateVersions[stateVersions.length - 1][key];
-          }
-        });
+        for (const key of keysToRemove) {
+          delete newState[key];
+        }
         break;
 
       case 'clear':
-        stateVersions.push({});
+        newState = {};
         break;
 
       default:
         break;
     }
+
+    stateVersions.push(newState);
   });
 
   stateVersions.shift();
