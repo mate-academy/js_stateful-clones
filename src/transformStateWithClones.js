@@ -8,8 +8,8 @@
  */
 function transformStateWithClones(state, actions) {
   // write code here
-  const stateCopy = { ...state };
-  const arrayOfStates = [];
+  let  stateCopy = { ...state };
+  const states = [];
 
   for (const action of actions) {
     const { type, extraData, keysToRemove } = action;
@@ -26,18 +26,16 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        for (const key in stateCopy) {
-          delete stateCopy[key];
-        }
+        stateCopy = {};
         break;
 
       default:
         break;
     }
-    arrayOfStates.push({ ...stateCopy });
+    states.push({ ...stateCopy });
   }
 
-  return arrayOfStates;
+  return states;
 }
 
 module.exports = transformStateWithClones;
