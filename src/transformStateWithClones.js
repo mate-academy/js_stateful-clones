@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   // write code here
-  const newArr = [];
+  const statesList = [];
   const copy = Object.assign({}, state);
 
   for (const action of actions) {
@@ -37,10 +37,10 @@ function transformStateWithClones(state, actions) {
       default:
         break;
     }
-    newArr.push({ ...copy });
+    statesList.push({ ...copy });
   }
 
-  return newArr;
+  return statesList;
 }
 
 module.exports = transformStateWithClones;
