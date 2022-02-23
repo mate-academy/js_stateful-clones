@@ -28,8 +28,7 @@ function transformStateWithClones(state, actions) {
         objects.push(newObj);
         break;
       case 'clear':
-        newObj = { ...newObj };
-        Object.keys(newObj).forEach(key => delete newObj[key]);
+        newObj = {};
         objects.push(newObj);
         break;
     }
