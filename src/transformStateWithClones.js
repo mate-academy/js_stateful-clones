@@ -28,7 +28,7 @@ function transformStateWithClones(state, actions) {
 
         break;
 
-      default:
+      case 'addProperties':
         const objKeyJoin = actions[i].extraData;
 
         Object.assign(objNew, objKeyJoin);
