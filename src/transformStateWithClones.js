@@ -34,8 +34,6 @@ function transformStateWithClones(state, actions) {
     arr.push({ ...obj });
   }
 
-  // arr.push({ ...obj });
-
   return arr;
 }
 
