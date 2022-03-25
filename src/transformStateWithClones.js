@@ -19,9 +19,9 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        for (const key in action.keysToRemove) {
-          if (stateCopy[action.keysToRemove[key]]) {
-            delete stateCopy[action.keysToRemove[key]];
+        for (const key of action.keysToRemove) {
+          if (stateCopy[key]) {
+            delete stateCopy[key];
           }
         };
         break;
@@ -35,7 +35,7 @@ function transformStateWithClones(state, actions) {
     newArr.push({ ...stateCopy });
   }
 
-  return (newArr);
+  return newArr;
 }
 
 module.exports = transformStateWithClones;
