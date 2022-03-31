@@ -7,8 +7,8 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const resArray = []; // [4 keys, 4 keys]
-  const resObject = { ...state }; // 4 key
+  const resArray = [];
+  const resObject = { ...state };
 
   for (let i = 0; i < actions.length; i++) {
     switch (actions[i].type) {
