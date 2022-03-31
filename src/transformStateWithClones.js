@@ -33,7 +33,7 @@ function transformStateWithClones(state, actions) {
     arr.push({ ...copy });
   }
 
-  return arr;
+  return arr; // 123
 }
 
 module.exports = transformStateWithClones;
