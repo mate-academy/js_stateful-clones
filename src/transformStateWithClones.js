@@ -34,9 +34,7 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    const stateVersion = { ...stateCopy };
-
-    statesAllVersions.push(stateVersion);
+    statesAllVersions.push({ ...stateCopy });
   }
 
   return statesAllVersions;
