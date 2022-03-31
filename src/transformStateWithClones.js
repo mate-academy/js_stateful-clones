@@ -8,26 +8,33 @@
  */
 function transformStateWithClones(state, actions) {
   const statesAllVersions = [];
-  const stateTemporaryVersion = { ...state };
+  const stateCopy = { ...state };
 
   for (const action of actions) {
-    if (action.type === 'addProperties') {
-      Object.assign(stateTemporaryVersion, action.extraData);
+    const { type, extraData, keysToRemove } = action;
+
+    switch (type) {
+      case 'addProperties':
+        Object.assign(stateCopy, extraData);
+        break;
+
+      case 'clear':
+        Object.keys(stateCopy).forEach((key) => {
+          delete stateCopy[key];
+        });
+        break;
+
+      case 'removeProperties':
+        keysToRemove.forEach((prop) => {
+          delete stateCopy[prop];
+        });
+        break;
+
+      default:
+        break;
     }
 
-    if (action.type === 'clear') {
-      Object.keys(stateTemporaryVersion).forEach((key) => {
-        delete stateTemporaryVersion[key];
-      });
-    }
-
-    if (action.type === 'removeProperties') {
-      action.keysToRemove.forEach((prop) => {
-        delete stateTemporaryVersion[prop];
-      });
-    }
-
-    const stateVersion = { ...stateTemporaryVersion };
+    const stateVersion = { ...stateCopy };
 
     statesAllVersions.push(stateVersion);
   }
