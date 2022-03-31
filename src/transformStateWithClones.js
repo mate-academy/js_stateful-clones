@@ -12,24 +12,27 @@ function transformStateWithClones(state, actions) {
   const steteItems = { ...state };
 
   for (const action of actions) {
-    switch (true) {
-      case action.type === 'addProperties':
+    switch (action.type) {
+      case 'addProperties':
         for (const key in action.extraData) {
           steteItems[key] = action.extraData[key];
         }
         break;
 
-      case action.type === 'removeProperties':
+      case 'removeProperties':
         for (const key of action.keysToRemove) {
           delete steteItems[key];
         }
         break;
 
-      case action.type === 'clear':
+      case 'clear':
         for (const key in steteItems) {
           delete steteItems[key];
         }
         break;
+
+      default:
+        return steteItems;
     }
 
     result.push({ ...steteItems });
