@@ -25,10 +25,12 @@ function transformStateWithClones(state, actions) {
         }
         break;
 
-      default:
+      case 'clear':
         for (const stateKey in tempObj) {
           delete tempObj[stateKey];
         }
+        break;
+      default:
         break;
     }
 
