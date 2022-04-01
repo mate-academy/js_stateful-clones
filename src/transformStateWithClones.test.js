@@ -89,19 +89,21 @@ test('Should use the latest value when adding an existent property', () => {
     });
 });
 
-test('Should create an empty object when removing the last property', () => {
-  const state = { foo: 'bar' };
+test(
+  'Should create an empty object when removing the last property',
+  () => {
+    const state = { foo: 'bar' };
 
-  expect(transformStateWithClones(state, [
-    {
-      type: 'removeProperties', keysToRemove: ['foo'],
-    },
-  ]))
-    .toEqual([{}]);
+    expect(transformStateWithClones(state, [
+      {
+        type: 'removeProperties', keysToRemove: ['foo'],
+      },
+    ]))
+      .toEqual([{}]);
 
-  expect(state)
-    .toEqual({ foo: 'bar' });
-});
+    expect(state)
+      .toEqual({ foo: 'bar' });
+  });
 
 test('Should create an object without removed properties', () => {
   const state = {
