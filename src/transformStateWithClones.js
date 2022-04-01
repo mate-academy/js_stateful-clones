@@ -11,14 +11,14 @@ function transformStateWithClones(state, actions) {
   let currentState = { ...state };
   let keys = [];
 
-  for (const act of actions) {
-    switch (act.type) {
+  for (const action of actions) {
+    switch (action.type) {
       case 'addProperties':
-        currentState = Object.assign(currentState, act.extraData);
+        currentState = Object.assign(currentState, action.extraData);
         break;
 
       case 'removeProperties':
-        keys = act.keysToRemove;
+        keys = action.keysToRemove;
 
         for (const key of keys) {
           delete currentState[key];
@@ -30,7 +30,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw new Error(`Unsupported action type:#{Saction.tipe}`);
+        throw new Error(`Unsupported action type:${action.type}`);
     }
 
     newState.push({ ...currentState });
