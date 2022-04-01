@@ -13,8 +13,8 @@ function transformStateWithClones(state, actions) {
     const action = actions[i];
     const lastState = updateState[i - 1] || state;
 
-    switch (true) {
-      case (action.type === 'addProperties'): {
+    switch (action.type) {
+      case ('addProperties'): {
         const newState = {
           ...lastState,
           ...action.extraData,
@@ -25,7 +25,7 @@ function transformStateWithClones(state, actions) {
         break;
       }
 
-      case (action.type === 'removeProperties'): {
+      case ('removeProperties'): {
         const newState = {
           ...{},
           ...lastState,
@@ -42,7 +42,7 @@ function transformStateWithClones(state, actions) {
         break;
       }
 
-      case (action.type === 'clear'): {
+      case ('clear'): {
         updateState[i] = {};
 
         break;
