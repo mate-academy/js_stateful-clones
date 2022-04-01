@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const res = [];
+  const newStateArr = [];
 
   for (let index = 0; index < actions.length; index++) {
     let newState = {};
@@ -19,7 +19,7 @@ function transformStateWithClones(state, actions) {
       case 'addProperties': {
         if (index) {
           newState = {
-            ...res[index - 1],
+            ...newStateArr[index - 1],
             ...actionExtraDate,
           };
         } else {
@@ -29,13 +29,13 @@ function transformStateWithClones(state, actions) {
           };
         }
 
-        res.push(newState);
+        newStateArr.push(newState);
         break;
       }
 
       case 'removeProperties': {
-        if (index) {
-          newState = { ...res[index - 1] };
+        if (index > 0) {
+          newState = { ...newStateArr[index - 1] };
         } else {
           newState = { ...state };
         }
@@ -44,12 +44,12 @@ function transformStateWithClones(state, actions) {
           delete newState[actions[index].keysToRemove[key]];
         }
 
-        res.push(newState);
+        newStateArr.push(newState);
         break;
       }
 
       case 'clear': {
-        res.push({ });
+        newStateArr.push({ });
         break;
       }
 
@@ -59,7 +59,7 @@ function transformStateWithClones(state, actions) {
     }
   }
 
-  return res;
+  return newStateArr;
 }
 
 module.exports = transformStateWithClones;
