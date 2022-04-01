@@ -16,7 +16,7 @@ function transformStateWithClones(state, actions) {
         Object.assign(stateV2, actions[i].extraData);
         break;
       case 'removeProperties' :
-        for (const key in stateV2) {
+        for (const key of actions[i].keysToRemove) {
           delete stateV2[key];
         }
 
