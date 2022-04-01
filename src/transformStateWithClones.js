@@ -25,8 +25,12 @@ function transformStateWithClones(state, actions) {
         }
         break;
 
-      default:
+      case 'clear':
         currentState = {};
+        break;
+
+      default:
+        throw new Error(`Unsupported action type:#{Saction.tipe}`);
     }
 
     newState.push({ ...currentState });
