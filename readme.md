@@ -67,27 +67,3 @@ we must get
 ```
 the `state` variable must still contain
 {foo: 'bar', bar: 'foo'}.
-
-
-function transformStateWithClones(state, actions) {
-  const result = [];
-  let newState = { ...state };
-
-  actions.forEach(e => {
-    if (e.type === 'addProperties') {
-      newState = {
-        ...newState,
-        ...e.extraData,
-      };
-      result.push({ ...newState });
-    } else if (e.type === 'removeProperties') {
-      e.keysToRemove.forEach(el => delete newState[el]);
-      result.push({ ...newState });
-    } else if (e.type === 'clear') {
-      newState = {};
-      result.push({ ...newState });
-    }
-  });
-
-  return result;
-}

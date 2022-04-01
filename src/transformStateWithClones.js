@@ -33,6 +33,10 @@ function transformStateWithClones(state, actions) {
         result.push({ ...newState });
         break;
       }
+
+      default: {
+        throw new Error(`Unsupported action type: ${actions.type}`);
+      }
     }
   });
 
