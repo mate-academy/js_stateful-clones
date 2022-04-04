@@ -8,40 +8,43 @@
  */
 function transformStateWithClones(state, actions) {
   const result = [];
-  let tempState = state;
+  let stateVersions = state;
+  let variantsCount = 0;
 
-  for (let i = 0; i < actions.length; i++) {
-    for (const keys in actions[i]) {
-      switch (actions[i][keys]) {
-        case 'addProperties':
-          if (result[i - 1]) {
-            tempState = result[i - 1];
-          }
+  for (const variants of actions) {
+    const { type, extraData, keysToRemove } = variants;
 
-          result.push(Object.assign({}, tempState));
+    switch (type) {
+      case 'addProperties':
+        if (result[variantsCount - 1]) {
+          stateVersions = result[variantsCount - 1];
+        }
 
-          for (const data in actions[i].extraData) {
-            result[i][data] = actions[i].extraData[data];
-          }
-          break;
+        result.push(Object.assign({}, stateVersions));
 
-        case 'removeProperties':
-          if (result[i - 1]) {
-            tempState = result[i - 1];
-          }
+        for (const data in extraData) {
+          result[variantsCount][data] = extraData[data];
+        }
+        break;
 
-          result.push(Object.assign({}, tempState));
+      case 'removeProperties':
+        if (result[variantsCount - 1]) {
+          stateVersions = result[variantsCount - 1];
+        }
 
-          for (const remove of actions[i].keysToRemove) {
-            delete result[i][remove];
-          }
-          break;
+        result.push(Object.assign({}, stateVersions));
 
-        case 'clear':
-          result.push({});
-          break;
-      }
+        for (const key of keysToRemove) {
+          delete result[variantsCount][key];
+        }
+        break;
+
+      case 'clear':
+        result.push({});
+        break;
     }
+
+    variantsCount++;
   }
 
   return result;
