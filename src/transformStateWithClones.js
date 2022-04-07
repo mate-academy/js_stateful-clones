@@ -7,50 +7,56 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const arr = [];
-  let objBox = {};
-  let objBox2 = {};
+  const resultArray = [];
+  let objectBox = {};
+  let objectBox2 = {};
 
   for (const key in state) {
-    objBox2[key] = state[key];
+    objectBox2[key] = state[key];
   }
 
   for (let i = 0; i < actions.length; i++) {
-    objBox = {};
+    objectBox = {};
 
-    for (const key in objBox2) {
-      objBox[key] = objBox2[key];
+    for (const key in objectBox2) {
+      objectBox[key] = objectBox2[key];
     }
 
-    if (actions[i].type === 'addProperties') {
-      for (const key in actions[i].extraData) {
-        objBox[key] = actions[i].extraData[key];
-      }
-
-      arr.push(objBox);
-      objBox2 = objBox;
-    } else if (actions[i].type === 'removeProperties') {
-      for (const key of actions[i].keysToRemove) {
-        if (!objBox[key]) {
-          continue;
+    switch (actions[i].type) {
+      case 'addProperties':
+        for (const key in actions[i].extraData) {
+          objectBox[key] = actions[i].extraData[key];
         }
+        resultArray.push(objectBox);
+        objectBox2 = objectBox;
+        break;
 
-        delete objBox[key];
-      }
+      case 'removeProperties':
+        for (const key of actions[i].keysToRemove) {
+          if (!objectBox[key]) {
+            continue;
+          }
 
-      arr.push(objBox);
-      objBox2 = objBox;
-    } else if (actions[i].type === 'clear' && Object.keys(state).length !== 0) {
-      for (const keyOfState in objBox) {
-        delete objBox[keyOfState];
-      }
+          delete objectBox[key];
+        }
+        resultArray.push(objectBox);
+        objectBox2 = objectBox;
+        break;
 
-      arr.push(objBox);
-      objBox2 = objBox;
+      case 'clear':
+        for (const key in objectBox) {
+          delete objectBox[key];
+        }
+        resultArray.push(objectBox);
+        objectBox2 = objectBox;
+        break;
+
+      default:
+        break;
     }
   }
 
-  return arr;
+  return resultArray;
 }
 
 module.exports = transformStateWithClones;
