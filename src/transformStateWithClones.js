@@ -13,34 +13,33 @@ function transformStateWithClones(state, actions) {
   for (const action in actions) {
     const tempAction = Object.assign({}, actions[action]);
 
-    if (tempAction['type'] === 'addProperties') {
-      const dataToAdd = tempAction['extraData'];
+    switch (tempAction['type']) {
+      case 'addProperties':
+        const dataToAdd = tempAction.extraData;
 
-      for (const key in dataToAdd) {
-        modifiedState[key] = dataToAdd[key];
-      }
+        for (const key in dataToAdd) {
+          modifiedState[key] = dataToAdd[key];
+        }
 
-      result.push(Object.assign({}, modifiedState));
-    }
+        result.push(Object.assign({}, modifiedState));
+        break;
 
-    if (tempAction['type'] === 'removeProperties') {
-      const dataToRemove = tempAction['keysToRemove'];
+      case 'removeProperties':
+        const dataToRemove = tempAction.keysToRemove;
 
-      for (const title in dataToRemove) {
-        delete modifiedState[dataToRemove[title]];
-      }
+        for (const title in dataToRemove) {
+          delete modifiedState[dataToRemove[title]];
+        }
 
-      result.push(Object.assign({}, modifiedState));
-    }
+        result.push(Object.assign({}, modifiedState));
+        break;
 
-    if (tempAction['type'] === 'clear') {
-      const properties = Object.getOwnPropertyNames(modifiedState);
+      case 'clear':
+        for (const key in modifiedState) {
+          delete modifiedState[key];
+        }
 
-      properties.forEach(prop => {
-        delete modifiedState[prop];
-      });
-
-      result.push(Object.assign({}, modifiedState));
+        result.push(Object.assign({}, modifiedState));
     }
   }
 
