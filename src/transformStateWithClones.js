@@ -26,6 +26,9 @@ function transformStateWithClones(state, actions) {
         for (const key in stateNew) {
           delete stateNew[key];
         };
+        break;
+      default:
+        continue;
     }
 
     resArr.push({
