@@ -25,13 +25,15 @@ test('Should create a new object with multiple added properties', () => {
     {
       type: 'addProperties',
       extraData: {
-        name: 'Jim', hello: 'world',
+        name: 'Jim',
+        hello: 'world',
       },
     },
   ]))
     .toEqual([
       {
-        name: 'Jim', hello: 'world',
+        name: 'Jim',
+        hello: 'world',
       },
     ]);
 
@@ -48,13 +50,17 @@ test('Should combine old properties with added ones', () => {
     {
       type: 'addProperties',
       extraData: {
-        name: 'Jim', hello: 'world',
+        name: 'Jim',
+        hello: 'world',
       },
     },
   ]))
     .toEqual([
       {
-        foo: 'bar', bar: 'foo', name: 'Jim', hello: 'world',
+        foo: 'bar',
+        bar: 'foo',
+        name: 'Jim',
+        hello: 'world',
       },
     ]);
 
@@ -73,7 +79,8 @@ test('Should use the latest value when adding an existent property', () => {
     {
       type: 'addProperties',
       extraData: {
-        foo: 'new', hello: 'world',
+        foo: 'new',
+        hello: 'world',
       },
     },
   ]))
@@ -94,7 +101,8 @@ test('Should create an empty object when removing the last property', () => {
 
   expect(transformStateWithClones(state, [
     {
-      type: 'removeProperties', keysToRemove: ['foo'],
+      type: 'removeProperties',
+      keysToRemove: ['foo'],
     },
   ]))
     .toEqual([{}]);
@@ -110,7 +118,8 @@ test('Should create an object without removed properties', () => {
 
   expect(transformStateWithClones(state, [
     {
-      type: 'removeProperties', keysToRemove: ['hello', 'foo', 'name'],
+      type: 'removeProperties',
+      keysToRemove: ['hello', 'foo', 'name'],
     },
   ]))
     .toEqual([
@@ -130,7 +139,8 @@ test('Should create the same state when removing no properties', () => {
 
   expect(transformStateWithClones(state, [
     {
-      type: 'removeProperties', keysToRemove: [],
+      type: 'removeProperties',
+      keysToRemove: [],
     },
   ]))
     .toEqual([
@@ -169,7 +179,9 @@ test('Should not fail when removing not existing property', () => {
 
 test('Should create an empty object after clear', () => {
   const state = {
-    foo: 'bar', name: 'Jim', another: 'one',
+    foo: 'bar',
+    name: 'Jim',
+    another: 'one',
   };
 
   expect(transformStateWithClones(state, [
@@ -179,7 +191,9 @@ test('Should create an empty object after clear', () => {
 
   expect(state)
     .toEqual({
-      foo: 'bar', name: 'Jim', another: 'one',
+      foo: 'bar',
+      name: 'Jim',
+      another: 'one',
     });
 });
 
@@ -196,7 +210,8 @@ test('Should not fails when calling clear for an empty state', () => {
 
 test('Should handle multiple types', () => {
   const state = {
-    foo: 'bar', bar: 'foo',
+    foo: 'bar',
+    bar: 'foo',
   };
 
   expect(transformStateWithClones(state, [
@@ -207,10 +222,14 @@ test('Should handle multiple types', () => {
       },
     },
     {
-      type: 'removeProperties', keysToRemove: ['bar', 'hello'],
+      type: 'removeProperties',
+      keysToRemove: ['bar', 'hello'],
     },
     {
-      type: 'addProperties', extraData: { another: 'one' },
+      type: 'addProperties',
+      extraData: {
+        another: 'one',
+      },
     },
   ]))
     .toEqual([
@@ -238,28 +257,35 @@ test('Should handle a long list of types', () => {
 
   expect(transformStateWithClones(state, [
     {
-      type: 'removeProperties', keysToRemove: ['another'],
+      type: 'removeProperties',
+      keysToRemove: ['another'],
     },
     { type: 'clear' },
     { type: 'clear' },
     { type: 'clear' },
     {
-      type: 'addProperties', extraData: { yet: 'another property' },
+      type: 'addProperties',
+      extraData: {
+        yet: 'another property',
+      },
     },
     { type: 'clear' },
     {
       type: 'addProperties',
       extraData: {
-        foo: 'bar', name: 'Jim',
+        foo: 'bar',
+        name: 'Jim',
       },
     },
     {
-      type: 'removeProperties', keysToRemove: ['name', 'hello'],
+      type: 'removeProperties',
+      keysToRemove: ['name', 'hello'],
     },
   ]))
     .toEqual([
       {
-        foo: 'bar', name: 'Jim',
+        foo: 'bar',
+        name: 'Jim',
       },
       {},
       {},
@@ -267,7 +293,8 @@ test('Should handle a long list of types', () => {
       { yet: 'another property' },
       {},
       {
-        foo: 'bar', name: 'Jim',
+        foo: 'bar',
+        name: 'Jim',
       },
       { foo: 'bar' },
     ]);
