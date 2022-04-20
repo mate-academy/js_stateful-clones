@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * @param {Object} state
@@ -8,19 +8,18 @@
  */
 function transformStateWithClones(state, actions) {
   const arr = [];
+  let objectFromState = Object.assign({}, state);
 
   for (let i = 0; i < actions.length; i++) {
-    let objectFromState = Object.assign({}, state);
-
     if (arr.length >= 1) {
       objectFromState = Object.assign({}, arr[i - 1]);
     }
 
-    if (actions[i].type === 'addProperties') {
+    if (actions[i].type === "addProperties") {
       Object.assign(objectFromState, actions[i].extraData);
     }
 
-    if (actions[i].type === 'removeProperties') {
+    if (actions[i].type === "removeProperties") {
       const propToDelete = actions[i].keysToRemove;
 
       for (let j = 0; j < propToDelete.length; j++) {
@@ -28,7 +27,7 @@ function transformStateWithClones(state, actions) {
       }
     }
 
-    if (actions[i].type === 'clear') {
+    if (actions[i].type === "clear") {
       for (const prop in objectFromState) {
         if (objectFromState.hasOwnProperty(prop)) {
           delete objectFromState[prop];
