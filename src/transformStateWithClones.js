@@ -8,34 +8,37 @@
  */
 function transformStateWithClones(state, actions) {
   const arr = [];
+
   let objectFromState = Object.assign({}, state);
 
   for (let i = 0; i < actions.length; i++) {
-    if (arr.length >= 1) {
-      objectFromState = Object.assign({}, arr[i - 1]);
-    }
+    // assign Object after previous changes
+    const prevObjectProp = Object.assign({}, objectFromState);
 
-    if (actions[i].type === "addProperties") {
-      Object.assign(objectFromState, actions[i].extraData);
-    }
+    switch (actions[i].type) {
+      case "addProperties":
+        Object.assign(prevObjectProp, actions[i].extraData);
+        break;
 
-    if (actions[i].type === "removeProperties") {
-      const propToDelete = actions[i].keysToRemove;
+      case "removeProperties":
+        const propToDelete = actions[i].keysToRemove;
 
-      for (let j = 0; j < propToDelete.length; j++) {
-        delete objectFromState[propToDelete[j]];
-      }
-    }
-
-    if (actions[i].type === "clear") {
-      for (const prop in objectFromState) {
-        if (objectFromState.hasOwnProperty(prop)) {
-          delete objectFromState[prop];
+        for (let j = 0; j < propToDelete.length; j++) {
+          delete prevObjectProp[propToDelete[j]];
         }
-      }
-    }
+        break;
 
-    arr.push(objectFromState);
+      case "clear":
+        for (const prop in prevObjectProp) {
+          if (prevObjectProp.hasOwnProperty(prop)) {
+            delete prevObjectProp[prop];
+          }
+        }
+        break;
+    }
+    // assign Object after changing it's properties in switch
+    objectFromState = Object.assign({}, prevObjectProp);
+    arr.push(prevObjectProp);
   }
 
   return arr;
