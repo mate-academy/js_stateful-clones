@@ -25,6 +25,9 @@ function transformStateWithClones(state, actions) {
         Object.keys(newState)
           .forEach(key => delete newState[key]);
         break;
+
+      default:
+        return `Please provide valid data`;
     }
     clones.push({ ...newState });
   }
