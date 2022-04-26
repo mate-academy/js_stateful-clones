@@ -8,26 +8,18 @@
  */
 function transformStateWithClones(state, actions) {
   const resultArray = [];
-  let objectBox = {};
   let objectBox2 = {};
 
-  for (const key in state) {
-    objectBox2[key] = state[key];
-  }
+  Object.assign(objectBox2, state);
 
   for (let i = 0; i < actions.length; i++) {
-    objectBox = {};
+    const objectBox = {};
 
-    for (const key in objectBox2) {
-      objectBox[key] = objectBox2[key];
-    }
+    Object.assign(objectBox, objectBox2);
 
     switch (actions[i].type) {
       case 'addProperties':
-        for (const key in actions[i].extraData) {
-          objectBox[key] = actions[i].extraData[key];
-        }
-        resultArray.push(objectBox);
+        Object.assign(objectBox, actions[i].extraData);
         objectBox2 = objectBox;
         break;
 
@@ -39,7 +31,6 @@ function transformStateWithClones(state, actions) {
 
           delete objectBox[key];
         }
-        resultArray.push(objectBox);
         objectBox2 = objectBox;
         break;
 
@@ -47,13 +38,14 @@ function transformStateWithClones(state, actions) {
         for (const key in objectBox) {
           delete objectBox[key];
         }
-        resultArray.push(objectBox);
         objectBox2 = objectBox;
         break;
 
       default:
         break;
     }
+
+    resultArray.push(objectBox);
   }
 
   return resultArray;
