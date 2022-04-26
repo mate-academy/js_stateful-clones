@@ -27,6 +27,9 @@ function transformStateWithClones(state, actions) {
           delete stateObject[remove];
         }
         break;
+
+      default:
+        break;
     }
 
     result.push({ ...stateObject });
