@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateClone = { ...state };
+  let stateClone = { ...state };
   const stateClones = [];
 
   for (const action of actions) {
@@ -16,31 +16,24 @@ function transformStateWithClones(state, actions) {
     switch (type) {
       case 'addProperties':
         Object.assign(stateClone, extraData);
-        stateClones.push(stateClone);
         break;
 
       case 'removeProperties':
         for (const key of keysToRemove) {
           delete stateClone[key];
         }
-
-        stateClones.push(stateClone);
         break;
 
       case 'clear':
-        for (const prop in stateClone) {
-          delete stateClone[prop];
-        }
-        stateClones.push(stateClone);
+        stateClone = {};
         break;
 
       default:
 
-        throw new Error();
-
-        // return 'Something went worng with your inputs'
-        //   + ', Please check and enter again';
+        return 'Something went worng with your inputs'
+          + ', Please check and enter again';
     }
+    stateClones.push({ ...stateClone });
   }
 
   return stateClones;
