@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateClone = { ...state };
+  let stateClone = { ...state };
   const stateClones = [];
 
   for (const action of actions) {
@@ -16,6 +16,11 @@ function transformStateWithClones(state, actions) {
     switch (type) {
       case 'addProperties':
         Object.assign(stateClone, extraData);
+        stateClones.push(stateClone);
+        break;
+
+      case 'clear':
+        stateClone = {};
         stateClones.push(stateClone);
         break;
 
