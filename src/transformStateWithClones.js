@@ -28,8 +28,6 @@ function transformStateWithClones(state, actions) {
         }
         arr.push({ ...cloneState });
         break;
-      default:
-        break;
     }
   }
 
