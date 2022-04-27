@@ -5,7 +5,7 @@
 # Task description
 
 Write a function `transformStateWithClones` that take a `state` object and an `actions` array
-and return an array of the same length as `actions` containing all previous versions of the `state`.
+and return an array of the same length as `actions`  all previous versions of the `state`.
 Each element of the resulting array has to represent the state produced by the next operation.
 
 **IMPORTANT!** You must not modify the initial `state` object in any way!
