@@ -23,7 +23,7 @@ function transformStateWithClones(state, actions) {
         }
         break;
 
-      default:
+      case 'clear':
         newState = {};
     }
 
