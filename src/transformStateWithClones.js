@@ -13,8 +13,6 @@ function transformStateWithClones(state, actions) {
   for (const currentAction of actions) {
     if (currentAction.type === 'addProperties') {
       Object.assign(modifyedObj, currentAction['extraData']);
-
-      clones.push({ ...modifyedObj });
     }
 
     if (currentAction.type === 'removeProperties') {
@@ -27,17 +25,15 @@ function transformStateWithClones(state, actions) {
           delete modifyedObj[currentDeleteKey];
         }
       }
-
-      clones.push({ ...modifyedObj });
     }
 
     if (currentAction.type === 'clear') {
       for (const key in modifyedObj) {
         delete modifyedObj[key];
       }
-
-      clones.push({ ...modifyedObj });
     }
+
+    clones.push({ ...modifyedObj });
   }
 
   return clones;
