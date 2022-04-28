@@ -39,30 +39,30 @@ test('Should create a new object with multiple added properties', () => {
     .toEqual({});
 });
 
-test('Should combine old properties with added ones', () => {
-  const state = {
-    foo: 'bar', bar: 'foo',
-  };
-
-  expect(transformStateWithClones(state, [
-    {
-      type: 'addProperties',
-      extraData: {
-        name: 'Jim', hello: 'world',
-      },
-    },
-  ]))
-    .toEqual([
-      {
-        foo: 'bar', bar: 'foo', name: 'Jim', hello: 'world',
-      },
-    ]);
-
-  expect(state)
-    .toEqual({
+test('Should combine old properties with added ones', function () {
+    const state = {
       foo: 'bar', bar: 'foo',
-    });
-});
+    };
+
+    expect(transformStateWithClones(state, [
+      {
+        type: 'addProperties',
+        extraData: {
+          name: 'Jim', hello: 'world',
+        },
+      },
+    ]))
+      .toEqual([
+        {
+          foo: 'bar', bar: 'foo', name: 'Jim', hello: 'world',
+        },
+      ]);
+
+    expect(state)
+      .toEqual({
+        foo: 'bar', bar: 'foo',
+      });
+  });
 
 test('Should use the latest value when adding an existent property', () => {
   const state = {
