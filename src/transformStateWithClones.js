@@ -11,10 +11,6 @@ function transformStateWithClones(state, actions) {
   const stateClone = Object.assign({}, state);
   const resultArr = [];
 
-  // if (actions.length === 0) {
-  //   return stateClone;
-  // }
-
   for (const property of actions) {
     if (property.type === 'removeProperties') {
       for (const action of property.keysToRemove) {
