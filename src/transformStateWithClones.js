@@ -11,13 +11,15 @@ function transformStateWithClones(state, actions) {
   const statesArray = [];
 
   for (const action of actions) {
-    switch (action.type) {
+    const { type, extraData, keysToRemove } = action;
+
+    switch (type) {
       case 'addProperties':
-        Object.assign(objectCopy, action.extraData);
+        Object.assign(objectCopy, extraData);
         break;
 
       case 'removeProperties':
-        for (const removeKey of action.keysToRemove) {
+        for (const removeKey of keysToRemove) {
           delete objectCopy[removeKey];
         }
         break;
@@ -32,9 +34,7 @@ function transformStateWithClones(state, actions) {
         throw new Error('Invalid paramater');
     }
 
-    const updatedState = { ...objectCopy };
-
-    statesArray.push(updatedState);
+    statesArray.push({ ...objectCopy });
   }
 
   return statesArray;
