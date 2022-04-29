@@ -32,6 +32,8 @@ function transformStateWithClones(state, actions) {
 
       case 'clear': cloneCopy = {};
         break;
+
+      default: break;
     }
 
     clone = cloneCopy;
