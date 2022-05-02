@@ -7,7 +7,6 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-
   let newState = { ...state };
   const arr = [];
 
@@ -23,7 +22,7 @@ function transformStateWithClones(state, actions) {
         };
         break;
 
-      default:
+      case 'clear':
         newState = {};
     }
     arr.push({ ...newState });
