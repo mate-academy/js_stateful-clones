@@ -3,7 +3,7 @@
 /**
  * @param {Object} state
  * @param {Object[]} actions
- *
+ *  1`1
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
@@ -26,6 +26,9 @@ function transformStateWithClones(state, actions) {
         for (const key1 in newState) {
           delete newState[key1];
         }
+        break;
+      default:
+        break;
     }
     res.push({ ...newState });
   }
