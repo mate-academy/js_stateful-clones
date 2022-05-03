@@ -8,19 +8,16 @@
  */
 function transformStateWithClones(state, actions) {
   const resultArray = [];
-  let objectBox2 = {};
+  const objectBox = {};
 
-  Object.assign(objectBox2, state);
+  Object.assign(objectBox, state);
 
   for (let i = 0; i < actions.length; i++) {
-    const objectBox = {};
 
-    Object.assign(objectBox, objectBox2);
 
     switch (actions[i].type) {
       case 'addProperties':
         Object.assign(objectBox, actions[i].extraData);
-        objectBox2 = objectBox;
         break;
 
       case 'removeProperties':
@@ -31,21 +28,19 @@ function transformStateWithClones(state, actions) {
 
           delete objectBox[key];
         }
-        objectBox2 = objectBox;
         break;
 
       case 'clear':
         for (const key in objectBox) {
           delete objectBox[key];
         }
-        objectBox2 = objectBox;
         break;
 
       default:
         break;
     }
 
-    resultArray.push(objectBox);
+    resultArray.push({ ...objectBox });
   }
 
   return resultArray;
