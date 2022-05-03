@@ -30,6 +30,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
+        results.push('action not existed');
     }
     results.push({ ...stateClone });
   }
