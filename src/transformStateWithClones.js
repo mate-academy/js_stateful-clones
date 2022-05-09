@@ -3,18 +3,18 @@
 function transformStateWithClones(state, actions) {
   const current = { ...state };
   const resultingArray = [];
-  let newr;
 
   for (let i = 0; i < actions.length; i++) {
+    
     if (actions[i].type === 'addProperties') {
-      for (const prop in actions[i].extraData) {
-        current[prop] = actions[i].extraData[prop];
+      for (const key in actions[i].extraData) {
+        current[key] = actions[i].extraData[key];
       }
     }
 
     if (actions[i].type === 'removeProperties') {
-      for (const word in actions[i].keysToRemove) {
-        delete current[actions[i].keysToRemove[word]];
+      for (const key in actions[i].keysToRemove) {
+        delete current[actions[i].keysToRemove[key]];
       }
     }
 
@@ -22,7 +22,9 @@ function transformStateWithClones(state, actions) {
       for (const key in current) {
         delete current[key];
       }
-    } newr = { ...current }; resultingArray[i] = newr;
+    }
+
+    resultingArray[i] = { ...current };
   }
 
   return resultingArray;
