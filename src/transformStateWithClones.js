@@ -8,13 +8,10 @@
  */
 function transformStateWithClones(state, actions) {
   const stateClones = [];
+  let newObj = { ...state };
 
   for (const action of actions) {
-    let newObj = {};
-
-    if (stateClones.length === 0) {
-      newObj = { ...state };
-    } else {
+    if (stateClones.length >= 1) {
       newObj = { ...stateClones[stateClones.length - 1] };
     }
 
@@ -36,7 +33,7 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    stateClones.push(newObj);
+    stateClones.push({ ...newObj });
   }
 
   return stateClones;
