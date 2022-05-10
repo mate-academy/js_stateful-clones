@@ -8,13 +8,9 @@
  */
 function transformStateWithClones(state, actions) {
   const result = [];
-  let copy = { ...state };
+  const copy = { ...state };
 
   actions.forEach(elem => {
-    if (result.length !== 0) {
-      copy = { ...result[result.length - 1] };
-    }
-
     switch (elem.type) {
       case 'addProperties':
         for (const key in elem.extraData) {
@@ -34,7 +30,7 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    result.push(copy);
+    result.push({ ...copy });
   });
 
   return result;
