@@ -7,7 +7,10 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const newState = [];
+  // list of all states
+  const newStates = [];
+
+  // state that is modified by actions
   let recentState = { ...state };
 
   for (const action of actions) {
@@ -17,30 +20,22 @@ function transformStateWithClones(state, actions) {
           ...recentState,
           ...action.extraData,
         };
-
-        newState.push({
-          ...recentState,
-        });
         break;
 
       case 'removeProperties':
         for (const key of action.keysToRemove) {
           delete recentState[key];
         }
-        newState.push({ ...recentState });
-        break;
-
-      case 'clear':
-        newState.push({});
         break;
 
       default:
-        newState.push({});
+        recentState = {};
         break;
     }
+    newStates.push({ ...recentState });
   }
 
-  return newState;
+  return newStates;
 }
 
 module.exports = transformStateWithClones;
