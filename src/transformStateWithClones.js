@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const copyState = { ...state };
-  const result = [];
+  const states = [];
 
   for (const action of actions) {
     if (action.type === 'addProperties') {
@@ -27,10 +27,10 @@ function transformStateWithClones(state, actions) {
       }
     }
 
-    result.push({ ...copyState });
+    states.push({ ...copyState });
   }
 
-  return result;
+  return states;
 }
 
 module.exports = transformStateWithClones;
