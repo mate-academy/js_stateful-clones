@@ -26,7 +26,7 @@ function transformStateWithClones(state, actions) {
 
         break;
       case 'clear':
-        for (const key in state) {
+        for (const key in stateToChange) {
           delete stateToChange[key];
         }
         break;
