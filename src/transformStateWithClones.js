@@ -30,7 +30,7 @@ function transformStateWithClones(state, actions) {
       default:
         break;
     }
-    arrState.push(copyState);
+    arrState.push({ ...copyState });
   }
 
   return arrState;
