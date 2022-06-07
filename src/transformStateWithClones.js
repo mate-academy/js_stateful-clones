@@ -18,16 +18,16 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        for (const j of keysToRemove) {
-          if (cloneState.hasOwnProperty(j)) {
-            delete cloneState[j];
+        for (const remove of keysToRemove) {
+          if (cloneState.hasOwnProperty(remove)) {
+            delete cloneState[remove];
           }
         }
         break;
 
       case 'clear':
-        for (const k in cloneState) {
-          delete cloneState[k];
+        for (const key in cloneState) {
+          delete cloneState[key];
         }
         break;
 
