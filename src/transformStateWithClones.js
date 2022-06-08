@@ -24,20 +24,22 @@ function transformStateWithClones(state, actions) {
       );
     }
 
-    if (actions[i].type === 'addProperties') {
-      Object.assign(resultStates[i], actions[i].extraData);
-    }
+    switch (actions[i].type) {
+      case ('addProperties'):
+        Object.assign(resultStates[i], actions[i].extraData);
+        break;
 
-    if (actions[i].type === 'removeProperties') {
-      for (const key of actions[i].keysToRemove) {
-        delete resultStates[i][key];
-      }
-    }
+      case ('removeProperties'):
+        for (const key of actions[i].keysToRemove) {
+          delete resultStates[i][key];
+        }
+        break;
 
-    if (actions[i].type === 'clear') {
-      for (const key in resultStates[i]) {
-        delete resultStates[i][key];
-      }
+      case ('clear'):
+        for (const key in resultStates[i]) {
+          delete resultStates[i][key];
+        }
+        break;
     }
   }
 
