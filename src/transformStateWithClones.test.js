@@ -256,21 +256,20 @@ test('Should handle a long list of types', () => {
     {
       type: 'removeProperties', keysToRemove: ['name', 'hello'],
     },
-  ]))
-    .toEqual([
-      {
-        foo: 'bar', name: 'Jim',
-      },
-      {},
-      {},
-      {},
-      { yet: 'another property' },
-      {},
-      {
-        foo: 'bar', name: 'Jim',
-      },
-      { foo: 'bar' },
-    ]);
+  ])).toEqual([
+    {
+      foo: 'bar', name: 'Jim',
+    },
+    {},
+    {},
+    {},
+    { yet: 'another property' },
+    {},
+    {
+      foo: 'bar', name: 'Jim',
+    },
+    { foo: 'bar' },
+  ]);
 
   expect(state)
     .toEqual({
