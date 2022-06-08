@@ -37,7 +37,6 @@ transformStateWithClones(state, [
 must return the following array:
 
 ```
-[
   {foo: 'bar', bar: 'foo', name: 'Jim', hello: 'world'},
   {foo: 'bar', name: 'Jim'},
   {foo: 'bar', name: 'Jim', another: 'one'}
