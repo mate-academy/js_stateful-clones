@@ -22,7 +22,7 @@ function transformStateWithClones(state, actions) {
         }
         break;
 
-      case 'clear':
+      default:
         for (const keys in cloneState) {
           delete cloneState[keys];
         }
