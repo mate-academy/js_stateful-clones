@@ -1,20 +1,22 @@
 'use strict';
 
 function transform(prevState, action) {
-  switch (action.type) {
+  const { type, extraData, keysToRemove } = action;
+
+  switch (type) {
     case 'clear':
       return {};
 
     case 'addProperties':
       return {
         ...prevState,
-        ...action.extraData,
+        ...extraData,
       };
 
     case 'removeProperties': {
       const newState = { ...prevState };
 
-      for (const key of action.keysToRemove) {
+      for (const key of keysToRemove) {
         delete newState[key];
       }
 
@@ -22,7 +24,7 @@ function transform(prevState, action) {
     }
 
     default:
-      return prevState;
+      return { ...prevState };
   }
 }
 
