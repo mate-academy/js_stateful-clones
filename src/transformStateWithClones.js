@@ -24,7 +24,7 @@ function transform(prevState, action) {
       return {};
 
     default:
-      return prevState;
+      return { ...prevState };
   }
 }
 /**
