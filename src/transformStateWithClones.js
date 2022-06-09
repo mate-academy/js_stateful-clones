@@ -39,6 +39,9 @@ function transform(prevState, action) {
       }
 
       return newState;
+
+    default:
+      return prevState;
   }
 }
 
