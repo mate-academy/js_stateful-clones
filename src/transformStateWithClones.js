@@ -44,7 +44,7 @@ function transform(prevState, action) {
     }
 
     default:
-      return prevState;
+      return { ...prevState };
   }
 }
 
