@@ -9,7 +9,7 @@
 
 function transformStateWithClones(state, actions) {
   const result = [];
-  let copied = { ...state };
+  const copied = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
