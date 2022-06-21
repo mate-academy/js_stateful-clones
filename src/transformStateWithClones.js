@@ -30,7 +30,7 @@ function transformStateWithClones(state, actions) {
 
         break;
     }
-    cloneStatus.push(Object.assign({ ...clone }, action.extraData));
+    cloneStatus.push({ ...clone });
   }
 
   return cloneStatus;
