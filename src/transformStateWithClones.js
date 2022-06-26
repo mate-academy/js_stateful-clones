@@ -31,7 +31,7 @@ function transformStateWithClones(state, actions) {
         curState = {};
         break;
       default:
-        Object.assign(state, {});
+        return null;
     }
 
     statesArr.push({ ...curState });
