@@ -19,10 +19,6 @@ function transformStateWithClones(state, actions) {
           copy[char] = extraData[char];
         }
 
-        actionsHistory.push({
-          ...copy,
-        });
-
         break;
 
       case 'removeProperties':
@@ -32,10 +28,6 @@ function transformStateWithClones(state, actions) {
           }
         }
 
-        actionsHistory.push({
-          ...copy,
-        });
-
         break;
 
       case 'clear':
@@ -43,12 +35,12 @@ function transformStateWithClones(state, actions) {
           delete copy[char];
         }
 
-        actionsHistory.push({
-          ...copy,
-        });
-
         break;
     }
+
+    actionsHistory.push({
+      ...copy,
+    });
   }
 
   return actionsHistory;
