@@ -18,13 +18,12 @@ function transformStateWithClones(state, actions) {
           ...newState,
           ...(action.extraData),
         };
-
         break;
 
       case 'removeProperties':
         for (const key of action.keysToRemove) {
           delete newState[key];
-        }
+        };
         break;
 
       case 'clear':
