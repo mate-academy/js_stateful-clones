@@ -28,11 +28,14 @@ function transformStateWithClones(state, actions) {
           delete objectForUse[key];
         };
         break;
+
+      default:
+        throw new Error('error');
     }
     arr.push(Object.assign({}, objectForUse));
   }
 
-  return (arr);
+  return arr;
 }
 
 module.exports = transformStateWithClones;
