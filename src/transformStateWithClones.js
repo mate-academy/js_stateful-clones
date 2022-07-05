@@ -27,8 +27,11 @@ function transformStateWithClones(state, actions) {
           delete clone[key];
         }
         break;
+
+      default:
+        return 'Unknown type';
     }
-    arrOfClone.push({...clone});
+    arrOfClone.push({ ...clone });
   });
 
   return arrOfClone;
