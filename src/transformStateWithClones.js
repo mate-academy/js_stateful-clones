@@ -29,6 +29,9 @@ function transformStateWithClones(state, actions) {
           delete stateClone[removeProperties];
         }
         break;
+
+      default:
+        return 'Enter an existing type';
     }
 
     stateСhanges.push(Object.assign({}, stateClone));
