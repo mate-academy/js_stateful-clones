@@ -32,7 +32,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        throw new Error('Wrong action type');
     }
 
     states.push({ ...stateCopy });
