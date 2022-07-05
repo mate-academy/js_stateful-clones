@@ -31,7 +31,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        newState = {};
+        throw new Error('Error');
     };
 
     arrayStates.push({ ...newState });
