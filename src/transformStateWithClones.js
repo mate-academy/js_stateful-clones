@@ -30,7 +30,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        return undefined;
+        throw new Error('Data is not valid');
     }
     stateHistory.push(Object.assign({}, stateClone));
   }
