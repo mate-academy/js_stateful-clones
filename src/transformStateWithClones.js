@@ -34,7 +34,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        throw Error('Error');
     }
 
     result.push({ ...stateClone });
