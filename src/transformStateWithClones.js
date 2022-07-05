@@ -32,6 +32,9 @@ function transformStateWithClones(state, actions) {
         Object.assign(stateClone, action.extraData);
 
         break;
+
+      default:
+        break;
     }
 
     result.push({ ...stateClone });
