@@ -22,12 +22,16 @@ function transformStateWithClones(state, actions) {
         Object.assign(stateClone, action.extraData);
         break;
 
-      default:
+      case 'removeProperties':
         for (const key of action.keysToRemove) {
           if (key in stateClone) {
             delete stateClone[key];
           }
-        }
+        };
+        break;
+
+      default:
+        break;
     }
 
     stateVersions.push({ ...stateClone });
