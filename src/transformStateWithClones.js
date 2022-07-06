@@ -28,7 +28,7 @@ function transformStateWithClones(state, actions) {
         }
         break;
       default:
-        return 'No actions needed';
+        throw new Error('Type is not right');
     }
 
     states.push(Object.assign({}, newState));
