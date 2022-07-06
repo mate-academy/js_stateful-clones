@@ -29,7 +29,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        return 'this doesn\'t run';
+        throw new Error('this doesn\'t run');
     }
     clonedStatesAfterTransforming.push({ ...clonedState });
   }
