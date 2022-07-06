@@ -29,7 +29,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        throw new Error('There is no action to make');
     }
     transformedState.push(Object.assign({}, stateCopy));
   }
