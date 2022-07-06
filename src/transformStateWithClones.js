@@ -30,7 +30,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        throw new Error('Not supported this action type');
     }
 
     transformedStates.push(Object.assign({}, currentState));
