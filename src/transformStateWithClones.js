@@ -7,29 +7,26 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let stateArray = [];
+  const stateArray = [];
 
-  let stateMod = {};
-
-  let i = 0;
+  const stateMod = {};
 
   Object.assign(stateMod, state);
 
   stateArray.push(stateMod);
 
-  actions.forEach(e => {
-    
-    let stateModIteration = {};
+  actions.forEach((action, i) => {
+    const stateModIteration = {};
 
     Object.assign(stateModIteration, stateArray[i]);
 
-    switch (e.type) {
-      case 'addProperties': 
-        Object.assign(stateModIteration, e.extraData);
+    switch (action.type) {
+      case 'addProperties':
+        Object.assign(stateModIteration, action.extraData);
         break;
 
       case 'removeProperties':
-        e.keysToRemove.forEach(key => {
+        action.keysToRemove.forEach(key => {
           delete stateModIteration[key];
         });
         break;
@@ -45,7 +42,6 @@ function transformStateWithClones(state, actions) {
     }
 
     stateArray.push(stateModIteration);
-    i++;
   });
 
   stateArray.shift();
