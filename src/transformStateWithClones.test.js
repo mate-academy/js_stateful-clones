@@ -215,7 +215,7 @@ test('Should handle multiple types', () => {
   ]))
     .toEqual([
       {
-        foo: 'bar', bar: 'foo', name: 'Jim', hello: 'world',
+        foo: 'bar', bar: 'foo', hello: 'world', name: 'Jim',
       },
       {
         foo: 'bar', name: 'Jim',
