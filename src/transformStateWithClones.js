@@ -35,7 +35,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        throw new Error('Invalid command type');
     }
 
     Clones.push(Object.assign({}, newState));
