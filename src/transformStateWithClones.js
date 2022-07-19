@@ -6,28 +6,28 @@
  *
  * @return {Object[]}
  */
+function copyFunction(myCurrentState) {
+  const tempState = {};
+
+  Object.assign(tempState, myCurrentState);
+
+  return tempState;
+}
+
 function transformStateWithClones(state, actions) {
   // write code here
   const myStatesArray = [];
   let tempState = {};
   const myCurrentState = {};
 
-  for (const keyInState in state) {
-    myCurrentState[keyInState] = state[keyInState];
-  }
+  Object.assign(myCurrentState, state);
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties' :
 
-        for (const key in action.extraData) {
-          myCurrentState[key] = action.extraData[key];
-        }
-        tempState = {};
-
-        for (const keyInMyState in myCurrentState) {
-          tempState[keyInMyState] = myCurrentState[keyInMyState];
-        }
+        Object.assign(myCurrentState, action.extraData);
+        tempState = copyFunction(myCurrentState);
         myStatesArray.push(tempState);
         break;
 
@@ -37,26 +37,21 @@ function transformStateWithClones(state, actions) {
           delete myCurrentState[keyState];
         }
         tempState = {};
-
-        for (const keyInMyState in myCurrentState) {
-          tempState[keyInMyState] = myCurrentState[keyInMyState];
-        }
         myStatesArray.push(tempState);
         break;
 
       case 'removeProperties':
+
         const keysArr = action.keysToRemove;
 
         for (const keyRemove of keysArr) {
           delete myCurrentState[keyRemove];
         }
-        tempState = {};
-
-        for (const keyInMyState in myCurrentState) {
-          tempState[keyInMyState] = myCurrentState[keyInMyState];
-        }
+        tempState = copyFunction(myCurrentState);
         myStatesArray.push(tempState);
         break;
+
+      default : break;
     }
   }
 
