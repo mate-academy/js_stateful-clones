@@ -11,41 +11,35 @@ function transformStateWithClones(state, actions) {
   const arrayState = [];
 
   for (const property of actions) {
-    if (property.type === 'addProperties') {
-      const addPropertiesObject = {};
+    switch (property.type) {
+      case 'addProperties':
 
-      for (const key in property.extraData) {
-        addPropertiesObject[key] = property.extraData[key];
-      }
+        cloneState = { ...cloneState };
 
-      const addCloneState = {
-        ...cloneState,
-        ...addPropertiesObject,
-      };
-
-      arrayState.push(addCloneState);
-      cloneState = { ...addCloneState };
-    }
-
-    if (property.type === 'removeProperties') {
-      const removeObject = { ...cloneState };
-
-      for (const keyremove of property.keysToRemove) {
-        if (keyremove in removeObject) {
-          delete removeObject[keyremove];
+        for (const key in property.extraData) {
+          cloneState[key] = property.extraData[key];
         }
-      }
+        break;
 
-      arrayState.push(removeObject);
-      cloneState = { ...removeObject };
+      case 'removeProperties':
+
+        cloneState = { ...cloneState };
+
+        for (const keyRemove of property.keysToRemove) {
+          if (keyRemove in cloneState) {
+            delete cloneState[keyRemove];
+          }
+        }
+        break;
+
+      case 'clear':
+        cloneState = {};
+        break;
+
+      default:
+        continue;
     }
-
-    if (property.type === 'clear') {
-      const emplyObject = {};
-
-      arrayState.push(emplyObject);
-      cloneState = {};
-    }
+    arrayState.push(cloneState);
   }
 
   return arrayState;
