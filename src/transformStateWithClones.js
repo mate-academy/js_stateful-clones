@@ -28,7 +28,7 @@ function transformStateWithClones(state, actions) {
 
         Object.assign(myCurrentState, action.extraData);
         tempState = copyFunction(myCurrentState);
-        myStatesArray.push(tempState);
+
         break;
 
       case 'clear':
@@ -37,7 +37,7 @@ function transformStateWithClones(state, actions) {
           delete myCurrentState[keyState];
         }
         tempState = {};
-        myStatesArray.push(tempState);
+
         break;
 
       case 'removeProperties':
@@ -48,11 +48,12 @@ function transformStateWithClones(state, actions) {
           delete myCurrentState[keyRemove];
         }
         tempState = copyFunction(myCurrentState);
-        myStatesArray.push(tempState);
+
         break;
 
       default : break;
     }
+    myStatesArray.push(tempState);
   }
 
   return myStatesArray;
