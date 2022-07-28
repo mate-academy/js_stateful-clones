@@ -17,7 +17,6 @@ function transformStateWithClones(state, actions) {
           cloneState[key] = item.extraData[key];
         }
 
-        cloneArray.push({ ...cloneState });
         break;
 
       case 'removeProperties':
@@ -25,14 +24,14 @@ function transformStateWithClones(state, actions) {
           delete cloneState[key];
         }
 
-        cloneArray.push({ ...cloneState });
         break;
 
       case 'clear':
         cloneState = {};
-        cloneArray.push({ ...cloneState });
+
         break;
     }
+    cloneArray.push({ ...cloneState });
   }
 
   return cloneArray;
