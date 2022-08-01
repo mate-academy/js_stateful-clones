@@ -7,47 +7,43 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const cloneState = {
+  let cloneState = {
     ...state,
   };
 
   const result = [];
 
-  for (const action in actions) {
-    const object = actions[action];
-    let resultOfLoop = {};
+  for (const action of actions) {
+    switch (action.type) {
+      case 'addProperties':
+        Object.assign(cloneState, action.extraData);
 
-    for (const key in object) {
-      if (object[key] === 'addProperties') {
-        resultOfLoop = Object.assign(cloneState, object['extraData']);
-      }
+        const newCloneAdd = {
+          ...cloneState,
+        };
 
-      if (object[key] === 'removeProperties') {
-        const deleteValue = object['keysToRemove'];
+        result.push(newCloneAdd);
+        break;
 
-        if (typeof (deleteValue) === 'undefined') {
-          Object.assign(resultOfLoop, cloneState);
-        } else {
-          for (const i of deleteValue) {
-            delete cloneState[i];
-            resultOfLoop = cloneState;
-          }
-        }
-      }
+      case 'removeProperties':
+        const deleteValue = action.keysToRemove;
 
-      if (object[key] === 'clear') {
-        for (const i in cloneState) {
+        for (const i of deleteValue) {
           delete cloneState[i];
-          resultOfLoop = cloneState;
         }
-      }
+
+        const newCloneRemove = {
+          ...cloneState,
+        };
+
+        result.push(newCloneRemove);
+        break;
+
+      case 'clear':
+        cloneState = {};
+        result.push(Object.assign({}, cloneState));
+        break;
     }
-
-    const copy = {
-      ...resultOfLoop,
-    };
-
-    result.push(copy);
   }
 
   return result;
