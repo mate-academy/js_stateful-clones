@@ -12,33 +12,40 @@ function transformStateWithClones(state, actions) {
   const object = { ...state };
 
   for (const action of actions) {
-    if (action.type === 'addProperties') {
-      Object.assign(object, action.extraData);
+    switch (action.type) {
+      case 'addProperties':
+        Object.assign(object, action.extraData);
 
-      const copy = { ...object };
+        const copy = { ...object };
 
-      array.push(copy);
-    }
+        array.push(copy);
 
-    if (action.type === 'removeProperties') {
-      const removeArray = action.keysToRemove;
+        break;
+      case 'removeProperties':
+        const removeArray = action.keysToRemove;
 
-      for (const key of removeArray) {
-        if (key in object) {
+        for (const key of removeArray) {
+          if (key in object) {
+            delete object[key];
+          }
+        }
+
+        const copy2 = { ...object };
+
+        array.push(copy2);
+
+        break;
+      case 'clear':
+        for (const key in object) {
           delete object[key];
         }
-      }
 
-      const copy = { ...object };
+        array.push({});
 
-      array.push(copy);
-    }
+        break;
 
-    if (action.type === 'clear') {
-      for (const key in object) {
-        delete object[key];
-      }
-      array.push({});
+      default:
+        return copy;
     }
   }
 
@@ -46,3 +53,33 @@ function transformStateWithClones(state, actions) {
 }
 
 module.exports = transformStateWithClones;
+
+// if (action.type === 'addProperties') {
+//   Object.assign(object, action.extraData);
+
+//   const copy = { ...object };
+
+//   array.push(copy);
+// }
+
+// if (action.type === 'removeProperties') {
+//   const removeArray = action.keysToRemove;
+
+//   for (const key of removeArray) {
+//     if (key in object) {
+//       delete object[key];
+//     }
+//   }
+
+//   const copy = { ...object };
+
+//   array.push(copy);
+// }
+
+// if (action.type === 'clear') {
+//   for (const key in object) {
+//     delete object[key];
+//   }
+//   array.push({});
+// }
+// }
