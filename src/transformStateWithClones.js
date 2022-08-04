@@ -10,15 +10,14 @@ function transformStateWithClones(state, actions) {
   // write code here
   const array = [];
   const object = { ...state };
+  let stateCopy = {};
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
         Object.assign(object, action.extraData);
 
-        const copy = { ...object };
-
-        array.push(copy);
+        stateCopy = { ...object };
 
         break;
       case 'removeProperties':
@@ -30,9 +29,7 @@ function transformStateWithClones(state, actions) {
           }
         }
 
-        const copy2 = { ...object };
-
-        array.push(copy2);
+        stateCopy = { ...object };
 
         break;
       case 'clear':
@@ -40,46 +37,16 @@ function transformStateWithClones(state, actions) {
           delete object[key];
         }
 
-        array.push({});
-
+        stateCopy = { ...object };
         break;
 
       default:
-        return copy;
+        array.push(stateCopy);
     }
+    array.push(stateCopy);
   }
 
   return array;
 }
 
 module.exports = transformStateWithClones;
-
-// if (action.type === 'addProperties') {
-//   Object.assign(object, action.extraData);
-
-//   const copy = { ...object };
-
-//   array.push(copy);
-// }
-
-// if (action.type === 'removeProperties') {
-//   const removeArray = action.keysToRemove;
-
-//   for (const key of removeArray) {
-//     if (key in object) {
-//       delete object[key];
-//     }
-//   }
-
-//   const copy = { ...object };
-
-//   array.push(copy);
-// }
-
-// if (action.type === 'clear') {
-//   for (const key in object) {
-//     delete object[key];
-//   }
-//   array.push({});
-// }
-// }
