@@ -8,9 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const stateNew = [];
-  const stateCopy = {
-    ...state,
-  };
+  const stateCopy = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
@@ -30,9 +28,7 @@ function transformStateWithClones(state, actions) {
         return 'nothing to change';
     }
 
-    stateNew.push({
-      ...stateCopy,
-    });
+    stateNew.push({ ...stateCopy });
   }
 
   return stateNew;
