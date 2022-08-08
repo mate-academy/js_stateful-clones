@@ -30,6 +30,9 @@ function transformStateWithClones(state, actions) {
           delete stateCopy[key];
         }
         break;
+
+      default:
+        return 'Error';
     }
     stateArr.push(Object.assign({}, stateCopy));
   }
