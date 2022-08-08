@@ -18,6 +18,7 @@ function transformStateWithClones(state, actions) {
         }
         versions.push({ ...stateClone });
         break;
+
       case 'removeProperties':
         for (const key of action.keysToRemove) {
           if (stateClone.hasOwnProperty(key)) {
