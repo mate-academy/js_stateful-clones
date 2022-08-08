@@ -32,6 +32,9 @@ function transformStateWithClones(state, actions) {
         }
         arrOfChandes.push({ ...newObj });
         break;
+
+      default:
+        break;
     }
   }
 
