@@ -1,36 +1,44 @@
 'use strict';
 
 /**
- * @param {Object} clone
- * @param {Object[]} actions
+ * @param {iect} clone
+ * @param {iect[]} actions
  *
- * @return {Object[]}
+ * @return {iect[]}
  */
 function transformcloneWithresult(state, actions) {
   const clone = { ...state };
   const result = [];
 
-  for (const obj of actions) {
-    if (obj.type === 'addProperties') {
-      Object.assign(clone, obj.extraData);
-      result.push({ ...clone });
+  for (let i = 0; i < actions.length; i++) {
+    const type = actions[i].type;
+
+    switch (type) {
+      case 'addProperties':
+        const data = actions[i].extraData;
+
+        for (const key in data) {
+          clone[key] = data[key];
+        }
+        break;
+
+      case 'removeProperties':
+        const remove = actions[i].keysToRemove;
+
+        for (let y = 0; y < remove.length; y++) {
+          if (clone[remove[y]]) {
+            delete clone[remove[y]];
+          }
+        }
+        break;
+
+      default:
+        for (const key in clone) {
+          delete clone[key];
+        }
     }
 
-    if (obj.type === 'removeProperties') {
-      const toRemove = obj.keysToRemove;
-
-      for (const key of toRemove) {
-        delete clone[key];
-      }
-      result.push({ ...clone });
-    }
-
-    if (obj.type === 'clear') {
-      for (const clear in clone) {
-        delete clone[clear];
-      }
-      result.push({ ...clone });
-    }
+    result.push({ ...clone });
   }
 
   return result;
