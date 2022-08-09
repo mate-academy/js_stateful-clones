@@ -8,37 +8,41 @@
  */
 function transformStateWithClones(state, actions) {
   const resultArray = [];
+  let removePropertiesClone = {};
 
   for (let i = 0; i < actions.length; i++) {
-    if (actions[i].type === 'addProperties') {
-      if (resultArray.length === 0) {
-        resultArray.push(Object.assign({}, state, actions[i].extraData));
-      } else {
-        resultArray.push(Object.assign({
-        }, resultArray[i - 1], actions[i].extraData));
-      }
-    }
-
-    if (actions[i].type === 'clear') {
-      resultArray.push({});
-    }
-
-    if (actions[i].type === 'removeProperties') {
-      if (resultArray.length === 0) {
-        const clone = Object.assign({}, state);
-
-        for (const keyToRemove of actions[i].keysToRemove) {
-          delete clone[keyToRemove];
+    switch (actions[i].type) {
+      case 'addProperties':
+        switch (resultArray.length) {
+          case 0:
+            resultArray.push(Object.assign({}, state, actions[i].extraData));
+            break;
+          default:
+            resultArray.push(Object.assign({
+            }, resultArray[i - 1], actions[i].extraData));
         }
-        resultArray.push(clone);
-      } else {
-        const clone = Object.assign({}, resultArray[i - 1]);
+        break;
+      case 'removeProperties':
+        switch (resultArray.length) {
+          case 0:
+            removePropertiesClone = Object.assign({}, state);
 
-        for (const keyToRemove of actions[i].keysToRemove) {
-          delete clone[keyToRemove];
+            for (const keyToRemove of actions[i].keysToRemove) {
+              delete removePropertiesClone[keyToRemove];
+            }
+            resultArray.push(removePropertiesClone);
+            break;
+          default:
+            removePropertiesClone = Object.assign({}, resultArray[i - 1]);
+
+            for (const keyToRemove of actions[i].keysToRemove) {
+              delete removePropertiesClone[keyToRemove];
+            }
+            resultArray.push(removePropertiesClone);
         }
-        resultArray.push(clone);
-      }
+        break;
+      default:
+        resultArray.push({});
     }
   }
 
