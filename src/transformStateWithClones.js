@@ -13,26 +13,18 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties': {
-        // console.log('action:', action);
-
         const { extraData } = action;
-
-        // console.log(extraData);
 
         const stateCopy = {
           ...lastState, ...extraData,
         };
 
-        // console.log("lastState:", lastState);
-        // console.log('extraData:', extraData);
-        // console.log(stateCopy);
         lastState = stateCopy;
         break;
       }
 
       case 'removeProperties': {
         const { keysToRemove } = action;
-
         const stateCopy = { ...lastState };
 
         for (const value of keysToRemove) {
@@ -56,32 +48,8 @@ function transformStateWithClones(state, actions) {
     }
     history.push(lastState);
   }
-  // console.log(lastState);
-  // console.log(history);
 
   return history;
 }
-
-// const state = {
-//   foo: 'bar', bar: 'foo',
-// };
-
-// transformStateWithClones(state, [
-//   {
-//     type: 'addProperties',
-//     extraData: {
-//       name: 'Jim', hello: 'world',
-//     },
-//   },
-//   {
-//     type: 'clear',
-//   },
-//   {
-//     type: 'removeProperties', keysToRemove: ['bar', 'hello'],
-//   },
-//   {
-//     type: 'addProperties', extraData: { another: 'one' },
-//   },
-// ]);
 
 module.exports = transformStateWithClones;
