@@ -7,23 +7,26 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const res = [];
+  const stateHistory = [];
   const intermObj = Object.assign({}, state);
 
   for (let i = 0; i < actions.length; i++) {
-    if (actions[i].type === 'addProperties') {
-      Object.assign(intermObj, actions[i].extraData);
-      res.push(Object.assign({}, intermObj));
-    } else if (actions[i].type === 'removeProperties') {
-      for (const el of actions[i].keysToRemove) {
-        delete intermObj[el];
-      }
-      res.push(Object.assign({}, intermObj));
-    } else if (actions[i].type === 'clear') {
-      for (const key in intermObj) {
-        delete intermObj[key];
-      }
-      res.push(Object.assign({}, intermObj));
+    switch (actions[i].type) {
+      case 'addProperties':
+        Object.assign(intermObj, actions[i].extraData);
+        stateHistory.push(Object.assign({}, intermObj));
+        break;
+      case 'removeProperties':
+        for (const el of actions[i].keysToRemove) {
+          delete intermObj[el];
+        }
+        stateHistory.push(Object.assign({}, intermObj));
+        break;
+      case 'clear':
+        for (const key in intermObj) {
+          delete intermObj[key];
+        }
+        stateHistory.push(Object.assign({}, intermObj));
     }
   }
 
@@ -31,7 +34,7 @@ function transformStateWithClones(state, actions) {
   // console.log('actions: ', actions);
   // console.log('intermObj: ', intermObj);
   // console.log('res: ', res);
-  return res;
+  return stateHistory;
 }
 
 module.exports = transformStateWithClones;
