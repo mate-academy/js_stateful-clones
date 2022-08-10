@@ -28,7 +28,8 @@ function transformStateWithClones(state, actions) {
         }
         break;
 
-      default: return 'Error';
+      default:
+        return 'Error';
     }
     history.push({ ...copyState });
   }
