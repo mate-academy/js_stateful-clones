@@ -14,30 +14,23 @@ function transformStateWithClones(state, actions) {
     const { extraData, keysToRemove, type } = action;
 
     switch (type) {
-      case 'addProperties': {
+      case 'addProperties':
         Object.assign(cloneOfState, extraData);
         history.push({ ...cloneOfState });
-
         break;
-      }
 
-      case 'removeProperties': {
+      case 'removeProperties':
         removeProp(cloneOfState, keysToRemove);
         history.push({ ...cloneOfState });
-
         break;
-      }
 
-      case 'clear': {
+      case 'clear':
         clear(cloneOfState);
         history.push({ ...cloneOfState });
-
         break;
-      }
 
-      default: {
+      default:
         throw new Error(`Unknowm action type: ${type}`);
-      }
     }
   }
 
