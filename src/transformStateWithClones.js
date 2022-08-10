@@ -19,7 +19,6 @@ function transformStateWithClones(state, actions) {
         };
 
         lastState = newState;
-        history.push(lastState);
 
         break;
       }
@@ -33,14 +32,12 @@ function transformStateWithClones(state, actions) {
         }
 
         lastState = newState;
-        history.push(lastState);
 
         break;
       }
 
       case 'clear': {
         lastState = {};
-        history.push(lastState);
 
         break;
       }
@@ -49,6 +46,8 @@ function transformStateWithClones(state, actions) {
         throw new Error(`Unknown type of action: ${action.type}`);
       }
     }
+
+    history.push(lastState);
   }
 
   return history;
