@@ -26,6 +26,10 @@ function transformStateWithClones(state, actions) {
         for (const key in copyState) {
           delete copyState[key];
         }
+        break;
+
+      default:
+        break;
     }
     newCopy.push({ ...copyState });
   }
