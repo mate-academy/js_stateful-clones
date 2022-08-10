@@ -14,22 +14,19 @@ function transformStateWithClones(state, actions) {
     const { type, extraData, keysToRemove } = key;
 
     switch (type) {
-      case 'addProperties': {
+      case 'addProperties':
         Object.assign(newState, extraData);
         break;
-      }
 
-      case 'removeProperties': {
+      case 'removeProperties':
         for (const prop of keysToRemove) {
           delete newState[prop];
         }
         break;
-      }
 
-      case 'clear': {
+      case 'clear':
         newState = {};
         break;
-      }
 
       default:
         return 'error';
