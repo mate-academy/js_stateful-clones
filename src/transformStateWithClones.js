@@ -27,21 +27,13 @@ function transformStateWithClones(state, actions) {
           delete intermObj[key];
         }
         stateHistory.push(Object.assign({}, intermObj));
+        break;
+      default:
+        throw new Error('');
     }
   }
 
-  // console.log('state: ', state);
-  // console.log('actions: ', actions);
-  // console.log('intermObj: ', intermObj);
-  // console.log('res: ', res);
   return stateHistory;
 }
 
 module.exports = transformStateWithClones;
-
-// transformStateWithClones({foo: 'bar', bar: 'foo'}, [
-//   {type: 'addProperties', extraData: {name: 'Jim', hello: 'world'}},
-//   {type: 'removeProperties', keysToRemove: ['bar', 'hello']},
-//   {type: 'clear'},
-//   {type: 'addProperties', extraData: {another: 'one'}}
-// ]);
