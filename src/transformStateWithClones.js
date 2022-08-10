@@ -1,17 +1,11 @@
 'use strict';
 
-/**
- * @param {Object} state
- * @param {Object[]} actions
- *
- * @return {Object[]}
- */
 function transformStateWithClones(state, actions) {
   const result = [];
 
   let stateful = { ...state };
   let copy = { ...state };
-  let copyClear = { ...state };
+  const copyClear = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
@@ -19,7 +13,6 @@ function transformStateWithClones(state, actions) {
         Object.assign(copy, action.extraData);
         result.push(copy);
         stateful = { ...copy };
-        copyClear = { ...copy };
         break;
 
       case 'removeProperties':
@@ -28,17 +21,17 @@ function transformStateWithClones(state, actions) {
         }
         result.push(stateful);
         copy = { ...stateful };
-        copyClear = { ...stateful };
         break;
 
       case 'clear':
         for (const keys in copyClear) {
           delete copyClear[keys];
         }
-        result.push(copyClear);
         copy = { ...copyClear };
-        stateful = { ...copyClear };
+        result.push(copyClear);
         break;
+
+      default: throw Error;
     }
   }
 
