@@ -30,7 +30,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        return ('Undefined ERROR');
     }
     allClones.push({ ...clone });
   }
