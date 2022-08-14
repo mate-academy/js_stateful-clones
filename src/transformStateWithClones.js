@@ -11,25 +11,30 @@ function transformStateWithClones(state, actions) {
   const resArr = [];
 
   for (const obj of actions) {
-    if (obj.type === 'addProperties') {
-      Object.assign(clone, obj.extraData);
-      resArr.push({ ...clone });
-    }
+    switch (obj.type) {
+      case 'addProperties':
+        Object.assign(clone, obj.extraData);
+        resArr.push({ ...clone });
+        break;
 
-    if (obj.type === 'removeProperties') {
-      const toRemove = obj.keysToRemove;
+      case 'removeProperties':
+        const toRemove = obj.keysToRemove;
 
-      for (const rem of toRemove) {
-        delete clone[rem];
-      }
-      resArr.push({ ...clone });
-    }
+        for (const rem of toRemove) {
+          delete clone[rem];
+        }
+        resArr.push({ ...clone });
+        break;
 
-    if (obj.type === 'clear') {
-      for (const clear in clone) {
-        delete clone[clear];
-      }
-      resArr.push({ ...clone });
+      case 'clear':
+        for (const clear in clone) {
+          delete clone[clear];
+        }
+        resArr.push({ ...clone });
+        break;
+
+      default:
+        throw new Error('Error: obj.type is not defined');
     }
   }
 
