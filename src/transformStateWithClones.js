@@ -14,20 +14,20 @@ function transformStateWithClones(state, actions) {
     switch (key.type) {
       case 'addProperties':
         Object.assign(cloneObject, key.extraData);
-        clone.push({ ...cloneObject });
         break;
 
       case 'removeProperties':
         for (const i of key.keysToRemove) {
           delete cloneObject[i];
-        } clone.push({ ...cloneObject });
+        }
         break;
 
       case 'clear':
         for (const x in cloneObject) {
           delete cloneObject[x];
-        } clone.push({ ...cloneObject });
+        }
     }
+    clone.push({ ...cloneObject });
   }
 
   return clone;
