@@ -16,12 +16,10 @@ function transformStateWithClones(state, actions) {
         for (const key in resultState) {
           delete resultState[key];
         }
-        resultArray.push({});
         break;
 
       case 'addProperties':
         resultState = Object.assign(resultState, action.extraData);
-        resultArray.push({ ...resultState });
         break;
 
       case 'removeProperties':
@@ -30,9 +28,10 @@ function transformStateWithClones(state, actions) {
             delete resultState[keyToRemove];
           }
         }
-        resultArray.push({ ...resultState });
         break;
     }
+
+    resultArray.push({ ...resultState });
   }
 
   return resultArray;
