@@ -6,39 +6,35 @@
  *
  * @return {Object[]}
  */
-function transformStateWithClones(state, actions) {
-  const clone = { ...state };
+function transformStateWithstateClones(state, actions) {
+  const stateClone = { ...state };
   const resArr = [];
 
   for (const obj of actions) {
     switch (obj.type) {
       case 'addProperties':
-        Object.assign(clone, obj.extraData);
-        resArr.push({ ...clone });
+        Object.assign(stateClone, obj.extraData);
         break;
 
       case 'removeProperties':
-        const toRemove = obj.keysToRemove;
-
-        for (const rem of toRemove) {
-          delete clone[rem];
+        for (const rem of obj.keysToRemove) {
+          delete stateClone[rem];
         }
-        resArr.push({ ...clone });
         break;
 
       case 'clear':
-        for (const clear in clone) {
-          delete clone[clear];
+        for (const clear in stateClone) {
+          delete stateClone[clear];
         }
-        resArr.push({ ...clone });
         break;
 
       default:
         throw new Error('Error: obj.type is not defined');
     }
+    resArr.push({ ...stateClone });
   }
 
   return resArr;
 }
 
-module.exports = transformStateWithClones;
+module.exports = transformStateWithstateClones;
