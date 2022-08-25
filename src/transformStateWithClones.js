@@ -19,8 +19,8 @@
       list = Object.assign(list, result[j]);
     } else if (actions[j].type === 'removeProperties') {
       if ((Object.values(actions[j].keysToRemove)).length > 0) {
-        for (const i of Object.values(actions[j].keysToRemove)) {
-          delete list[i];
+        for (const toDelete of Object.values(actions[j].keysToRemove)) {
+          delete list[toDelete];
         }
         result[j] = Object.assign({}, list);
       } else {
