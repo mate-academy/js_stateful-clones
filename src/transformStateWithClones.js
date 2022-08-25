@@ -27,7 +27,7 @@
         return [list];
       }
     } else if (actions[j].type === 'clear') {
-      for (const i of Object.keys(state)) {
+      for (let i of Object.keys(state)) {
         list = Object.assign({});
         result[j] = {};
       }
