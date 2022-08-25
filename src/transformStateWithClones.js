@@ -7,9 +7,8 @@
  * @return {Object[]}
  */
  function transformStateWithClones(state, actions) {
-  const copy = Object.assign({}, state);
   const result = [];
-  let list = Object.assign({}, copy);
+  let list = Object.assign({}, state);
 
   for (let j = 0; j < actions.length; j++) {
     if (actions[j].type === 'addProperties') {
@@ -19,15 +18,15 @@
       list = Object.assign(list, result[j]);
     } else if (actions[j].type === 'removeProperties') {
       if ((Object.values(actions[j].keysToRemove)).length > 0) {
-        for (const toDelete of Object.values(actions[j].keysToRemove)) {
-          delete list[toDelete];
+        for (const i of Object.values(actions[j].keysToRemove)) {
+          delete list[i];
         }
         result[j] = Object.assign({}, list);
       } else {
         return [list];
       }
     } else if (actions[j].type === 'clear') {
-      for (const i of Object.keys(state)) {
+      for (let i = 0; i < (Object.keys(state)).length; i++) {
         list = Object.assign({});
         result[j] = {};
       }
@@ -38,4 +37,31 @@
 }
 
 
-module.exports = transformStateWithClones;
+// module.exports = transformStateWithClones;
+
+const state = {
+  foo: 'bar', name: 'Jim', another: 'one',
+};
+
+transformStateWithClones(state, [
+  {
+    type: 'removeProperties', keysToRemove: ['another'],
+  },
+  { type: 'clear' },
+  { type: 'clear' },
+  { type: 'clear' },
+  {
+    type: 'addProperties', extraData: { yet: 'another property' },
+  },
+  { type: 'clear' },
+  {
+    type: 'addProperties',
+    extraData: {
+      foo: 'bar', name: 'Jim',
+    },
+  },
+  {
+    type: 'removeProperties', keysToRemove: ['name', 'hello'],
+  },
+])
+
