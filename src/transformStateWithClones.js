@@ -13,32 +13,28 @@ function transformStateWithClones(state, actions) {
   for (let i = 0; i < actions.length; i++) {
     switch (actions[i].type) {
       case 'addProperties':
-        switch (resultArray.length) {
-          case 0:
-            resultArray.push(Object.assign({}, state, actions[i].extraData));
-            break;
-          default:
-            resultArray.push(Object.assign({
-            }, resultArray[i - 1], actions[i].extraData));
+        if (resultArray.length === 0) {
+          resultArray.push(Object.assign({}, state, actions[i].extraData));
+        } else {
+          resultArray.push(Object.assign({},
+            resultArray[i - 1], actions[i].extraData));
         }
         break;
       case 'removeProperties':
-        switch (resultArray.length) {
-          case 0:
-            removePropertiesClone = Object.assign({}, state);
+        if (resultArray.length === 0) {
+          removePropertiesClone = Object.assign({}, state);
 
-            for (const keyToRemove of actions[i].keysToRemove) {
-              delete removePropertiesClone[keyToRemove];
-            }
-            resultArray.push(removePropertiesClone);
-            break;
-          default:
-            removePropertiesClone = Object.assign({}, resultArray[i - 1]);
+          for (const keyToRemove of actions[i].keysToRemove) {
+            delete removePropertiesClone[keyToRemove];
+          }
+          resultArray.push(removePropertiesClone);
+        } else {
+          removePropertiesClone = Object.assign({}, resultArray[i - 1]);
 
-            for (const keyToRemove of actions[i].keysToRemove) {
-              delete removePropertiesClone[keyToRemove];
-            }
-            resultArray.push(removePropertiesClone);
+          for (const keyToRemove of actions[i].keysToRemove) {
+            delete removePropertiesClone[keyToRemove];
+          }
+          resultArray.push(removePropertiesClone);
         }
         break;
       default:
