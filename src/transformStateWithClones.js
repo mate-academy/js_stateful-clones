@@ -23,10 +23,8 @@ function transformStateWithClones(state, actions) {
 
       case 'removeProperties' :
         for (const keyRemove of keysToRemove) {
-          if (keyRemove in newState === true) {
-            delete newState[keyRemove];
-          }
-        };
+          delete newState[keyRemove];
+        }
         break;
 
       case `clear` :
