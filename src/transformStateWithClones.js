@@ -24,7 +24,12 @@ function transformStateWithClones(state, actions) {
 
       case 'clear':
         copyState = {};
-        clear(copyState, stateHistory);
+
+        stateHistory.push(
+          {
+            ...copyState,
+          }
+        );
         break;
     }
   }
@@ -48,14 +53,6 @@ function removeProperties(copyState, keysToRemove, stateHistory) {
     delete copyState[key];
   }
 
-  stateHistory.push(
-    {
-      ...copyState,
-    }
-  );
-}
-
-function clear(copyState, stateHistory) {
   stateHistory.push(
     {
       ...copyState,
