@@ -7,37 +7,43 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let shadow = {};
+  let cloneShadow = {};
   const clone = {};
-  const res = [];
+  const result = [];
 
   Object.assign(clone, state);
 
   // Main Loop:
   for (const action of actions) {
-    shadow = {};
+    cloneShadow = {};
 
-    // For the type of 'addProperties':
-    if (action['type'] === 'addProperties') {
-      for (const extraItem in action['extraData']) {
-        clone[extraItem] = action['extraData'][extraItem];
-      }
+    switch (action['type']) {
+      // For the type of 'addProperties':
+      case 'addProperties':
+        for (const extraItem in action['extraData']) {
+          clone[extraItem] = action['extraData'][extraItem];
+        }
+        break;
+
       // For the type of 'removeProperties':
-    } else if (action['type'] === 'removeProperties') {
-      for (const delItem of action['keysToRemove']) {
-        delete clone[delItem];
-      }
+      case 'removeProperties':
+        for (const delItem of action['keysToRemove']) {
+          delete clone[delItem];
+        }
+        break;
+
       // For the type of 'clear':
-    } else if (action['type'] === 'clear') {
-      for (const delAllItem in clone) {
-        delete clone[delAllItem];
-      }
+      case 'clear':
+        for (const delAllItem in clone) {
+          delete clone[delAllItem];
+        }
+        break;
     }
 
-    res.push(Object.assign(shadow, clone));
+    result.push(Object.assign(cloneShadow, clone));
   }
 
-  return res;
+  return result;
 }
 
 module.exports = transformStateWithClones;
