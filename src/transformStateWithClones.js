@@ -23,8 +23,8 @@ function transformStateWithClones(state, actions) {
           break;
 
         case 'removeProperties':
-          for (let j = 0; j < actions[i].keysToRemove.length; j++) {
-            delete resultArr[i][actions[i].keysToRemove[j]];
+          for (let propRemove of actions[i].keysToRemove) {
+            delete resultArr[i][propRemove];
           }
 
           if (i < (actions.length - 1)) {
@@ -33,8 +33,8 @@ function transformStateWithClones(state, actions) {
           break;
 
         case 'clear':
-          for (const l in resultArr[i]) {
-            delete resultArr[i][l];
+          for (const propClear in resultArr[i]) {
+            delete resultArr[i][propClear];
           }
 
           if (i < (actions.length - 1)) {
