@@ -25,9 +25,9 @@ function transformStateWithClones(state, actions) {
 
       case ('removeProperties'):
         for (let i = 0; i < action.keysToRemove.length; i++) {
-          const deletePropertie = action.keysToRemove[i];
+          const propertieToDelete = action.keysToRemove[i];
 
-          delete copy[deletePropertie];
+          delete copy[propertieToDelete];
         };
 
         resultObject = { ...copy };
@@ -46,6 +46,9 @@ function transformStateWithClones(state, actions) {
         result.push(resultObject);
 
         break;
+
+      default:
+        return 'Error';
     }
   }
 
