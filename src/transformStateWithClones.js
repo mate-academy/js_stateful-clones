@@ -8,11 +8,10 @@
  */
 function transformStateWithClones(state, actions) {
   const correctState = { ...state };
-  let clone = {};
   const result = [];
 
   for (const action of actions) {
-    clone = {};
+    const clone = {};
 
     switch (action.type) {
       case 'addProperties':
