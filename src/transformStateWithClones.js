@@ -13,20 +13,24 @@ function transformStateWithClones(state, actions) {
   };
 
   for (const action in actions) {
-    if (actions[action].type === 'addProperties') {
-      Object.assign(current, actions[action].extraData);
-    }
+    const { type, extraData, keysToRemove } = actions[action];
 
-    if (actions[action].type === 'removeProperties') {
-      for (const key of actions[action].keysToRemove) {
-        delete current[key];
-      }
-    }
-
-    if (actions[action].type === 'clear') {
-      for (const property in current) {
-        delete current[property];
-      }
+    switch (type) {
+      case 'addProperties':
+        Object.assign(current, extraData);
+        break;
+      case 'removeProperties':
+        for (const key of keysToRemove) {
+          delete current[key];
+        }
+        break;
+      case 'clear':
+        for (const property in current) {
+          delete current[property];
+        }
+        break;
+      default:
+        throw new Error('Wrong type!');
     }
 
     states.push({
