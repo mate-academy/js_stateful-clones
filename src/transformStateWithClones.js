@@ -12,7 +12,7 @@ function transformStateWithClones(state, actions) {
   const stateArray = [];
 
   for (const action of actions) {
-    const object = {};
+    const objectClone = {};
 
     switch (action.type) {
       case 'addProperties' :
@@ -31,7 +31,7 @@ function transformStateWithClones(state, actions) {
         }
         break;
     }
-    stateArray.push(Object.assign(object, copyState));
+    stateArray.push(Object.assign(objectClone, copyState));
   }
 
   return stateArray;
