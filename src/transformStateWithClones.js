@@ -31,6 +31,8 @@ function transformStateWithClones(state, actions) {
           delete cloneObject[deleteAll];
         }
         break;
+      default:
+        throw new Error('Wrong type!');
     }
     arrayWithObjects.push({ ...cloneObject });
   }
