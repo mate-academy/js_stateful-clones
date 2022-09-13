@@ -7,22 +7,15 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let cloneShadow = {};
-  const clone = {};
+  const clone = { ...state };
   const result = [];
-
-  Object.assign(clone, state);
 
   // Main Loop:
   for (const action of actions) {
-    cloneShadow = {};
-
     switch (action['type']) {
       // For the type of 'addProperties':
       case 'addProperties':
-        for (const extraItem in action['extraData']) {
-          clone[extraItem] = action['extraData'][extraItem];
-        }
+        Object.assign(clone, action['extraData']);
         break;
 
       // For the type of 'removeProperties':
@@ -40,7 +33,7 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    result.push(Object.assign(cloneShadow, clone));
+    result.push({ ...clone });
   }
 
   return result;
