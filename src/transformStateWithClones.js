@@ -24,11 +24,15 @@ function transformStateWithClones(state, actions) {
 
         result.push({ ...stateCopy });
         break;
+
       case 'clear':
         Object.keys(stateCopy).forEach(key => (delete stateCopy[key]));
 
         result.push({ ...stateCopy });
         break;
+
+      default:
+        return;
     }
   }
 
