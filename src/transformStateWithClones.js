@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const statesArray = [];
+  const states = [];
   const copyState = { ...state };
 
   for (const action of actions) {
@@ -25,9 +25,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        const keysToClear = Object.keys(copyState);
-
-        for (const keyToClear of keysToClear) {
+        for (const keyToClear in copyState) {
           delete copyState[keyToClear];
         }
         break;
@@ -35,10 +33,10 @@ function transformStateWithClones(state, actions) {
       default:
         return 'Error!';
     }
-    statesArray.push({ ...copyState });
+    states.push({ ...copyState });
   }
 
-  return statesArray;
+  return states;
 }
 
 module.exports = transformStateWithClones;
