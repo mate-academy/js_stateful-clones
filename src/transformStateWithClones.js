@@ -18,18 +18,21 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        const delProp = action.keysToRemove;
+        const arrKeysToRemove = action.keysToRemove;
 
-        for (const key of delProp) {
+        for (const key of arrKeysToRemove) {
           delete copyState[key];
         }
         break;
 
       case 'clear':
-        for (const key in action) {
+        for (const key in copyState) {
           delete copyState[key];
         }
         break;
+
+      default:
+        return 'Unknown action type';
     }
 
     resultState.push({ ...copyState });
