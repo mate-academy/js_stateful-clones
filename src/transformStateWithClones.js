@@ -8,53 +8,35 @@
  */
 function transformStateWithClones(state, actions) {
   // write code here
-  let stateClone = { ...state };
-  const resultArr = [];
+  const stateClone = { ...state };
+  const allStates = [];
 
-  for (const obj of actions) {
-    if (obj['type'] === 'addProperties') {
-      Object.assign(stateClone, obj['extraData']);
+  for (const action of actions) {
+    switch (action.type) {
+      case 'addProperties':
+        Object.assign(stateClone, action.extraData);
+        break;
 
-      resultArr.push({ ...stateClone });
-    }
-
-    if (obj['type'] === 'removeProperties') {
-      for (const property of obj['keysToRemove']) {
-        if (stateClone[property]) {
-          delete stateClone[property];
+      case 'removeProperties':
+        for (const key of action.keysToRemove) {
+          delete stateClone[key];
         }
-      }
+        break;
 
-      resultArr.push({ ...stateClone });
+      case 'clear':
+        for (const key in stateClone) {
+          delete stateClone[key];
+        }
+        break;
+
+      default:
+        throw Error('unknown action type');
     }
 
-    if (obj['type'] === 'clear') {
-      stateClone = {};
-
-      resultArr.push({});
-    }
+    allStates.push({ ...stateClone });
   }
 
-  return resultArr;
+  return allStates;
 }
-
-// const state = {
-//   foo: 'bar', bar: 'foo',
-// };
-
-// transformStateWithClones(state, [
-//   {
-//     type: 'addProperties',
-//     extraData: {
-//       name: 'Jim', hello: 'world',
-//     },
-//   },
-//   {
-//     type: 'removeProperties', keysToRemove: ['bar', 'hello'],
-//   },
-//   {
-//     type: 'addProperties', extraData: { another: 'one' },
-//   },
-// ]);
 
 module.exports = transformStateWithClones;
