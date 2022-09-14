@@ -26,6 +26,9 @@ function transformStateWithClones(state, actions) {
         for (const key of action.keysToRemove) {
           delete current[key];
         }
+        
+       default:
+        throw Error('unknown action type');
     }
     result.push({ ...current });
   }
