@@ -27,6 +27,9 @@ function transformStateWithClones(state, actions) {
           delete transformedState[key];
         }
         break;
+        
+      default:
+        return 'Unknown action type'
     }
     clonesOfState.push({ ...transformedState });
   });
