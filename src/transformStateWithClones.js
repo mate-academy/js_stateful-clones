@@ -27,6 +27,9 @@ function transformStateWithClones(state, actions) {
           delete modifiedState[clearedKey];
         }
         break;
+
+      default:
+        throw Error('Unknown action type');
     }
 
     transformedStateWithClones.push({ ...modifiedState });
