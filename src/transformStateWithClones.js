@@ -27,7 +27,7 @@ function transformStateWithClones(state, actions) {
         help = {};
         break;
       default:
-        break;
+        return 'Error';
     }
 
     clone.push({ ...help });
