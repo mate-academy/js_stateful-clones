@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const newState = { ...state };
-  const returnObjects = [];
+  const stateClones = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -32,10 +32,10 @@ function transformStateWithClones(state, actions) {
         window.alert(`I don't know why I am here`);
     }
 
-    returnObjects.push(Object.assign({}, newState));
+    stateClones.push(Object.assign({}, newState));
   }
 
-  return returnObjects;
+  return stateClones;
 }
 
 module.exports = transformStateWithClones;
