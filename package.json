@@ -5,7 +5,7 @@
   "main": "src/transformStateWithClones.js",
   "scripts": {
     "init": "mate-scripts init",
-    "start": "mate-scripts start",
+    "start": "node init && mate-scripts start",
     "lint": "mate-scripts lint",
     "test:only": "mate-scripts test",
     "update": "mate-scripts update",
