@@ -19,17 +19,13 @@ function transformStateWithClones(state, actions) {
 
       case 'removeProperties':
         for (const key of action.keysToRemove) {
-          if (stateCopy[key]) {
-            delete stateCopy[key];
-          }
+          delete stateCopy[key];
         }
         break;
 
       case 'clear':
-        if (stateCopy) {
-          for (const key in stateCopy) {
-            delete stateCopy[key];
-          }
+        for (const key in stateCopy) {
+          delete stateCopy[key];
         }
         break;
 
