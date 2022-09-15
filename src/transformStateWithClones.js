@@ -2,24 +2,24 @@
 
 function transformStateWithClones(state, actions) {
   // write code here
-  const copy = { ...state };
-  const mainArray = [];
+  const copyState = { ...state };
+  const states = [];
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        Object.assign(copy, action.extraData);
+        Object.assign(copyState, action.extraData);
         break;
 
       case 'removeProperties':
         for (const key of action.keysToRemove) {
-          delete copy[key];
+          delete copyState[key];
         }
         break;
 
       case 'clear':
-        for (const key in copy) {
-          delete copy[key];
+        for (const key in copyState) {
+          delete copyState[key];
         }
         break;
 
@@ -27,9 +27,9 @@ function transformStateWithClones(state, actions) {
         throw Error('unknown action type');
     }
 
-    mainArray.push({ ...copy });
+    states.push({ ...copyState });
   }
 
-  return mainArray;
+  return states;
 }
 module.exports = transformStateWithClones;
