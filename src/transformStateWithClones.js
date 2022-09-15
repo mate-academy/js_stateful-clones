@@ -7,11 +7,11 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const reducer = (_state, action) => {
+  const reducer = (reducerState, action) => {
     switch (action.type) {
       case 'addProperties':
         return {
-          ..._state,
+          ...reducerState,
           ...action.extraData,
         };
       case 'removeProperties':
@@ -19,20 +19,20 @@ function transformStateWithClones(state, actions) {
           const { [key]: _, ...p } = object;
 
           return p;
-        }, _state);
+        }, reducerState);
 
         return updatedState;
       case 'clear':
         return {};
       default:
-        break;
+        return 'There in no action like this';
     }
   };
 
   const modifiedStates = [];
 
-  actions.reduce((__state, act) => {
-    const modifiedState = reducer(__state, act);
+  actions.reduce((reduceState, act) => {
+    const modifiedState = reducer(reduceState, act);
 
     modifiedStates.push(modifiedState);
 
