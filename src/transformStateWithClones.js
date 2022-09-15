@@ -10,7 +10,7 @@ function transformStateWithClones(state, actions) {
   // write code here
   const stateClone = {};
 
-  Object.assign(stateClone, state);
+  Object.assign(stateClone, { ...state });
 
   const resultArray = [];
 
@@ -33,7 +33,7 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    resultArray.push(Object.assign({ ...stateClone }));
+    resultArray.push({ ...stateClone });
   }
 
   return resultArray;
