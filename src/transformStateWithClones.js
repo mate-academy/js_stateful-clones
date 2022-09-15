@@ -13,27 +13,56 @@ function transformStateWithClones(state, actions) {
   for (let i = 0; i < actions.length; i++) {
     let actionsType;
 
-    if (actions[i].type === 'addProperties') {
-      actionsType = actions[i].extraData;
+    switch (true) {
+      case actions[i].type === 'addProperties':
+        actionsType = actions[i].extraData;
 
-      result.push(Object.assign(stateCopy, actionsType));
-    } else if (actions[i].type === 'removeProperties') {
-      actionsType = actions[i].keysToRemove;
+        result.push(Object.assign(stateCopy, actionsType));
+        break;
 
-      for (const key of actionsType) {
-        delete stateCopy[key];
-      }
+      case actions[i].type === 'removeProperties':
+        actionsType = actions[i].keysToRemove;
 
-      result.push(stateCopy);
-    } else if (actions[i].type === 'clear') {
-      for (const key in stateCopy) {
-        delete stateCopy[key];
-      }
+        for (const key of actionsType) {
+          delete stateCopy[key];
+        }
 
-      result.push(stateCopy);
+        result.push(stateCopy);
+        break;
+
+      case actions[i].type === 'clear':
+        for (const key in stateCopy) {
+          delete stateCopy[key];
+        }
+
+        result.push(stateCopy);
+        break;
     }
+
     stateCopy = {};
     stateCopy = { ...result[i] };
+
+    // if (actions[i].type === 'addProperties') {
+    //   actionsType = actions[i].extraData;
+
+    //   result.push(Object.assign(stateCopy, actionsType));
+    // } else if (actions[i].type === 'removeProperties') {
+    //   actionsType = actions[i].keysToRemove;
+
+    //   for (const key of actionsType) {
+    //     delete stateCopy[key];
+    //   }
+
+    //   result.push(stateCopy);
+    // } else if (actions[i].type === 'clear') {
+    //   for (const key in stateCopy) {
+    //     delete stateCopy[key];
+    //   }
+
+    //   result.push(stateCopy);
+    // }
+    // stateCopy = {};
+    // stateCopy = { ...result[i] };
   }
 
   return result;
