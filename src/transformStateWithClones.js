@@ -7,39 +7,47 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const resultArray = [];
-  let addObj = { ...state };
+  const totalPropertys = [];
+  let copyState = { ...state };
 
-  for (const { type, extraData, keysToRemove } of actions) {
-    if (type === 'addProperties') {
-      addObj = {
-        ...addObj,
-        ...extraData,
-      };
+  for (const action of actions) {
+    switch (action.type) {
+      case 'addProperties':
+        copyState = {
+          ...copyState,
+          ...action.extraData,
+        };
 
-      resultArray.push({
-        ...addObj, ...extraData,
-      });
-    } else if (type === 'removeProperties') {
-      for (const item of keysToRemove) {
-        if (Object.keys(addObj).filter(elem => elem === item)) {
-          delete addObj[item];
+        totalPropertys.push({
+          ...copyState,
+          ...action.extraData,
+        });
+        break;
+
+      case 'removeProperties':
+        for (const property of action.keysToRemove) {
+          if (Object.keys(copyState).filter(elem => elem === property)) {
+            delete copyState[property];
+          }
         }
-      }
 
-      resultArray.push({
-        ...addObj, ...extraData,
-      });
-    } else {
-      for (const bit of Object.keys(addObj)) {
-        delete addObj[bit];
-      }
+        totalPropertys.push({
+          ...copyState,
+          ...action.extraData,
+        });
+        break;
 
-      resultArray.push(addObj);
+      case 'clear':
+        for (const key of Object.keys(copyState)) {
+          delete copyState[key];
+        }
+
+        totalPropertys.push(copyState);
+        break;
     }
   }
 
-  return resultArray;
+  return totalPropertys;
 }
 
 module.exports = transformStateWithClones;
