@@ -20,11 +20,13 @@ function transformStateWithClones(state, actions) {
           delete statePaste[key];
         }
         break;
-
-      default:
+      case 'clear':
         for (const property in statePaste) {
           delete statePaste[property];
         }
+        break;
+      default:
+        throw new Error('Error');
     }
     objState.push({ ...statePaste });
   }
