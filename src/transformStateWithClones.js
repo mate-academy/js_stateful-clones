@@ -8,12 +8,12 @@
  */
 function transformStateWithClones(state, actions) {
   const cloneObject = {};
-  const arrayWithObjects = [];
+  const stateVersions = [];
 
   Object.assign(cloneObject, state);
 
-  for (const objects of actions) {
-    const { type, extraData, keysToRemove } = objects;
+  for (const action of actions) {
+    const { type, extraData, keysToRemove } = action;
 
     switch (type) {
       case 'addProperties' :
@@ -27,17 +27,17 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear' :
-        for (const deleteAll in cloneObject) {
-          delete cloneObject[deleteAll];
+        for (const key in cloneObject) {
+          delete cloneObject[key];
         }
         break;
       default:
         throw new Error('Wrong type!');
     }
-    arrayWithObjects.push({ ...cloneObject });
+    stateVersions.push({ ...cloneObject });
   }
 
-  return arrayWithObjects;
+  return stateVersions;
 }
 
 module.exports = transformStateWithClones;
