@@ -29,7 +29,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw Error('Unknown action type');
+        throw Error('Unknown action type!');
     }
 
     totalPropertys.push({ ...copyState });
