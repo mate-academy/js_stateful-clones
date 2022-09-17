@@ -17,7 +17,9 @@ function transformStateWithClones(state, actions) {
 
     if (action.type === 'removeProperties') {
       for (const key of action.keysToRemove) {
-        delete tranformedObject[key];
+        if (tranformedObject[key]) {
+          delete tranformedObject[key];
+        }
       }
     }
 
