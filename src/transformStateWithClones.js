@@ -8,6 +8,8 @@
  */
 function transformStateWithClones(state, actions) {
   const reducer = (reducerState, action) => {
+    const changedState = { ...reducerState };
+
     switch (action.type) {
       case 'addProperties':
         return {
@@ -15,15 +17,17 @@ function transformStateWithClones(state, actions) {
           ...action.extraData,
         };
       case 'removeProperties':
-        const updatedState = action.keysToRemove.reduce((object, key) => {
-          const { [key]: _, ...p } = object;
+        for (const key of action.keysToRemove) {
+          delete changedState[key];
+        };
 
-          return p;
-        }, reducerState);
-
-        return updatedState;
+        return changedState;
       case 'clear':
-        return {};
+        for (const key in changedState) {
+          delete changedState[key];
+        };
+
+        return changedState;
       default:
         return 'There in no action like this';
     }
