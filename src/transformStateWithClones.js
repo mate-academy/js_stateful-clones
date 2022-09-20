@@ -25,9 +25,10 @@ function transformStateWithClones(state, actions) {
           delete condition[action.keysToRemove[j]];
         }
         break;
-      default: for (const property in condition) {
-        delete condition[property];
-      }
+      case 'clear':
+        for (const property in condition) {
+          delete condition[property];
+        }
         break;
     }
     states[i] = { ...condition };
