@@ -12,13 +12,13 @@ function transformStateWithClones(state, actions) {
   let version = {};
 
   for (const action of actions) {
-    switch (true) {
-      case action.type === 'addProperties':
+    switch (action.type) {
+      case 'addProperties':
         version = { ...addProperties(stateCopy, action.extraData) };
         versions.push(version);
         break;
 
-      case action.type === 'removeProperties':
+      case 'removeProperties':
         version = { ...removeProperties(stateCopy, action.keysToRemove) };
         versions.push(version);
         break;
