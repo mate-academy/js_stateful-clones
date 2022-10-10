@@ -26,10 +26,14 @@ function transformStateWithClones(state, actions) {
         }
         break;
 
-      default:
+      case 'clear':
         for (const key in stateCopy) {
           delete stateCopy[key];
         }
+        break;
+
+      default:
+        break;
     }
     arrOfActions.push({ ...stateCopy });
   }
