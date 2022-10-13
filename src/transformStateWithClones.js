@@ -10,40 +10,46 @@ function transformStateWithClones(state, actions) {
   const clear = 'clear';
   const add = 'addProperties';
   const remove = 'removeProperties';
-  const arr = [];
-  const copy = {};
+  const result = [];
+  const stateClones = {};
 
-  Object.assign(copy, state);
-  arr.push(copy);
+  Object.assign(stateClones, state);
+  result.push(stateClones);
 
   for (let i = 0; i < actions.length; i++) {
-    if (actions[i].type === clear) {
-      for (const ch in arr[i]) {
-        delete arr[i][ch];
-      }
-    } else if (actions[i].type === add) {
-      for (const jey in actions[i].extraData) {
-        arr[i][jey] = actions[i].extraData[jey];
-      }
-    } else if (actions[i].type === remove) {
-      for (let j = 0; j < actions[i].keysToRemove.length; j++) {
-        for (const ch in arr[i]) {
-          if (ch === actions[i].keysToRemove[j]) {
-            delete arr[i][ch];
+    switch (actions[i].type) {
+      case clear:
+        for (const ch in result[i]) {
+          delete result[i][ch];
+        }
+        break;
+
+      case add:
+        for (const jey in actions[i].extraData) {
+          result[i][jey] = actions[i].extraData[jey];
+        }
+        break;
+
+      case remove:
+        for (let j = 0; j < actions[i].keysToRemove.length; j++) {
+          for (const ch in result[i]) {
+            if (ch === actions[i].keysToRemove[j]) {
+              delete result[i][ch];
+            }
           }
         }
-      }
+        break;
     }
 
     if (actions[i + 1]) {
       const object = {};
 
-      Object.assign(object, arr[i]);
-      arr.push(object);
+      Object.assign(object, result[i]);
+      result.push(object);
     }
   }
 
-  return arr;
+  return result;
 }
 
 module.exports = transformStateWithClones;
