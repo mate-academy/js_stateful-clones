@@ -6,35 +6,35 @@
  *
  * @return {Object[]}
  */
-function transformStateWithClones(state, actions) {
-  const cloneState = [];
-  const cloneObject = { ...state };
+function transformStateWithClone(state, actions) {
+  const stateClone = [];
+  const objectClone = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        Object.assign(cloneObject, action.extraData);
+        Object.assign(objectClone, action.extraData);
         break;
 
       case 'removeProperties':
-        for (const remove of action.keysToRemove) {
-          delete cloneObject[remove];
+        for (const keyToRemove of action.keysToRemove) {
+          delete objectClone[keyToRemove];
         }
         break;
 
       case 'clear':
-        for (const clear in cloneObject) {
-          delete cloneObject[clear];
+        for (const key in objectClone) {
+          delete objectClone[key];
         }
         break;
 
       default:
-        break;
+        throw new Error('Ivalid data type');
     }
-    cloneState.push({ ...cloneObject });
+    stateClone.push({ ...objectClone });
   }
 
-  return cloneState;
+  return stateClone;
 }
 
-module.exports = transformStateWithClones;
+module.exports = transformStateWithClone;
