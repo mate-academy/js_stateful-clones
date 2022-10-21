@@ -35,7 +35,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        return 'Something went wrong';
+        throw new Error(`You gave wrong object properties`);
     }
   }
 
