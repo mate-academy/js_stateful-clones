@@ -17,8 +17,8 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        for (const deleteKey of action.keysToRemove) {
-          delete newObject[deleteKey];
+        for (const keyToDelete of action.keysToRemove) {
+          delete newObject[keyToDelete];
         }
         break;
 
@@ -29,7 +29,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        throw Error;
     }
 
     newState.push({ ...newObject });
