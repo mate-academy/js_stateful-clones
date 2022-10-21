@@ -7,7 +7,7 @@
 Write a function `transformStateWithClones` that take a `state` object and an `actions` array
 and return an array of the same length as `actions` containing all previous versions of the `state`.
 Each element of the resulting array has to represent the state produced by the next operation.
-
+}
 **IMPORTANT!** You must not modify the initial `state` object in any way!
 
 - `state` is an initial object. It should always remain the same.
@@ -21,6 +21,15 @@ Each element of the resulting array has to represent the state produced by the n
       with the list of property names (keys) to remove from the `state`; (Not existing
       properties should be ignored)
     - if `type` is `clear` you should create an empty state object. No second property in this case;
+
+
+
+<!-- function transformStateWithClones(state{}, actions{ [] [] [] [] }) {
+
+return [actions.length in state]
+
+type: addProperties: /  removeProperties  /  clear
+extraData{key: value}   keysToRemove[]       {} -->
 
 Example of usage:
 
