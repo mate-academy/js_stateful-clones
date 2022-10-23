@@ -9,34 +9,32 @@
 function transformStateWithClones(state, actions) {
   const stateCopy = [];
 
-  stateCopy.push(Object.assign({}, state));
+  for (const action of actions) {
+    stateCopy.length === 0
+      ? stateCopy.push({ ...state })
+      : stateCopy.push({ ...stateCopy[stateCopy.length - 1] });
 
-  for (let i = 0; i < Object.values(actions).length; i++) {
-    if (i > 0) {
-      stateCopy.push(Object.assign({}, stateCopy[i - 1]));
-    }
+    const operativeObject = stateCopy[stateCopy.length - 1];
 
-    switch (actions[i].type) {
+    switch (action.type) {
+      case 'addProperties':
+        Object.assign(operativeObject, action.extraData);
+        break;
+
       case 'clear':
-        Object.keys(stateCopy[i]).forEach(key => {
-          delete stateCopy[i][key];
+        Object.keys(operativeObject).forEach(key => {
+          delete operativeObject[key];
         });
         break;
 
       case 'removeProperties':
-        actions[i].keysToRemove.forEach(key => {
-          delete stateCopy[i][key];
+        action.keysToRemove.forEach(key => {
+          delete operativeObject[key];
         });
         break;
 
-      case 'addProperties':
-        for (const [key, value] of Object.entries(actions[i].extraData)) {
-          stateCopy[i][key] = value;
-        }
-        break;
-
       default:
-        return 'Error occured';
+        throw new Error('Error occured');
     }
   }
 
