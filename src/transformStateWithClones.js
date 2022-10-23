@@ -26,6 +26,9 @@ function transformStateWithClones(state, actions) {
         for (const value in copyState) {
           delete copyState[value];
         }
+        break;
+
+      default: Error('No matches found');
     }
     result.push({ ...copyState });
   }
