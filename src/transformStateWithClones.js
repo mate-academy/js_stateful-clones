@@ -28,7 +28,7 @@ function transformStateWithClones(state, actions) {
         }
         break;
 
-      default: Error('No matches found');
+      default:
     }
     result.push({ ...copyState });
   }
