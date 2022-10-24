@@ -29,7 +29,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw new Error('Wrong type of transformState');
+        throw new Error('Wrong type of action');
     }
     transformedState.push({ ...stateCopy });
   }
