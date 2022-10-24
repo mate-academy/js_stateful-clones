@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const stateCopy = { ...state };
-  const arrayState = [];
+  const transformedStates = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -17,14 +17,14 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        for (const prop of action.keysToRemove) {
-          delete stateCopy[prop];
+        for (const key of action.keysToRemove) {
+          delete stateCopy[key];
         }
         break;
 
       case 'clear':
-        for (const prop in stateCopy) {
-          delete stateCopy[prop];
+        for (const key in stateCopy) {
+          delete stateCopy[key];
         }
         break;
 
@@ -32,10 +32,10 @@ function transformStateWithClones(state, actions) {
         throw new Error('Enter valid data');
     }
 
-    arrayState.push({ ...stateCopy });
+    transformedStates.push({ ...stateCopy });
   }
 
-  return arrayState;
+  return transformedStates;
 }
 
 module.exports = transformStateWithClones;
