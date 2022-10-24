@@ -11,25 +11,25 @@ function transformStateWithClones(state, actions) {
   const arrayState = [];
 
   for (const action of actions) {
-    switch (true) {
-      case action.type === 'addProperties':
+    switch (action.type) {
+      case 'addProperties':
         Object.assign(stateCopy, action.extraData);
         break;
 
-      case action.type === 'removeProperties':
+      case 'removeProperties':
         for (const prop of action.keysToRemove) {
           delete stateCopy[prop];
         }
         break;
 
-      case action.type === 'clear':
+      case 'clear':
         for (const prop in stateCopy) {
           delete stateCopy[prop];
         }
         break;
 
       default:
-        return 'Enter valid data';
+        throw new Error('Enter valid data');
     }
 
     arrayState.push({ ...stateCopy });
