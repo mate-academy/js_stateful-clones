@@ -7,35 +7,34 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateVirsions = [];
+  const stateVersions = [];
   const copyState = { ...state };
 
   for (const action of actions) {
-    Object.assign(copyState, action.extraData);
-
     switch (action.type) {
       case 'addProperties':
-        stateVirsions.push(Object.assign({}, copyState));
+        Object.assign(copyState, action.extraData);
         break;
 
       case 'removeProperties':
-        for (const property of action.keysToRemove) {
-          delete copyState[property];
+        for (const keyToRemove of action.keysToRemove) {
+          delete copyState[keyToRemove];
         };
-        stateVirsions.push(Object.assign({}, copyState));
         break;
 
       case 'clear':
-        Object.keys(copyState).forEach(key => delete copyState[key]);
-        stateVirsions.push({});
+        for (const keyToRemove in copyState) {
+          delete copyState[keyToRemove];
+        }
         break;
 
       default:
-        break;
+        throw new Error('Unverifiable action');
     }
+    stateVersions.push(Object.assign({}, copyState));
   }
 
-  return stateVirsions;
+  return stateVersions;
 }
 
 module.exports = transformStateWithClones;
