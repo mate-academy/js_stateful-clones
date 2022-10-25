@@ -27,7 +27,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        throw new Error('Error occured');
     }
 
     objectStates.push({ ...stateCopy });
