@@ -30,6 +30,9 @@ function transformStateWithClones(state, actions) {
         }
 
         break;
+
+      default:
+        throw new Error('error');
     }
 
     newObject.push({ ...stateCopy });
