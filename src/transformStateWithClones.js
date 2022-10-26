@@ -32,7 +32,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw new Error('error');
+        throw new Error('Wrong object properties');
     }
 
     newObject.push({ ...stateCopy });
