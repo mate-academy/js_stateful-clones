@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const stateCopy = { ...state };
-  const stateArr = [];
+  const transformedStates = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -18,8 +18,8 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        for (const property of action.keysToRemove) {
-          delete stateCopy[property];
+        for (const key of action.keysToRemove) {
+          delete stateCopy[key];
         }
 
         break;
@@ -32,10 +32,10 @@ function transformStateWithClones(state, actions) {
       default:
         throw new Error('Check the action type');
     }
-    stateArr.push({ ...stateCopy });
+    transformedStates.push({ ...stateCopy });
   }
 
-  return stateArr;
+  return transformedStates;
 }
 
 module.exports = transformStateWithClones;
