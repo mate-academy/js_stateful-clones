@@ -8,13 +8,13 @@
  */
 function transformStateWithClones(state, actions) {
   const result = [];
-  // const removeState = {};
+
   const copyOfState = Object.assign({}, state);
 
   actions.forEach(action => {
-    const { keysToRemove, extraData } = action;
+    const { keysToRemove, extraData, type } = action;
 
-    switch (action.type) {
+    switch (type) {
       case 'addProperties':
         Object.assign(copyOfState, extraData);
 
