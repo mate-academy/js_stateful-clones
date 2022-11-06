@@ -8,51 +8,54 @@
  */
 function transformStateWithClones(state, actions) {
   const NewArray = [];
-  let massive = { ...state };
+  let array = { ...state };
 
-  for (let numArr = 0; numArr < actions.length; numArr++) {
-    const action = Object.assign({}, actions[numArr]);
+  for (const numArr of actions) {
+    const action = Object.assign({}, numArr);
 
-    for (const key in action) { // loop all types in array 'action'
+    for (const key in action) {
       if (action[key] === 'addProperties') {
-        const state1 = { ...massive };
+        const state1 = { ...array };
 
         Object.assign(state1, action.extraData);
         NewArray.push(state1);
 
-        for (const b in massive) {
-          delete massive[b];
-        }
-        massive = { ...state1 };
-      } else if (action[key] === 'clear') {
-        const state2 = { ...massive };
-
-        for (const x in state2) {
-          delete state2[x];
+        for (const b in array) {
+          delete array[b];
         };
 
-        NewArray.push(state2);
+        array = { ...state1 };
+      } else if (action[key] === 'clear') {
+        const state1 = { ...array };
 
-        for (const b in massive) {
-          delete massive[b];
-        }
-        massive = { ...state2 };
+        for (const x in state1) {
+          delete state1[x];
+        };
+
+        NewArray.push(state1);
+
+        for (const b in array) {
+          delete array[b];
+        };
+
+        array = { ...state1 };
       } else if (action[key] === 'removeProperties') {
-        const state3 = { ...massive };
+        const state1 = { ...array };
 
         for (let keyRem = 0; keyRem < action.keysToRemove.length; keyRem++) {
-          for (const x in state3) {
+          for (const x in state1) {
             if (x === action.keysToRemove[keyRem]) {
-              delete state3[x];
-            }
-          }
-        }
-        NewArray.push(state3);
+              delete state1[x];
+            };
+          };
+        };
+        NewArray.push(state1);
 
-        for (const b in massive) {
-          delete massive[b];
-        }
-        massive = { ...state3 };
+        for (const b in array) {
+          delete array[b];
+        };
+
+        array = { ...state1 };
       }
     }
   }
