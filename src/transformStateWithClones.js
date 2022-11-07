@@ -17,7 +17,7 @@ function transformStateWithClones(state, actions) {
     if (action.type === 'addProperties') {
       newClone = Object.assign(newClone, action.extraData);
 
-      cloneHistory.push(Object.assign({}, newClone));
+      cloneHistory.push({ ...newClone });
     }
 
     if (action.type === 'removeProperties') {
@@ -25,7 +25,7 @@ function transformStateWithClones(state, actions) {
         delete newClone[key];
       }
 
-      cloneHistory.push(Object.assign({}, newClone));
+      cloneHistory.push({ ...newClone });
     }
 
     if (action.type === 'clear') {
@@ -33,7 +33,7 @@ function transformStateWithClones(state, actions) {
         delete newClone[key];
       }
 
-      cloneHistory.push(Object.assign({}, newClone));
+      cloneHistory.push({ ...newClone });
     }
   }
 
