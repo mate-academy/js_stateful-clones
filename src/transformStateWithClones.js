@@ -7,41 +7,43 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
+  const result = [];
   let correctState = Object.assign({}, state);
 
-  const result = [];
-
   for (const action of actions) {
-    if (action['type'] === 'addProperties') {
-      correctState = Object.assign(correctState, action['extraData']);
+    // let correctState = Object.assign({}, state);
+    // console.log(correctState);
+    switch (action['type']) {
+      case 'addProperties':
+        correctState = Object.assign(correctState, action['extraData']);
 
-      const clone = Object.assign({}, correctState);
+        const cloneAdd = Object.assign({}, correctState);
 
-      result.push(clone);
-    }
+        result.push(cloneAdd);
+        break;
 
-    if (action['type'] === 'removeProperties') {
-      for (const keys of action['keysToRemove']) {
-        delete correctState[keys];
-      }
+      case 'removeProperties':
+        for (const keys of action['keysToRemove']) {
+          delete correctState[keys];
+        }
 
-      const clone = Object.assign({}, correctState);
+        const cloneRemove = Object.assign({}, correctState);
 
-      result.push(clone);
-    }
+        result.push(cloneRemove);
+        break;
 
-    if (action['type'] === 'clear') {
-      for (const keys in correctState) {
-        delete correctState[keys];
-      }
+      case 'clear':
+        for (const keys in correctState) {
+          delete correctState[keys];
+        }
 
-      const clone = Object.assign({}, correctState);
+        const clone = Object.assign({}, correctState);
 
-      result.push(clone);
+        result.push(clone);
+        continue;
     }
   }
 
-  // console.log(state);
   return result;
 }
 
