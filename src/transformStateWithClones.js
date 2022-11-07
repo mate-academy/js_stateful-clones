@@ -14,26 +14,29 @@ function transformStateWithClones(state, actions) {
   };
 
   for (const action of actions) {
-    if (action.type === 'addProperties') {
-      newClone = Object.assign(newClone, action.extraData);
+    switch (action.type) {
+      case 'addProperties':
+        newClone = Object.assign(newClone, action.extraData);
 
-      cloneHistory.push({ ...newClone });
-    }
+        cloneHistory.push({ ...newClone });
 
-    if (action.type === 'removeProperties') {
-      for (const key of action.keysToRemove) {
-        delete newClone[key];
-      }
+        break;
 
-      cloneHistory.push({ ...newClone });
-    }
+      case 'removeProperties':
+        for (const key of action.keysToRemove) {
+          delete newClone[key];
+        }
 
-    if (action.type === 'clear') {
-      for (const key in newClone) {
-        delete newClone[key];
-      }
+        cloneHistory.push({ ...newClone });
 
-      cloneHistory.push({ ...newClone });
+        break;
+
+      case 'clear':
+        for (const key in newClone) {
+          delete newClone[key];
+        }
+
+        cloneHistory.push({ ...newClone });
     }
   }
 
