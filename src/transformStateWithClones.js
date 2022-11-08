@@ -37,6 +37,11 @@ function transformStateWithClones(state, actions) {
         }
 
         cloneHistory.push({ ...newClone });
+
+        break;
+
+      default:
+        throw new Error('invalid action type');
     }
   }
 
