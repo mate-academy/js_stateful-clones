@@ -29,6 +29,7 @@ function transformStateWithClones(state, actions) {
       default:
         // eslint-disable-next-line no-console
         console.log("There's no such command");
+        break;
     }
 
     result.push({ ...newState });
