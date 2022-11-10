@@ -8,16 +8,16 @@
  */
 function transformStateWithClones(state, actions) {
   let stateClone = { ...state };
-  const emptyArr = [];
+  const transformedStates = [];
 
-  for (const act of actions) {
-    switch (act.type) {
+  for (const action of actions) {
+    switch (action.type) {
       case 'addProperties':
-        Object.assign(stateClone, act.extraData);
+        Object.assign(stateClone, action.extraData);
         break;
 
       case 'removeProperties':
-        for (const key of act.keysToRemove) {
+        for (const key of action.keysToRemove) {
           delete stateClone[key];
         };
         break;
@@ -29,10 +29,10 @@ function transformStateWithClones(state, actions) {
       default:
         throw Error('no action');
     }
-    emptyArr.push({ ...stateClone });
+    transformedStates.push({ ...stateClone });
   }
 
-  return emptyArr;
+  return transformedStates;
 }
 
 module.exports = transformStateWithClones;
