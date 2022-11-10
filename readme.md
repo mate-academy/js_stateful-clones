@@ -67,3 +67,67 @@ we must get
 ```
 the `state` variable must still contain
 {foo: 'bar', bar: 'foo'}.
+
+Напишіть функцію `transformStateWithClones`, яка приймає об'єкт `state` та масив `actions`
+і повертає масив такої ж довжини, що й `actions`, що містить усі попередні версії `state`.
+Кожен елемент отриманого масиву має представляти стан, створений наступною операцією.
+
+**ВАЖЛИВО!** Ви не повинні жодним чином змінювати початковий об'єкт `state`!
+
+- `state` є початковим об'єктом. Вона завжди повинна залишатися незмінною.
+
+- `actions` - це масив об'єктів. Кожен об’єкт у цьому масиві має такі властивості:
+  - `type` містить рядок: або `'addProperties'`, `'removeProperties'` або `'clear'`;
+  - Друга властивість кожного об'єкта залежить від "типу" і може бути однією з наступних:
+    - якщо `type` є `addProperties`, другою властивістю є `extraData`. Він містить об’єкт
+      з парами "ключ: значення", щоб додати до стану;
+    - якщо `type` є `removeProperties`, другою властивістю є `keysToRemove`. Він містить масив
+      зі списком імен властивостей (ключів), які потрібно видалити зі стану; (Не існує
+      властивості слід ігнорувати)
+    - якщо `type` є `clear`, ви повинні створити порожній об'єкт стану. Другої властивості в даному випадку немає;
+
+Приклад використання:
+
+Якщо `state` {foo: 'bar', bar: 'foo'}, то
+
+```
+transformStateWithClones(стан, [
+  {type: 'addProperties', extraData: {name: 'Jim', hello: 'world'}},
+  {type: 'removeProperties', keysToRemove: ['bar', 'hello']},
+  {тип: 'addProperties', extraData: {інший: 'один'}}
+])
+```
+
+має повернути такий масив:
+
+```
+[
+  {foo: 'bar', bar: 'foo', name: 'Jim', hello: 'world'},
+  {foo: 'bar', name: 'Jim'},
+  {foo: 'bar', name: 'Jim', another: 'one'}
+].
+```
+
+**Сам об'єкт `state` не слід змінювати і має залишатися {foo: 'bar', bar: 'foo'}.**
+
+Потім після дзвінка
+
+```
+transformStateWithClones(стан, [
+  {тип: 'addProperties', extraData: {ще: 'інша властивість'}}
+  {type: 'clear'},
+  {type: 'addProperties', extraData: {foo: 'bar', name: 'Jim'}}
+])
+```
+
+ми повинні отримати
+
+```
+[
+  {foo: 'bar', bar: 'foo', yet: 'інша властивість'},
+  {},
+  {foo: 'bar', name: 'Jim'}
+].
+```
+змінна `state` має все ще містити
+{foo: 'bar', bar: 'foo'}.
