@@ -11,15 +11,19 @@ function transformStateWithClones(state, actions) {
   const clones = [];
 
   actions.forEach(action => {
-    if (action.type === 'addProperties') {
-      Object.assign(currentState, action.extraData);
-    } else if (action.type === 'clear') {
-      currentState = {};
-    } else {
-      action.keysToRemove.forEach(key => {
-        delete currentState[key];
-      });
+    switch (action.type) {
+      case 'addProperties':
+        Object.assign(currentState, action.extraData);
+        break;
+      case 'clear':
+        currentState = {};
+        break;
+      default:
+        action.keysToRemove.forEach(key => {
+          delete currentState[key];
+        });
     }
+
     clones.push({ ...currentState });
   });
 
