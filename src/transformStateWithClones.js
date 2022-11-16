@@ -22,6 +22,9 @@ function transformStateWithClones(state, actions) {
         action.keysToRemove.forEach(key => {
           delete currentState[key];
         });
+        break;
+      default:
+        throw new Error('worng data!');
     }
 
     clones.push({ ...currentState });
