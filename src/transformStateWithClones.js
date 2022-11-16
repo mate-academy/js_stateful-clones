@@ -1,37 +1,43 @@
 'use strict';
 
 /**
- * @param {Object} state
+ * @param {Object} localState
  * @param {Object[]} actions
  *
  * @return {Object[]}
  */
-function transformStateWithClones(state, actions) {
+function transformStateWithClones(stste, actions) {
   const result = [];
-  let state2 = {
-    ...state,
+  let stateCopy = {
+    ...stste,
   };
 
   for (const obj of actions) {
     const action = obj['type'];
-    const newState = {
-      ...state2,
+    const localState = {
+      ...stateCopy,
     };
 
-    if (action === 'addProperties') {
-      addProperties(newState, obj.extraData);
+    switch (action) {
+      case 'addProperties':
+        addProperties(localState, obj.extraData);
+        break;
+
+      case 'removeProperties':
+        removeProperties(localState, obj.keysToRemove);
+        break;
+
+      case 'clear':
+        clear(localState);
+        break;
+
+      default:
+
+        break;
     }
 
-    if (action === 'removeProperties') {
-      removeProperties(newState, obj.keysToRemove);
-    }
-
-    if (action === 'clear') {
-      clear(newState);
-    }
-
-    result.push(newState);
-    state2 = newState;
+    result.push(localState);
+    stateCopy = localState;
   }
 
   return result;
