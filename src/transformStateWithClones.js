@@ -28,6 +28,10 @@ function transformStateWithClones(state, actions) {
         for (const clear in nextState) {
           delete nextState[clear];
         }
+        break;
+
+      default:
+        return;
     }
 
     result.push({ ...nextState });
