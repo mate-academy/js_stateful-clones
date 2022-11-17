@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(stste, actions) {
-  const result = [];
+  const listOfClones = [];
   let stateCopy = {
     ...stste,
   };
@@ -36,11 +36,11 @@ function transformStateWithClones(stste, actions) {
         break;
     }
 
-    result.push(localState);
+    listOfClones.push(localState);
     stateCopy = localState;
   }
 
-  return result;
+  return listOfClones;
 }
 
 function addProperties(state, data) {
