@@ -9,7 +9,6 @@
 function transformStateWithClones(state, actions) {
   const result = [];
   const copyState = { ...state };
-  const strError = `throw new Error("I'm Error")`;
 
   for (const action of actions) {
     const { keysToRemove, extraData, type } = action;
@@ -33,7 +32,7 @@ function transformStateWithClones(state, actions) {
         }
         break;
       default:
-        return strError;
+        throw new Error("I'm Error");
     }
     result.push({ ...copyState });
   }
