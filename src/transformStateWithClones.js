@@ -6,29 +6,26 @@
  *
  * @return {Object[]}
  */
-function transformStateWithClones(stste, actions) {
+function transformStateWithClones(state, actions) {
   const listOfClones = [];
-  let stateCopy = {
-    ...stste,
+  const stateCopy = {
+    ...state,
   };
 
   for (const obj of actions) {
     const action = obj['type'];
-    const localState = {
-      ...stateCopy,
-    };
 
     switch (action) {
       case 'addProperties':
-        addProperties(localState, obj.extraData);
+        addProperties(stateCopy, obj.extraData);
         break;
 
       case 'removeProperties':
-        removeProperties(localState, obj.keysToRemove);
+        removeProperties(stateCopy, obj.keysToRemove);
         break;
 
       case 'clear':
-        clear(localState);
+        clear(stateCopy);
         break;
 
       default:
@@ -36,8 +33,7 @@ function transformStateWithClones(stste, actions) {
         break;
     }
 
-    listOfClones.push(localState);
-    stateCopy = localState;
+    listOfClones.push({ ...stateCopy });
   }
 
   return listOfClones;
@@ -50,8 +46,8 @@ function addProperties(state, data) {
 }
 
 function removeProperties(state, toRemove) {
-  for (const i of toRemove) {
-    delete state[i];
+  for (const itemToRemove of toRemove) {
+    delete state[itemToRemove];
   }
 }
 
