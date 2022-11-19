@@ -14,9 +14,7 @@ function transformStateWithClones(state, actions) {
   for (const i in actions) {
     switch (actions[i].type) {
       case 'addProperties' : {
-        for (const key in actions[i].extraData) {
-          newState[key] = actions[i].extraData[key];
-        }
+        Object.assign(newState, actions[i].extraData);
         break;
       }
 
