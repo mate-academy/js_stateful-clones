@@ -32,8 +32,7 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    allStates.push(copyState);
-    copyState = Object.assign({}, allStates[allStates.length - 1]);
+    allStates.push({ ...copyState });
   }
 
   return allStates;
