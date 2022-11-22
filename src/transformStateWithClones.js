@@ -18,9 +18,7 @@ function transformStateWithClones(state, actions) {
 
       case 'removeProperties':
         item.keysToRemove.forEach(keyDel => {
-          if (keyDel in stateCopy) {
-            delete stateCopy[keyDel];
-          }
+          delete stateCopy[keyDel];
         });
         break;
 
