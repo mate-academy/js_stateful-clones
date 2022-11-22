@@ -7,14 +7,12 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let stateCopy = { ...state };
-  const resultingdArray = [];
+  const stateCopy = { ...state };
+  const transformedState = [];
 
   for (const { type,
     extraData: propertiesToAdd,
     keysToRemove: propertiesToDelete } of actions) {
-    stateCopy = { ...stateCopy };
-
     switch (type) {
       case 'addProperties':
         Object.assign(stateCopy, propertiesToAdd);
@@ -35,10 +33,10 @@ function transformStateWithClones(state, actions) {
       default:
         break;
     }
-    resultingdArray.push(stateCopy);
+    transformedState.push({ ...stateCopy });
   }
 
-  return resultingdArray;
+  return transformedState;
 }
 
 module.exports = transformStateWithClones;
