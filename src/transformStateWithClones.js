@@ -8,19 +8,17 @@
  */
 function transformStateWithClones(state, actions) {
   // write code here
-  const resultState = [];
+  const stateHistory = [];
   const stateCopy = { ...state };
 
   actions.forEach((action) => {
     switch (action.type) {
       case 'addProperties':
         Object.assign(stateCopy, action.extraData);
-
         break;
 
       case 'removeProperties': {
         action.keysToRemove.forEach((key) => delete stateCopy[key]);
-
         break;
       }
 
@@ -31,10 +29,10 @@ function transformStateWithClones(state, actions) {
         break;
       }
     }
-    resultState.push({ ...stateCopy });
+    stateHistory.push({ ...stateCopy });
   });
 
-  return resultState;
+  return stateHistory;
 }
 
 module.exports = transformStateWithClones;
