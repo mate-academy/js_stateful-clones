@@ -29,7 +29,7 @@ If `state` is {foo: 'bar', bar: 'foo'}, then
 ```
 transformStateWithClones(state, [
   {type: 'addProperties', extraData: {name: 'Jim', hello: 'world'}},
-  {type: 'removeProperties', keysToRemove: ['bar', 'hello']},
+  {type: ', keysToRemove: ['bar', 'hello']},
   {type: 'addProperties', extraData: {another: 'one'}}
 ])
 ```
@@ -44,7 +44,7 @@ must return the following array:
 ].
 ```
 
-**The `state` object itself should not be modified and must remain {foo: 'bar', bar: 'foo'}.**
+*The `state` object itself should not be modified and must remain {foo: 'bar', bar: 'foo'}.***
 
 Then after calling
 
