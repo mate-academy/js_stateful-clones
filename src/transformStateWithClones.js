@@ -22,10 +22,8 @@ function transformStateWithClones(state, actions) {
     }
 
     if (obj.type === 'clear') {
-      if (Object.keys(currentState).length !== 0) {
-        for (const key in currentState) {
-          delete currentState[key];
-        }
+      for (const key in currentState) {
+        delete currentState[key];
       }
     }
 
