@@ -20,11 +20,13 @@ function transformStateWithClones(state, actions) {
       case 'removeProperties':
         obj.keysToRemove.forEach(el => delete clone[el]);
         break;
-      default:
+      case 'clear':
         for (const key in clone) {
           delete clone[key];
         };
         break;
+      default:
+        return;
     }
 
     result.push({ ...clone });
