@@ -13,16 +13,18 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     const { type } = action;
 
-    if (type === 'addProperties') {
-      Object.assign(currentState, action.extraData);
-    }
-
-    if (type === 'removeProperties') {
-      action.keysToRemove.forEach(key => delete currentState[key]);
-    }
-
-    if (type === 'clear') {
-      currentState = {};
+    switch (type) {
+      case 'addProperties':
+        Object.assign(currentState, action.extraData);
+        break;
+      case 'removeProperties':
+        action.keysToRemove.forEach(key => delete currentState[key]);
+        break;
+      case 'clear':
+        currentState = {};
+        break;
+      default:
+        throw new Error(`${action} is not supported`);
     }
 
     result.push({ ...currentState });
