@@ -13,7 +13,6 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     switch (true) {
       case (action.type === 'addProperties'):
-        resultState.push(Object.assign({}, stateCopy, action.extraData));
         Object.assign(stateCopy, action.extraData);
         break;
 
@@ -25,19 +24,19 @@ function transformStateWithClones(state, actions) {
 
           return stateCopy;
         });
-        resultState.push(Object.assign({}, stateCopy));
         break;
 
       case (action.type === 'clear'):
         Object.getOwnPropertyNames(stateCopy).forEach(function(prop) {
           delete stateCopy[prop];
         });
-        resultState.push({});
         break;
 
       default:
         return Error;
     }
+
+    resultState.push({ ...stateCopy });
   }
 
   return resultState;
