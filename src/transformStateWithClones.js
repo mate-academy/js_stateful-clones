@@ -11,20 +11,22 @@ function transformStateWithClones(state, actions) {
   let stateCopy = { ...state };
 
   for (const obj of actions) {
+    stateCopy = { ...stateCopy };
+
     switch (obj.type) {
       case 'addProperties':
-        stateCopy = { ...stateCopy };
         Object.assign(stateCopy, obj.extraData);
         break;
       case 'removeProperties':
-        stateCopy = { ...stateCopy };
         obj.keysToRemove.forEach(key => delete stateCopy[key]);
         break;
       case 'clear':
         stateCopy = { };
         break;
       default:
-        break;
+        throw new Error(obj.type
+          ? `${obj.type} is not supported`
+          : `Action is ${obj.type}`);
     }
     stateHistory.push(stateCopy);
   };
