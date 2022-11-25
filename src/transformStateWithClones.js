@@ -9,27 +9,27 @@
 function transformStateWithClones(state, actions) {
   let clones = [state];
 
-  actions.forEach(handleAction);
-
-  clones.shift();
-
-  return clones;
-
-  function handleAction({ type, extraData, keysToRemove }) {
+  actions.forEach(({ type, extraData, keysToRemove }) => {
     const lastState = clones[clones.length - 1];
 
     switch (type) {
       case 'addProperties':
-        clones = [
-          ...clones,
-          addProperties(lastState, extraData),
-        ];
+        clones = [...clones, {
+          ...lastState,
+          ...extraData,
+        }];
         break;
 
       case 'removeProperties':
+        const newState = { ...lastState };
+
+        keysToRemove.forEach(key => {
+          delete newState[key];
+        });
+
         clones = [
           ...clones,
-          removeProperties(lastState, keysToRemove),
+          newState,
         ];
         break;
 
@@ -43,24 +43,11 @@ function transformStateWithClones(state, actions) {
       default:
         throw new Error('Wrong action type!');
     }
-  }
+  });
 
-  function addProperties(object, extraProperties) {
-    return {
-      ...object,
-      ...extraProperties,
-    };
-  }
+  clones.shift();
 
-  function removeProperties(object, keysToDelete) {
-    const newObj = { ...object };
-
-    keysToDelete.forEach(key => {
-      delete newObj[key];
-    });
-
-    return newObj;
-  }
+  return clones;
 }
 
 module.exports = transformStateWithClones;
