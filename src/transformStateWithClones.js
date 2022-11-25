@@ -8,17 +8,15 @@
  */
 function transformStateWithClones(state, actions) {
   const result = [];
-  let stateCopy = { ...state };
+  const stateCopy = { ...state };
 
   for (const impact of actions) {
     switch (impact.type) {
       case 'addProperties':
-        stateCopy = { ...stateCopy };
-        Object.assign(stateCopy, impact['extraData']);
+        Object.assign(stateCopy, impact.extraData);
         break;
 
       case 'removeProperties':
-        stateCopy = { ...stateCopy };
 
         for (const key of impact.keysToRemove) {
           delete stateCopy[key];
@@ -26,13 +24,15 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        stateCopy = {};
+        for (const key in stateCopy) {
+          delete stateCopy[key];
+        }
         break;
 
       default:
-        break;
+        throw new Error(`${impact} is not supported`);
     }
-    result.push(stateCopy);
+    result.push({ ...stateCopy });
   }
 
   return result;
