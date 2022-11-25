@@ -11,8 +11,6 @@ function transformStateWithClones(state, actions) {
   let stateCopy = { ...state };
 
   for (const action of actions) {
-    stateCopy = { ...stateCopy };
-
     switch (action.type) {
       case 'addProperties':
         Object.assign(stateCopy, action.extraData);
