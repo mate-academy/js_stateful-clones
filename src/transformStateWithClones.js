@@ -28,7 +28,7 @@ function transformStateWithClones(state, actions) {
           ? `${action.type} is not supported`
           : `Action is ${action.type}`);
     }
-    stateHistory.push(stateCopy);
+    stateHistory.push({ ...stateCopy });
   };
 
   return stateHistory;
