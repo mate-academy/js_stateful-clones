@@ -8,28 +8,28 @@
  */
 function transformStateWithClones(state, actions) {
   const stateVersions = [];
-  let stClone = { ...state };
+  let stateClone = { ...state };
 
   for (const order of actions) {
     switch (order.type) {
       case 'addProperties':
-        stClone = { ...stClone };
-        Object.assign(stClone, order.extraData);
+        stateClone = { ...stateClone };
+        Object.assign(stateClone, order.extraData);
         break;
 
       case 'removeProperties':
-        stClone = { ...stClone };
-        order.keysToRemove.forEach(key => delete stClone[key]);
+        stateClone = { ...stateClone };
+        order.keysToRemove.forEach(key => delete stateClone[key]);
         break;
 
       case 'clear':
-        stClone = {};
+        stateClone = {};
         break;
 
       default:
-        break;
+        throw new Error('action is not supported');
     }
-    stateVersions.push(stClone);
+    stateVersions.push(stateClone);
   }
 
   return stateVersions;
