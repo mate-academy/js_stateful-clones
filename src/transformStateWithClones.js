@@ -23,8 +23,8 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        for (const clearAll in copyState) {
-          delete copyState[clearAll];
+        for (const keyToRemove in copyState) {
+          delete copyState[keyToRemove];
         }
         break;
 
