@@ -13,8 +13,8 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     switch (action.type) {
       case 'clear':
-        for (const prop in stateClone) {
-          delete stateClone[prop];
+        for (const property in stateClone) {
+          delete stateClone[property];
         }
         break;
 
