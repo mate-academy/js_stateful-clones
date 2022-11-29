@@ -11,16 +11,14 @@ function transformStateWithClones(state, actions) {
   const copy = { ...state };
 
   for (const action of actions) {
-    const { type, extraData, keysToRemove } = action;
-
-    switch (type) {
+    switch (action.type) {
       case 'addProperties':
-        Object.assign(copy, extraData);
+        Object.assign(copy, action.extraData);
         stateArray.push({ ...copy });
         break;
 
       case 'removeProperties':
-        for (const key of keysToRemove) {
+        for (const key of action.keysToRemove) {
           delete copy[key];
         }
 
@@ -36,7 +34,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw new Error(`Type ${type} is invalid!`);
+        throw new Error(`Type ${action.type} is invalid!`);
     }
   }
 
