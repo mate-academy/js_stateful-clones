@@ -11,29 +11,29 @@ function transformStateWithClones(state, actions) {
   const copyStep = [];
 
   for (const action of actions) {
-    if (action.type === 'addProperties') {
-      Object.assign(step, { ...action.extraData });
-      copyStep.push({ ...step });
-    }
+    switch (action.type) {
+      case 'addProperties':
+        Object.assign(step, { ...action.extraData });
+        copyStep.push({ ...step });
+        break;
+      case 'removeProperties':
+        const optionDelete = action.keysToRemove;
 
-    if (action.type === 'removeProperties') {
-      const bro = action.keysToRemove;
+        for (const option of optionDelete) {
+          delete step[option];
+        }
+        copyStep.push({ ...step });
+        break;
 
-      for (const n of bro) {
-        delete step[n];
-      }
-      copyStep.push({ ...step });
-    }
+      case 'clear':
 
-    if (action.type === 'clear') {
-      for (const ch in step) {
-        delete step[ch];
-      }
-      copyStep.push({ ...step });
+        for (const clear in step) {
+          delete step[clear];
+        }
+        copyStep.push({ ...step });
     }
   }
 
   return copyStep;
 }
-
 module.exports = transformStateWithClones;
