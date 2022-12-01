@@ -8,8 +8,8 @@
  */
 function transformStateWithClones(state, actions) {
   // write code here
-  let cloneState = Object.assign({}, state);
-  const result = [];
+  let cloneState = { ...state };
+  const statesArr = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -30,10 +30,10 @@ function transformStateWithClones(state, actions) {
       default:
         throw new Error('action is not supported');
     }
-    result.push({ ...cloneState });
+    statesArr.push({ ...cloneState });
   }
 
-  return result;
+  return statesArr;
 }
 
 module.exports = transformStateWithClones;
