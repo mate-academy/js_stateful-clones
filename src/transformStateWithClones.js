@@ -14,7 +14,6 @@ function transformStateWithClones(state, actions) {
     switch (action.type) {
       case 'addProperties':
         Object.assign(step, { ...action.extraData });
-        copyStep.push({ ...step });
         break;
       case 'removeProperties':
         const optionDelete = action.keysToRemove;
@@ -22,16 +21,14 @@ function transformStateWithClones(state, actions) {
         for (const option of optionDelete) {
           delete step[option];
         }
-        copyStep.push({ ...step });
         break;
-
       case 'clear':
-
         for (const clear in step) {
           delete step[clear];
         }
-        copyStep.push({ ...step });
+        break;
     }
+    copyStep.push({ ...step });
   }
 
   return copyStep;
