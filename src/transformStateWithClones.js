@@ -12,7 +12,8 @@ function transformStateWithClones(state, actions) {
 
   for (const action of actions) {
     switch (action.type) {
-      case 'addProperties' : Object.assign(newObject, action.extraData);
+      case 'addProperties' :
+        Object.assign(newObject, action.extraData);
         break;
       case 'removeProperties' :
         for (const key of action.keysToRemove) {
@@ -26,7 +27,10 @@ function transformStateWithClones(state, actions) {
         }
         break;
 
-      default : break;
+      default :
+        // eslint-disable-next-line no-console
+        console.log('No such command');
+        break;
     }
     resultArray.push({ ...newObject });
   }
