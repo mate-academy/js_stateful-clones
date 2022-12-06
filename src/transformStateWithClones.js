@@ -25,6 +25,9 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         clonesState = {};
         break;
+
+      default:
+        throw new Error('invalid type of action');
     }
     result.push({ ...clonesState });
   }
