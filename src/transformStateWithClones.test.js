@@ -2,6 +2,53 @@
 
 const transformStateWithClones = require('./transformStateWithClones');
 
+test('Should handle a long list of types', () => {
+  const state = {
+    foo: 'bar', name: 'Jim', another: 'one',
+  };
+
+  expect(transformStateWithClones(state, [
+    {
+      type: 'removeProperties', keysToRemove: ['another'],
+    },
+    { type: 'clear' },
+    { type: 'clear' },
+    { type: 'clear' },
+    {
+      type: 'addProperties', extraData: { yet: 'another property' },
+    },
+    { type: 'clear' },
+    {
+      type: 'addProperties',
+      extraData: {
+        foo: 'bar', name: 'Jim',
+      },
+    },
+    {
+      type: 'removeProperties', keysToRemove: ['name', 'hello'],
+    },
+  ]))
+    .toEqual([
+      {
+        foo: 'bar', name: 'Jim',
+      },
+      {},
+      {},
+      {},
+      { yet: 'another property' },
+      {},
+      {
+        foo: 'bar', name: 'Jim',
+      },
+      { foo: 'bar' },
+    ]);
+
+  expect(state)
+    .toEqual({
+      foo: 'bar', name: 'Jim', another: 'one',
+    });
+});
+
 test('Should create a new object with a single added property', () => {
   const state = {};
 
