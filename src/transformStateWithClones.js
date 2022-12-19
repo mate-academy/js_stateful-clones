@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /**
  * @param {Object} state
@@ -12,35 +12,29 @@ function transformStateWithClones(state, actions) {
     ...state,
   };
 
-  actions.forEach((element) => {
-    const action = element.type;
+  actions.forEach((action) => {
+    const { type, extraData, keysToRemove } = action;
 
-    switch (action) {
-      case "addProperties":
-        const { extraData } = element;
-
+    switch (type) {
+      case 'addProperties':
         for (const key in extraData) {
           currentState[key] = extraData[key];
         }
-        allStateVersions.push(Object.assign({}, currentState));
         break;
 
-      case "removeProperties":
-        const { keysToRemove } = element;
-
+      case 'removeProperties':
         for (const key of keysToRemove) {
           delete currentState[key];
         }
-        allStateVersions.push(Object.assign({}, currentState));
         break;
 
-      case "clear":
+      case 'clear':
         for (const key in currentState) {
           delete currentState[key];
         }
-        allStateVersions.push(Object.assign({}, currentState));
         break;
     }
+    allStateVersions.push(Object.assign({}, currentState));
   });
 
   return allStateVersions;
