@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const copyState = { ...state };
+  let copyState = { ...state };
   const states = [];
 
   for (const action of actions) {
@@ -23,9 +23,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        for (const key in copyState) {
-          delete copyState[key];
-        }
+        copyState = {};
         break;
 
       default:
