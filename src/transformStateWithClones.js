@@ -32,6 +32,9 @@ function transformStateWithClones(state, actions) {
         result.push({ ...stateCopy });
 
         break;
+
+      default:
+        return 'Actions aren\'t correct.';
     }
   }
 
