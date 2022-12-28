@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let stateCopy = { ...state };
+  const stateCopy = { ...state };
   const stateCopies = [];
 
   for (const action of actions) {
@@ -19,7 +19,9 @@ function transformStateWithClones(state, actions) {
         action.keysToRemove.forEach(key => delete stateCopy[key]);
         break;
       case 'clear':
-        stateCopy = {};
+        for (const item in stateCopy) {
+          delete stateCopy[item];
+        }
         break;
       default:
         break;
