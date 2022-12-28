@@ -29,6 +29,9 @@ function transformStateWithClones(state, actions) {
           delete stateClone[keys];
         }
         break;
+
+      default:
+        throw Error('error');
     }
 
     const newObj = { ...stateClone };
