@@ -26,7 +26,7 @@ function transformStateWithClones(state, actions) {
         stateNew = {};
         break;
       default:
-        throw new Error('function dot found');
+        throw new Error('function not found');
     }
 
     stateChanges.push({ ...stateNew });
