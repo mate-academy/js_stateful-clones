@@ -9,7 +9,7 @@
 function transformStateWithClones(state, actions) {
   // write code here
   const result = [];
-  let stateCopy = Object.assign({}, state);
+  const stateCopy = Object.assign({}, state);
 
   for (const action of actions) {
     switch (action.type) {
@@ -22,7 +22,9 @@ function transformStateWithClones(state, actions) {
         }
         break;
       case 'clear':
-        stateCopy = {};
+        for (const key in stateCopy) {
+          delete stateCopy[key];
+        }
         break;
       default: throw new Error('unknown action type');
     }
