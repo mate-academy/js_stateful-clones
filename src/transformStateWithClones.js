@@ -8,30 +8,30 @@
  */
 function transformStateWithClones(state, actions) {
   const result = [];
-  let nextState = { ...state };
+  const cloneState = { ...state };
 
   for (const action of actions) {
     switch (action['type']) {
       case 'addProperties':
-        for (const data in action.extraData) {
-          nextState[data] = action.extraData[data];
-        }
+        Object.assign(cloneState, action.extraData);
         break;
 
       case 'removeProperties':
         for (const toRemove of action.keysToRemove) {
-          delete nextState[toRemove];
+          delete cloneState[toRemove];
         }
         break;
 
       case 'clear':
-        nextState = {};
+        for (const toClear in cloneState) {
+          delete cloneState[toClear];
+        }
         break;
 
       default:
         throw new Error('Unexpected state');
     }
-    result.push({ ...nextState });
+    result.push({ ...cloneState });
   }
 
   return result;
