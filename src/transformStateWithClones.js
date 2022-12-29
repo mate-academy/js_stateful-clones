@@ -23,8 +23,8 @@ function transformStateWithClones(state, actions) {
           delete stateClone[removleKey];
         }
         break;
-      // default:
-      // break;
+      default:
+        throw new Error('Something wrong, check please');
     }
     cloneArray.push({ ...stateClone });
   }
