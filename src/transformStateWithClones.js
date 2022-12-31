@@ -31,8 +31,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        // eslint-disable-next-line no-console
-        console.log('Check input value');
+        throw new Error('Invalid input value');
     }
 
     result.push({ ...stateClone });
