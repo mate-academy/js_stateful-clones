@@ -4,7 +4,7 @@
 github.com/mate-academy/js_task-guideline/blob/master/README.md) before start**
 
 # Task description
-
+asd
 Write a function `transformStateWithClones` that take a `state` object and an `actions` array
 and return an array of the same length as `actions` containing all previous versions of the `state`.
 Each element of the resulting array has to represent the state produced by the next operation.
