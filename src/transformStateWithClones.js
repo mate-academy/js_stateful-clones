@@ -8,37 +8,34 @@
  */
 function transformStateWithClones(state, actions) {
   // write code here
-  const result = [];
-  const currentState = { ...state };
+  const copyState = { ...state };
+  const modifiedStates = [];
 
-  actions.forEach((action) => {
+  for (const action of actions) {
     switch (action.type) {
-      case 'addProperties': {
-        Object.assign(currentState, action.extraData);
-        result.push({ ...currentState });
+      case 'addProperties':
+        Object.assign(copyState, action.extraData);
         break;
-      }
 
-      case 'removeProperties': {
-        action.keysToRemove.forEach((key) => {
-          if (key in currentState) {
-            delete currentState[key];
-          }
-        });
-        result.push({ ...currentState });
-        break;
-      }
-
-      case 'clear': {
-        for (const key in currentState) {
-          delete currentState[key];
+      case 'removeProperties':
+        for (const key of action.keysToRemove) {
+          delete copyState[key];
         }
-        result.push({ ...currentState });
-      }
-    }
-  });
+        break;
 
-  return result;
+      case 'clear':
+        for (const key in copyState) {
+          delete copyState[key];
+        }
+        break;
+
+      default :
+        throw new Error('action type was not found');
+    }
+    modifiedStates.push({ ...copyState });
+  }
+
+  return modifiedStates;
 }
 
 module.exports = transformStateWithClones;
