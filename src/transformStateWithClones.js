@@ -7,67 +7,30 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
+  const copyOfState = Object.assign({}, state);
   const arr = [];
 
-  for (const action of actions) {
-    if (action.type === 'clear') {
-      if (arr.length === 0) {
-        const obj = Object.assign({}, state);
-
-        for (const prop in obj) {
-          delete obj[prop];
+  for (let action of actions) {
+    switch (action.type) {
+      case ('clear'):
+        for (const prop in copyOfState) {
+          delete copyOfState[prop];
         }
-
-        arr.push(obj);
-      } else {
-        const obj = Object.assign({}, arr[arr.length - 1]);
-
-        for (const prop in obj) {
-          delete obj[prop];
-        }
-
-        arr.push(obj);
-      }
-    }
-
-    if (action.type === 'addProperties') {
-      if (arr.length === 0) {
-        const obj = Object.assign({}, state);
-
-        Object.assign(obj, action.extraData);
-
-        arr.push(obj);
-      } else {
-        const obj = Object.assign({}, arr[arr.length - 1]);
-
-        Object.assign(obj, action.extraData);
-
-        arr.push(obj);
-      }
-    }
-
-    if (action.type === 'removeProperties') {
-      if (arr.length === 0) {
-        const obj = Object.assign({}, state);
-
+        break;
+      case ('addProperties'):
+        Object.assign(copyOfState, action.extraData);
+        break;
+      case ('removeProperties'):
         for (const prop of action.keysToRemove) {
-          delete obj[prop];
+          delete copyOfState[prop];
         }
-
-        arr.push(obj);
-      } else {
-        const obj = Object.assign({}, arr[arr.length - 1]);
-
-        for (const prop of action.keysToRemove) {
-          delete obj[prop];
-        }
-
-        arr.push(obj);
-      }
+        break;
+      default:
+        action = null;
     }
+    arr.push(Object.assign({}, copyOfState));
   }
 
   return arr;
 }
-
 module.exports = transformStateWithClones;
