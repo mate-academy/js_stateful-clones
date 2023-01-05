@@ -9,56 +9,26 @@
 
 function transformStateWithClones(state, actions) {
   const cloneArr = [];
-  const clone = {};
+  let clone = { ...state };
 
-  for (const key in state) {
-    clone[key] = state[key];
-  }
+  for (const action of actions) {
+    const { type, extraData, keysToRemove } = action;
 
-  for (const act of actions) {
-    for (const type in act) {
-      if (act[type] === 'addProperties') {
-        Object.assign(clone, act.extraData);
+    switch (type) {
+      case 'addProperties':
+        Object.assign(clone, extraData);
+        break;
 
-        const stampClone = {};
-
-        for (const key in clone) {
-          stampClone[key] = clone[key];
-        }
-
-        cloneArr.push(stampClone);
-      } else if (act[type] === 'removeProperties') {
-        const stateKeys = Object.keys(clone);
-
-        for (const key of act.keysToRemove) {
-          for (const stateKey of stateKeys) {
-            if (key === stateKey) {
-              delete clone[stateKey];
-            }
-          }
-        }
-
-        const stampClone = {};
-
-        for (const key in clone) {
-          stampClone[key] = clone[key];
-        }
-
-        cloneArr.push(stampClone);
-      } else if (act[type] === 'clear') {
-        for (const key in clone) {
+      case 'removeProperties':
+        for (const key of keysToRemove) {
           delete clone[key];
-        };
-
-        const stampClone = {};
-
-        for (const key in clone) {
-          stampClone[key] = clone[key];
         }
+        break;
 
-        cloneArr.push(stampClone);
-      }
+      case 'clear':
+        clone = {};
     }
+    cloneArr.push({ ...clone });
   }
 
   return cloneArr;
