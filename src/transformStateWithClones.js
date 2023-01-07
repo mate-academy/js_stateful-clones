@@ -7,26 +7,26 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const vers = [];
+  const verions = [];
   let result = { ...state };
-  let ver = {};
+  let version = {};
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        ver = { ...Object.assign(result, action.extraData) };
-        vers.push(ver);
+        version = { ...Object.assign(result, action.extraData) };
+        verions.push(version);
         break;
 
       case 'removeProperties':
-        ver = { ...removeProperties(result, action.keysToRemove) };
-        vers.push(ver);
+        version = { ...removeProperties(result, action.keysToRemove) };
+        verions.push(version);
         break;
 
       case 'clear':
         result = {};
-        ver = {};
-        vers.push(ver);
+        version = {};
+        verions.push(version);
         break;
 
       default:
@@ -34,7 +34,7 @@ function transformStateWithClones(state, actions) {
     }
   }
 
-  return vers;
+  return verions;
 }
 
 function removeProperties(obj, prop) {
