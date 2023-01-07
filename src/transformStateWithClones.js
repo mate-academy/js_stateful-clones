@@ -27,6 +27,10 @@ function transformStateWithClones(state, actions) {
         result = {};
         ver = {};
         vers.push(ver);
+        break;
+
+      default:
+        return `Something goes wrong! Check: State:${state}. Action:${actions}`;
     }
   }
 
