@@ -30,7 +30,7 @@ function transformStateWithcopyStates(state, actions) {
         break;
 
       default:
-        return 'error';
+        throw new Error('Unhandled action type');
     }
     rezult.push({ ...copyState });
   }
