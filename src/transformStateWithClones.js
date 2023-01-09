@@ -7,22 +7,18 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const arr = [];
+  const arrayResult = [];
   const copy = { ...state };
 
-  for (const elem of actions) {
-    switch (elem.type) {
+  for (const action of actions) {
+    switch (action.type) {
       case 'addProperties':
-        Object.assign(copy, elem.extraData);
+        Object.assign(copy, action.extraData);
         break;
 
       case 'removeProperties':
-        for (const key in copy) {
-          for (const elem1 of elem.keysToRemove) {
-            if (key === elem1) {
-              delete copy[key];
-            }
-          }
+        for (const key of action.keysToRemove) {
+          delete copy[key];
         }
         break;
 
@@ -31,10 +27,10 @@ function transformStateWithClones(state, actions) {
           delete copy[key];
         }
     }
-    arr.push({ ...copy });
+    arrayResult.push({ ...copy });
   }
 
-  return arr;
+  return arrayResult;
 }
 
 module.exports = transformStateWithClones;
