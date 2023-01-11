@@ -11,8 +11,8 @@ function transformStateWithClones(state, actions) {
   const stateClonesArr = [];
   let stateClone = { ...state };
 
-  function removeProps(properties) {
-    for (const key of properties) {
+  function removeProps(propsToRemove) {
+    for (const key of propsToRemove) {
       stateClone = { ...stateClone };
       delete stateClone[key];
     }
