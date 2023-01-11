@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   // write code here
-  const stateArr = [];
+  const stateClonesArr = [];
   let stateClone = { ...state };
 
   function removeProps(properties) {
@@ -44,10 +44,10 @@ function transformStateWithClones(state, actions) {
       default:
         return actions;
     }
-    stateArr.push(stateClone);
+    stateClonesArr.push(stateClone);
   }
 
-  return stateArr;
+  return stateClonesArr;
 }
 
 module.exports = transformStateWithClones;
