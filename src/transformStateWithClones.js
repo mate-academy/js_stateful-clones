@@ -11,24 +11,29 @@ function transformStateWithClones(state, actions) {
   const result = [];
 
   for (const action of actions) {
-    switch (action.type) {
+    const {
+      type,
+      extraData,
+      keysToRemove,
+    } = action;
+
+    switch (type) {
       case 'clear':
         clone = {};
         break;
 
       case 'addProperties':
-        clone = Object.assign(clone, action.extraData);
+        clone = Object.assign(clone, extraData);
         break;
 
       case 'removeProperties':
-        for (const prop of action.keysToRemove) {
+        for (const prop of keysToRemove) {
           delete clone[prop];
         };
         break;
 
       default:
-        // eslint-disable-next-line no-console
-        console.log('Action not found');
+        break;
     };
 
     result.push({ ...clone });
