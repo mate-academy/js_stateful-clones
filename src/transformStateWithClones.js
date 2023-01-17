@@ -7,30 +7,36 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const currentObject = { ...state };
+  let newState = { ...state };
   const clonesArray = [];
 
   for (const action of actions) {
-    const { type, extraData, keysToRemove } = action;
+    const {
+      type,
+      extraData,
+      keysToRemove,
+    } = action;
 
     switch (type) {
       case 'addProperties':
-        Object.assign(currentObject, extraData);
+        Object.assign(newState, extraData);
         break;
 
       case 'removeProperties':
         for (const key of keysToRemove) {
-          delete currentObject[key];
+          delete newState[key];
         }
         break;
 
       case 'clear':
-        for (const key in currentObject) {
-          delete currentObject[key];
-        }
+        newState = {};
         break;
+
+      default:
+        // eslint-disable-next-line no-console
+        console.log(`Unexpected type in action ${actions.indexOf(action) + 1}`);
     }
-    clonesArray.push({ ...currentObject });
+    clonesArray.push({ ...newState });
   }
 
   return clonesArray;
