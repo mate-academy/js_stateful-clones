@@ -11,7 +11,7 @@ Each element of the resulting array has to represent the state produced by the n
 **IMPORTANT!** You must not modify the initial `state` object in any way!
 
 - `state` is an initial object. It should always remain the same.
-
+ 
 - `actions` is an array of objects. Each object in this array has the next properties:
   - `type` contains a string: either `'addProperties'`, `'removeProperties'` or `'clear'`;
   - The second property of each object depends on `type` and may be one of the following:
