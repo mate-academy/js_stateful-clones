@@ -16,27 +16,25 @@ function transformStateWithClones(state, actions) {
 
     switch (type) {
       case 'addProperties':
-
         for (const key in extraData) {
           result[key] = extraData[key];
         };
         break;
 
       case 'removeProperties':
-
         for (const toRemove of keysToRemove) {
-          for (const key in result) {
-            if (toRemove === key) {
-              delete result[key];
-            };
-          };
+          delete result[toRemove];
+        };
+        break;
+
+      case 'clear':
+        for (const key in result) {
+          delete result[key];
         };
         break;
 
       default:
-        for (const key in result) {
-          delete result[key];
-        };
+        return result;
     };
 
     arrResult.push({ ...result });
