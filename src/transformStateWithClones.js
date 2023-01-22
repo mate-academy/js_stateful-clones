@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const copyState = { ...state };
+  let copyState = { ...state };
   const resultArray = [];
 
   for (const action of actions) {
@@ -23,9 +23,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        Object.getOwnPropertyNames(copyState).forEach(function(prop) {
-          delete copyState[prop];
-        });
+        copyState = {};
         break;
     }
     resultArray.push({ ...copyState });
