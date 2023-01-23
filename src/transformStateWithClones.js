@@ -6,31 +6,6 @@
  *
  * @return {Object[]}
  */
-const state1 = {
-  foo: 'bar', bar: 'foo',
-};
-
-const actions1 = [
-  {
-    type: 'removeProperties', keysToRemove: ['another'],
-  },
-  { type: 'clear' },
-  { type: 'clear' },
-  { type: 'clear' },
-  {
-    type: 'addProperties', extraData: { yet: 'another property' },
-  },
-  { type: 'clear' },
-  {
-    type: 'addProperties',
-    extraData: {
-      foo: 'bar', name: 'Jim',
-    },
-  },
-  {
-    type: 'removeProperties', keysToRemove: ['name', 'hello'],
-  },
-];
 
 function transformStateWithClones(state, actions) {
   const array = [];
@@ -64,5 +39,5 @@ function transformStateWithClones(state, actions) {
 
   return array;
 }
-transformStateWithClones(state1, actions1);
+
 module.exports = transformStateWithClones;
