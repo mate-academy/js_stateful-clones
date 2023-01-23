@@ -6,32 +6,63 @@
  *
  * @return {Object[]}
  */
+const state1 = {
+  foo: 'bar', bar: 'foo',
+};
+
+const actions1 = [
+  {
+    type: 'removeProperties', keysToRemove: ['another'],
+  },
+  { type: 'clear' },
+  { type: 'clear' },
+  { type: 'clear' },
+  {
+    type: 'addProperties', extraData: { yet: 'another property' },
+  },
+  { type: 'clear' },
+  {
+    type: 'addProperties',
+    extraData: {
+      foo: 'bar', name: 'Jim',
+    },
+  },
+  {
+    type: 'removeProperties', keysToRemove: ['name', 'hello'],
+  },
+];
+
 function transformStateWithClones(state, actions) {
   const array = [];
-  let tempSTate = { ...state };
+  const tempSTate = { ...state };
 
-  for (const item of actions) {
-    for (const key in item) {
-      if (key === 'extraData') {
-        Object.assign(tempSTate, item[key]);
+  for (const action of actions) {
+    switch (action.type) {
+      case 'addProperties' :
+        Object.assign(tempSTate, action.extraData);
         array.push({ ...tempSTate });
-      }
+        break;
 
-      if (key === 'keysToRemove') {
-        for (const k in item[key]) {
-          delete tempSTate[item[key][k]];
+      case 'removeProperties' :
+        for (const item of action.keysToRemove) {
+          delete tempSTate[item];
         }
         array.push({ ...tempSTate });
-      }
+        break;
 
-      if (item[key] === 'clear') {
-        tempSTate = {};
+      case 'clear' :
+        for (const key in tempSTate) {
+          delete tempSTate[key];
+        }
         array.push({ ...tempSTate });
-      }
+        break;
+
+      default :
+        return array;
     }
   }
 
   return array;
 }
-
+transformStateWithClones(state1, actions1);
 module.exports = transformStateWithClones;
