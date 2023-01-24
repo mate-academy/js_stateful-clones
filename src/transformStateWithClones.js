@@ -19,21 +19,17 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties' :
-        for (const item of action.keysToRemove) {
-          delete tempSTate[item];
-        }
+        action.keysToRemove.forEach(key => delete tempSTate[key]);
         array.push({ ...tempSTate });
         break;
 
       case 'clear' :
-        for (const key in tempSTate) {
-          delete tempSTate[key];
-        }
+        Object.keys(tempSTate).forEach(key => delete tempSTate[key]);
         array.push({ ...tempSTate });
         break;
 
       default :
-        return array;
+        throw new Error(`Action ${action.type} is unknown!`);
     }
   }
 
