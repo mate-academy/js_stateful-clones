@@ -7,8 +7,9 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const newArray = [];
+  const result = [];
   let newState = Object.assign({}, state);
+  const caseDefault = 'An error because of an unknown type';
 
   for (const action of actions) {
     switch (action.type) {
@@ -25,12 +26,15 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         newState = {};
         break;
+
+      default:
+        return caseDefault;
     }
 
-    newArray.push({ ...newState });
+    result.push({ ...newState });
   }
 
-  return newArray;
+  return result;
 }
 
 module.exports = transformStateWithClones;
