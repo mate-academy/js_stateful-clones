@@ -15,22 +15,20 @@ function transformStateWithClones(state, actions) {
     switch (action.type) {
       case 'addProperties' :
         Object.assign(tempSTate, action.extraData);
-        array.push({ ...tempSTate });
         break;
 
       case 'removeProperties' :
         action.keysToRemove.forEach(key => delete tempSTate[key]);
-        array.push({ ...tempSTate });
         break;
 
       case 'clear' :
         Object.keys(tempSTate).forEach(key => delete tempSTate[key]);
-        array.push({ ...tempSTate });
         break;
 
       default :
         throw new Error(`Action ${action.type} is unknown!`);
     }
+    array.push({ ...tempSTate });
   }
 
   return array;
