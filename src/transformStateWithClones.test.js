@@ -261,14 +261,19 @@ test('Should handle a long list of types', () => {
       {
         foo: 'bar', name: 'Jim',
       },
+
       {},
       {},
       {},
+
       { yet: 'another property' },
+
       {},
+
       {
         foo: 'bar', name: 'Jim',
       },
+
       { foo: 'bar' },
     ]);
 

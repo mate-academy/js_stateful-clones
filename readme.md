@@ -51,7 +51,9 @@ Then after calling
 ```
 transformStateWithClones(state, [
   {type: 'addProperties', extraData: {yet: 'another property'}}
+
   {type: 'clear'},
+
   {type: 'addProperties', extraData: {foo: 'bar', name: 'Jim'}}
 ])
 ```
@@ -61,7 +63,9 @@ we must get
 ```
 [
   {foo: 'bar', bar: 'foo', yet: 'another property'},
+
   {},
+  
   {foo: 'bar', name: 'Jim'}
 ].
 ```
