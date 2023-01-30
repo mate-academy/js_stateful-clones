@@ -8,17 +8,19 @@
  */
 function transformStateWithClones(state, actions) {
   const stateDuplicate = { ...state };
-  const result = [];
+  const transformedStates = [];
 
   for (const action of actions) {
-    switch (action.type) {
+    const { type, extraData, keysToRemove } = action;
+
+    switch (type) {
       case 'addProperties': {
-        addProps(stateDuplicate, action.extraData);
+        addProps(stateDuplicate, extraData);
         break;
       }
 
       case 'removeProperties': {
-        removeProps(stateDuplicate, action.keysToRemove);
+        removeProps(stateDuplicate, keysToRemove);
         break;
       }
 
@@ -26,12 +28,16 @@ function transformStateWithClones(state, actions) {
         clearAll(stateDuplicate);
         break;
       }
+
+      default: {
+        return state;
+      }
     }
 
-    result.push({ ...stateDuplicate });
+    transformedStates.push({ ...stateDuplicate });
   }
 
-  return result;
+  return transformedStates;
 }
 
 const addProps = function(myState, addThis) {
