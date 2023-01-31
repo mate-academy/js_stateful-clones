@@ -44,9 +44,6 @@ function transformStateWithClones(state, actions) {
     }
   }
 
-  // eslint-disable-next-line no-console
-  console.log(result);
-
   return result;
 }
 
