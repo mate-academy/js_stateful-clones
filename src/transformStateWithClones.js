@@ -14,7 +14,6 @@ function transformStateWithClones(state, actions) {
     switch (action.type) {
       case 'addProperties':
         Object.assign(cloneObject, action.extraData);
-        cloneArray.push({ ...cloneObject });
         break;
 
       case 'removeProperties':
@@ -23,15 +22,19 @@ function transformStateWithClones(state, actions) {
             delete cloneObject[key];
           }
         }
-        cloneArray.push({ ...cloneObject });
         break;
 
       case 'clear':
         for (const key in cloneObject) {
           delete cloneObject[key];
         }
-        cloneArray.push({ ...cloneObject });
+        break;
+
+      default:
+        throw new Error('unknown action type');
     }
+
+    cloneArray.push({ ...cloneObject });
   }
 
   return cloneArray;
