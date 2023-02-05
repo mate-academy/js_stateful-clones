@@ -22,9 +22,7 @@ function transformStateWithClones(state, actions) {
 
       case remove:
         for (const key of action.keysToRemove) {
-          if (newState[key]) {
-            delete newState[key];
-          };
+          delete newState[key];
         };
         arr.push({ ...newState });
         break;
