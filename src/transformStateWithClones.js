@@ -26,9 +26,9 @@ function transformStateWithClones(state, actions) {
         Object.keys(clone).forEach(key => delete clone[key]);
     }
 
-    const object = Object.assign({}, clone);
+    const cloneObject = Object.assign({}, clone);
 
-    result.push(object);
+    result.push(cloneObject);
   }
 
   return result;
