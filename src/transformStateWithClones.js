@@ -30,11 +30,13 @@ function transformStateWithClones(state, actions) {
         break;
       }
 
-      case 'clear': {
+      case 'clear':
         for (const key in copyOfState) {
           delete copyOfState[key];
         }
-      }
+        break;
+      default:
+        return 'type was not provided';
     }
 
     arrayOfStates.push({ ...copyOfState });
