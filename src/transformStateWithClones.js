@@ -10,14 +10,14 @@ function transformStateWithClones(state, actions) {
   const result = [];
   const copy = { ...state };
 
-  actions.forEach(elem => {
-    switch (elem.type) {
+  actions.forEach(action => {
+    switch (action.type) {
       case ('addProperties'):
-        Object.assign(copy, elem.extraData);
+        Object.assign(copy, action.extraData);
         break;
 
       case ('removeProperties'):
-        elem.keysToRemove.forEach(rem => {
+        action.keysToRemove.forEach(rem => {
           delete copy[rem];
         });
         break;
@@ -27,6 +27,8 @@ function transformStateWithClones(state, actions) {
           delete copy[key];
         }
         break;
+
+      default: return 'Please, enter the valid data';
     }
 
     result.push({ ...copy });
