@@ -31,6 +31,9 @@ function transformStateWithClones(state, actions) {
         for (const key in resultState[i]) {
           delete resultState[i][key];
         }
+        break;
+      
+      default:
     }
   }
 
