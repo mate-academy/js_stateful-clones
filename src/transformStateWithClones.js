@@ -29,7 +29,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        newObj = {};
+        action.type = 'This action type is not supported';
         break;
     }
 
