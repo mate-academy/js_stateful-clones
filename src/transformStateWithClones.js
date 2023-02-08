@@ -30,14 +30,19 @@ function transformStateWithClones(state, actions) {
           delete copyOfState[prop];
         }
         break;
+
       case ('addProperties'):
         Object.assign(copyOfState, action.extraData);
         break;
+
       case ('removeProperties'):
         for (const prop of action.keysToRemove) {
           delete copyOfState[prop];
         }
         break;
+
+      default:
+        throw new Error('Unexpected action');
     }
     arr.push(Object.assign({}, copyOfState));
   }
