@@ -31,6 +31,9 @@ function transformStateWithClones(state, actions) {
           delete supportObj[prop];
         }
         break;
+        
+      default:
+        return 'action is not found'
     }
 
     result.push(Object.assign({}, supportObj));
