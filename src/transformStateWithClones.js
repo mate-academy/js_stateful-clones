@@ -33,7 +33,7 @@ function transformStateWithClones(state, actions) {
         break;
         
       default:
-        return 'action is not found'
+        return 'action is not found';
     }
 
     result.push(Object.assign({}, supportObj));
