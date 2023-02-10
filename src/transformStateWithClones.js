@@ -20,7 +20,7 @@ function transformStateWithClones(state, actions) {
           clone[data] = prop;
         }
         resultArr.push(clone);
-        clone = { ...resultArr[resultArr.length - 1] };
+        clone = Object.assign({}, resultArr[resultArr.length - 1]);
         break;
 
       case 'removeProperties':
@@ -28,7 +28,7 @@ function transformStateWithClones(state, actions) {
           delete clone[key];
         }
         resultArr.push(clone);
-        clone = { ...resultArr[resultArr.length - 1] };
+        clone = Object.assign({}, resultArr[resultArr.length - 1]);
         break;
 
       case 'clear':
@@ -36,7 +36,7 @@ function transformStateWithClones(state, actions) {
           delete clone[key];
         }
         resultArr.push(clone);
-        clone = { ...resultArr[resultArr.length - 1] };
+        clone = Object.assign({}, resultArr[resultArr.length - 1]);
         break;
 
       default:
