@@ -10,50 +10,31 @@ function transformStateWithClones(state, actions) {
   const result = [];
 
   for (const action of actions) {
-    const lastItemInArray = result[result.length - 1];
+    const currentStateObject = result[result.length - 1];
 
     switch (action.type) {
       case 'addProperties':
-        let addedProperties;
-
-        if (result.length === 0) {
-          addedProperties = Object.assign({}, state, action.extraData);
-        } else {
-          addedProperties
-            = Object.assign({}, lastItemInArray, action.extraData);
-        }
-
-        result.push(addedProperties);
+        result.push(
+          Object.assign({}, currentStateObject || state, action.extraData)
+        );
         break;
 
       case 'removeProperties':
-        let removedProperties;
+        const object = Object.assign({}, currentStateObject || state);
 
-        if (result.length === 0) {
-          removedProperties = Object.assign({}, state);
-        } else {
-          removedProperties = Object.assign({}, lastItemInArray);
-        }
+        action.keysToRemove.forEach(key => delete object[key]);
 
-        action.keysToRemove.forEach(key => delete removedProperties[key]);
-
-        result.push(removedProperties);
+        result.push(object);
         break;
 
       case 'clear':
-        let clearedProperties;
+        const clearedObject = Object.assign({}, currentStateObject || state);
 
-        if (result.length === 0) {
-          clearedProperties = Object.assign({}, state);
-        } else {
-          clearedProperties = Object.assign({}, lastItemInArray);
-        }
-
-        Object.keys(clearedProperties).forEach(key => {
-          delete clearedProperties[key];
+        Object.keys(clearedObject).forEach(key => {
+          delete clearedObject[key];
         });
 
-        result.push(clearedProperties);
+        result.push(clearedObject);
         break;
 
       default:
