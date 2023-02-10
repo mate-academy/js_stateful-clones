@@ -20,12 +20,16 @@ function transformStateWithClones(state, actions) {
         copyState = {};
         break;
 
-      default:
+      case 'removeProperties':
         for (const key of action.keysToRemove) {
           if (copyState[key]) {
             delete copyState[key];
           }
         }
+        break;
+
+      default:
+        throw new Error('Unexpected action');
     }
 
     result.push({ ...copyState });
