@@ -27,12 +27,15 @@ function transformStateWithClones(state, actions) {
           delete copy[del];
         }
         break;
-    }
 
-    result.push({ ...copy });
-  }
+      default:
+        break;
+    }  
 
-  return result;
+  result.push({ ...copy });
+}
+
+return result;
 }
 
 module.exports = transformStateWithClones;
