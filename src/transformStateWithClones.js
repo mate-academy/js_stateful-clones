@@ -27,9 +27,7 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    const clone = { ...objCopy };
-
-    preVersions.push(clone);
+    preVersions.push({ ...objCopy });
   }
 
   return preVersions;
