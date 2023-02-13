@@ -13,11 +13,11 @@ function transformStateWithClones(state, actions) {
   actions.map(({ type, keysToRemove, extraData }) => {
     switch (type) {
       case 'clear':
-        Object.keys(copyState).map(key => delete copyState[key]);
+        Object.keys(copyState).forEach(key => delete copyState[key]);
         break;
 
       case 'removeProperties':
-        keysToRemove.map(key => copyState[key] && delete copyState[key]);
+        keysToRemove.forEach(key => copyState[key] && delete copyState[key]);
         break;
 
       case 'addProperties':
