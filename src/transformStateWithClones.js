@@ -7,10 +7,10 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const listOfActions = [state];
+  const listOfActions = [];
 
   for (const action of actions) {
-    const currentObject = listOfActions[listOfActions.length - 1];
+    const currentObject = listOfActions[listOfActions.length - 1] || state;
     const objectCopy = { ...currentObject };
 
     switch (action.type) {
