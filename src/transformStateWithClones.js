@@ -37,7 +37,7 @@ function transformStateWithClones(state, actions) {
     listOfActions.push(objectCopy);
   }
 
-  return listOfActions.slice(1, listOfActions.length);
+  return listOfActions;
 }
 
 module.exports = transformStateWithClones;
