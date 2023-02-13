@@ -25,7 +25,7 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    clonesArr.push(stateCopy);
+    clonesArr.push({ ...stateCopy });
   }
 
   return clonesArr;
