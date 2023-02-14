@@ -32,9 +32,9 @@ function transformStateWithClones(state, actions) {
     }
 
     arrayOfObj.push({ ...copy });
-
-    return arrayOfObj;
   }
+
+  return arrayOfObj;
 }
 
 module.exports = transformStateWithClones;
