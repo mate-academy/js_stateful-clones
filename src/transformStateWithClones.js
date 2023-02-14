@@ -10,13 +10,9 @@ function transformStateWithClones(state, actions) {
   const states = [];
 
   for (const action of actions) {
-    let stateCopy = {};
-
-    if (states.length === 0) {
-      stateCopy = { ...state };
-    } else {
-      stateCopy = { ...states[states.length - 1] };
-    }
+    let stateCopy = states.length === 0
+      ? { ...state }
+      : { ...states[states.length - 1] };
 
     switch (action.type) {
       case 'addProperties':
@@ -30,9 +26,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        for (const keyToRemove of Object.keys(stateCopy)) {
-          delete stateCopy[keyToRemove];
-        }
+        stateCopy = {};
         break;
 
       default:
