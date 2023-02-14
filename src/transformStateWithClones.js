@@ -31,6 +31,10 @@ function transformStateWithClones(state, actions) {
           delete copyOfState[item];
         }
         resultArray.push({ ...copyOfState });
+        break;
+
+      default:
+        return '';
     }
   }
 
