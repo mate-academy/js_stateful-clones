@@ -19,29 +19,23 @@ function transformStateWithClones(state, actions) {
 
           clone[data] = prop;
         }
-        resultArr.push(clone);
-        clone = Object.assign({}, resultArr[resultArr.length - 1]);
         break;
 
       case 'removeProperties':
         for (const key of action.keysToRemove) {
           delete clone[key];
         }
-        resultArr.push(clone);
-        clone = Object.assign({}, resultArr[resultArr.length - 1]);
         break;
 
       case 'clear':
-        for (const key in clone) {
-          delete clone[key];
-        }
-        resultArr.push(clone);
-        clone = Object.assign({}, resultArr[resultArr.length - 1]);
+        clone = {};
         break;
 
       default:
         throw new Error('unexpected action');
     }
+    resultArr.push(clone);
+    clone = Object.assign({}, resultArr[resultArr.length - 1]);
   }
 
   return resultArr;
