@@ -27,6 +27,8 @@ function transformStateWithClones(state, actions) {
           delete copy[del];
         }
         break;
+      default:
+        throw new Error(`something went wrong`);
     }
     result.push({ ...copy });
   }
