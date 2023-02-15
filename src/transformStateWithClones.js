@@ -21,16 +21,18 @@ function transformStateWithClones(state, actions) {
           delete stateCopy[key];
         }
         break;
+
       case 'clear' :
         for (const key in stateCopy) {
           delete stateCopy[key];
         }
         break;
+
+      default :
+        break;
     }
 
-    const assign = { ...stateCopy };
-
-    stateHistory.push(assign);
+    stateHistory.push({ ...stateCopy });
   }
 
   return stateHistory;
