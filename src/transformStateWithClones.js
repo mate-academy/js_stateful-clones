@@ -7,10 +7,10 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const resultArray = [];
+  const history = [];
   let currentState = { ...state };
 
-  for (const action of [...actions]) {
+  for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
         Object.assign(currentState, action.extraData);
@@ -26,10 +26,10 @@ function transformStateWithClones(state, actions) {
         currentState = {};
     }
 
-    resultArray.push({ ...currentState });
+    history.push({ ...currentState });
   }
 
-  return resultArray;
+  return history;
 }
 
 module.exports = transformStateWithClones;
