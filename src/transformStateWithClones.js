@@ -8,35 +8,36 @@
  */
 function transformStateWithClones(state, actions) {
   const copyState = Object.assign({}, state);
-  const resultArray = [];
+  const historyActions = [];
+
+  const ADD_ACTION = 'addProperties';
+  const DELETE_ACTION = 'removeProperties';
+  const CLEAR_ACTION = 'clear';
 
   for (const action of actions) {
     const whatWeMustDo = action.type;
-    const isAdding = whatWeMustDo === 'addProperties';
-    const isDeleting = whatWeMustDo === 'removeProperties';
-    const isClearing = whatWeMustDo === 'clear';
 
-    switch (true) {
-      case (isAdding):
+    switch (whatWeMustDo) {
+      case (ADD_ACTION):
         Object.assign(copyState, action.extraData);
         break;
 
-      case (isDeleting):
+      case (DELETE_ACTION):
         deletProp(copyState, action.keysToRemove);
         break;
 
-      case (isClearing):
+      case (CLEAR_ACTION):
         clearingTheObject(copyState);
         break;
 
       default:
-        return 'Unknow error';
+        throw new Error(`Unknown key: "${whatWeMustDo}"`);
     }
 
-    resultArray.push(Object.assign({}, copyState));
+    historyActions.push(Object.assign({}, copyState));
   }
 
-  return resultArray;
+  return historyActions;
 }
 
 function clearingTheObject(object) {
