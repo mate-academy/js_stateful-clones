@@ -17,19 +17,24 @@ function transformStateWithClones(state, actions) {
         break;
       }
 
-      case 'removeProperties': {
-        action.keysToRemove.forEach(key => delete stateCopy[key]);
-        break;
-      }
+      case 'removeProperties':
+        for (const key of action.keysToRemove) {
+          delete stateCopy[key];
+        }
 
-      case 'clear': {
-        Object.keys(stateCopy).forEach(key => delete stateCopy[key]);
         break;
-      }
+
+      case 'clear':
+        for (const key in stateCopy) {
+          delete stateCopy[key];
+        }
+
+        break;
 
       default:
-        Error('Error');
+        Error(`Error in ${action.type} action type`);
     }
+
     stateHistory.push({ ...stateCopy });
   }
 
