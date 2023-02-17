@@ -7,8 +7,8 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const resultArray = [];
-  const copyOfState = JSON.parse(JSON.stringify(state));
+  const stateHistory = [];
+  const copyOfState = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
@@ -31,12 +31,12 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        return '';
+        throw new Error('Something went wrong!');
     }
-    resultArray.push({ ...copyOfState });
+    stateHistory.push({ ...copyOfState });
   }
 
-  return resultArray;
+  return stateHistory;
 }
 
 module.exports = transformStateWithClones;
