@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const copy = { ...state };
+  let copy = { ...state };
   const result = [];
 
   actions.forEach(action => {
@@ -17,15 +17,17 @@ function transformStateWithClones(state, actions) {
         break;
 
       case ('removeProperties') :
-        Object.keys(action.keysToRemove).forEach(function(key) {
-          delete copy[action.keysToRemove[key]];
-        });
+        for (const key of action.keysToRemove) {
+          delete copy[key];
+        }
         break;
 
       case ('clear') :
-        for (const key in copy) {
-          delete copy[key];
-        }
+        copy = {};
+        break;
+
+      default:
+        throw Error('Unexpected action');
     }
 
     result.push({ ...copy });
