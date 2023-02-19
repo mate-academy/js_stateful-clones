@@ -27,7 +27,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        return 'unexpected action';
     }
 
     arrStates.push({ ...stateCopy });
