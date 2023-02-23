@@ -68,37 +68,26 @@ we must get
 the `state` variable must still contain
 {foo: 'bar', bar: 'foo'}.
 
-// for (const { type, extraData, keysToRemove } of actions) {
-//   switch ({
-//     type,
-//     extraData,
-//     keysToRemove,
-//   }.type) {
-//     case 'addProperties':
-//       Object.assign(state, {
-//         type,
-//         extraData,
-//         keysToRemove,
-//       }.extraData);
-//       break;
+<!-- for (const { type, extraData, keysToRemove } of actions) {
+    switch (type) {
+      case 'addProperties':
+        Object.assign(state, extraData);
+        break;
 
-//     case 'removeProperties':
-//       for (const arr of {
-//         type,
-//         extraData,
-//         keysToRemove,
-//       }.keysToRemove) {
-//         delete state[arr];
-//       }
-//       break;
+      case 'removeProperties':
+        for (const key of keysToRemove) {
+          delete state[key];
+        }
+        break;
 
-//     case 'clear':
-//       for (const key in state) {
-//         delete state[key];
-//       }
-//       break;
+      case 'clear':
+        for (const key in state) {
+          delete state[key];
+        }
+        break;
 
-//     default:
-//       return 'Something wrong...';
-//   }
-// }
+      default:
+        throw new Error(`There is no action like: ${type}`);
+    }
+  }
+} -->
