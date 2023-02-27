@@ -24,7 +24,7 @@ function transformStateWithClones(state, actions) {
         stateCopy = {};
         break;
       default:
-        break;
+        return `Unexpected action type: ${type}. Could not transform state.`;
     }
 
     result.push({ ...stateCopy });
