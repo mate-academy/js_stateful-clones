@@ -7,42 +7,42 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const mainArr = [];
-  const helpArr = [];
+  const clones = [];
 
-  helpArr.push(state);
+  clones[0] = state;
 
   for (let i = 0; i < actions.length; i++) {
-    const copy = Object.assign({}, helpArr[i]);
-    const firstObj = actions[i];
+    const copy = Object.assign({}, clones[i]);
+    const current = actions[i];
 
-    if (firstObj.type === 'addProperties') {
-      const secondObj = firstObj.extraData;
+    switch (true) {
+      case current.type === 'addProperties':
+        const first = current.extraData;
 
-      for (const key in secondObj) {
-        copy[key] = secondObj[key];
-      }
+        for (const key in first) {
+          copy[key] = first[key];
+        }
+        break;
+
+      case current.type === 'removeProperties':
+        const second = current.keysToRemove;
+
+        for (const key of second) {
+          delete copy[key];
+        }
+        break;
+
+      case current.type === 'clear':
+        for (const key in copy) {
+          delete copy[key];
+        }
+        break;
     }
 
-    if (firstObj.type === 'removeProperties') {
-      const secondObj = firstObj.keysToRemove;
+    clones.push(copy);
+  };
 
-      for (const key of secondObj) {
-        delete copy[key];
-      }
-    }
-
-    if (firstObj.type === 'clear') {
-      for (const key in copy) {
-        delete copy[key];
-      }
-    }
-
-    mainArr.push(copy);
-    helpArr.push(copy);
-  }
-
-  return mainArr;
+  return clones.splice(1);
 }
 
 module.exports = transformStateWithClones;
