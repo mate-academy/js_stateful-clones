@@ -24,7 +24,7 @@ function transformStateWithClones(state, actions) {
         stateClone = {};
         break;
       default:
-        result.push({ ...stateClone });
+        return 'action type is invalid';
     }
     result.push({ ...stateClone });
   }
