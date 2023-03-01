@@ -8,21 +8,21 @@
  */
 function transformStateWithClones(state, actions) {
   const result = [];
-  let obj = { ...state };
+  let copiedObj = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
       case 'clear':
-        obj = {};
+        copiedObj = {};
         break;
 
       case 'addProperties':
-        Object.assign(obj, action.extraData);
+        Object.assign(copiedObj, action.extraData);
         break;
 
       case 'removeProperties':
         for (const key of action.keysToRemove) {
-          delete obj[key];
+          delete copiedObj[key];
         }
         break;
 
@@ -30,7 +30,7 @@ function transformStateWithClones(state, actions) {
         return 'Invalid type data';
     }
 
-    result.push({ ...obj });
+    result.push({ ...copiedObj });
   }
 
   return result;
