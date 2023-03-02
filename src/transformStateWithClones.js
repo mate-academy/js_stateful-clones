@@ -16,20 +16,22 @@ function transformStateWithClones(state, actions) {
         for (const num in copy) {
           delete copy[num];
         };
-        newArr.push({ ...copy });
         break;
 
       case 'addProperties':
         Object.assign(copy, action.extraData);
-        newArr.push({ ...copy });
         break;
 
       case 'removeProperties':
         for (const key of action.keysToRemove) {
           delete copy[key];
         }
-        newArr.push({ ...copy });
+        break;
+
+      default:
+        throw new Error('Unsupported action type');
     }
+    newArr.push({ ...copy });
   }
 
   return newArr;
