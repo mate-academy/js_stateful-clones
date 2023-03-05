@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use strict';
 
 /**
@@ -11,33 +12,28 @@ function transformStateWithClones(state, actions) {
   let currentState = { ...state };
 
   for (const { type, extraData, keysToRemove } of actions) {
-    let nextState;
-
     switch (type) {
       case 'addProperties':
-        nextState = {
+        currentState = {
           ...currentState, ...extraData,
         };
         break;
       case 'removeProperties':
-        nextState = {};
-
         for (const [key, value] of Object.entries(currentState)) {
-          if (!keysToRemove.includes(key)) {
-            nextState[key] = value;
+          if (keysToRemove.includes(key)) {
+            delete currentState[key];
           }
         }
 
         break;
       case 'clear':
-        nextState = {};
+        currentState = {};
         break;
       default:
         return 'Unknown action type';
     }
 
-    clonedStates.push(nextState);
-    currentState = nextState;
+    clonedStates.push({ ...currentState });
   }
 
   return clonedStates;
