@@ -19,7 +19,7 @@ function transformStateWithClones(state, actions) {
         };
         break;
       case 'removeProperties':
-        for (const [key, value] of Object.entries(currentState)) {
+        for (const [key] of Object.entries(currentState)) {
           if (keysToRemove.includes(key)) {
             delete currentState[key];
           }
