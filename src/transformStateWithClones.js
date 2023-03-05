@@ -7,8 +7,8 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateClone = { ...state };
-  const result = [];
+  let stateClone = { ...state };
+  let result = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -23,10 +23,11 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        for (const key in stateClone) {
-          delete stateClone[key];
-        }
+        stateClone = {};
         break;
+
+      default:
+        result = 'action type not found';
     } result.push({ ...stateClone });
   }
 
