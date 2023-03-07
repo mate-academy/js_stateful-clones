@@ -27,7 +27,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        return 'action type not found';
+        throw Error(`action type ${action.type} not found`);
     } result.push({ ...stateClone });
   }
 
