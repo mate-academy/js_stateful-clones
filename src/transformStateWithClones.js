@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const copyState = {};
-  let arr = [];
+  let tempArr = [];
   const arrFinish = [];
 
   for (const key in state) {
@@ -18,27 +18,26 @@ function transformStateWithClones(state, actions) {
   for (const obj of actions) {
     switch (obj.type) {
       case 'addProperties':
-        arrFinish.push({ ...Object.assign(copyState, obj.extraData) });
+        Object.assign(copyState, obj.extraData)
         break;
 
       case 'removeProperties':
-        arr = obj.keysToRemove;
+        tempArr = obj.keysToRemove;
 
-        for (const key of arr) {
+        for (const key of tempArr) {
           delete copyState[key];
         }
-        arrFinish.push({ ...copyState });
         break;
 
       case 'clear':
-        arr = Object.keys({ ...copyState });
+        tempArr = Object.keys({ ...copyState });
 
-        for (const key of arr) {
+        for (const key of tempArr) {
           delete copyState[key];
         }
-        arrFinish.push({ ...copyState });
         break;
     }
+    arrFinish.push({ ...copyState });
   }
 
   return arrFinish;
