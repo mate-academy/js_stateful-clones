@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * @param {Object} state
@@ -12,24 +12,27 @@ function transformStateWithClones(state, actions) {
 
   for (const action of actions) {
     switch (action.type) {
-      case 'addProperties':
+      case "addProperties":
         for (const key in action.extraData) {
           copyState[key] = action.extraData[key];
         }
+
         mas.push({ ...copyState });
         break;
 
-      case 'removeProperties':
+      case "removeProperties":
         for (const key of action.keysToRemove) {
           delete copyState[key];
         }
+
         mas.push({ ...copyState });
         break;
 
-      case 'clear':
+      case "clear":
         for (const key in copyState) {
           delete copyState[key];
         }
+
         mas.push({});
         break;
     }
