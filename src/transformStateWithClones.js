@@ -30,7 +30,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        currentState = { ...state };
+        throw new Error('Case not found, try againe');
     }
     transformStateClone.push({ ...currentState });
   }
