@@ -1,5 +1,39 @@
 'use strict';
 
+const stateObject = {
+  foo: 'bar',
+  name: 'Jim',
+  another: 'one',
+};
+
+const stateAction = [
+  {
+    type: 'removeProperties',
+    keysToRemove: ['another'],
+  },
+  { type: 'clear' },
+  { type: 'clear' },
+  { type: 'clear' },
+  {
+    type: 'addProperties',
+    extraData: { yet: 'another property' },
+  },
+  { type: 'clear' },
+  {
+    type: 'addProperties',
+    extraData: {
+      foo: 'bar',
+      name: 'Jim',
+    },
+  },
+  {
+    type: 'removeProperties',
+    keysToRemove: ['name', 'hello'],
+  },
+];
+
+transformStateWithClones(stateObject, stateAction);
+
 function transformStateWithClones(state, actions) {
   const result = [];
 
@@ -14,28 +48,24 @@ function transformStateWithClones(state, actions) {
           ...newState,
           ...extraData,
         };
-        result.push(newState);
         break;
 
       case 'removeProperties':
-        const updatedState = { ...newState };
-
         for (const key of keysToRemove) {
-          delete updatedState[key];
+          delete newState[key];
         }
 
-        newState = updatedState;
-        result.push(newState);
         break;
 
       case 'clear':
         newState = {};
-        result.push(newState);
         break;
 
       default:
         return null;
     }
+
+    result.push(newState);
   }
 
   return result;
