@@ -18,22 +18,18 @@ function transformStateWithClones(state, actions) {
 
       case 'removeProperties':
         action.keysToRemove.forEach(key => {
-          if (modifiedObject.hasOwnProperty(key)) {
-            delete modifiedObject[key];
-          }
+          delete modifiedObject[key];
         });
         break;
 
       case 'clear':
         for (const key in modifiedObject) {
-          if (modifiedObject.hasOwnProperty(key)) {
-            delete modifiedObject[key];
-          }
+          delete modifiedObject[key];
         }
         break;
 
       default:
-        throw new Error();
+        throw new Error('Invalid type');
     }
     stateArray.push({ ...modifiedObject });
   });
