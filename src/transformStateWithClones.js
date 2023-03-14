@@ -14,9 +14,7 @@ function transformStateWithClones(state, actions) {
   for (const act of actions) {
     switch (act.type) {
       case 'addProperties':
-        for (const actKey in act.extraData) {
-          newObj[actKey] = act.extraData[actKey];
-        }
+        Object.assign(newObj, act.extraData);
         break;
 
       case 'removeProperties':
@@ -27,7 +25,7 @@ function transformStateWithClones(state, actions) {
 
       // eslint-disable-next-line no-fallthrough
       case 'clear':
-        for (const stateKey in state) {
+        for (const stateKey in newObj) {
           delete newObj[stateKey];
         }
         break;
