@@ -22,10 +22,13 @@ function transformStateWithClones(state, actions) {
         transformedStates.push(newState);
         break;
 
-      default :
+      case 'clear' :
         newState = {};
         transformedStates.push(newState);
         break;
+
+      default :
+        return 'error';
     }
   }
 
