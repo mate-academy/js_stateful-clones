@@ -11,31 +11,28 @@ function transformStateWithClones(state, actions) {
   let stateClone = { ...state };
 
   for (const { type, extraData, keysToRemove } of actions) {
-    let newStateClone = { ...stateClone };
-
     switch (type) {
       case 'addProperties':
-        Object.assign(newStateClone, extraData);
+        Object.assign(stateClone, extraData);
         break;
 
       case 'removeProperties':
         for (const character of keysToRemove) {
-          if (newStateClone.hasOwnProperty(character)) {
-            delete newStateClone[character];
+          if (stateClone.hasOwnProperty(character)) {
+            delete stateClone[character];
           }
         }
         break;
 
       case 'clear':
-        newStateClone = {};
+        stateClone = {};
         break;
 
       default:
-        break;
+        throw new Error('Unexpected action');
     }
 
-    array.push(newStateClone);
-    stateClone = newStateClone;
+    array.push({ ...stateClone });
   }
 
   return array;
