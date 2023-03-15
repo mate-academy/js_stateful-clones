@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateCopy = [];
+  const stateCopies = [];
   const currentState = { ...state };
 
   for (const action of actions) {
@@ -18,9 +18,7 @@ function transformStateWithClones(state, actions) {
 
       case 'removeProperties':
         action.keysToRemove.forEach(key => {
-          if (currentState.hasOwnProperty(key)) {
-            delete currentState[key];
-          }
+          delete currentState[key];
         });
         break;
 
@@ -34,10 +32,10 @@ function transformStateWithClones(state, actions) {
         throw new Error('Invalid property');
     }
 
-    stateCopy.push({ ...currentState });
+    stateCopies.push({ ...currentState });
   }
 
-  return stateCopy;
+  return stateCopies;
 }
 
 module.exports = transformStateWithClones;
