@@ -2,28 +2,26 @@
 
 /**
  * @param {Object} state
- * @param {Object[]} actions
+ * @param {Object[]} actionions
  *
  * @return {Object[]}
  */
-function transformStateWithClones(state, actions) {
-  const arrayOfObjects = [];
+function transformStateWithClones(state, actionions) {
+  const finalArray = [];
   const newObj = { ...state };
-  const err1 = Error('Something went wrong');
 
-  for (const act of actions) {
-    switch (act.type) {
+  for (const action of actionions) {
+    switch (action.type) {
       case 'addProperties':
-        Object.assign(newObj, act.extraData);
+        Object.assign(newObj, action.extraData);
         break;
 
       case 'removeProperties':
-        for (const removeKeys of act.keysToRemove) {
-          delete newObj[removeKeys];
+        for (const key of action.keysToRemove) {
+          delete newObj[key];
         }
         break;
 
-      // eslint-disable-next-line no-fallthrough
       case 'clear':
         for (const stateKey in newObj) {
           delete newObj[stateKey];
@@ -31,13 +29,13 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw err1;
+        throw new Error();
     }
 
-    arrayOfObjects.push({ ...newObj });
+    finalArray.push({ ...newObj });
   }
 
-  return arrayOfObjects;
+  return finalArray;
 }
 
 module.exports = transformStateWithClones;
