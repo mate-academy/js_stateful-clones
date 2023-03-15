@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const copyState = { ...state };
-  const multipleStateArr = [];
+  const stateHistory = [];
 
   actions.forEach(action => {
     switch (action.type) {
@@ -32,13 +32,13 @@ function transformStateWithClones(state, actions) {
       }
 
       default:
-        return `Sorry i don't know this action`;
+        throw new Error(`Sorry i don't know this statement: ${action.type}`);
     }
 
-    multipleStateArr.push({ ...copyState });
+    stateHistory.push({ ...copyState });
   });
 
-  return multipleStateArr;
+  return stateHistory;
 }
 
 module.exports = transformStateWithClones;
