@@ -7,10 +7,10 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const obj = Object.assign({}, state);
+  let obj = { ...state };
   const result = [];
 
-  actions.forEach(element => {
+  actions.forEach((element) => {
     switch (element.type) {
       case 'clear':
         for (const key in obj) {
@@ -18,12 +18,17 @@ function transformStateWithClones(state, actions) {
         }
         break;
       case 'removeProperties':
-        element.keysToRemove.forEach(prop => {
+        element.keysToRemove.forEach((prop) => {
           delete obj[prop];
         });
         break;
+      case 'addProperties':
+        obj = {
+          ...obj, ...element.extraData,
+        };
+        break;
       default:
-        Object.assign(obj, element.extraData);
+        return result;
     }
     result.push({ ...obj });
   });
