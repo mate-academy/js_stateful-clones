@@ -9,7 +9,6 @@
 function transformStateWithClones(state, actions) {
   const copyState = { ...state };
   const resultingArray = [];
-  const errorMessage = 'Error';
 
   for (const action of actions) {
     switch (action.type) {
@@ -18,8 +17,8 @@ function transformStateWithClones(state, actions) {
         break;
 
       case `removeProperties`:
-        for (const value of action.keysToRemove) {
-          delete copyState[value];
+        for (const key of action.keysToRemove) {
+          delete copyState[key];
         }
         break;
 
@@ -30,7 +29,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw errorMessage;
+        throw new Error('Input error');
     }
 
     resultingArray.push({ ...copyState });
