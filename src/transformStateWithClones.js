@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const stateCopy = Object.assign({}, state);
-  const result = [];
+  const objectData = [];
 
   actions.forEach(element => {
     switch (element.type) {
@@ -32,10 +32,10 @@ function transformStateWithClones(state, actions) {
         throw new Error('data dont regard conditions');
     }
 
-    result.push({ ...stateCopy });
+    objectData.push({ ...stateCopy });
   });
 
-  return result;
+  return objectData;
 }
 
 module.exports = transformStateWithClones;
