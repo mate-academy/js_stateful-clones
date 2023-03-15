@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const currentState = { ...state };
-  const copiedState = [];
+  const historyOfState = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -23,16 +23,19 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        Object.keys(currentState).forEach(key => delete currentState[key]);
+        Object.keys(currentState).forEach(key => {
+          delete currentState[key];
+        });
         break;
 
       default:
         throw new Error('Invalid type of action');
     };
-    copiedState.push({ ...currentState });
+
+    historyOfState.push({ ...currentState });
   }
 
-  return copiedState;
+  return historyOfState;
 }
 
 module.exports = transformStateWithClones;
