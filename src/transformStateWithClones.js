@@ -7,7 +7,7 @@
  * @return {actionect[]}
  */
 function transformStateWithClones(state, actions) {
-  const arrOfStates = [];
+  const states = [];
   const copyState = Object.assign({}, state);
 
   for (const action of actions) {
@@ -25,13 +25,13 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        return null;
+        throw new Error('Input is invalid');
     }
 
-    arrOfStates.push({ ...copyState });
+    states.push({ ...copyState });
   }
 
-  return arrOfStates;
+  return states;
 }
 
 function clearState(state) {
