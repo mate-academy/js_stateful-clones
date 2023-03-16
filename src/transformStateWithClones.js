@@ -8,16 +8,16 @@
  */
 function transformStateWithClones(state, actions) {
   const stateCopy = Object.assign({}, state);
-  const objectData = [];
+  const cloneObjectsArray = [];
 
-  actions.forEach(element => {
-    switch (element.type) {
+  actions.forEach(action => {
+    switch (action.type) {
       case 'addProperties':
-        Object.assign(stateCopy, element.extraData);
+        Object.assign(stateCopy, action.extraData);
         break;
 
       case 'removeProperties':
-        element.keysToRemove.forEach(key => {
+        action.keysToRemove.forEach(key => {
           delete stateCopy[key];
         });
         break;
@@ -31,10 +31,11 @@ function transformStateWithClones(state, actions) {
       default:
         throw new Error('data dont regard conditions');
     }
-    objectData.push({ ...stateCopy });
+
+    cloneObjectsArray.push({ ...stateCopy });
   });
 
-  return objectData;
+  return cloneObjectsArray;
 }
 
 module.exports = transformStateWithClones;
