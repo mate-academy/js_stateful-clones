@@ -8,14 +8,12 @@
  */
 function transformStateWithClones(state, actions) {
   const stateCopy = { ...state };
-  const stateArr = [];
+  const stateArray = [];
 
-  for (const prop of actions) {
-    switch (prop.type) {
+  for (const action of actions) {
+    switch (action.type) {
       case 'addProperties':
-        for (const extra in prop.extraData) {
-          stateCopy[extra] = prop.extraData[extra];
-        }
+        Object.assign(stateCopy, action.extraData);
         break;
 
       case 'clear':
@@ -25,7 +23,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        for (const key of prop.keysToRemove) {
+        for (const key of action.keysToRemove) {
           delete stateCopy[key];
         }
         break;
@@ -34,10 +32,10 @@ function transformStateWithClones(state, actions) {
         throw new Error('Unknown type');
     }
 
-    stateArr.push({ ...stateCopy });
+    stateArray.push({ ...stateCopy });
   }
 
-  return stateArr;
+  return stateArray;
 }
 
 module.exports = transformStateWithClones;
