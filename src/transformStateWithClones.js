@@ -23,6 +23,9 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         Object.keys(copyState).forEach(key => delete copyState[key]);
         break;
+
+      default:
+        throw new Error('Error 404');
     }
 
     states.push({ ...copyState });
