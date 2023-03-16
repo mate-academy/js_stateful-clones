@@ -27,7 +27,9 @@ function transformStateWithClones(state, actions) {
           delete stateCopy[property];
         }
         break;
-      default: throw new Error('invalid action type');
+
+      default:
+        throw new Error('invalid action type');
     }
 
     modifiedStates.push({ ...stateCopy });
