@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const stateCopy = { ...state };
-  const transformedArr = [];
+  const states = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -32,10 +32,10 @@ function transformStateWithClones(state, actions) {
         throw new Error();
     }
 
-    transformedArr.push({ ...stateCopy });
+    states.push({ ...stateCopy });
   }
 
-  return transformedArr;
+  return states;
 }
 
 module.exports = transformStateWithClones;
