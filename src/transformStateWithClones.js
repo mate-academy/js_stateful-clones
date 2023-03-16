@@ -28,7 +28,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default :
-        return 'error';
+        return null;
     }
   }
 
@@ -46,8 +46,8 @@ function addProperties(state, action) {
 function removeProperties(state, action) {
   const newState = { ...state };
 
-  for (const keyToRemove in action.keysToRemove) {
-    delete newState[action.keysToRemove[keyToRemove]];
+  for (const keyToRemove of action.keysToRemove) {
+    delete newState[keyToRemove];
   }
 
   return newState;
