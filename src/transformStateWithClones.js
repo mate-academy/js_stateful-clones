@@ -25,7 +25,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw new Error('Error 404');
+        throw new Error('You make mistake in type actions: ' + action.type);
     }
 
     states.push({ ...copyState });
