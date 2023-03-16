@@ -15,28 +15,27 @@ function transformStateWithClones(state, actions) {
   const states = [];
 
   for (const action of actions) {
-    switch (action['type']) {
+    switch (action.type) {
       case 'addProperties':
-        for (const fieldToAdd in action['extraData']) {
-          copyOfState[fieldToAdd] = action['extraData'][fieldToAdd];
-        };
-        states.push(makeDeepCloneJSON(copyOfState));
+        Object.assign(copyOfState, action.extraData);
         break;
+
       case 'removeProperties':
-        for (const keyToRemove of action['keysToRemove']) {
+        for (const keyToRemove of action.keysToRemove) {
           delete copyOfState[keyToRemove];
         };
-        states.push((makeDeepCloneJSON(copyOfState)));
         break;
+
       case 'clear':
         for (const field in copyOfState) {
           delete copyOfState[field];
         }
-        states.push({});
         break;
+
       default:
         throw new Error('Invalid operation');
     }
+    states.push(makeDeepCloneJSON(copyOfState));
   }
 
   return states;
