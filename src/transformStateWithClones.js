@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const statesArray = [];
+  const states = [];
   const stateCopy = JSON.parse(JSON.stringify(state));
 
   actions.forEach(action => {
@@ -30,10 +30,10 @@ function transformStateWithClones(state, actions) {
         throw new Error('Something went wrong!');
     }
 
-    statesArray.push(JSON.parse(JSON.stringify(stateCopy)));
+    states.push(JSON.parse(JSON.stringify(stateCopy)));
   });
 
-  return statesArray;
+  return states;
 }
 
 module.exports = transformStateWithClones;
