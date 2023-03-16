@@ -1,40 +1,42 @@
 'use strict';
 
 /**
- * @param {Object} state
- * @param {Object[]} actions
+ * @param {actionect} state
+ * @param {actionect[]} actions
  *
- * @return {Object[]}
+ * @return {actionect[]}
  */
 function transformStateWithClones(state, actions) {
-  const arrOfObjects = [];
+  const arrOfStates = [];
   const copyState = Object.assign({}, state);
 
-  for (const obj of actions) {
-    switch (obj.type) {
+  for (const action of actions) {
+    switch (action.type) {
       case 'addProperties':
-        Object.assign(copyState, obj.extraData);
+        Object.assign(copyState, action.extraData);
         break;
+
       case 'removeProperties':
-        obj.keysToRemove.forEach(elem => delete copyState[elem]);
+        action.keysToRemove.forEach(key => delete copyState[key]);
         break;
 
       case 'clear':
-        toClearState(copyState);
+        clearState(copyState);
         break;
 
       default:
         return null;
     }
-    arrOfObjects.push({ ...copyState });
+
+    arrOfStates.push({ ...copyState });
   }
 
-  return arrOfObjects;
+  return arrOfStates;
 }
 
-function toClearState(state) {
-  for (const elem in state) {
-    delete state[elem];
+function clearState(state) {
+  for (const key in state) {
+    delete state[key];
   }
 }
 
