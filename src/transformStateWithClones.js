@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateArr = [];
+  const states = [];
   const stateCopy = Object.assign({}, state);
 
   for (const action of actions) {
@@ -29,13 +29,13 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        return Error;
+        throw new Error('Wrong actions!');
     }
 
-    stateArr.push({ ...stateCopy });
+    states.push({ ...stateCopy });
   }
 
-  return stateArr;
+  return states;
 }
 
 module.exports = transformStateWithClones;
