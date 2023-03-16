@@ -29,6 +29,7 @@ function transformStateWithClones(state, actions) {
       default:
         throw new Error('Something went wrong!');
     }
+
     statesArray.push(JSON.parse(JSON.stringify(stateCopy)));
   });
 
