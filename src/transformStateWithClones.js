@@ -9,7 +9,7 @@
 function transformStateWithClones(state, actions) {
   // write code here
   const stateCopy = { ...state };
-  const arrStates = [];
+  const states = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -33,10 +33,10 @@ function transformStateWithClones(state, actions) {
         throw new Error('Input is invalid');
     }
 
-    arrStates.push({ ...stateCopy });
+    states.push({ ...stateCopy });
   }
 
-  return arrStates;
+  return states;
 }
 
 module.exports = transformStateWithClones;
