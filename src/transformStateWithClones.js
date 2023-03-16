@@ -8,11 +8,9 @@
  */
 function transformStateWithClones(state, actions) {
   const statesArray = [];
-  let stateCopy = JSON.parse(JSON.stringify(state));
+  const stateCopy = JSON.parse(JSON.stringify(state));
 
   actions.forEach(action => {
-    stateCopy = JSON.parse(JSON.stringify(stateCopy));
-
     switch (action.type) {
       case 'addProperties':
         Object.assign(stateCopy, action.extraData);
@@ -31,7 +29,7 @@ function transformStateWithClones(state, actions) {
       default:
         throw new Error('Something went wrong!');
     }
-    statesArray.push(stateCopy);
+    statesArray.push(JSON.parse(JSON.stringify(stateCopy)));
   });
 
   return statesArray;
