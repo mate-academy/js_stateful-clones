@@ -6,12 +6,8 @@
  *
  * @return {Object[]}
  */
-function makeDeepCloneJSON(obj) {
-  return JSON.parse(JSON.stringify(obj));
-}
-
 function transformStateWithClones(state, actions) {
-  const copyOfState = makeDeepCloneJSON(state);
+  const copyOfState = { ...state };
   const states = [];
 
   for (const action of actions) {
@@ -35,7 +31,8 @@ function transformStateWithClones(state, actions) {
       default:
         throw new Error('Invalid operation');
     }
-    states.push(makeDeepCloneJSON(copyOfState));
+
+    states.push({ ...copyOfState });
   }
 
   return states;
