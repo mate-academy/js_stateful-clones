@@ -7,24 +7,24 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const copyOfState = { ...state };
+  const stateCopy = { ...state };
   const states = [];
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        Object.assign(copyOfState, action.extraData);
+        Object.assign(stateCopy, action.extraData);
         break;
 
       case 'removeProperties':
         for (const keyToRemove of action.keysToRemove) {
-          delete copyOfState[keyToRemove];
+          delete stateCopy[keyToRemove];
         };
         break;
 
       case 'clear':
-        for (const field in copyOfState) {
-          delete copyOfState[field];
+        for (const field in stateCopy) {
+          delete stateCopy[field];
         }
         break;
 
@@ -32,7 +32,7 @@ function transformStateWithClones(state, actions) {
         throw new Error('Invalid operation');
     }
 
-    states.push({ ...copyOfState });
+    states.push({ ...stateCopy });
   }
 
   return states;
