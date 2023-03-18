@@ -7,12 +7,10 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const states = [state];
+  const states = [];
   let currentState = state;
 
-  for (let i = 0; i < actions.length; i++) {
-    const action = actions[i];
-
+  for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
         currentState = {
@@ -20,19 +18,22 @@ function transformStateWithClones(state, actions) {
           ...action.extraData,
         };
         break;
+
       case 'removeProperties':
         const filteredState = {};
 
-        for (const [key, value] of Object.entries(currentState)) {
+        for (const key of Object.keys(currentState)) {
           if (!action.keysToRemove.includes(key)) {
-            filteredState[key] = value;
+            filteredState[key] = currentState[key];
           }
         }
         currentState = filteredState;
         break;
+
       case 'clear':
         currentState = {};
         break;
+
       default:
         throw new Error(`Unsupported action type: ${action.type}`);
     }
@@ -40,7 +41,7 @@ function transformStateWithClones(state, actions) {
     states.push({ ...currentState });
   }
 
-  return states.slice(1);
+  return states;
 }
 
 module.exports = transformStateWithClones;
