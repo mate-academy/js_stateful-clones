@@ -9,53 +9,46 @@
 function transformStateWithClones(state, actions) {
   // write code here
   const k = [];
-  let stateClon = {
+  let stateClone = {
     ...state,
   };
-  const actionsClone = {};
 
-  for (let i = 0; i < actions.length; i++) {
-    switch (actions[i].type) {
-      case ('removeProperties'):
-        for (const kInStat in stateClon) {
-          for (let n = 0; n < actions[i].keysToRemove.length; n++) {
-            if (kInStat === actions[i].keysToRemove[n]) {
-              delete stateClon[kInStat];
+  for (const action in actions) {
+    const { type } = actions[action];
+
+    switch (type) {
+      case 'addProperties':
+        const { extraData } = actions[action];
+
+        stateClone = {
+          ...stateClone,
+          ...extraData,
+        };
+        k.push({ ...stateClone });
+        break;
+
+      case 'removeProperties':
+        const { keysToRemove } = actions[action];
+
+        for (const key of keysToRemove) {
+          for (const kInStat in stateClone) {
+            if (key === kInStat) {
+              delete stateClone[key];
             }
           }
         }
-
-        actionsClone[i] = {
-          ...stateClon,
-        };
-        k[i] = actionsClone[i];
+        k.push({ ...stateClone });
         break;
-      case ('clear'):
-        for (const del in stateClon) {
-          delete stateClon[del];
-        }
 
-        if (actionsClone[i] === undefined) {
-          actionsClone[i] = {};
-        }
-        k[i] = actionsClone[i];
+      case 'clear':
+        stateClone = {};
+        k.push({ ...stateClone });
         break;
+
       default:
-        actionsClone[i] = {
-          ...stateClon,
-          ...actions[i].extraData,
-        };
-
-        stateClon = {
-          ...stateClon,
-          ...actions[i].extraData,
-        };
-        k[i] = actionsClone[i];
         break;
     }
   }
-
-  // const k = Object.assign(actionsClone[0], actionsClone[1], actionsClone[2]);
 
   return k;
 }
