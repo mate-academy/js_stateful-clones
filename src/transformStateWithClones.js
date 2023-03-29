@@ -30,6 +30,9 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         stateCopy = {};
         break;
+
+      default:
+        return 'Wrong input data';
     }
     states.push(stateCopy);
     stateCopy = Object.assign({}, states[states.length - 1]);
