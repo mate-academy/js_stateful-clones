@@ -7,7 +7,6 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
   const resultArray = [];
   let stateClone = {
     ...state,
@@ -34,7 +33,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        return `Error: ${type}`;
     }
     resultArray.push({ ...stateClone });
   }
