@@ -69,3 +69,6 @@ we must get
 ```
 the `state` variable must still contain
 {foo: 'bar', bar: 'foo'}.
+
+
+Test
