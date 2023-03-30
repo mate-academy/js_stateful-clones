@@ -29,6 +29,9 @@ function transformStateWithClones(state, actions) {
           delete stateCopy[key];
         }
         break;
+
+      default:
+        return 'incorrect action type';
     }
     stateClones.push({ ...stateCopy });
   }
