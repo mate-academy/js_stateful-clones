@@ -40,7 +40,7 @@ must return the following array:
 
 ```
 [
-  {foo: 'bar', bar: 'foo', name: 'Jim', hello: 'world'},
+  ёё
   {foo: 'bar', name: 'Jim'},
   {foo: 'bar', name: 'Jim', another: 'one'}
 ].
@@ -67,5 +67,6 @@ we must get
   {foo: 'bar', name: 'Jim'}
 ].
 ```
+
 the `state` variable must still contain
 {foo: 'bar', bar: 'foo'}.
