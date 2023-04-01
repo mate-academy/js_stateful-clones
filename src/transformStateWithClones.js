@@ -29,7 +29,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        return 'Erorr: Unknown action type';
+        return 'Unknown action type';
     }
     listStates.push({ ...cloneState });
   }
