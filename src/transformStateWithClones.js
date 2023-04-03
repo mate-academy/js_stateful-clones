@@ -13,22 +13,29 @@ function transformStateWithClones(state, actions) {
   const stateVersions = [];
 
   for (let i = 0; i < actions.length; i++) {
-    if (actions[i].type === 'addProperties') {
-      for (const key in actions[i].extraData) {
-        stateClone[key] = actions[i].extraData[key];
-      }
-    }
+    const actionsItem = actions[i];
 
-    if (actions[i].type === 'removeProperties') {
-      for (let a = 0; a < actions[i].keysToRemove.length; a++) {
-        delete stateClone[actions[i].keysToRemove[a]];
-      }
-    }
+    switch (actionsItem.type) {
+      case 'addProperties':
+        for (const key in actionsItem.extraData) {
+          stateClone[key] = actionsItem.extraData[key];
+        }
+        break;
 
-    if (actions[i].type === 'clear') {
-      for (const key in stateClone) {
-        delete stateClone[key];
-      }
+      case 'removeProperties':
+        for (let a = 0; a < actionsItem.keysToRemove.length; a++) {
+          delete stateClone[actionsItem.keysToRemove[a]];
+        }
+        break;
+
+      case 'clear':
+        for (const key in stateClone) {
+          delete stateClone[key];
+        }
+        break;
+
+      default:
+        throw new Error('Unexpected command');
     }
 
     stateVersions.push({
