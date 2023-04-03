@@ -4,26 +4,29 @@ function transformStateWithClones(state, actions) {
   const arrayResult = [];
   const cloneState = { ...state };
 
-  for (const elem of actions) {
-    const { type, keysToRemove, extraData } = elem;
+  for (const action of actions) {
+    const { type, keysToRemove, extraData } = action;
 
-    if (type === 'addProperties') {
-      Object.assign(cloneState, extraData);
+    switch (type) {
+      case 'addProperties':
+        Object.assign(cloneState, extraData);
+        break;
+
+      case 'removeProperties':
+        for (const value of keysToRemove) {
+          delete cloneState[value];
+        };
+        break;
+
+      case 'clear':
+        Object.keys(cloneState).forEach((el) => {
+          delete cloneState[el];
+        });
+        break;
+      default: throw new Error('type is not found');
     };
-
-    if (type === 'removeProperties') {
-      for (const value of keysToRemove) {
-        delete cloneState[value];
-      };
-    };
-
-    if (type === 'clear') {
-      Object.keys(cloneState).forEach((el) => {
-        delete cloneState[el];
-      });
-    }
     arrayResult.push({ ...cloneState });
-  };
+  }
 
   return arrayResult;
 };
