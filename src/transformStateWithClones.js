@@ -7,38 +7,42 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const finalArray = [state];
+  const stateClone = {
+    ...state,
+  };
+  const stateVersions = [];
 
   for (let i = 0; i < actions.length; i++) {
-    switch (actions[i].type) {
+    const actionsItem = actions[i];
+
+    switch (actionsItem.type) {
       case 'addProperties':
-        finalArray.push({
-          ...finalArray[finalArray.length - 1],
-          ...actions[i].extraData,
-        });
+        for (const key in actionsItem.extraData) {
+          stateClone[key] = actionsItem.extraData[key];
+        }
         break;
 
       case 'removeProperties':
-        const removeKeys = actions[i].keysToRemove;
-
-        finalArray.push(
-          Object.fromEntries(
-            Object.entries(finalArray[finalArray.length - 1]).filter(
-              ([key, value]) => !removeKeys.includes(key)
-            )
-          )
-        );
+        for (let a = 0; a < actionsItem.keysToRemove.length; a++) {
+          delete stateClone[actionsItem.keysToRemove[a]];
+        }
         break;
 
       case 'clear':
-        finalArray.push({});
+        for (const key in stateClone) {
+          delete stateClone[key];
+        }
         break;
 
       default:
-        break;
+        throw new Error('Unexpected command');
     }
+
+    stateVersions.push({
+      ...stateClone,
+    });
   }
 
-  return finalArray.slice(1);
+  return stateVersions;
 }
 module.exports = transformStateWithClones;
