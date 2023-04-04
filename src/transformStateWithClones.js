@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   // write code here
-  const clonedState = { ...state };
+  let clonedState = { ...state };
   const states = [];
 
   for (let n = 0; n < actions.length; n++) {
@@ -25,11 +25,12 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        const stateKeys = [ ...Object.keys(clonedState) ];
+        clonedState = {};
 
-        for (let i = 0; i < stateKeys.length; i++) {
-          delete clonedState[stateKeys[i]];
-        }
+        break;
+
+      default:
+        return 'ERROR: Incorrect Action';
     }
 
     states.push({ ...clonedState });
