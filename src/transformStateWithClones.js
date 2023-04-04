@@ -11,7 +11,7 @@ function transformStateWithClones(state, actions) {
   const statefulClone = {
     ...state,
   };
-  const copy = [];
+  const statefulCloneCloned = [];
 
   for (let i = 0; i < actions.length; i++) {
     switch (actions[i].type) {
@@ -36,12 +36,12 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    copy.push({
+    statefulCloneCloned.push({
       ...statefulClone,
     });
   }
 
-  return copy;
+  return statefulCloneCloned;
 }
 
 module.exports = transformStateWithClones;
