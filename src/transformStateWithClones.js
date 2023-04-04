@@ -8,25 +8,25 @@
  */
 function transformStateWithClones(state, actions) {
   const actionsHistory = [];
-  const newState = { ...state };
+  const stateCopy = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        Object.assign(newState, action.extraData);
+        Object.assign(stateCopy, action.extraData);
         break;
       case 'removeProperties':
-        action.keysToRemove.forEach(key => delete newState[key]);
+        action.keysToRemove.forEach(key => delete stateCopy[key]);
         break;
       case 'clear':
-        Object.keys(newState).forEach(key => delete newState[key]);
+        Object.keys(stateCopy).forEach(key => delete stateCopy[key]);
         break;
 
       default:
         return 'Error, probably the wrong parameter was specified.';
     }
 
-    actionsHistory.push({ ...newState });
+    actionsHistory.push({ ...stateCopy });
   }
 
   return actionsHistory;
