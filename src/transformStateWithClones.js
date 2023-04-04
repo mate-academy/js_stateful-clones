@@ -31,6 +31,10 @@ function transformStateWithClones(state, actions) {
         for (const key in stateCopy) {
           delete stateCopy[key];
         }
+        break;
+
+      default:
+        return 'Wrong input data';
     }
     stateLog.push({ ...stateCopy });
   }
