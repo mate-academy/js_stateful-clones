@@ -11,7 +11,7 @@ function transformStateWithClones(state, actions) {
   const stateCopy = {
     ...state,
   };
-  const result = [];
+  const previousVersions = [];
 
   for (let i = 0; i < actions.length; i++) {
     switch (actions[i].type) {
@@ -25,19 +25,19 @@ function transformStateWithClones(state, actions) {
           delete stateCopy[actions[i].keysToRemove[x]];
         }
         break;
-      case 'clear':
+
+      default:
         for (const key in stateCopy) {
           delete stateCopy[key];
         }
-        break;
     }
 
-    result.push({
+    previousVersions.push({
       ...stateCopy,
     });
   }
 
-  return result;
+  return previousVersions;
 }
 
 module.exports = transformStateWithClones;
