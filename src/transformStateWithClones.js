@@ -7,7 +7,6 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
   function prepareNewObject(previousState) {
     previousStates.push(previousState);
     stateCopy = Object.assign({}, previousState);
@@ -22,20 +21,18 @@ function transformStateWithClones(state, actions) {
         for (const act in action.extraData) {
           stateCopy[act] = action.extraData[act];
         }
-        prepareNewObject(stateCopy);
         break;
       case 'removeProperties':
         for (const act of action.keysToRemove) {
           delete stateCopy[act];
         }
-        prepareNewObject(stateCopy);
         break;
       case 'clear':
-        prepareNewObject({});
         break;
       default:
         throw new Error('Unknown action: ' + action.type);
     }
+    prepareNewObject(action.type === 'clear' ? {} : stateCopy);
   }
 
   return previousStates;
