@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateClone = {
+  let stateClone = {
     ...state,
   };
   const stateVersions = [];
@@ -29,9 +29,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        for (const key in stateClone) {
-          delete stateClone[key];
-        }
+        stateClone = {};
         break;
 
       default:
