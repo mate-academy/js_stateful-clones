@@ -32,6 +32,8 @@ function transformStateWithClones(state, actions) {
 
 function addProperties(state, obj) {
   Object.assign(state, obj.extraData);
+
+  return state;
 }
 
 function removeProperties(state, obj) {
@@ -40,12 +42,16 @@ function removeProperties(state, obj) {
       delete state[key];
     }
   }
+
+  return state;
 }
 
 function clear(state) {
   for (const key in state) {
     delete state[key];
   }
+
+  return state;
 }
 
 module.exports = transformStateWithClones;
