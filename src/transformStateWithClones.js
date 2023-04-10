@@ -7,7 +7,6 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
   const result = [];
   let currentState = { ...state };
 
@@ -16,10 +15,7 @@ function transformStateWithClones(state, actions) {
 
     switch (type) {
       case 'addProperties':
-        currentState = {
-          ...currentState,
-          ...extraData,
-        };
+        Object.assign(currentState, extraData);
         break;
       case 'removeProperties':
         for (let j = 0; j < keysToRemove.length; j++) {
