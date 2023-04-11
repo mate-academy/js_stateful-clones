@@ -10,14 +10,14 @@ function transformStateWithClones(state, actions) {
   const statefulClones = [];
   const stateClone = { ...state };
 
-  for (const singleAction of actions) {
-    switch (singleAction.type) {
+  for (const action of actions) {
+    switch (action.type) {
       case 'addProperties':
-        Object.assign(stateClone, singleAction.extraData);
+        Object.assign(stateClone, action.extraData);
         break;
 
       case 'removeProperties':
-        singleAction.keysToRemove.forEach(el => {
+        action.keysToRemove.forEach(el => {
           delete stateClone[el];
         });
         break;
@@ -25,7 +25,11 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         for (const key in stateClone) {
           delete stateClone[key];
-        }
+        };
+        break;
+
+      default:
+        throw new Error('Unknown sctions type.');
     };
 
     statefulClones.push({ ...stateClone });
