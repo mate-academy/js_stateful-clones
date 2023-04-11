@@ -67,3 +67,13 @@ we must get
 ```
 the `state` variable must still contain
 {foo: 'bar', bar: 'foo'}.
+
+
+// If `state` is {foo: 'bar', bar: 'foo'}, then
+
+// ```
+// transformStateWithClones(state, [
+//   {type: 'addProperties', extraData: {name: 'Jim', hello: 'world'}},
+//   {type: 'removeProperties', keysToRemove: ['bar', 'hello']},
+//   {type: 'addProperties', extraData: {another: 'one'}}
+// ])
