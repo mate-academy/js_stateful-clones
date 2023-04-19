@@ -9,14 +9,12 @@
 function transformStateWithClones(state, actions) {
   // write code here
   const resultArr = [];
-  const stateClone = { ...state };
+  let stateClone = { ...state };
 
   for (const objAc of actions) {
     switch (objAc.type) {
       case 'clear':
-        for (const key in stateClone) {
-          delete stateClone[key];
-        }
+        stateClone = {};
         break;
 
       case 'removeProperties':
