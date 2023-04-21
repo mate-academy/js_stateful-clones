@@ -23,6 +23,9 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         newObject = {};
         break;
+
+      default:
+        return 'Error';
     }
     newArray.push({ ...newObject });
   }
