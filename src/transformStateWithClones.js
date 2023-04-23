@@ -10,40 +10,38 @@ function transformStateWithClones(state, actions) {
   const result = [];
   const workState = { ...state };
 
-  for (const i of actions) {
-    for (const key in i) {
-      const add = i.extraData;
-      const remove = i.keysToRemove;
+  for (const action of actions) {
+    const add = action.extraData;
+    const remove = action.keysToRemove;
 
-      if (i[key] === 'addProperties') {
+    switch (action.type) {
+      case 'addProperties':
         for (const x in add) {
           workState[x] = add[x];
         }
 
-        result.push({ ...workState });
-      }
+        break;
 
-      if (i[key] === 'removeProperties') {
+      case 'removeProperties':
         for (const ch of remove) {
           if (ch in workState) {
             delete workState[ch];
           }
         }
 
-        result.push({ ...workState });
-      }
+        break;
 
-      if (i[key] === 'clear') {
+      case 'clear':
         for (const del in workState) {
           delete workState[del];
         }
 
-        result.push({ ...workState });
-      }
+        break;
     }
+
+    result.push({ ...workState });
   }
 
   return result;
 }
-
 module.exports = transformStateWithClones;
