@@ -8,29 +8,34 @@
  */
 function transformStateWithClones(state, actions) {
   const stagesOfModify = [];
-  const modifyingState = JSON.parse(JSON.stringify(state));
+  const modifyingState = { ...state };
 
-  for (let i = 0; i < actions.length; i++) {
-    const { type, ...rest } = actions[i];
+  for (const action of actions) {
+    const { type, ...rest } = action;
 
-    if (type === 'clear') {
-      const objectCleared = { ...clear(modifyingState) };
+    switch (true) {
+      case type === 'clear':
+        const objectCleared
+          = { ...clear(modifyingState) };
 
-      stagesOfModify.push(objectCleared);
-    };
+        stagesOfModify.push(objectCleared);
+        break;
+      case type === 'removeProperties':
+        const objectRemovedProps
+          = { ...removeProperties(modifyingState, rest) };
 
-    if (type === 'removeProperties') {
-      const objectRemovedProps = { ...removeProperties(modifyingState, rest) };
+        stagesOfModify.push(objectRemovedProps);
+        break;
+      case type === 'addProperties':
+        const objectAddedProps
+          = { ...addProperties(modifyingState, rest) };
 
-      stagesOfModify.push(objectRemovedProps);
-    };
-
-    if (type === 'addProperties') {
-      const objectAddedProps = { ...addProperties(modifyingState, rest) };
-
-      stagesOfModify.push(objectAddedProps);
-    };
-  };
+        stagesOfModify.push(objectAddedProps);
+        break;
+      default:
+        break;
+    }
+  }
 
   return stagesOfModify;
 };
