@@ -12,29 +12,23 @@ function transformStateWithClones(state, actions) {
 
   for (const action of actions) {
     const { type, ...rest } = action;
+    let modifiedObject = {};
 
-    switch (true) {
-      case type === 'clear':
-        const objectCleared
-          = { ...clear(modifyingState) };
-
-        stagesOfModify.push(objectCleared);
+    switch (type) {
+      case 'clear':
+        modifiedObject = clear(modifyingState);
         break;
-      case type === 'removeProperties':
-        const objectRemovedProps
-          = { ...removeProperties(modifyingState, rest) };
-
-        stagesOfModify.push(objectRemovedProps);
+      case 'removeProperties':
+        modifiedObject = removeProperties(modifyingState, rest);
         break;
-      case type === 'addProperties':
-        const objectAddedProps
-          = { ...addProperties(modifyingState, rest) };
-
-        stagesOfModify.push(objectAddedProps);
+      case 'addProperties':
+        modifiedObject = addProperties(modifyingState, rest);
         break;
       default:
         break;
     }
+
+    stagesOfModify.push({ ...modifiedObject });
   }
 
   return stagesOfModify;
