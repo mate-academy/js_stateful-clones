@@ -7,48 +7,34 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let newState = { ...state };
-  const newObject = [];
+  const newState = { ...state };
+  const result = [];
 
   for (const current of actions) {
-    const objectAddProperties = {};
-    const objectRemoveKeys = {};
-    const objectClearKeys = {};
+    switch (current.type) {
+      case 'addProperties':
+        Object.assign(newState, current.extraData);
 
-    if (current.type === 'addProperties') {
-      Object.assign(objectAddProperties, newState, ...[current.extraData]);
+        break;
 
-      newObject.push(objectAddProperties);
-      newState = { ...objectAddProperties };
-      // console.log(newState)
+      case 'removeProperties':
+        for (const value of current.keysToRemove) {
+          delete newState[value];
+        }
+
+        break;
+
+      case 'clear':
+        for (const key in newState) {
+          delete newState[key];
+        }
+
+        break;
     }
 
-    if (current.type === 'removeProperties') {
-      Object.assign(objectRemoveKeys, newState);
-
-      const removeKeys = current.keysToRemove;
-
-      removeKeys.forEach(function(item, i) {
-        delete objectRemoveKeys[item];
-      });
-
-      newObject.push(objectRemoveKeys);
-      newState = { ...objectRemoveKeys };
-    }
-
-    if (current.type === 'clear') {
-      Object.assign(objectClearKeys, newState);
-
-      for (const key in newState) {
-        delete objectClearKeys[key];
-      }
-
-      newObject.push(objectClearKeys);
-      newState = { ...objectClearKeys };
-    }
+    result.push({ ...newState });
   }
 
-  return newObject;
+  return result;
 }
-
 module.exports = transformStateWithClones;
