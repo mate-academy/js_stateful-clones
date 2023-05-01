@@ -16,13 +16,13 @@ function transformStateWithClones(state, actions) {
 
     switch (type) {
       case 'clear':
-        modifiedObject = clear(modifyingState);
+        modifiedObject = clearProperties(modifyingState);
         break;
       case 'removeProperties':
-        modifiedObject = removeProperties(modifyingState, rest);
+        modifiedObject = removeProperties(modifyingState, rest.keysToRemove);
         break;
       case 'addProperties':
-        modifiedObject = addProperties(modifyingState, rest);
+        modifiedObject = addProperties(modifyingState, rest.extraData);
         break;
       default:
         break;
@@ -34,7 +34,7 @@ function transformStateWithClones(state, actions) {
   return stagesOfModify;
 };
 
-function clear(obj) {
+function clearProperties(obj) {
   for (const key of Object.keys(obj)) {
     delete obj[key];
   }
@@ -42,13 +42,13 @@ function clear(obj) {
   return obj;
 };
 
-function addProperties(obj, addedProperties) {
-  Object.assign(obj, addedProperties.extraData);
+function addProperties(obj, extraData) {
+  Object.assign(obj, extraData);
 
   return obj;
 };
 
-function removeProperties(obj, { keysToRemove }) {
+function removeProperties(obj, keysToRemove) {
   for (let i = 0; i < keysToRemove.length; i++) {
     delete obj[keysToRemove[i]];
   }
