@@ -21,20 +21,20 @@ function transformStateWithClones(state, actions) {
       lastObject = { ...resultArray[i - 1] };
     }
 
-    switch (true) {
-      case (action.type === 'clear'):
+    switch (action.type) {
+      case 'clear':
         nextObject = {};
         resultArray[i] = { ...nextObject };
         break;
 
-      case (action.type === 'addProperties'):
+      case 'addProperties':
         const addObject = action.extraData;
 
         nextObject = Object.assign(lastObject, addObject);
         resultArray[i] = { ...nextObject };
         break;
 
-      case (action.type === 'removeProperties'):
+      case 'removeProperties':
         const removeArray = action.keysToRemove;
 
         nextObject = { ...lastObject };
