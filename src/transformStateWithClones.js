@@ -9,20 +9,18 @@
 function transformStateWithClones(state, actions) {
   // write code here
   const arr = [];
-  const objectToEqual = {};
-
-  Object.assign(objectToEqual, state);
+  const objectToEqual = { ...state };
 
   for (const action of actions) {
-    const whatToDo = action.type;
+    const { type, extraData, keysToRemove } = action;
 
-    switch (whatToDo) {
+    switch (type) {
       case 'addProperties':
-        Object.assign(objectToEqual, action.extraData);
+        Object.assign(objectToEqual, extraData);
         break;
 
       case 'removeProperties':
-        action.keysToRemove.forEach((keyToRemove) =>
+        keysToRemove.forEach((keyToRemove) =>
           delete objectToEqual[keyToRemove]);
         break;
 
