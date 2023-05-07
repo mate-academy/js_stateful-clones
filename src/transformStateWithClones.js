@@ -7,9 +7,8 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
   const arr = [];
-  const objectToEqual = { ...state };
+  let objectToEqual = { ...state };
 
   for (const action of actions) {
     const { type, extraData, keysToRemove } = action;
@@ -25,9 +24,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        for (const key in objectToEqual) {
-          delete objectToEqual[key];
-        }
+        objectToEqual = {};
         break;
 
       default: return;
