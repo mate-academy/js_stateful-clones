@@ -8,10 +8,14 @@
  */
 function transformState(state, actions) {
   const result = [];
+  const copyState = { ...state };
+
+  for (const [key, value] of Object.entries(copyState)) {
+    copyState[key] = value.trim();
+  }
 
   for (const action of actions) {
     const { type, extraData, keysToRemove } = action;
-    const copyState = { ...state };
 
     switch (type) {
       case 'addProperties': {
