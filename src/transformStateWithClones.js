@@ -13,17 +13,23 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     const { type, extraData, keysToRemove } = action;
 
+    const switcher = {
+      add: 'addProperties',
+      remove: 'removeProperties',
+      clear: 'clear',
+    };
+
     switch (type) {
-      case 'addProperties':
+      case switcher.add:
         Object.assign(objectToEqual, extraData);
         break;
 
-      case 'removeProperties':
+      case switcher.remove:
         keysToRemove.forEach((keyToRemove) =>
           delete objectToEqual[keyToRemove]);
         break;
 
-      case 'clear':
+      case switcher.clear:
         objectToEqual = {};
         break;
 
