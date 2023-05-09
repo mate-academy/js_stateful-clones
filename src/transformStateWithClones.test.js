@@ -271,6 +271,7 @@ test('Should handle a long list of types', () => {
       },
       { foo: 'bar' },
     ]);
+  // te;
 
   expect(state)
     .toEqual({
