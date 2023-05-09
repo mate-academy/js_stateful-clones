@@ -36,11 +36,11 @@ function transformStateWithClones(state, actions) {
   }
 
   return versionsOfState;
+}
 
-  function removeProperties(object, propertiesToRemove) {
-    for (const property of propertiesToRemove) {
-      delete object[property];
-    }
+function removeProperties(object, propertiesToRemove) {
+  for (const property of propertiesToRemove) {
+    delete object[property];
   }
 }
 
