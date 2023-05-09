@@ -44,13 +44,13 @@ function add(object, data) {
 }
 
 function remove(object, data) {
-  const newObject = { ...object };
+  const copy = { ...object };
 
   for (const key of data) {
-    delete newObject[key];
+    delete copy[key];
   }
 
-  return newObject;
+  return copy;
 }
 
 module.exports = transformStateWithClones;
