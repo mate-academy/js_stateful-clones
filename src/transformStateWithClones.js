@@ -6,25 +6,25 @@
  *
  * @return {Object[]}
  */
+
+function removeProperties(object, keysToRemove) {
+  for (const key of keysToRemove) {
+    delete object[key];
+  }
+}
+
+function clearObject(object) {
+  for (const key in object) {
+    delete object[key];
+  }
+}
+
+function addProperties(object, propertiesToAdd) {
+  Object.assign(object, propertiesToAdd);
+}
+
 function transformStateWithClones(state, actions) {
   const copyState = { ...state };
-
-  function removeProperties(object, keysToRemove) {
-    for (const key of keysToRemove) {
-      delete object[key];
-    }
-  }
-
-  function clearObject(object) {
-    for (const key in object) {
-      delete object[key];
-    }
-  }
-
-  function addProperties(object, propertiesToAdd) {
-    Object.assign(object, propertiesToAdd);
-  }
-
   const result = [];
 
   for (const action of actions) {
@@ -48,7 +48,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        return 'Error';
+        throw new Error('Invalid action type');
     }
   }
 
