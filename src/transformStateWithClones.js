@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const stateCopy = { ...state };
-  const newArr = [];
+  const stateVersions = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -29,10 +29,10 @@ function transformStateWithClones(state, actions) {
         throw new Error('Error');
     }
 
-    newArr.push({ ...stateCopy });
+    stateVersions.push({ ...stateCopy });
   }
 
-  return newArr;
+  return stateVersions;
 }
 
 function removeProperties(keysToRemove, state) {
