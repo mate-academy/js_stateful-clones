@@ -27,26 +27,29 @@ function transformStateWithClones(state, actions) {
         currentState = {};
         states.push(currentState);
         break;
+
+      default:
+        throw new Error('unknown operation');
     }
   }
 
   return states;
 }
 
-function add(object, data) {
+function add(object, extraData) {
   const copy = { ...object };
 
-  for (const key in data) {
-    copy[key] = data[key];
+  for (const key in extraData) {
+    copy[key] = extraData[key];
   }
 
   return copy;
 }
 
-function remove(object, data) {
+function remove(object, keysToRemove) {
   const copy = { ...object };
 
-  for (const key of data) {
+  for (const key of keysToRemove) {
     delete copy[key];
   }
 
