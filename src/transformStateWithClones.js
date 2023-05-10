@@ -32,7 +32,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw new Error('Error');
+        throw new Error('Undefined action type');
     }
 
     stateArr.push({ ...stateCopy });
