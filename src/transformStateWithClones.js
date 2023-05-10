@@ -8,12 +8,12 @@
  */
 function transformStateWithClones(state, actions) {
   const stateCopy = { ...state };
-  const result = [];
+  const stateActionsResult = [];
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        Object.assign(stateCopy, action['extraData']);
+        Object.assign(stateCopy, action.extraData);
         break;
 
       case 'removeProperties':
@@ -31,10 +31,10 @@ function transformStateWithClones(state, actions) {
       default: throw new Error(`This statement: ${action.type} is unknown`);
     }
 
-    result.push({ ...stateCopy });
+    stateActionsResult.push({ ...stateCopy });
   }
 
-  return result;
+  return stateActionsResult;
 }
 
 module.exports = transformStateWithClones;
