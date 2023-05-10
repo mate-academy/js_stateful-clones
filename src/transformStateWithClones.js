@@ -31,25 +31,24 @@ function transformStateWithClones(state, actions) {
     switch (action.type) {
       case 'addProperties':
         addProperties(stateCopy, action.extraData);
-        stateClones[stateClones.length] = { ...stateCopy };
 
         break;
 
       case 'clear':
         clearObject(stateCopy);
-        stateClones[stateClones.length] = { ...stateCopy };
 
         break;
 
       case 'removeProperties':
         removeProperties(stateCopy, action.keysToRemove);
-        stateClones[stateClones.length] = { ...stateCopy };
 
         break;
 
       default:
         throw new Error('Invalid action type');
     }
+
+    stateClones.push({ ...stateCopy });
   }
 
   return stateClones;
