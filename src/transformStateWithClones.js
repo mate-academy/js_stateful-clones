@@ -24,26 +24,26 @@ function addProperties(object, propertiesToAdd) {
 }
 
 function transformStateWithClones(state, actions) {
-  const copyState = { ...state };
-  const result = [];
+  const stateCopy = { ...state };
+  const stateClones = [];
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        addProperties(copyState, action.extraData);
-        result[result.length] = { ...copyState };
+        addProperties(stateCopy, action.extraData);
+        stateClones[stateClones.length] = { ...stateCopy };
 
         break;
 
       case 'clear':
-        clearObject(copyState);
-        result[result.length] = { ...copyState };
+        clearObject(stateCopy);
+        stateClones[stateClones.length] = { ...stateCopy };
 
         break;
 
       case 'removeProperties':
-        removeProperties(copyState, action.keysToRemove);
-        result[result.length] = { ...copyState };
+        removeProperties(stateCopy, action.keysToRemove);
+        stateClones[stateClones.length] = { ...stateCopy };
 
         break;
 
@@ -52,7 +52,7 @@ function transformStateWithClones(state, actions) {
     }
   }
 
-  return result;
+  return stateClones;
 }
 
 module.exports = transformStateWithClones;
