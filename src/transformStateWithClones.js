@@ -7,40 +7,38 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const versions = [];
   let currentState = { ...state };
 
+  const versions = [];
+
   for (const action of actions) {
+    currentState = { ...currentState };
+
     switch (action.type) {
       case 'addProperties':
         currentState = {
           ...currentState,
           ...action.extraData,
         };
-        versions.push(currentState);
         break;
 
       case 'removeProperties':
-        currentState = { ...currentState };
-
         for (const key of action.keysToRemove) {
           delete currentState[key];
         }
-        versions.push(currentState);
         break;
 
       case 'clear':
-        currentState = { ...currentState };
-
         for (const key in currentState) {
           delete currentState[key];
         }
-        versions.push(currentState);
         break;
 
       case 'default':
         throw new Error(`No ${action.type} action type found`);
     }
+
+    versions.push(currentState);
   }
 
   return versions;
