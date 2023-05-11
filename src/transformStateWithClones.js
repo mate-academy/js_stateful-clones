@@ -7,16 +7,13 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let copyState = { ...state };
+  const copyState = { ...state };
   const previousStateVers = [];
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties': {
-        copyState = {
-          ...copyState,
-          ...action.extraData,
-        };
+        Object.assign(copyState, action.extraData);
         break;
       }
 
