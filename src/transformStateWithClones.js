@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const stateCopy = { ...state };
-  const result = [];
+  const stateVersions = [];
 
   actions.forEach(action => {
     switch (action.type) {
@@ -21,23 +21,27 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        for (const key in stateCopy) {
-          delete stateCopy[key];
-        }
+        clear(stateCopy);
         break;
 
       default:
-        throw new Error('invalid type of actions');
+        throw new Error(`invalid type of action: ${action.type}`);
     }
 
-    result.push({ ...stateCopy });
+    stateVersions.push({ ...stateCopy });
   });
 
-  return result;
+  return stateVersions;
 }
 
 function removeProperties(copy, listOfKeys) {
   for (const key of listOfKeys) {
+    delete copy[key];
+  }
+}
+
+function clear(copy) {
+  for (const key in copy) {
     delete copy[key];
   }
 }
