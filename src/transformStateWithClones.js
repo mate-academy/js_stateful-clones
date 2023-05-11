@@ -8,52 +8,52 @@
  * @return {Object[]}
  */
 
+const addProperties = (actionExtraData, transformedState) => {
+  for (const key of Object.keys(actionExtraData)) {
+    const value = actionExtraData[key];
+
+    transformedState[key] = value;
+  }
+};
+
+const deleteCertainProperties = (actionKeysToRemove, transformedState) => {
+  for (const key of actionKeysToRemove) {
+    delete transformedState[key];
+  }
+};
+
+const deleteAllProperties = (transformedState) => {
+  for (const key of Object.keys(transformedState)) {
+    delete transformedState[key];
+  }
+};
+
 function transformStateWithClones(state, actions) {
-  const newState = { ...state };
-  const newStatesArray = [];
-
-  const addProperties = (object) => {
-    for (const key of Object.keys(object)) {
-      const value = object[key];
-
-      newState[key] = value;
-    }
-  };
-
-  const deleteCertainProperties = (array) => {
-    for (const key of array) {
-      delete newState[key];
-    }
-  };
-
-  const deleteAllProperties = (object) => {
-    for (const key of Object.keys(object)) {
-      delete newState[key];
-    }
-  };
+  const transformedState = { ...state };
+  const transformedStates = [];
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        addProperties(action.extraData);
+        addProperties(action.extraData, transformedState);
         break;
 
       case 'removeProperties':
-        deleteCertainProperties(action.keysToRemove);
+        deleteCertainProperties(action.keysToRemove, transformedState);
         break;
 
       case 'clear':
-        deleteAllProperties(newState);
+        deleteAllProperties(transformedState);
         break;
 
       default:
         throw new Error('Wrong action type!');
     }
 
-    newStatesArray.push({ ...newState });
+    transformedStates.push({ ...transformedState });
   }
 
-  return newStatesArray;
+  return transformedStates;
 }
 
 module.exports = transformStateWithClones;
