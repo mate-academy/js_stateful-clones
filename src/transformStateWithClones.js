@@ -6,21 +6,21 @@
  *
  * @return {Object[]}
  */
-function removeProperties(obj, toRemoveArray) {
-  for (const item of toRemoveArray) {
-    delete obj[item];
+function removeProperties(object, properties) {
+  for (const item of properties) {
+    delete object[item];
   }
 }
 
-function clearObj(obj) {
-  for (const key in obj) {
-    delete obj[key];
+function clearObj(object) {
+  for (const key in object) {
+    delete object[key];
   }
 }
 
 function transformStateWithClones(state, actions) {
   const clonedState = { ...state };
-  const stateArr = [];
+  const stateVersions = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -40,10 +40,10 @@ function transformStateWithClones(state, actions) {
         throw new Error('wrong action type');
     }
 
-    stateArr.push({ ...clonedState });
+    stateVersions.push({ ...clonedState });
   }
 
-  return stateArr;
+  return stateVersions;
 }
 
 module.exports = transformStateWithClones;
