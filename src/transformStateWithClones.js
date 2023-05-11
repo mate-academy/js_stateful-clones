@@ -11,7 +11,11 @@ function transformStateWithClones(state, actions) {
   const stateVersions = [];
 
   for (const action of actions) {
-    const { type, keysToRemove, extraData } = action;
+    const {
+      type,
+      keysToRemove,
+      extraData,
+    } = action;
 
     switch (type) {
       case 'clear':
