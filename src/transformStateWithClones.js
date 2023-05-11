@@ -6,10 +6,9 @@
  *
  * @return {Object[]}
  */
-function transformStateWithClonees(state, actions) {
+function transformStateWithClones(state, actions) {
   const result = [];
   const clone = { ...state };
-  let multiClone = {};
 
   for (const action of actions) {
     if (action.type === 'addProperties') {
@@ -25,11 +24,10 @@ function transformStateWithClonees(state, actions) {
         delete clone[data];
       }
     }
-    multiClone = { ...clone };
-    result.push(multiClone);
+    result.push({ ...clone });
   }
 
   return result;
 }
 
-module.exports = transformStateWithClonees;
+module.exports = transformStateWithClones;
