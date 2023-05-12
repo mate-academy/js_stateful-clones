@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let copyState = { ...state };
+  let stateCopy = { ...state };
   const versionsOfState = [];
 
   for (const action of actions) {
@@ -15,24 +15,24 @@ function transformStateWithClones(state, actions) {
       case 'addProperties':
         const { extraData } = action;
 
-        Object.assign(copyState, extraData);
+        Object.assign(stateCopy, extraData);
         break;
 
       case 'removeProperties':
         const { keysToRemove } = action;
 
-        removeProperties(copyState, keysToRemove);
+        removeProperties(stateCopy, keysToRemove);
         break;
 
       case 'clear':
-        copyState = {};
+        stateCopy = {};
         break;
 
       default:
         throw Error(`unknown actions type ${action.type}`);
     }
 
-    versionsOfState.push({ ...copyState });
+    versionsOfState.push({ ...stateCopy });
   }
 
   return versionsOfState;
