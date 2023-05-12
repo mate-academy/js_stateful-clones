@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 'use strict';
 
 /**
@@ -8,16 +7,12 @@
  * @return {Object[]}
  */
 
-const addProperties = (actionExtraData, transformedState) => {
-  for (const key of Object.keys(actionExtraData)) {
-    const value = actionExtraData[key];
-
-    transformedState[key] = value;
-  }
+const addProperties = (extraData, transformedState) => {
+  Object.assign(transformedState, extraData);
 };
 
-const deleteCertainProperties = (actionKeysToRemove, transformedState) => {
-  for (const key of actionKeysToRemove) {
+const deleteCertainProperties = (keysToRemove, transformedState) => {
+  for (const key of keysToRemove) {
     delete transformedState[key];
   }
 };
