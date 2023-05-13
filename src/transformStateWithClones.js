@@ -7,31 +7,36 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const result = actions;
+  const result = [];
   let clonedState = { ...state };
 
   for (const action in actions) {
     const point = actions[action];
 
     if (point.type === 'addProperties') {
-      result[action] = {
+      const resultAction = {
         ...clonedState, ...point.extraData,
       };
-      clonedState = result[action];
+
+      result.push(resultAction);
+      clonedState = resultAction;
     }
 
     if (point.type === 'removeProperties') {
-      result[action] = { ...clonedState };
+      const resultAction = { ...clonedState };
 
       for (let i = 0; i < point.keysToRemove.length; i++) {
-        delete result[action][point.keysToRemove[i]];
+        delete resultAction[point.keysToRemove[i]];
       }
-      clonedState = result[action];
+      result.push(resultAction);
+      clonedState = resultAction;
     }
 
     if (point.type === 'clear') {
-      result[action] = {};
-      clonedState = result[action];
+      const resultAction = {};
+
+      result.push(resultAction);
+      clonedState = resultAction;
     }
   }
 
