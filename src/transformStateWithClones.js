@@ -6,17 +6,13 @@
  *
  * @return {Object[]}
  */
+
 function transformStateWithClones(state, actions) {
   const stateHistory = [];
   let stateCopy = { ...state };
-  const removeKey = function(actionObject) {
-    for (const keyToRemove of actionObject.keysToRemove) {
-      delete stateCopy[keyToRemove];
-    }
-  };
 
   for (const action of actions) {
-    const { type } = action;
+    const { type, extraData } = action;
 
     switch (type) {
       case 'clear':
@@ -24,14 +20,14 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'addProperties':
-        Object.assign(stateCopy, action.extraData);
+        Object.assign(stateCopy, extraData);
         break;
 
       case 'removeProperties':
-        removeKey(action);
+        removeKey(action, stateCopy);
         break;
 
-      default: throw new Error("Unexpected 'type' value");
+      default: throw new Error('Unexpected action.type value');
     }
 
     stateHistory.push({ ...stateCopy });
@@ -39,4 +35,13 @@ function transformStateWithClones(state, actions) {
 
   return stateHistory;
 }
+
+const removeKey = function(actionObject, object) {
+  const { keysToRemove } = actionObject;
+
+  for (const keyToRemove of keysToRemove) {
+    delete object[keyToRemove];
+  }
+};
+
 module.exports = transformStateWithClones;
