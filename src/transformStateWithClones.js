@@ -6,6 +6,19 @@
  *
  * @return {Object[]}
  */
+
+function removePropertiesFromState(copyState, keysToRemove) {
+  for (const keyToRemove of keysToRemove) {
+    delete copyState[keyToRemove];
+  }
+}
+
+function deleteKeysFromState(copyState) {
+  for (const key in copyState) {
+    delete copyState[key];
+  }
+}
+
 function transformStateWithClones(state, actions) {
   const stateVersions = [];
   const copyState = { ...state };
@@ -19,15 +32,11 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        for (const keyToRemove of keysToRemove) {
-          delete copyState[keyToRemove];
-        }
+        removePropertiesFromState(copyState, keysToRemove);
         break;
 
       case 'clear':
-        for (const key in copyState) {
-          delete copyState[key];
-        }
+        deleteKeysFromState(copyState);
         break;
 
       default:
