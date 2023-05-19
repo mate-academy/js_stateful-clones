@@ -8,20 +8,14 @@
  */
 function transformStateWithClones(state, actions) {
   const clones = [];
-  const newState = {};
-
-  for (const key in state) {
-    newState[key] = state[key];
-  }
+  const newState = { ...state };
 
   for (let i = 0; i < actions.length; i++) {
     const currentAction = actions[i];
 
     switch (currentAction.type) {
       case 'addProperties':
-        for (const givenProperty in currentAction.extraData) {
-          newState[givenProperty] = currentAction.extraData[givenProperty];
-        }
+        Object.assign(newState, currentAction.extraData);
 
         break;
 
