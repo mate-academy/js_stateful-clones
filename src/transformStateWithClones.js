@@ -18,12 +18,12 @@ function transformStateWithClones(state, actions) {
   const clearAction = 'clear';
 
   for (const action of actions) {
-    const { type } = action;
+    const { type, extraData, keysToRemove } = action;
 
     switch (type) {
       case addAction:
         copyState = {
-          ...copyState, ...action.extraData,
+          ...copyState, ...extraData,
         };
         break;
 
@@ -32,7 +32,7 @@ function transformStateWithClones(state, actions) {
           ...copyState,
         };
 
-        action.keysToRemove.forEach(key => {
+        keysToRemove.forEach(key => {
           delete copyState[key];
         });
         break;
