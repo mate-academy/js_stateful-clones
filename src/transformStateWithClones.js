@@ -6,7 +6,6 @@
  *
  * @return {Object[]}
  */
-
 function transformStateWithClones(state, actions) {
   const result = [];
   const cloneState = { ...state };
