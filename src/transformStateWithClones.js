@@ -28,8 +28,7 @@ function transformStateWithClones(state, actions) {
         delete newState[st];
       }
     }
-    // eslint-disable-next-line no-console
-    console.log(newArray);
+
     newArray.push({ ...newState });
   }
 
