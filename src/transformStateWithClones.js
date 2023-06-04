@@ -18,21 +18,19 @@ function transformStateWithClones(state, actions) {
             delete stateVersion[keyToRemove];
           }
         }
-        stateVersions.push({ ...stateVersion });
         break;
       case 'addProperties':
         Object.assign(stateVersion, action.extraData);
-        stateVersions.push({ ...stateVersion });
         break;
       case 'clear':
         for (const stateVersionKey in stateVersion) {
           delete stateVersion[stateVersionKey];
         }
-        stateVersions.push({ ...stateVersion });
         break;
       default:
         break;
     }
+    stateVersions.push({ ...stateVersion });
   }
 
   return stateVersions;
