@@ -16,6 +16,7 @@ function transformStateWithClones(state, actions) {
         const nextState = Object.assign({}, clonedState, action.extraData);
 
         result.push(nextState);
+        clonedState = nextState;
         break;
       }
 
@@ -29,6 +30,7 @@ function transformStateWithClones(state, actions) {
           }
         }
         result.push(nextState);
+        clonedState = nextState;
         break;
       }
 
@@ -36,12 +38,10 @@ function transformStateWithClones(state, actions) {
         const nextState = {};
 
         result.push(nextState);
+        clonedState = nextState;
         break;
       }
-      default:
-        break;
     }
-    clonedState = Object.assign({}, result[result.length - 1]);
   }
 
   return result;
