@@ -9,36 +9,42 @@
 function transformStateWithClones(state, actions) {
   const resultArr = [];
 
-  for (const a of actions) {
-    if (a.type === 'addProperties') {
-      if (resultArr.length === 0) {
-        resultArr.push(Object.assign({}, state, a.extraData));
-      } else {
-        resultArr.push(Object.assign(
-          {},
-          resultArr[resultArr.length - 1],
-          a.extraData));
-      }
-    } else if (a.type === 'removeProperties') {
-      let temporaryResult = {};
-
-      if (resultArr.length === 0) {
-        temporaryResult = { ...state };
-      } else {
-        temporaryResult = { ...resultArr[resultArr.length - 1] };
-      }
-
-      if (a.keysToRemove !== 0) {
-        for (const b of a.keysToRemove) {
-          delete temporaryResult[b];
+  for (const action of actions) {
+    switch (action.type) {
+      case 'addProperties':
+        if (resultArr.length === 0) {
+          resultArr.push(Object.assign({}, state, action.extraData));
+        } else {
+          resultArr.push(Object.assign(
+            {},
+            resultArr[resultArr.length - 1],
+            action.extraData));
         }
-      } else {
-        temporaryResult = { ...state };
-      }
+        break;
 
-      resultArr.push(temporaryResult);
-    } else {
-      resultArr.push({});
+      case 'removeProperties':
+        let temporaryResult = {};
+
+        if (resultArr.length === 0) {
+          temporaryResult = { ...state };
+        } else {
+          temporaryResult = { ...resultArr[resultArr.length - 1] };
+        }
+
+        if (action.keysToRemove !== 0) {
+          for (const key of action.keysToRemove) {
+            delete temporaryResult[key];
+          }
+        } else {
+          temporaryResult = { ...state };
+        }
+
+        resultArr.push(temporaryResult);
+        break;
+
+      case 'clear':
+        resultArr.push({});
+        break;
     }
   }
 
