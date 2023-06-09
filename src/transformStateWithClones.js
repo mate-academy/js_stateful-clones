@@ -19,7 +19,7 @@ function transformStateWithClones(state, actions) {
         action.keysToRemove.map(key => delete stateCopy[key]);
         break;
       case 'clear':
-        Object.keys(stateCopy).forEach(key => delete stateCopy[key]);
+        stateCopy = {};
         break;
       default:
         throw new Error('Invalid action type');
