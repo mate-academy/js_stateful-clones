@@ -15,24 +15,12 @@ function transformStateWithClones(state, actions) {
       case 'addProperties':
         Object.assign(STATE_COPY, action.extraData);
 
-        STATE_CHANGES_LIST.push({
-          ...{},
-          ...STATE_COPY,
-        });
-
         break;
 
       case 'removeProperties':
         for (const key of action.keysToRemove) {
-          if (STATE_COPY.hasOwnProperty(key)) {
-            delete STATE_COPY[key];
-          }
+          delete STATE_COPY[key];
         }
-
-        STATE_CHANGES_LIST.push({
-          ...{},
-          ...STATE_COPY,
-        });
 
         break;
 
@@ -41,16 +29,16 @@ function transformStateWithClones(state, actions) {
           delete STATE_COPY[key];
         }
 
-        STATE_CHANGES_LIST.push({
-          ...{},
-          ...STATE_COPY,
-        });
-
         break;
 
       default:
         throw new Error(`Action type "${action.type}" does not exist`);
     }
+
+    STATE_CHANGES_LIST.push({
+      ...{},
+      ...STATE_COPY,
+    });
   }
 
   return STATE_CHANGES_LIST;
