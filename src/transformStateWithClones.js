@@ -35,10 +35,7 @@ function transformStateWithClones(state, actions) {
         throw new Error(`Action type "${action.type}" does not exist`);
     }
 
-    STATE_CHANGES_LIST.push({
-      ...{},
-      ...STATE_COPY,
-    });
+    STATE_CHANGES_LIST.push({ ...STATE_COPY });
   }
 
   return STATE_CHANGES_LIST;
