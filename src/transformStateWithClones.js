@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const logArray = [];
-  const copyState = Object.assign({}, state);
+  let copyState = Object.assign({}, state);
 
   for (const action of actions) {
     switch (action.type) {
@@ -23,15 +23,13 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        for (const key in copyState) {
-          delete copyState[key];
-        }
+        copyState = {};
         break;
 
       default:
-        break;
+        throw new Error('Invalid type');
     }
-    logArray.push(Object.assign({}, copyState));
+    logArray.push({ ...copyState });
   }
 
   return logArray;
