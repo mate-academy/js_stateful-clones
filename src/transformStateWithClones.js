@@ -10,36 +10,46 @@ function transformStateWithClones(state, actions) {
   const result = [];
 
   actions.forEach((item, index, array) => {
-    if (item.type === 'addProperties') {
-      const newObj = result.length === 0
-        ? { ...state } : { ...result[result.length - 1] };
+    let newObj;
 
-      for (const key in item.extraData) {
-        newObj[key] = item.extraData[key];
-      }
-      result.push(newObj);
-    }
+    switch (item.type) {
+      case 'addProperties':
+        newObj = result.length === 0
+          ? { ...state }
+          : { ...result[result.length - 1] };
 
-    if (item.type === 'removeProperties') {
-      const newObjRemove = result.length === 0
-        ? { ...state } : { ...result[result.length - 1] };
-
-      item.keysToRemove.forEach((key) => {
-        if (newObjRemove[key]) {
-          delete newObjRemove[key];
+        for (const key in item.extraData) {
+          newObj[key] = item.extraData[key];
         }
-      });
-      result.push(newObjRemove);
-    }
+        result.push(newObj);
+        break;
 
-    if (item.type === 'clear') {
-      const newObjClear = result.length === 0
-        ? { ...state } : { ...result[result.length - 1] };
+      case 'removeProperties':
+        const newObjRemove = result.length === 0
+          ? { ...state }
+          : { ...result[result.length - 1] };
 
-      Object.keys(newObjClear).forEach((key) => {
-        delete newObjClear[key];
-      });
-      result.push(newObjClear);
+        item.keysToRemove.forEach((key) => {
+          if (newObjRemove[key]) {
+            delete newObjRemove[key];
+          }
+        });
+        result.push(newObjRemove);
+        break;
+
+      case 'clear':
+        const newObjClear = result.length === 0
+          ? { ...state }
+          : { ...result[result.length - 1] };
+
+        Object.keys(newObjClear).forEach((key) => {
+          delete newObjClear[key];
+        });
+        result.push(newObjClear);
+        break;
+
+      default:
+        break;
     }
   });
 
