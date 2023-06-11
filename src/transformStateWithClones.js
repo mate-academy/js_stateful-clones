@@ -21,11 +21,11 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        clear(stateClone);
+        removeProperties(stateClone, Object.keys(stateClone));
         break;
 
       default:
-        return;
+        throw new Error(`Action of type ${type} is invalid`);
     }
 
     clones.push({ ...stateClone });
@@ -35,19 +35,11 @@ function transformStateWithClones(state, actions) {
 }
 
 function addProperties(obj, properties) {
-  for (const property in properties) {
-    obj[property] = properties[property];
-  }
+  Object.assign(obj, properties);
 }
 
 function removeProperties(obj, keys) {
   for (const key of keys) {
-    delete obj[key];
-  }
-}
-
-function clear(obj) {
-  for (const key in obj) {
     delete obj[key];
   }
 }
