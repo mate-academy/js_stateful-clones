@@ -10,15 +10,14 @@ function transformStateWithClones(state, actions) {
   const resArr = [];
   let copyState = { ...state };
 
-  for (const instr of actions) {
-    const { type, extraData, keysToRemove } = instr;
+  for (const action of actions) {
+    const { type, extraData, keysToRemove } = action;
 
     switch (type) {
       case 'addProperties':
         for (const [key, value] of Object.entries(extraData)) {
           copyState[key] = value;
         }
-        resArr.push({ ...copyState });
         break;
       case 'removeProperties':
         for (const key of Object.values(keysToRemove)) {
@@ -26,13 +25,12 @@ function transformStateWithClones(state, actions) {
             delete copyState[key];
           }
         }
-        resArr.push({ ...copyState });
         break;
-      case 'clear':
+      default:
         copyState = {};
-        resArr.push({ ...copyState });
         break;
     }
+    resArr.push({ ...copyState });
   }
 
   return resArr;
