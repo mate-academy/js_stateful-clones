@@ -25,7 +25,7 @@ Each element of the resulting array has to represent the state produced by the n
     - if `type` is `clear` you should create an empty state object. No second property in this case;
 
 Example of usage:
-
+/* module.exports = transformStateWithClones; */
 If `state` is {foo: 'bar', bar: 'foo'}, then
 
 ```
