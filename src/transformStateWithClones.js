@@ -17,11 +17,10 @@ function transformStateWithClones(state, actions) {
   function reducer(action) {
     switch (action.type) {
       case 'addProperties':
-        for (const key in action.extraData) {
-          initialState[key] = action.extraData[key];
-        }
-
-        statesArray.push({ ...initialState });
+        initialState = {
+          ...initialState,
+          ...action.extraData,
+        };
 
         break;
 
@@ -30,20 +29,18 @@ function transformStateWithClones(state, actions) {
           delete initialState[key];
         }
 
-        statesArray.push({ ...initialState });
-
         break;
 
       case 'clear':
         initialState = {};
-
-        statesArray.push({ ...initialState });
 
         break;
 
       default:
         throw new Error('Unexpected type');
     }
+
+    statesArray.push({ ...initialState });
   }
 
   return statesArray;
