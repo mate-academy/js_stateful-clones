@@ -11,7 +11,6 @@ function transformStateWithClones(state, actions) {
   const copyState = { ...state };
 
   for (const action of actions) {
-    // Extracting multiple properties:
     const { type, extraData, keysToRemove } = action;
 
     switch (type) {
