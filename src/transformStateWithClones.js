@@ -10,16 +10,14 @@ function transformStateWithClones(state, actions) {
   const statesArray = [];
   const currentState = { ...state };
 
-  for (let i = 0; i < actions.length; i++) {
-    const currentAction = actions[i];
-
-    switch (currentAction.type) {
+  for (const action of actions) {
+    switch (action.type) {
       case 'addProperties':
-        addProperties(currentState, currentAction.extraData);
+        addProperties(currentState, action.extraData);
         break;
 
       case 'removeProperties':
-        removeProperties(currentState, currentAction.keysToRemove);
+        removeProperties(currentState, action.keysToRemove);
         break;
 
       case 'clear':
@@ -27,10 +25,10 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw new Error("Something went wrond! Please check your data!");
+        return new Error("Something went wrond! Please check your data!");
     }
 
-    statesArray[i] = { ...currentState };
+    statesArray.push({ ...currentState });
   }
 
   return statesArray;
