@@ -20,9 +20,7 @@ function transformStateWithClones(state, actions) {
         const { keysToRemove } = action;
 
         for (const key of keysToRemove) {
-          if (stateClone.hasOwnProperty(key)) {
-            delete stateClone[key];
-          }
+          delete stateClone[key];
         }
         break;
 
@@ -33,7 +31,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw new Error('Error');
+        throw new Error('Invalid input');
     }
 
     combinedStates.push({ ...stateClone });
