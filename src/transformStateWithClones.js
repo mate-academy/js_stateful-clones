@@ -27,7 +27,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw new Error();
+        throw new Error("Something went wrond! Please check your data!");
     }
 
     statesArray[i] = { ...currentState };
