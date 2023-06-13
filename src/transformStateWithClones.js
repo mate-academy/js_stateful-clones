@@ -7,11 +7,10 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-
   const stateCopy = {
     ...state,
   };
-  const prevVersion = [];
+  const prevVersions = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -30,11 +29,15 @@ function transformStateWithClones(state, actions) {
           delete stateCopy[key];
         }
         break;
+
+      default:
+        return 'Unknown action type';
     }
-    prevVersion.push({ ...stateCopy });
+
+    prevVersions.push({ ...stateCopy });
   }
 
-  return prevVersion;
+  return prevVersions;
 }
 
 module.exports = transformStateWithClones;
