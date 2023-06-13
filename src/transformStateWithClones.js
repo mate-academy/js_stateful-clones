@@ -27,7 +27,11 @@ function transformStateWithClones(state, actions) {
           delete copyState[key];
         }
         break;
+
+      default:
+        throw new Error('This type doesn`t exist');
     }
+
     history.push({ ...copyState });
   }
 
