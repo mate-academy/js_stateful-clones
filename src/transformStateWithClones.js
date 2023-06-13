@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const result = [];
+  const resultOfTransform = [];
   let currentState = { ...state };
 
   for (const action of actions) {
@@ -38,10 +38,10 @@ function transformStateWithClones(state, actions) {
         throw new Error(`Action error with ${type}`);
     }
 
-    result.push({ ...currentState });
+    resultOfTransform.push({ ...currentState });
   }
 
-  return result;
+  return resultOfTransform;
 }
 
 module.exports = transformStateWithClones;
