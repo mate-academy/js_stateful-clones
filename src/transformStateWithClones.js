@@ -9,9 +9,7 @@
 function transformStateWithClones(state, actions) {
   const cloneState = [];
 
-  let stateCopy = {
-    ...state,
-  };
+  let stateCopy = { ...state };
 
   const addAction = 'addProperties';
   const removeAction = 'removeProperties';
