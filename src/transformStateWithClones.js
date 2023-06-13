@@ -20,10 +20,6 @@ function transformStateWithClones(state, actions) {
     switch (type) {
       case 'addProperties':
         Object.assign(cloneOfState, extraData);
-
-        const cloneAfterAddingProperties = createClone(cloneOfState);
-
-        resultArray.push(cloneAfterAddingProperties);
         break;
 
       case 'removeProperties':
@@ -32,25 +28,19 @@ function transformStateWithClones(state, actions) {
             delete cloneOfState[arrKey];
           }
         }
-
-        const cloneAfterRemovingProperties = createClone(cloneOfState);
-
-        resultArray.push(cloneAfterRemovingProperties);
         break;
 
       case 'clear':
         for (const objKey in cloneOfState) {
           delete cloneOfState[objKey];
         }
-
-        const cloneAfterClearing = createClone(cloneOfState);
-
-        resultArray.push(cloneAfterClearing);
         break;
 
       default:
         return 'Invalid action type';
     }
+
+    resultArray.push(createClone(cloneOfState));
   }
 
   return resultArray;
