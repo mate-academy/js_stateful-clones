@@ -42,7 +42,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        throw new Error(`Action error: ${type}`);
     }
 
     cloneState.push(stateCopy);
