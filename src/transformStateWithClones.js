@@ -6,35 +6,6 @@
  *
  * @return {Object[]}
  */
-// function transformStateWithClones(state, actions) {
-//   for (const action in actions) {
-//     switch (action.type) {
-//       case ('addProperties') :
-//         const extraData = action.extraData;
-
-//         for (const key in extraData) {
-//           state[key] = extraData[key];
-//         }
-//         break;
-
-//       case ('removeProperties') :
-//         const keysToRemove = action.keysToRemove;
-
-//         for (const key in keysToRemove) {
-//           if (state.hasOwn('key')) {
-//             delete state[key];
-//           }
-//         }
-//         break;
-
-//       case ('clear') :
-//         for (const key in state) {
-//           delete state[key];
-//         }
-//         break;
-//     }
-//   }
-// }
 function transformStateWithClones(state, actions) {
   const result = [];
   let currentState = { ...state };
