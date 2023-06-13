@@ -24,21 +24,15 @@ function transformStateWithClones(state, actions) {
         break;
 
       case REMOVE_PROPERTY_TYPE:
-        for (let j = 0; j < action.keysToRemove.length; j++) {
-          const key = action.keysToRemove[j];
-
-          if (stateCopy.hasOwnProperty(key)) {
-            delete stateCopy[key];
-          }
+        for (const key of action.keysToRemove) {
+          delete stateCopy[key];
         }
 
         break;
 
       case CLEAR_TYPE:
-        for (const key in stateCopy) {
-          if (stateCopy.hasOwnProperty(key)) {
-            delete stateCopy[key];
-          }
+        for (const key of Object.keys(stateCopy)) {
+          delete stateCopy[key];
         }
 
         break;
