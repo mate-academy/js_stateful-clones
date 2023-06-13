@@ -10,28 +10,27 @@ function transformStateWithClones(state, actions) {
   let stateCopy = { ...state };
   const previuosVersions = [];
 
-  for (let i = 0; i < actions.length; i++) {
-    switch (actions[i].type) {
+  for (const action of actions) {
+    switch (action.type) {
       case 'addProperties':
-        Object.assign(stateCopy, actions[i].extraData);
-        previuosVersions.push({ ...stateCopy });
+        Object.assign(stateCopy, action.extraData);
         break;
 
       case 'removeProperties':
-        for (const key in actions[i].keysToRemove) {
-          delete stateCopy[actions[i].keysToRemove[key]];
+        for (const key in action.keysToRemove) {
+          delete stateCopy[action.keysToRemove[key]];
         }
-        previuosVersions.push({ ...stateCopy });
         break;
 
       case 'clear':
         stateCopy = {};
-        previuosVersions.push({});
         break;
 
       default:
         throw new Error('Wrong type');
     }
+
+    previuosVersions.push({ ...stateCopy });
   }
 
   return previuosVersions;
