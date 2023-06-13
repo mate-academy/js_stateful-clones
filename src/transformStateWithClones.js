@@ -7,7 +7,6 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
   const stateVersions = [{ ...state }];
 
   for (const action of actions) {
@@ -27,6 +26,8 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         currentVersion = {};
         break;
+      default:
+        throw Error('no type for action');
     }
     stateVersions.push(currentVersion);
   }
