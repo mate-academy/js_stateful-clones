@@ -23,7 +23,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw new Error(`Error`);
+        throw new Error(`Invalid action type`);
     }
 
     cloneStates.push({ ...currentState });
