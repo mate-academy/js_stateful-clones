@@ -7,41 +7,48 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const newState = [];
+  const stateCopy = [];
   let allProperties = {};
 
   for (const action of actions) {
-    if (action.type === 'addProperties') {
-      if (newState.length === 0) {
-        newState.push(Object.assign({}, state, action['extraData']));
-      } else {
-        newState.push(
-          Object.assign({}, newState[newState.length - 1], action['extraData'])
-        );
-      }
-    }
+    switch (action.type) {
+      case 'addProperties':
+        if (stateCopy.length === 0) {
+          stateCopy.push(Object.assign({}, state, action['extraData']));
+        } else {
+          stateCopy.push(
+            Object.assign({},
+              stateCopy[stateCopy.length - 1],
+              action['extraData'])
+          );
+        }
+        break;
 
-    if (action.type === 'removeProperties') {
-      if (newState.length === 0) {
-        Object.assign(allProperties, state);
-      } else {
-        Object.assign(allProperties, newState[newState.length - 1]);
-      }
+      case 'removeProperties':
+        if (stateCopy.length === 0) {
+          Object.assign(allProperties, state);
+        } else {
+          Object.assign(allProperties, stateCopy[stateCopy.length - 1]);
+        }
 
-      for (const property of action['keysToRemove']) {
-        delete allProperties[property];
-      }
+        for (const property of action['keysToRemove']) {
+          delete allProperties[property];
+        }
 
-      newState.push(allProperties);
-      allProperties = {};
-    }
+        stateCopy.push(allProperties);
+        allProperties = {};
+        break;
 
-    if (action.type === 'clear') {
-      newState.push({});
+      case 'clear':
+        stateCopy.push({});
+        break;
+
+      default:
+        throw new Error('Invalid Action Name');
     }
   }
 
-  return newState;
+  return stateCopy;
 }
 
 module.exports = transformStateWithClones;
