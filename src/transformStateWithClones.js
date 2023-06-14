@@ -29,7 +29,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        return 'Invalid data input';
+        throw new Error('Invalid data input');
     }
 
     stateActionsArray.push({ ...clonedState });
