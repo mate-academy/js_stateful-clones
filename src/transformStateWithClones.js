@@ -27,8 +27,9 @@ function transformStateWithClones(state, actions) {
           delete copyState[key];
         }
         break;
-      default:
-        return 'Sorry, we does not have actions for your state';
+        
+        default:
+          throw new Error('Sorry, we does not have actions for your state');
     }
 
     newState.push({ ...copyState });
