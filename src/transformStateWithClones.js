@@ -17,24 +17,22 @@ function transformStateWithClones(state, actions) {
     const { type, extraData, keysToRemove } = action;
 
     switch (type) {
-      case ADD_PROPERTIES: {
+      case ADD_PROPERTIES:
         Object.assign(stateCopy, extraData);
         break;
-      }
 
-      case REMOVE_PROPERTIES: {
+      case REMOVE_PROPERTIES:
         for (const key of keysToRemove) {
           delete stateCopy[key];
         }
         break;
-      }
 
-      case CLEAR_PROPERTIES: {
+      case CLEAR_PROPERTIES:
         stateCopy = {};
         break;
-      }
 
-      default: throw new Error(`Action error with ${type}`);
+      default:
+        throw new Error(`Action error with ${type}`);
     }
     previousState.push({ ...stateCopy });
   }
