@@ -27,14 +27,14 @@ function transformStateWithClones(state, actions) {
       }
 
       case 'clear': {
-        for (const key of Object.keys(modifiedState)) {
+        for (const key in modifiedState) {
           delete modifiedState[key];
         };
         break;
       }
 
       default: {
-        throw new Error('Error');
+        throw new Error(`Missing type of action.Type "${type}" in not valid`);
       }
     };
     generalArray.push({ ...modifiedState });
