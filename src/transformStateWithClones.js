@@ -11,30 +11,26 @@ function transformStateWithClones(state, actions) {
   let currentState = { ...state };
 
   for (const action of actions) {
-    let newState;
-
     switch (action.type) {
       case 'addProperties':
-        newState = {
+        currentState = {
           ...currentState, ...action.extraData,
         };
         break;
 
       case 'removeProperties':
-        newState = { ...currentState };
-        action.keysToRemove.forEach(key => delete newState[key]);
+        action.keysToRemove.forEach(key => delete currentState[key]);
         break;
 
       case 'clear':
-        newState = {};
+        currentState = {};
         break;
 
       default:
         throw new Error('Invalid action type');
     }
 
-    arrayOfActions.push(newState);
-    currentState = newState;
+    arrayOfActions.push({ ...currentState });
   }
 
   return arrayOfActions;
