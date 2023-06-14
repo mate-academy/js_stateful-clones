@@ -14,21 +14,18 @@ function transformStateWithClones(state, actions) {
     switch (action.type) {
       case 'addProperties':
         Object.assign(newState, action.extraData);
-
         break;
       case 'removeProperties':
         for (const removeItem of action.keysToRemove) {
           delete newState[removeItem];
         }
-
         break;
       case 'clear':
         Object.keys(newState)
           .forEach(objectValue => delete newState[objectValue]);
-
         break;
       default:
-        break;
+        throw new Error(`Incorrect value: ${action.type}`);
     }
 
     arrayOfStates.push({ ...newState });
