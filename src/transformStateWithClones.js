@@ -6,7 +6,7 @@
  *
  * @return {Object[]}
  */
-function transformstateWithClones(state, actions) {
+function transformStateWithClones(state, actions) {
   const addOption = 'addProperties';
   const removeOption = 'removeProperties';
   const clearOption = 'clear';
@@ -18,22 +18,21 @@ function transformstateWithClones(state, actions) {
       case addOption:
         Object.assign(stateCopy, action.extraData);
         break;
-      case removeOption:
 
+      case removeOption:
         for (const key of action.keysToRemove) {
           delete stateCopy[key];
         }
-
         break;
-      case clearOption:
 
+      case clearOption:
         for (const key of Object.keys(stateCopy)) {
           delete stateCopy[key];
         }
-
         break;
+
       default:
-        return 'There is no options to change';
+        throw new Error('There is no options to change');
     }
 
     cloneState.push({ ...stateCopy });
@@ -42,4 +41,4 @@ function transformstateWithClones(state, actions) {
   return cloneState;
 }
 
-module.exports = transformstateWithClones;
+module.exports = transformStateWithClones;
