@@ -16,24 +16,22 @@ function transformStateWithClones(state, actions) {
     switch (type) {
       case 'addProperties':
         Object.assign(currentState, extraData);
-        stateCondition.push({ ...currentState });
         break;
 
       case 'removeProperties':
         for (const key of keysToRemove) {
           delete currentState[key];
         }
-        stateCondition.push({ ...currentState });
         break;
 
       case 'clear':
         currentState = {};
-        stateCondition.push({ ...currentState });
         break;
 
       default:
         throw new Error('Wrong typфe of action!');
     }
+    stateCondition.push({ ...currentState });
   }
 
   return stateCondition;
