@@ -11,8 +11,6 @@ function transformStateWithClones(state, actions) {
   const currentState = { ...state };
 
   for (const action of actions) {
-    // currentState = { ...state };
-
     applyAction(currentState, action);
 
     results.push({ ...currentState });
