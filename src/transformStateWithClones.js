@@ -7,8 +7,8 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const clearObject = [];
-  const modifiedObject = { ...state };
+  const result = [];
+  let modifiedObject = { ...state };
 
   actions.forEach(action => {
     const { type, extraData, keysToRemove } = action;
@@ -24,16 +24,14 @@ function transformStateWithClones(state, actions) {
         }
         break;
       case 'clear':
-        for (const key in modifiedObject) {
-          delete modifiedObject[key];
-        }
+        modifiedObject = {};
         break;
       default:
     }
-    clearObject.push({ ...modifiedObject });
+    result.push({ ...modifiedObject });
   });
 
-  return clearObject;
+  return result;
 }
 
 module.exports = transformStateWithClones;
