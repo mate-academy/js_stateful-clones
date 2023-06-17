@@ -28,10 +28,7 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    let addInArrayObj = Object.assign({}, cloneState);
-
-    resObjArr.push(addInArrayObj);
-    addInArrayObj = {};
+    resObjArr.push(Object.assign({}, cloneState));
   }
 
   return resObjArr;
