@@ -8,38 +8,36 @@
  */
 function transformStateWithClones(state, actions) {
   const stateCopy = { ...state };
-  const result = [];
+  const stateHistory = [];
 
   for (const action of actions) {
-    switch (true) {
-      case action.type === 'addProperties':
+    switch (action.type) {
+      case 'addProperties':
         for (const key in action.extraData) {
           stateCopy[key] = action.extraData[key];
         }
         break;
 
-      case action.type === 'removeProperties':
-        const actionKeysToRemove = action.keysToRemove;
-
-        for (let i = 0; i < actionKeysToRemove.length; i++) {
-          delete stateCopy[action.keysToRemove[i]];
+      case 'removeProperties':
+        for (const key of action.keysToRemove) {
+          delete stateCopy[key];
         }
         break;
 
-      case action.type === 'clear':
+      case 'clear':
         for (const keyState in stateCopy) {
           delete stateCopy[keyState];
         }
         break;
 
       default:
-        return;
+        throw new Error('Action type not supported');
     }
-    const stateCopytoArray = { ...stateCopy };
-    result.push(stateCopytoArray);
+
+    stateHistory.push({ ...stateCopy });
   }
 
-  return result;
+  return stateHistory;
 }
 
 module.exports = transformStateWithClones;
