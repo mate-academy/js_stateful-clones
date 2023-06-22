@@ -7,38 +7,34 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const array = [];
-  let stateCopy = { ...state };
+  const stateClones = [];
+  let copyState = { ...state };
 
   for (const action of actions) {
     const { type, extraData, keysToRemove } = action;
 
     switch (type) {
       case 'addProperties':
-        for (const key in extraData) {
-          stateCopy[key] = extraData[key];
-        }
+        Object.assign(copyState, extraData);
         break;
 
       case 'removeProperties':
-        keysToRemove.forEach(key => {
-          if (key in stateCopy) {
-            delete stateCopy[key];
-          }
+        keysToRemove.forEach((key) => {
+          delete copyState[key];
         });
         break;
 
       case 'clear':
-        stateCopy = {};
+        copyState = {};
         break;
 
       default:
         throw new Error(`type in array 'actions' is not found`);
     }
-    array.push({ ...stateCopy });
+    stateClones.push({ ...copyState });
   }
 
-  return array;
+  return stateClones;
 }
 
 module.exports = transformStateWithClones;
