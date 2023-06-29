@@ -30,6 +30,9 @@ function transformStateWithClones(state, actions) {
           delete newStateObject[key];
         }
         break;
+
+      default:
+        return 0;
     }
 
     cloneTransformsState.push({ ...newStateObject });
