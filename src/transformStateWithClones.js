@@ -17,15 +17,11 @@ function transformStateWithClones(state, actions) {
       for (const key in extraData) {
         newState[key] = extraData[key];
       }
-    } else
-
-    if (type === 'removeProperties') {
+    } else if (type === 'removeProperties') {
       for (const key of keysToRemove) {
         delete newState[key];
       }
-    } else
-
-    if (type === 'clear') {
+    } else if (type === 'clear') {
       for (const element in newState) {
         delete newState[element];
       }
