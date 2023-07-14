@@ -11,18 +11,18 @@ function transformStateWithClones(state, actions) {
   const semyResult = { ...state };
 
   for (const action of actions) {
-    switch (action.type) {
-      case 'addProperties':
+    switch (true) {
+      case !!action.extraData:
         Object.assign(semyResult, action.extraData);
         break;
 
-      case 'removeProperties':
+      case !!action.keysToRemove:
         for (const key of action.keysToRemove) {
           delete semyResult[key];
         };
         break;
 
-      case 'clear':
+      case (!action.extraData && !action.keysToRemove):
         for (const key in semyResult) {
           delete semyResult[key];
         };
