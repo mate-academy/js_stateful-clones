@@ -10,26 +10,25 @@ function transformStateWithClones(state, actions) {
   const result = [Object.assign({}, state)];
   let cloneObject = result[0];
 
+  const actionType = {
+    addProperties: (action) => {
+      cloneObject = Object.assign({}, cloneObject, action.extraData);
+    },
+    removeProperties: (action) => {
+      cloneObject = Object.assign({}, cloneObject);
+
+      for (const key of action.keysToRemove) {
+        delete cloneObject[key];
+      }
+    },
+    clear: () => {
+      cloneObject = {};
+    },
+  };
+
   for (const action of actions) {
-    switch (action.type) {
-      case 'addProperties':
-        cloneObject = Object.assign({}, cloneObject, action.extraData);
-        break;
-
-      case 'removeProperties':
-        cloneObject = Object.assign({}, cloneObject);
-
-        for (const key of action.keysToRemove) {
-          delete cloneObject[key];
-        }
-        break;
-
-      case 'clear':
-        cloneObject = {};
-        break;
-
-      default:
-        break;
+    if (action.type in actionType) {
+      actionType[action.type](action);
     }
     result.push(cloneObject);
   }
