@@ -31,6 +31,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
+        break;
     }
     newArr.push({ ...stateCopy });
   }
