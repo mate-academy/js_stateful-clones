@@ -6,60 +6,64 @@
  *
  * @return {Object[]}
  */
+
 function transformStateWithClones(state, actions) {
   const stateCloneArray = [];
-  let indexLastActions = 0;
+  let checkStateObject = Object.assign({}, state);
 
   actions.forEach((action) => {
     const { type, extraData, keysToRemove } = action;
 
     switch (type) {
       case 'clear':
-        stateCloneArray.push(Object.assign({}));
+        checkStateObject = Object.assign(
+          {},
+          checkStateObject
+        );
+
+        for (const stateProper in checkStateObject) {
+          if (checkStateObject.hasOwnProperty(stateProper)) {
+            delete checkStateObject[stateProper];
+          }
+        }
+
+        stateCloneArray.push(
+          checkStateObject
+        );
+
         break;
 
       case 'addProperties':
+        stateCloneArray.push(
+          checkStateObject = Object.assign(
+            {},
+            checkStateObject,
+            extraData,
+          )
+        );
 
-        if (!stateCloneArray.length) {
-          stateCloneArray.push(Object.assign({}, state, extraData));
-          break;
-        }
+        break;
 
-        indexLastActions = stateCloneArray.length - 1;
+      case 'removeProperties':
+        checkStateObject = Object.assign(
+          {},
+          checkStateObject
+        );
+
+        keysToRemove.forEach((removeProperties) => {
+          if (removeProperties in checkStateObject) {
+            delete checkStateObject[removeProperties];
+          }
+        });
 
         stateCloneArray.push(
-          Object.assign({}, stateCloneArray[indexLastActions], extraData)
+          checkStateObject
         );
 
         break;
 
       default:
-        if (!stateCloneArray.length) {
-          stateCloneArray.push(Object.assign({}, state));
-
-          Object.values(keysToRemove).forEach((removeProperties) => {
-            if (removeProperties in stateCloneArray[0]) {
-              delete stateCloneArray[0][removeProperties];
-            }
-          });
-          break;
-        }
-
-        indexLastActions = stateCloneArray.length - 1;
-
-        stateCloneArray.push(
-          Object.assign({}, stateCloneArray[indexLastActions])
-        );
-
-        indexLastActions += 1;
-
-        Object.values(keysToRemove).forEach((removeProperties) => {
-          if (removeProperties in stateCloneArray[indexLastActions]) {
-            delete stateCloneArray[indexLastActions][removeProperties];
-          }
-        });
-
-        break;
+        return 'Something went wrong';
     }
   });
 
