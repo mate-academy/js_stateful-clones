@@ -17,13 +17,11 @@ function transformStateWithClones(state, actions) {
     }
 
     if (ResultObject.length === 0) {
-      Object.assign(CurrentObject, state, operation.extraData);
+      Object.assign(CurrentObject, state);
     }
 
     if (operation.type === 'addProperties') {
-      if (ResultObject.length !== 0) {
-        Object.assign(CurrentObject, operation.extraData);
-      }
+      Object.assign(CurrentObject, operation.extraData);
       ResultObject.push(CurrentObject);
     }
 
