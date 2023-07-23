@@ -7,42 +7,41 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const ResultObject = [];
+  const stateClones = [];
 
-  for (const operation of actions) {
-    const CurrentObject = {};
+  for (const action of actions) {
+    const currentState = {};
 
-    if (ResultObject.length !== 0) {
-      Object.assign(CurrentObject, ResultObject[ResultObject.length - 1]);
+    if (stateClones.length !== 0) {
+      Object.assign(currentState, stateClones[stateClones.length - 1]);
     }
 
-    if (ResultObject.length === 0) {
-      Object.assign(CurrentObject, state);
+    if (stateClones.length === 0) {
+      Object.assign(currentState, state);
     }
 
-    if (operation.type === 'addProperties') {
-      Object.assign(CurrentObject, operation.extraData);
-      ResultObject.push(CurrentObject);
-    }
+    switch (action.type) {
+      case 'addProperties':
+        Object.assign(currentState, action.extraData);
+        break;
 
-    if (operation.type === 'clear') {
-      for (const key in CurrentObject) {
-        delete CurrentObject[key];
-      }
-      ResultObject.push(CurrentObject);
-    }
+      case 'clear':
+        for (const key in currentState) {
+          delete currentState[key];
+        }
+        break;
 
-    if (operation.type === 'removeProperties') {
-      const keysToRemove = operation.keysToRemove;
+      case 'removeProperties':
+        const keysToRemove = action.keysToRemove;
 
-      for (const key of keysToRemove) {
-        delete CurrentObject[key];
-      }
-      ResultObject.push(CurrentObject);
+        for (const key of keysToRemove) {
+          delete currentState[key];
+        }
     }
+    stateClones.push(currentState);
   }
 
-  return ResultObject;
+  return stateClones;
 }
 
 module.exports = transformStateWithClones;
