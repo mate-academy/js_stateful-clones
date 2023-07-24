@@ -7,12 +7,12 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const ActionTypes = {};
   const objectCollect = [];
-
-  actions.map(action => {
-    ActionTypes[action.type] = action.type;
-  });
+  const ActionTypes = {
+    addProperties: 'addProperties',
+    removeProperties: 'removeProperties',
+    clear: 'clear',
+  };
 
   for (const action of actions) {
     const stateCopy = {};
