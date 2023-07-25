@@ -15,14 +15,17 @@ function transformStateWithClones(state, actions) {
       case 'addProperties':
         Object.assign(currentState, action.extraData);
         break;
+        
       case 'removeProperties':
         for (const key of action.keysToRemove) {
           delete currentState[key];
         }
         break;
+        
       case 'clear':
         currentState = {};
         break;
+        
       default:
         throw Error('Something went wrong');
     }
