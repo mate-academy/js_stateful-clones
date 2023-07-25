@@ -2,7 +2,9 @@
 
 **Read [the guideline](https://github.com/mate-academy/js_task-guideline/blob/master/README.md) before start**
 
-## ❗️❗️❗️ DON'T FORGET TO PROOFREAD YOUR CODE WITH [CHECKLIST](https://github.com/mate-academy/js_stateful-clones/blob/master/checklist.md) BEFORE SENDING YOUR PULL REQUEST❗️❗️❗️
+## ❗️❗️❗️ DON'T FORGET TO PROOFREAD YOUR CODE WITH [CHECKLIST](
+
+) BEFORE SENDING YOUR PULL REQUEST❗️❗️❗️
 
 # Task description
 
@@ -67,5 +69,6 @@ we must get
   {foo: 'bar', name: 'Jim'}
 ].
 ```
+
 the `state` variable must still contain
 {foo: 'bar', bar: 'foo'}.
