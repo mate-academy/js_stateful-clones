@@ -24,7 +24,7 @@ function transformStateWithClones(state, actions) {
         currentState = {};
         break;
       default:
-        return 'Error';
+        throw Error('Something went wrong');
     }
 
     result.push({ ...currentState });
