@@ -7,20 +7,6 @@
  * @return {Object[]}
  */
 
-// function deepClone(obj) {
-//   const clone = {};
-
-//   for (const key in obj) {
-//     if (typeof obj[key] === 'object' && obj[key] !== null) {
-//       clone[key] = deepClone(obj[key]);
-//     } else {
-//       clone[key] = obj[key];
-//     }
-//   }
-
-//   return clone;
-// }
-
 function transformStateWithClones(state, actions) {
   const actionsOfState = [];
   const stateClone = Object.assign({}, state);
