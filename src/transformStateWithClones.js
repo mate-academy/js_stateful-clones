@@ -19,9 +19,13 @@ function transformStateWithClones(state, actions) {
       case 'removeProperties':
         key.keysToRemove.forEach(el => delete actualState[el]);
         break;
-      default:
+
+      case 'clear':
         Object.keys(actualState).forEach(el => delete actualState[el]);
         break;
+
+      default:
+        throw new Error('Error! Please check input data!');
     }
     statesArr.push({ ...actualState });
   }
