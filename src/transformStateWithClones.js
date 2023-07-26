@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const states = [];
-  let stateCopy = Object.assign({}, state);
+  let stateCopy = { ...state };
 
   actions.forEach((action) => {
     switch (action.type) {
