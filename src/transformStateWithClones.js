@@ -19,8 +19,8 @@ function transformStateWithClones(state, actions) {
         result.push(pushObj);
         break;
       case 'removeProperties':
-        for (let j = 0; j < action.keysToRemove.length; j++) {
-          delete newState[action.keysToRemove[j]];
+        for (const key of action.keysToRemove) {
+          delete newState[key];
         }
         pushObj = { ...newState };
         result.push(pushObj);
