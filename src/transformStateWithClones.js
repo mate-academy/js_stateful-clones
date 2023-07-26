@@ -28,11 +28,11 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        Error('sth gone wrong :(');
+        Error('something went wrong :(');
         break;
     }
 
-    actionsOfState.push(Object.assign({}, stateClone));
+    actionsOfState.push({ ...stateClone });
   }
 
   return actionsOfState;
