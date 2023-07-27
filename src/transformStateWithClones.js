@@ -36,7 +36,7 @@ function transformStateWithClones(state, actions) {
         throw new Error('unsupported value');
     }
 
-    actionsOnState.push(Object.assign({}, stateCopy));
+    actionsOnState.push({ ...stateCopy });
   }
 
   return actionsOnState;
