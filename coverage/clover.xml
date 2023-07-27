@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1690459467018" clover="3.2.0">
+  <project timestamp="1690459467018" name="All files">
+    <metrics statements="17" coveredstatements="16" conditionals="6" coveredconditionals="5" methods="1" coveredmethods="1" elements="24" coveredelements="22" complexity="0" loc="17" ncloc="17" packages="1" files="1" classes="1"/>
+    <file name="transformStateWithClones.js" path="D:\projects\js_stateful-clones\src\transformStateWithClones.js">
+      <metrics statements="17" coveredstatements="16" conditionals="6" coveredconditionals="5" methods="1" coveredmethods="1"/>
+      <line num="10" count="12" type="stmt"/>
+      <line num="11" count="12" type="stmt"/>
+      <line num="13" count="12" type="stmt"/>
+      <line num="14" count="21" type="cond" truecount="3" falsecount="1"/>
+      <line num="16" count="8" type="stmt"/>
+      <line num="17" count="8" type="stmt"/>
+      <line num="20" count="7" type="stmt"/>
+      <line num="21" count="11" type="cond" truecount="2" falsecount="0"/>
+      <line num="22" count="9" type="stmt"/>
+      <line num="25" count="7" type="stmt"/>
+      <line num="28" count="6" type="stmt"/>
+      <line num="29" count="6" type="stmt"/>
+      <line num="31" count="6" type="stmt"/>
+      <line num="34" count="0" type="stmt"/>
+      <line num="36" count="21" type="stmt"/>
+      <line num="39" count="12" type="stmt"/>
+      <line num="42" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>

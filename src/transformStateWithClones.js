@@ -6,32 +6,37 @@
  *
  * @return {Object[]}
  */
-function deepClone(obj) {
-  return JSON.parse(JSON.stringify(obj));
-}
-
 function transformStateWithClones(state, actions) {
-  const result = [];
-  let currentState = deepClone(state);
+  const copyState = { ...state };
+  const stateArray = [];
 
-  actions.forEach((action) => {
-    if (action.type === 'addProperties') {
-      // eslint-disable-next-line object-curly-newline
-      currentState = { ...currentState, ...action.extraData };
-    } else if (action.type === 'removeProperties') {
-      action.keysToRemove.forEach((key) => {
-        if (currentState.hasOwnProperty(key)) {
-          delete currentState[key];
+  for (const action of actions) {
+    switch (action.type) {
+      case 'addProperties':
+        Object.assign(copyState, action.extraData);
+        break;
+
+      case 'removeProperties':
+        for (const key of action.keysToRemove) {
+          if (copyState.hasOwnProperty(key)) {
+            delete copyState[key];
+          }
         }
-      });
-    } else if (action.type === 'clear') {
-      currentState = {};
+        break;
+
+      case 'clear':
+        for (const key in copyState) {
+          delete copyState[key];
+        }
+        break;
+
+      default:
+        throw new Error('Unknown value');
     }
+    stateArray.push({ ...copyState });
+  }
 
-    result.push(deepClone(currentState));
-  });
-
-  return result;
+  return stateArray;
 }
 
 module.exports = transformStateWithClones;
