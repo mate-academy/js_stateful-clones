@@ -11,20 +11,25 @@ function transformStateWithClones(state, actions) {
   const resArrObj = [];
   // eslint-disable-next-line standard/object-curly-even-spacing
   const copyState = { ...state };
+  const types = {
+    'add': 'addProperties',
+    'remove': 'removeProperties',
+    'clear': 'clear',
+  };
 
   for (const keys of actions) {
     const { type, extraData, keysToRemove } = keys;
 
     switch (type) {
-      case 'addProperties':
+      case types.add:
         Object.assign(copyState, extraData);
         break;
-      case 'removeProperties':
+      case types.remove:
         for (const values of keysToRemove) {
           delete copyState[values];
         }
         break;
-      case 'clear':
+      case types.clear:
         for (const values in copyState) {
           delete copyState[values];
         }
