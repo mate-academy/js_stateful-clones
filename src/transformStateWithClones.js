@@ -26,7 +26,7 @@ function transformStateWithClones(state, actions) {
         result.push({ ...cloneObj });
         break;
 
-      case action.type === 'clear':
+      default:
         Object.keys(cloneObj).forEach(n => delete cloneObj[n]);
         result.push({ ...cloneObj });
     }
