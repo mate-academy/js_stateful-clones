@@ -7,48 +7,36 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
-  const s = JSON.parse(JSON.stringify(state)); // Pełna kopia obiektu state
-  const arr = [];
-  const acc = [];
+  const stateCloned = {
+    ...state,
+  };
 
-  acc.push(s);
+  const transformedStates = [];
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        const stat = JSON.parse(JSON.stringify(acc[acc.length - 1]));
-
-        if (action.extraData && typeof action.extraData === 'object') {
-          Object.assign(stat, action.extraData);
-        }
-        arr.push(stat);
-        acc.push(stat);
+        Object.assign(stateCloned, action.extraData);
         break;
+
       case 'removeProperties':
-        const stat1 = JSON.parse(JSON.stringify(acc[acc.length - 1]));
-
-        if (action.keysToRemove && Array.isArray(action.keysToRemove)) {
-          for (const key of action.keysToRemove) {
-            delete stat1[key];
-          }
-          arr.push(stat1);
-          acc.push(stat1);
-        }
+        action.keysToRemove.forEach(key => delete stateCloned[key]);
         break;
+
       case 'clear':
-        const stat2 = {}; // Tworzymy nowy pusty obiekt
+        Object.keys(stateCloned).forEach(key => delete stateCloned[key]);
+        break;
 
-        arr.push(stat2);
-        acc.push(stat2);
-        break;
       default:
-        // Ignoring unknown action types
-        break;
+        throw new Error('Unknown action type');
     }
+
+    transformedStates.push({
+      ...stateCloned,
+    });
   }
 
-  return arr;
+  return transformedStates;
 }
 
 module.exports = transformStateWithClones;
