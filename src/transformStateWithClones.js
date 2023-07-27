@@ -25,6 +25,9 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         Object.keys(stateClone).forEach(key => delete stateClone[key]);
         break;
+
+      default:
+        throw Error('Invalid action type: ' + action.type);
     }
 
     actionLog.push({
