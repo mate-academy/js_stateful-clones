@@ -29,11 +29,13 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        stateCopy = {};
+        for (const key in stateCopy) {
+          delete stateCopy[key];
+        }
         break;
 
       default:
-        break;
+        throw new Error('No state provided');
     }
 
     resultClone.push({ ...stateCopy });
