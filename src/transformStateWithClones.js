@@ -24,8 +24,6 @@ function transformStateWithClones(state, actions) {
 
         Object.assign(stateCopy, property);
 
-        cloneResults.push({ ...stateCopy });
-
         break;
 
       case REMOVE:
@@ -35,16 +33,12 @@ function transformStateWithClones(state, actions) {
           delete stateCopy[key];
         }
 
-        cloneResults.push({ ...stateCopy });
-
         break;
 
       case CLEAR:
         for (const value in stateCopy) {
           delete stateCopy[value];
         }
-
-        cloneResults.push({ ...stateCopy });
 
         break;
 
@@ -53,6 +47,8 @@ function transformStateWithClones(state, actions) {
 
         return ERROR;
     }
+
+    cloneResults.push({ ...stateCopy });
   }
 
   return cloneResults;
