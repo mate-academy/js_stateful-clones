@@ -1,79 +1,49 @@
 'use strict';
 
+const REMOVE_PROPERTIES = 'removeProperties';
+const ACTION_ADD_PROPERTIES = 'addProperties';
+const CLEAR = 'clear';
+
 /**
- * @param {Object} state
- * @param {Object[]} actions
- *
- * @return {Object[]}
- */
-// function transformStateWithClones(state, actions) {
-//   const result = [];
-//   let currentState = Object.assign({}, state);
-
-//   actions.forEach((action) => {
-//     const newState = Object.assign({}, currentState);
-
-//     switch (action.type) {
-//       case 'addProperties':
-//         if (action.extraData && typeof action.extraData === 'object') {
-//           Object.assign(newState, action.extraData);
-//         }
-//         break;
-//       case 'removeProperties':
-//         if (action.keysToRemove && Array.isArray(action.keysToRemove)) {
-//           action.keysToRemove.forEach((key) => {
-//             if (newState.hasOwnProperty(key)) {
-//               delete newState[key];
-//             }
-//           });
-//         }
-//         break;
-//       case 'clear':
-//         newState = {};
-//         break;
-//       default:
-//         break;
-//     }
-
-//     result.push(newState);
-//     currentState = newState;
-//   });
-
-//   return result;
-// }
+* @param {Object} state
+* @typedef {Object} Action
+* @property {string} type
+* @property {Object} extraData
+* @property {strinmg[]} keysToRemove
+* @param {Action[]} actions
+*/
 
 function transformStateWithClones(state, actions) {
   const result = [];
-  let currentState = Object.assign({}, state);
+  const currentState = { ...state };
 
-  actions.forEach((action) => {
-    let newState = Object.assign({}, currentState);
-
+  for (const action of actions) {
     switch (action.type) {
-      case 'addProperties':
-        if (action.extraData && typeof action.extraData === 'object') {
-          Object.assign(newState, action.extraData);
+      case ACTION_ADD_PROPERTIES:
+        const { extraData } = action;
+
+        Object.assign(currentState, extraData);
+        break;
+
+      case REMOVE_PROPERTIES:
+        const { keysToRemove } = action;
+
+        for (const key of keysToRemove) {
+          if (currentState.hasOwnProperty(key)) {
+            delete currentState[key];
+          }
         }
         break;
-      case 'removeProperties':
-        if (action.keysToRemove && Array.isArray(action.keysToRemove)) {
-          action.keysToRemove.forEach((key) => {
-            if (newState.hasOwnProperty(key)) {
-              delete newState[key];
-            }
-          });
+
+      case CLEAR:
+        for (const key in currentState) {
+          delete currentState[key];
         }
-        break;
-      case 'clear':
-        newState = {};
-        break;
-      default:
         break;
     }
 
-    result.push(Object.assign({}, newState));
-    currentState = newState;
-  });
+    result.push({ ...currentState });
+  }
 
   return result;
 }
