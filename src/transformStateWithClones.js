@@ -19,19 +19,19 @@ function transformStateWithClones(state, actions) {
         };
         break;
       case 'removeProperties':
-        clonedObject = { ...clonedObject };
-
         for (const key of action.keysToRemove) {
           delete clonedObject[key];
         }
         break;
       case 'clear':
-        clonedObject = {};
+        for (const key in clonedObject) {
+          delete clonedObject[key];
+        }
         break;
       default:
-        return 'Error';
+        throw Error('Error');
     }
-    stateWithClones.push(clonedObject);
+    stateWithClones.push({ ...clonedObject });
   }
 
   return stateWithClones;
