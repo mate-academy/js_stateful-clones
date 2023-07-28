@@ -32,7 +32,6 @@ function transformStateWithClones(state, actions) {
         }
         break;
 
-        break;
       default:
         throw new Error(`Error: ${action.type}`);
     }
