@@ -18,6 +18,7 @@ function transformStateWithClones(state, actions) {
         currentState = {
           ...currentState, ...extraData,
         };
+
         break;
 
       case 'removeProperties':
@@ -26,13 +27,16 @@ function transformStateWithClones(state, actions) {
             delete currentState[key];
           }
         }
+
         break;
 
       case 'clear':
         currentState = {};
+
         break;
 
       default:
+
         break;
     }
 
