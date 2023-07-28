@@ -12,11 +12,9 @@ function transformStateWithClones(state, actions) {
   for (const currentAction of actions) {
     switch (currentAction.type) {
       case 'addProperties':
-        const extraData = currentAction.extraData;
+        const { extraData } = currentAction;
 
-        for (const key in extraData) {
-          nextState[key] = extraData[key];
-        }
+        Object.assign(nextState, extraData);
         break;
 
       case 'removeProperties':
@@ -36,6 +34,9 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
+
+        // console.error('This is an error message');
+        //  i can not use it as i get a "unexpected console statment" error
         break;
     }
 
