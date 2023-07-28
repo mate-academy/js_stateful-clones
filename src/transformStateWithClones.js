@@ -1,17 +1,15 @@
 'use strict';
-
 /**
  * @param {Object} state
  * @param {Object[]} actions
  * @returns {Object[]}
  */
-function transformState(state, actions) {
+
+function transformStateWithClones(state, actions) {
   const result = [];
-  let cloneOfState = { ...state };
+  const nextState = { ...state };
 
   for (const currentAction of actions) {
-    let nextState = { ...cloneOfState };
-
     switch (currentAction.type) {
       case 'addProperties':
         const extraData = currentAction.extraData;
@@ -32,18 +30,19 @@ function transformState(state, actions) {
         break;
 
       case 'clear':
-        nextState = {};
+        for (const key in nextState) {
+          delete nextState[key];
+        }
         break;
 
       default:
         break;
     }
 
-    result.push(nextState);
-    cloneOfState = nextState;
+    result.push({ ...nextState });
   }
 
   return result;
 }
 
-module.exports = transformState;
+module.exports = transformStateWithClones;
