@@ -35,9 +35,7 @@ function transformStateWithClones(state, actions) {
 
       default:
 
-        // console.error('This is an error message');
-        //  i can not use it as i get a "unexpected console statment" error
-        break;
+        throw Error('Something went wrong');
     }
 
     result.push({ ...nextState });
