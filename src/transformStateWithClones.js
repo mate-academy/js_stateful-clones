@@ -10,7 +10,8 @@ function transformStateWithClones(state, actions) {
   // write code here
   const clonedState = [];
   const currentStateData = { ...state };
-  const addDataToArray = () => {
+
+  function addDataToArray() {
     clonedState.push({ ...currentStateData });
   };
 
