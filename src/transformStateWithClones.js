@@ -11,31 +11,25 @@ function transformStateWithClones(state, actions) {
   const clonedState = [];
   const currentStateData = { ...state };
 
-  function addDataToArray() {
-    clonedState.push({ ...currentStateData });
-  };
-
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        Object.assign(currentStateData, { ...action.extraData });
-        addDataToArray();
+        Object.assign(currentStateData, action.extraData);
         break;
       case 'removeProperties':
         for (const keyToRemove of action.keysToRemove) {
           delete currentStateData[keyToRemove];
         }
-        addDataToArray();
         break;
       case 'clear':
         for (const key in currentStateData) {
           delete currentStateData[key];
         }
-        addDataToArray();
         break;
       default:
         throw new Error('Array have not correct action value');
     }
+    clonedState.push({ ...currentStateData });
   }
 
   return clonedState;
