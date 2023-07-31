@@ -8,15 +8,14 @@
  */
 function transformStateWithClones(state, actions) {
   // write code here
-  const stateCopy = Object.assign({}, state);
+  const stateCopy = { ...state };
   const arrStates = [];
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        for (const key in action.extraData) {
-          stateCopy[key] = action.extraData[key];
-        }
+        Object.assign(stateCopy, action.extraData);
+
         break;
 
       case 'removeProperties':
@@ -34,7 +33,7 @@ function transformStateWithClones(state, actions) {
       default:
         throw new Error(`Incorrect type ${action.type}`);
     }
-    arrStates.push(Object.assign({}, stateCopy));
+    arrStates.push({ ...stateCopy });
   }
 
   return arrStates;
