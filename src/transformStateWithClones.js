@@ -8,7 +8,6 @@
  */
 function transformStateWithClones(state, actions) {
   const copyState = { ...state };
-  // const copyState = Object.assign({}, state);
   const arrayState = [];
 
   for (const action of actions) {
