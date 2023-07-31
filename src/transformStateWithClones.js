@@ -30,6 +30,9 @@ function transformStateWithClones(state, actions) {
           delete stateCopy[key];
         }
         break;
+
+      default:
+        throw new Error(`Incorrect type ${action.type}`);
     }
     arrStates.push(Object.assign({}, stateCopy));
   }
