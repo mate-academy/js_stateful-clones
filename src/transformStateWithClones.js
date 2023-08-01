@@ -27,6 +27,9 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         Object.keys(stateCopy).forEach((key) => delete stateCopy[key]);
         break;
+
+      default:
+        throw Error('Invalid input.');
     }
 
     stateVersions.push(Object.assign({}, stateCopy));
