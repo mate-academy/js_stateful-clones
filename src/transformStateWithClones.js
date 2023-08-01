@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   // write code here
-  const smtgh = [];
+  const copyArray = [];
   const copyState = { ...state };
 
   actions.forEach(action => {
@@ -25,12 +25,15 @@ function transformStateWithClones(state, actions) {
         Object.keys(copyState).forEach((key) => delete copyState[key]);
 
         break;
+
+      default:
+        break;
     }
-    smtgh.push({ ...copyState });
+    copyArray.push({ ...copyState });
   });
   // eslint-disable-next-line
 
-  return smtgh;
+  return copyArray;
 }
 
 module.exports = transformStateWithClones;
