@@ -183,7 +183,7 @@ test('Should create an empty object after clear', () => {
     });
 });
 
-test('Should not fails when calling clear for an empty state', () => {
+test('Should not fail when calling clear for an empty state', () => {
   const state = {};
 
   transformStateWithClones(state, [
