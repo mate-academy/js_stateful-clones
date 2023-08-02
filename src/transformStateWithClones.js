@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const stateCopy = { ...state };
-  const resultArray = [];
+  const stateChanges = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -31,10 +31,10 @@ function transformStateWithClones(state, actions) {
       default :
         throw new Error('Invalid action type');
     }
-    resultArray.push({ ...stateCopy });
+    stateChanges.push({ ...stateCopy });
   }
 
-  return resultArray;
+  return stateChanges;
 }
 
 module.exports = transformStateWithClones;
