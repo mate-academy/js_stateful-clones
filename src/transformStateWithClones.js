@@ -15,17 +15,21 @@ function transformStateWithClones(state, actions) {
       case 'addProperties':
         Object.assign(stateCopy, action.extraData);
         break;
+
       case 'removeProperties':
         action.keysToRemove.forEach(key => {
           delete stateCopy[key];
         });
         break;
+
       case 'clear':
         Object.keys(stateCopy).forEach(key => {
           delete stateCopy[key];
         });
         break;
-      default: break;
+
+      default:
+        throw new Error('Something is wrong. Please, check the input');
     }
 
     stateVersions.push({ ...stateCopy });
