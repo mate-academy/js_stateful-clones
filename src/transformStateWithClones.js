@@ -7,30 +7,30 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const newState = JSON.parse(JSON.stringify(state));
-  const newStateArr = [];
+  const stateCopy = { ...state };
+  const stateHistory = [];
 
   actions.forEach((action) => {
     switch (action.type) {
       case 'clear':
-        Object.keys(newState).forEach((element) => delete newState[element]);
+        Object.keys(stateCopy).forEach((key) => delete stateCopy[key]);
         break;
 
       case 'addProperties':
-        Object.assign(newState, action.extraData);
+        Object.assign(stateCopy, action.extraData);
         break;
 
       case 'removeProperties':
-        action.keysToRemove.forEach((element) => delete newState[element]);
+        action.keysToRemove.forEach((key) => delete stateCopy[key]);
         break;
 
       default:
         throw new Error('Unexpected error');
     }
-    newStateArr.push({ ...newState });
+    stateHistory.push({ ...stateCopy });
   });
 
-  return newStateArr;
+  return stateHistory;
 }
 
 module.exports = transformStateWithClones;
