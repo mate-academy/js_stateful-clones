@@ -17,18 +17,18 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        for (const key of action.keysToRemove) {
+        action.keysToRemove.forEach(key => {
           delete stateIteration[key];
-        }
+        });
         break;
 
       case 'clear':
-        for (const key in stateIteration) {
+        Object.keys(stateIteration).forEach(key => {
           delete stateIteration[key];
-        }
+        });
         break;
 
-      default: break;
+      default: throw Error('Something went wrong');
     }
 
     stateIterations.push({ ...stateIteration });
