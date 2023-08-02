@@ -19,38 +19,31 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     // get type of action
     const { type } = action;
+    let changedObject = null;
 
     // choice correct action
     switch (type) {
       case 'addProperties':
         const { extraData } = action;
 
-        // get object with adding new properties
-        const addedProperties = addPropertiesToState(cloneState, extraData);
-
-        // add generated object to cloned array
-        clonedStates.push(addedProperties);
+        changedObject = addPropertiesToState(cloneState, extraData);
         break;
 
       case 'removeProperties':
         const { keysToRemove } = action;
 
-        // get object with removing properties with special keys
-        const removedProperties
-          = removePropertiesToState(cloneState, keysToRemove);
-
-        // add generated object to cloned array
-        clonedStates.push(removedProperties);
+        changedObject = removePropertiesToState(cloneState, keysToRemove);
         break;
 
       case 'clear':
-        // get object with cleared properties
-        const clearedProperties = clearPropertiesToState(cloneState);
-
-        // add generated object to cloned array
-        clonedStates.push(clearedProperties);
+        changedObject = clearPropertiesToState(cloneState);
         break;
+
+      default:
+        throw new Error('Smth gone wrong');
     }
+
+    clonedStates.push(changedObject);
   }
 
   return clonedStates;
