@@ -16,13 +16,13 @@ function transformStateWithClones(state, actions) {
         Object.assign(stateCopy, action.extraData);
         break;
       case 'removeProperties':
-        action.keysToRemove.map(key => delete stateCopy[key]);
+        action.keysToRemove.forEach(key => delete stateCopy[key]);
         break;
       case 'clear':
-        Object.keys(stateCopy).map(key => delete stateCopy[key]);
+        Object.keys(stateCopy).forEach(key => delete stateCopy[key]);
         break;
       default:
-        break;
+        return new Error('Something wrong');
     }
 
     operationsResult.push({ ...stateCopy });
