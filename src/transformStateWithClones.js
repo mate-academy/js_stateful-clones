@@ -18,9 +18,7 @@ function transformStateWithClones(state, actions) {
 
       case 'removeProperties':
         action.keysToRemove.forEach((key) => {
-          if (stateCopy.hasOwnProperty(key)) {
-            delete stateCopy[key];
-          }
+          delete stateCopy[key];
         });
         break;
 
@@ -29,7 +27,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw Error('Invalid input.');
+        throw new Error('Invalid input.');
     }
     stateVersions.push(Object.assign({}, stateCopy));
   }
