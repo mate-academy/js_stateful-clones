@@ -18,23 +18,18 @@ function transformStateWithClones(state, actions) {
 
       case 'removeProperties':
         for (const key of action.keysToRemove) {
-          if (stateCopy.hasOwnProperty(key)) {
-            delete stateCopy[key];
-          }
+          delete stateCopy[key];
         }
         break;
 
       case 'clear':
         for (const key in stateCopy) {
-          if (stateCopy.hasOwnProperty(key)) {
-            delete stateCopy[key];
-          }
+          delete stateCopy[key];
         }
         break;
 
       default :
-
-        break;
+        throw new Error('Invalid action type');
     }
     resultArray.push({ ...stateCopy });
   }
