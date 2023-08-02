@@ -11,7 +11,7 @@ function transformStateWithClones(state, actions) {
 
   actions.forEach((action) => {
     const stateCopy = stateHistory.length
-      ? { ...stateHistory.at(-1) }
+      ? { ...stateHistory[stateHistory.length - 1] }
       : { ...state };
 
     switch (action.type) {
