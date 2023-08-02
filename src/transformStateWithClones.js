@@ -26,7 +26,7 @@ function transformStateWithClones(state, actions) {
 
       default:
         return new Error(`
-          Something went wrong: unexpected  action.type: ${action.type}
+          Something went wrong: unexpected action.type: ${action.type}
         `);
     }
 
