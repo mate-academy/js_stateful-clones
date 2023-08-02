@@ -6,6 +6,18 @@
  *
  * @return {Object[]}
  */
+function stateClear(state) {
+  for (const prop in state) {
+    delete state[prop];
+  }
+}
+
+function stateRemoveProperty(state, keysArr) {
+  for (const key of keysArr) {
+    delete state[key];
+  }
+}
+
 function transformStateWithClones(state, actions) {
   const statesArray = [];
   const currentState = { ...state };
@@ -15,17 +27,16 @@ function transformStateWithClones(state, actions) {
       case 'addProperties':
         Object.assign(currentState, action.extraData);
         break;
+
       case 'removeProperties':
-        for (const key of action.keysToRemove) {
-          delete currentState[key];
-        }
+        stateRemoveProperty(currentState, action.keysToRemove);
         break;
+
       case 'clear':
-        for (const prop in currentState) {
-          if (currentState.hasOwnProperty(prop)) {
-            delete currentState[prop];
-          }
-        }
+        stateClear(currentState);
+        break;
+
+      default:
         break;
     }
 
