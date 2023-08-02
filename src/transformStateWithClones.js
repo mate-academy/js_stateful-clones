@@ -34,6 +34,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
+        throw new Error('Input is invalid');
     }
 
     statesLog.push({ ...stateCopy });
