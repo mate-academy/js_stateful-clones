@@ -7,7 +7,6 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
   const copyArray = [];
   const copyState = { ...state };
 
@@ -31,7 +30,6 @@ function transformStateWithClones(state, actions) {
     }
     copyArray.push({ ...copyState });
   });
-  // eslint-disable-next-line
 
   return copyArray;
 }
