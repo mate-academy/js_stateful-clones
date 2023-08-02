@@ -7,37 +7,16 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const transformedClones = [];
-  const stateClone = makeDeepCopy(state);
+  const stateSnapshots = [];
+  const stateClone = { ...state };
 
   for (const action of actions) {
     transformState(stateClone, action);
 
-    transformedClones.push(makeDeepCopy(stateClone));
+    stateSnapshots.push({ ...stateClone });
   }
 
-  return transformedClones;
-}
-
-/**
- * @param {Object} original
- *
- * @return {Object}
- */
-function makeDeepCopy(original) {
-  const copy = {};
-
-  for (const key in original) {
-    let value = original[key];
-
-    if (typeof value === 'object') {
-      value = makeDeepCopy(value);
-    }
-
-    copy[key] = value;
-  }
-
-  return copy;
+  return stateSnapshots;
 }
 
 /**
