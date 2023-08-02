@@ -15,38 +15,39 @@ function transformStateWithClones(state, actions) {
   const statesList = [{ ...state }];
 
   for (const action of actions) {
-    const currentObject = { ...statesList.slice(-1)[0] };
+    let currentObject = { ...statesList.slice(-1)[0] };
 
     switch (action.type) {
       case TYPE_ADD_PROPERTIES: {
         const objectWithNewFields = action.extraData;
 
-        statesList.push(
-          {
-            ...currentObject,
-            ...objectWithNewFields,
-          });
+        currentObject = {
+          ...currentObject,
+          ...objectWithNewFields,
+        };
         break;
       }
 
       case TYPE_REMOVE_PROPERTIES: {
-        const arrayOfFields = action.keysToRemove;
+        const keysToRemove = action.keysToRemove;
 
-        for (const field of arrayOfFields) {
-          delete currentObject[field];
+        for (const key of keysToRemove) {
+          delete currentObject[key];
         }
 
-        statesList.push({ ...currentObject });
+        currentObject = { ...currentObject };
         break;
       }
 
       case TYPE_CLEAR: {
-        statesList.push({});
+        currentObject = {};
         break;
       }
 
       default: return 'undefined type';
     }
+
+    statesList.push(currentObject);
   }
 
   return statesList.slice(1);
