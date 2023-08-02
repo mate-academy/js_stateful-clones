@@ -27,7 +27,7 @@ function transformStateWithClones(state, actions) {
 
         break;
 
-      default: return null;
+      default: return Error('Something went wrong');
     }
 
     actionsArray.push({ ...stateCopy });
