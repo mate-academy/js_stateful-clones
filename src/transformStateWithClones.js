@@ -6,10 +6,12 @@
  *
  * @return {Object[]}
  */
+
+const TYPE_ADD_PROPERTIES = 'addProperties';
+const TYPE_REMOVE_PROPERTIES = 'removeProperties';
+const TYPE_CLEAR = 'clear';
+
 function transformStateWithClones(state, actions) {
-  const TYPE_ADD_PROPERTIES = 'addProperties';
-  const TYPE_REMOVE_PROPERTIES = 'removeProperties';
-  const TYPE_CLEAR = 'clear';
   const statesList = [{ ...state }];
 
   for (const action of actions) {
