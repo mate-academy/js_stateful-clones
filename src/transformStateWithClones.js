@@ -15,16 +15,19 @@ function transformStateWithClones(state, actions) {
       case 'addProperties':
         Object.assign(stateClone, action.extraData);
         break;
+
       case 'removeProperties':
         action.keysToRemove.forEach((key) =>
           delete stateClone[key]
         );
         break;
+
       case 'clear':
         Object.keys(stateClone).forEach((key) =>
           delete stateClone[key]
         );
         break;
+
       default: return 'Incorrect data';
     }
     historyArray.push({ ...stateClone });
