@@ -15,7 +15,7 @@ function transformStateWithClones(state, actions) {
   const statesList = [{ ...state }];
 
   for (const action of actions) {
-    let currentObject = { ...statesList.slice(-1)[0] };
+    let currentObject = { ...statesList[statesList.length - 1] };
 
     switch (action.type) {
       case TYPE_ADD_PROPERTIES: {
@@ -33,9 +33,7 @@ function transformStateWithClones(state, actions) {
 
         for (const key of keysToRemove) {
           delete currentObject[key];
-        }
-
-        currentObject = { ...currentObject };
+        };
         break;
       }
 
@@ -44,7 +42,7 @@ function transformStateWithClones(state, actions) {
         break;
       }
 
-      default: return 'undefined type';
+      default: return 'error';
     }
 
     statesList.push(currentObject);
