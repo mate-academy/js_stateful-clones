@@ -8,11 +8,12 @@
  */
 
 function transformStateWithClones(state, actions) {
-  const resultArr = [];
-  const createNewObj = (obj) => {
-    const newObj = resultArr.length === 0
-      ? Object.assign({ ...state })
-      : Object.assign({ ...resultArr[resultArr.length - 1] });
+  const results = [];
+
+  const createNewObj = (obj, arr) => {
+    const newObj = arr.length === 0
+      ? Object.assign({ ...obj })
+      : Object.assign({ ...arr[arr.length - 1] });
 
     return newObj;
   };
@@ -20,22 +21,23 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties': {
-        resultArr.push(Object.assign(createNewObj(state), action.extraData));
+        results.push(Object.assign(createNewObj(state,
+          results), action.extraData));
         break;
       }
 
       case 'removeProperties': {
-        resultArr.push(createNewObj(state));
+        results.push(createNewObj(state, results));
 
-        for (const keyToRemove of action.keysToRemove) {
-          delete resultArr[resultArr.length - 1][keyToRemove];
-        }
+        action.keysToRemove.forEach(keyToRemove => {
+          delete results[results.length - 1][keyToRemove];
+        });
 
         break;
       }
 
       case 'clear': {
-        resultArr.push({});
+        results.push({});
         break;
       }
 
@@ -44,7 +46,7 @@ function transformStateWithClones(state, actions) {
     }
   }
 
-  return resultArr;
+  return results;
 }
 
 module.exports = transformStateWithClones;
