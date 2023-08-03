@@ -7,13 +7,13 @@
  * @return {Object[]}
  */
 
-const keyToRemove = (state, action) => {
-  for (const key of action) {
+const remove = (state, keysToRemove) => {
+  for (const key of keysToRemove) {
     delete state[key];
   }
 };
 
-const keysToClear = (state) => {
+const clearKey = (state) => {
   for (const key in state) {
     delete state[key];
   }
@@ -32,11 +32,11 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        keyToRemove(stateCopy, keysToRemove);
+        remove(stateCopy, keysToRemove);
         break;
 
       case 'clear':
-        keysToClear(stateCopy);
+        clearKey(stateCopy);
         break;
 
       default:
