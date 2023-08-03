@@ -6,6 +6,19 @@
  *
  * @return {Object[]}
  */
+
+const keyToRemove = (state, action) => {
+  for (const key of action) {
+    delete state[key];
+  }
+};
+
+const keysToClear = (state) => {
+  for (const key in state) {
+    delete state[key];
+  }
+};
+
 function transformStateWithClones(state, actions) {
   const stateCopy = { ...state };
   const stateHistory = [];
@@ -25,6 +38,9 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         keysToClear(stateCopy);
         break;
+
+      default:
+        break;
     }
 
     stateHistory.push({ ...stateCopy });
@@ -32,17 +48,5 @@ function transformStateWithClones(state, actions) {
 
   return stateHistory;
 }
-
-const keyToRemove = (state, action) => {
-  for (const key of action) {
-    delete state[key];
-  }
-};
-
-const keysToClear = (state) => {
-  for (const key in state) {
-    delete state[key];
-  }
-};
 
 module.exports = transformStateWithClones;
