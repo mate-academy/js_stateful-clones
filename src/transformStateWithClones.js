@@ -25,7 +25,8 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        throw new Error(`Something went wrong:`
+        + `unexpected  action.type: ${action.type}`);
     }
 
     previousChanges.push({ ...stateCopy });
