@@ -29,14 +29,14 @@ function transformStateWithClones(state, actions) {
   };
 
   const clonesArray = [];
+  let previousState = { ...state }; // Змінимо 'currentState' на 'previousState'
 
   for (const action of actions) {
     const handler = actionHandlers[action.type];
 
     if (handler) {
-      const newState = handler(action, state);
-
-      clonesArray.push(JSON.parse(JSON.stringify(newState)));
+      previousState = handler(action, previousState);
+      clonesArray.push(JSON.parse(JSON.stringify(previousState)));
     }
   }
 
