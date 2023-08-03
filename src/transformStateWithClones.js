@@ -7,7 +7,32 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
+  const stateCopy = { ...state };
+  const previousChanges = [];
+
+  actions.forEach((action) => {
+    switch (action.type) {
+      case 'addProperties':
+        Object.assign(stateCopy, action.extraData);
+        break;
+
+      case 'removeProperties':
+        action.keysToRemove.forEach((key) => delete stateCopy[key]);
+        break;
+
+      case 'clear':
+        Object.keys(stateCopy).forEach((key) => delete stateCopy[key]);
+        break;
+
+      default:
+        throw new Error(`Something went wrong:`
+        + `unexpected  action.type: ${action.type}`);
+    }
+
+    previousChanges.push({ ...stateCopy });
+  });
+
+  return previousChanges;
 }
 
 module.exports = transformStateWithClones;
