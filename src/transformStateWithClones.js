@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 
-const remove = (state, keysToRemove) => {
+const removeKeys = (state, keysToRemove) => {
   for (const key of keysToRemove) {
     delete state[key];
   }
@@ -32,7 +32,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        remove(stateCopy, keysToRemove);
+        removeKeys(stateCopy, keysToRemove);
         break;
 
       case 'clear':
@@ -40,7 +40,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        throw new Error('Add correct state or action!');
     }
 
     stateHistory.push({ ...stateCopy });
