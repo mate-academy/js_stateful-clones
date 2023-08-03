@@ -9,47 +9,38 @@
 
 function transformStateWithClones(state, actions) {
   const resultArr = [];
+  const createNewObj = (obj) => {
+    const newObj = resultArr.length === 0
+      ? Object.assign({ ...state })
+      : Object.assign({ ...resultArr[resultArr.length - 1] });
 
-  for (let i = 0; i < actions.length; i++) {
-    switch (actions[i].type) {
-      case 'addProperties':
-        if (resultArr.length === 0) {
-          resultArr.push(Object.assign({ ...state }, actions[i].extraData));
-        } else {
-          resultArr.push(Object.assign({ ...resultArr[resultArr.length - 1] },
-            actions[i].extraData));
+    return newObj;
+  };
+
+  for (const action of actions) {
+    switch (action.type) {
+      case 'addProperties': {
+        resultArr.push(Object.assign(createNewObj(state), action.extraData));
+        break;
+      }
+
+      case 'removeProperties': {
+        resultArr.push(createNewObj(state));
+
+        for (const keyToRemove of action.keysToRemove) {
+          delete resultArr[resultArr.length - 1][keyToRemove];
         }
 
         break;
+      }
 
-      case 'removeProperties':
-        if (resultArr.length === 0) {
-          resultArr.push({ ...state });
-        } else {
-          resultArr.push({ ...resultArr[resultArr.length - 1] });
-        }
-
-        for (const action of actions[i].keysToRemove) {
-          delete resultArr[resultArr.length - 1][action];
-        };
-
+      case 'clear': {
+        resultArr.push({});
         break;
-
-      case 'clear':
-        if (resultArr.length === 0) {
-          resultArr.push({ ...state });
-        } else {
-          resultArr.push({ ...resultArr[resultArr.length - 1] });
-        }
-
-        Object.keys(resultArr[resultArr.length - 1]).forEach(key => {
-          delete resultArr[resultArr.length - 1][key];
-        });
-
-        break;
+      }
 
       default:
-        break;
+        throw new Error('Something went wrong');
     }
   }
 
