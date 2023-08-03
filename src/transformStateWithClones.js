@@ -18,6 +18,10 @@ function stateRemoveProperty(state, keysArr) {
   }
 }
 
+function addProperties(state, extraData) {
+  Object.assign(state, extraData);
+}
+
 function transformStateWithClones(state, actions) {
   const statesArray = [];
   const currentState = { ...state };
@@ -25,7 +29,7 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        Object.assign(currentState, action.extraData);
+        addProperties(currentState, action.extraData);
         break;
 
       case 'removeProperties':
@@ -37,7 +41,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        throw new Error('Invalid input!');
     }
 
     statesArray.push({ ...currentState });
