@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const stateHistory = [];
-  const stateCopy = { ...state };
+  let stateCopy = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
@@ -24,15 +24,12 @@ function transformStateWithClones(state, actions) {
         break;
       }
 
-      case 'clear': {
-        Object.keys(stateCopy).forEach(key => {
-          delete stateCopy[key];
-        });
+      case 'clear':
+        stateCopy = {};
         break;
-      }
 
       default:
-        break;
+        return `Something went wrong, there's no '${action.type}' action type`;
     }
     stateHistory.push({ ...stateCopy });
   }
