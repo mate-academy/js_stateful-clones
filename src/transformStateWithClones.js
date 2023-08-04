@@ -8,45 +8,40 @@
  */
 
 function transformStateWithClones(state, actions) {
-  const results = [];
-
-  const createNewObj = (obj, arr) => {
-    const newObj = arr.length === 0
-      ? Object.assign({ ...obj })
-      : Object.assign({ ...arr[arr.length - 1] });
-
-    return newObj;
-  };
+  const stateHistory = [];
+  const stateClone = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties': {
-        results.push(Object.assign(createNewObj(state,
-          results), action.extraData));
+        Object.assign(stateClone, action.extraData);
         break;
       }
 
       case 'removeProperties': {
-        results.push(createNewObj(state, results));
-
         action.keysToRemove.forEach(keyToRemove => {
-          delete results[results.length - 1][keyToRemove];
+          delete stateClone[keyToRemove];
         });
 
         break;
       }
 
       case 'clear': {
-        results.push({});
+        for (const key in stateClone) {
+          delete stateClone[key];
+        }
+
         break;
       }
 
       default:
-        throw new Error('Something went wrong');
+        throw new Error('Uncorect state type');
     }
+
+    stateHistory.push({ ...stateClone });
   }
 
-  return results;
+  return stateHistory;
 }
 
 module.exports = transformStateWithClones;
