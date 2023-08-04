@@ -34,6 +34,7 @@ transformStateWithClones(state, [
   {type: 'removeProperties', keysToRemove: ['bar', 'hello']},
   {type: 'addProperties', extraData: {another: 'one'}}
 ])
+
 ```
 
 must return the following array:

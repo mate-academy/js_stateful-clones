@@ -8,35 +8,36 @@
  */
 function transformStateWithClones(state, actions) {
   const newState = ({ ...state });
-  const arrayFromState = [];
+  const renovatedState = [];
 
-  for (let i = 0; i < actions.length; i++) {
-    const extraDatavalue = actions[i].extraData;
-    const typeOfAction = actions[i].type;
-    const removeValue = actions[i].keysToRemove;
+  for (const action of actions) {
+    const extraDatavalue = action.extraData || {};
+    const typeOfAction = action.type;
+    const removeValue = action.keysToRemove || {};
 
     switch (typeOfAction) {
       case 'addProperties':
         for (const newProperty in extraDatavalue) {
           newState[newProperty] = extraDatavalue[newProperty];
         }
-        arrayFromState.push({ ...newState });
+
         break;
 
       case 'removeProperties':
         for (let j = 0; j < removeValue.length; j++) {
           delete newState[removeValue[j]];
         }
-        arrayFromState.push({ ...newState });
+
         break;
 
       default:
         Object.keys(newState).forEach(key => delete newState[key]);
-        arrayFromState.push({ ...{} });
     }
+
+    renovatedState.push({ ...newState });
   }
 
-  return arrayFromState;
+  return renovatedState;
 }
 
 module.exports = transformStateWithClones;
