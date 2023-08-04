@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const result = [];
+  const statesHistory = [];
   const stateCopy = { ...state };
 
   for (const action of actions) {
@@ -32,10 +32,10 @@ function transformStateWithClones(state, actions) {
         throw new Error('action.type does not match the condition');
     }
 
-    result.push({ ...stateCopy });
+    statesHistory.push({ ...stateCopy });
   }
 
-  return result;
+  return statesHistory;
 }
 
 module.exports = transformStateWithClones;
