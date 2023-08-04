@@ -29,7 +29,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        return 'incorect data';
+        throw new Error('incorrect data');
     }
 
     dataOfState.push({ ...stateCopy });
