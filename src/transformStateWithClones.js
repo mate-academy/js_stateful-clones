@@ -38,7 +38,7 @@ function transformState(stateCopy, action) {
       break;
 
     default:
-      throw new Error('Hey ho!');
+      throw new Error('Unknown properties');
   }
 }
 
