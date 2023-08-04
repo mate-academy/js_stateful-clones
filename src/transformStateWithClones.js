@@ -13,36 +13,36 @@ function transformStateWithClones(state, actions) {
     throw new Error('Invalid arguments');
   }
 
-  let cloneState = { ...state };
+  let stateCopy = { ...state };
   const clonedStates = [];
 
   for (const action of actions) {
-    // get type of action
     const { type } = action;
 
-    // choice correct action
     switch (type) {
-      case 'addProperties':
+      case 'addProperties': {
         const { extraData } = action;
 
-        addPropertiesToState(cloneState, extraData);
+        addPropertiesToState(stateCopy, extraData);
         break;
+      }
 
-      case 'removeProperties':
+      case 'removeProperties': {
         const { keysToRemove } = action;
 
-        removePropertiesToState(cloneState, keysToRemove);
+        removeKeys(stateCopy, keysToRemove);
         break;
+      }
 
       case 'clear':
-        cloneState = {};
+        stateCopy = {};
         break;
 
       default:
         throw new Error('Smth gone wrong');
     }
 
-    clonedStates.push({ ...cloneState });
+    clonedStates.push({ ...stateCopy });
   }
 
   return clonedStates;
@@ -58,9 +58,9 @@ function addPropertiesToState(state, extraData) {
   }
 }
 
-function removePropertiesToState(state, keysToRemove) {
-  for (const removeKey of keysToRemove) {
-    delete state[removeKey];
+function removeKeys(state, keysToRemove) {
+  for (const key of keysToRemove) {
+    delete state[key];
   }
 }
 
