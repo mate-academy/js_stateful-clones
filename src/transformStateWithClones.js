@@ -20,8 +20,11 @@ function transformStateWithClones(state, actions) {
           delete newState[key];
         }
         break;
-      default:
+      case 'clear':
         newState = {};
+        break;
+      default:
+        throw new Error(`Action type ${action.type} is not valid.`);
     }
     result.push({ ...newState });
   }
