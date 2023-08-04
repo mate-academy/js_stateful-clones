@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const dataOfState = [];
+  const stateHistory = [];
   const stateCopy = { ...state };
 
   for (const action of actions) {
@@ -32,10 +32,10 @@ function transformStateWithClones(state, actions) {
         throw new Error('incorrect data');
     }
 
-    dataOfState.push({ ...stateCopy });
+    stateHistory.push({ ...stateCopy });
   }
 
-  return dataOfState;
+  return stateHistory;
 }
 
 module.exports = transformStateWithClones;
