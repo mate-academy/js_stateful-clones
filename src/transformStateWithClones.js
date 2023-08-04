@@ -9,7 +9,7 @@
 
 function transformStateWithClones(state, actions) {
   let stateCopy = { ...state };
-  const stateCopyActions = [];
+  const stateHistory = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -30,10 +30,11 @@ function transformStateWithClones(state, actions) {
       default:
         throw new Error('Unknown properties');
     }
-    stateCopyActions.push({ ...stateCopy });
+
+    stateHistory.push({ ...stateCopy });
   }
 
-  return stateCopyActions;
+  return stateHistory;
 }
 
 module.exports = transformStateWithClones;
