@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const newState = ({ ...state });
+  let newState = ({ ...state });
   const renovatedState = [];
 
   for (const action of actions) {
@@ -30,8 +30,13 @@ function transformStateWithClones(state, actions) {
 
         break;
 
+      case 'clear':
+        newState = {};
+
+        break;
+
       default:
-        Object.keys(newState).forEach(key => delete newState[key]);
+        throw new Error('Error!');
     }
 
     renovatedState.push({ ...newState });
