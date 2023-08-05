@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const stateClone = { ...state };
-  const stateClones = [];
+  const transformedStates = [];
 
   actions.forEach(action => {
     switch (action.type) {
@@ -18,28 +18,24 @@ function transformStateWithClones(state, actions) {
 
       case 'removeProperties':
         for (const key of action.keysToRemove) {
-          if (stateClone.hasOwnProperty(key)) {
-            delete stateClone[key];
-          }
+          delete stateClone[key];
         }
         break;
 
       case 'clear':
-        for (const key of Object.keys(stateClone)) {
-          if (stateClone.hasOwnProperty(key)) {
-            delete stateClone[key];
-          }
+        for (const key in stateClone) {
+          delete stateClone[key];
         }
         break;
 
       default:
-        return new Error('Oops, something went wrong!');
+        throw new Error('Oops, something went wrong!');
     }
 
-    stateClones.push({ ...stateClone });
+    transformedStates.push({ ...stateClone });
   });
 
-  return stateClones;
+  return transformedStates;
 }
 
 module.exports = transformStateWithClones;
