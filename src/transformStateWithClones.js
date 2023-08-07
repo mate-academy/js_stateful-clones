@@ -12,6 +12,7 @@ function transformStateWithClones(state, actions) {
   const TYPE_THREE = 'clear';
   const stateClone = { ...state };
   const resultArr = [];
+  let addObj = {};
 
   for (const obj of actions) {
     const { type } = obj;
@@ -20,9 +21,8 @@ function transformStateWithClones(state, actions) {
       case TYPE_ONE:
         Object.assign(stateClone, obj.extraData);
 
-        const addObj = { ...stateClone };
+        addObj = { ...stateClone };
 
-        resultArr.push(addObj);
         break;
 
       case TYPE_TWO:
@@ -30,9 +30,8 @@ function transformStateWithClones(state, actions) {
           delete stateClone[key];
         }
 
-        const removeObj = { ...stateClone };
+        addObj = { ...stateClone };
 
-        resultArr.push(removeObj);
         break;
 
       case TYPE_THREE:
@@ -40,14 +39,15 @@ function transformStateWithClones(state, actions) {
           delete stateClone[prop];
         }
 
-        const clearObj = { ...stateClone };
+        addObj = { ...stateClone };
 
-        resultArr.push(clearObj);
         break;
 
       default:
         return state;
     }
+
+    resultArr.push(addObj);
   }
 
   return resultArr;
