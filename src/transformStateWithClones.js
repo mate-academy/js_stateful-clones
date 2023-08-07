@@ -24,15 +24,14 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        for (let j = 0; j < removeValue.length; j++) {
-          delete newState[removeValue[j]];
+        for (const willDeletted of removeValue) {
+          delete newState[willDeletted];
         }
 
         break;
 
       case 'clear':
         newState = {};
-
         break;
 
       default:
