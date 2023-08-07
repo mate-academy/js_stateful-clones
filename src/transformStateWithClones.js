@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const statesHistory = [];
-  const stateCopy = { ...state };
+  let stateCopy = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
@@ -25,16 +25,12 @@ function transformStateWithClones(state, actions) {
       }
 
       case 'clear': {
-        const keysToClear = Object.keys(stateCopy);
-
-        for (const keyToClear of keysToClear) {
-          delete stateCopy[keyToClear];
-        }
+        stateCopy = {};
         break;
       }
 
       default:
-        throw new Error();
+        throw new Error('Some error');
     }
     statesHistory.push({ ...stateCopy });
   }
