@@ -8,10 +8,10 @@
  */
 function transformStateWithClones(state, actions) {
   const resultArray = [];
+  const currentState = { ...state };
 
   for (const action of actions) {
     const { type } = action;
-    const currentState = { ...resultArray[resultArray.length - 1] || state };
 
     if (type === 'addProperties') {
       const { extraData } = action;
@@ -21,19 +21,15 @@ function transformStateWithClones(state, actions) {
       const { keysToRemove } = action;
 
       for (const key of keysToRemove) {
-        if (currentState.hasOwnProperty(key)) {
-          delete currentState[key];
-        }
+        delete currentState[key];
       }
     } else if (type === 'clear') {
       for (const key in currentState) {
-        if (currentState.hasOwnProperty(key)) {
-          delete currentState[key];
-        }
+        delete currentState[key];
       }
     }
 
-    resultArray.push(currentState);
+    resultArray.push({ ...currentState });
   }
 
   return resultArray;
