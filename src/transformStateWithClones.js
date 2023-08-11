@@ -9,14 +9,12 @@
 function transformStateWithClones(state, actions) {
   // write code here
   const result = [];
-  const copyState = { ...state };
+  let copyState = { ...state };
   const _addProperties = 'addProperties';
   const _removeProperties = 'removeProperties';
   const _clear = 'clear';
 
-  for (const action of actions) {
-    const { type, extraData, keysToRemove } = action;
-
+  for (const { type, extraData, keysToRemove } of actions) {
     switch (type) {
       case _addProperties:
         Object.assign(copyState, extraData);
@@ -27,7 +25,7 @@ function transformStateWithClones(state, actions) {
         }
         break;
       case _clear:
-        Object.keys(copyState).forEach(key => delete copyState[key]);
+        copyState = {};
         break;
       default:
         throw new Error('Type error!');
