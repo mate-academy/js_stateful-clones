@@ -19,14 +19,17 @@ function transformStateWithClones(state, actions) {
       case _addProperties:
         Object.assign(copyState, extraData);
         break;
+
       case _removeProperties:
         for (const removeKey of keysToRemove) {
           delete copyState[removeKey];
         }
         break;
+
       case _clear:
         copyState = {};
         break;
+
       default:
         throw new Error('Type error!');
     }
