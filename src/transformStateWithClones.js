@@ -9,28 +9,31 @@
 function transformStateWithClones(state, actions) {
   const stateArray = [];
   const cloneState = { ...state };
+  const ADD = 'addProperties';
+  const REMOVE = 'removeProperties';
+  const CLEAR = 'clear';
 
-  for (const action of actions) {
-    switch (action.type) {
-      case 'addProperties':
-        Object.assign(cloneState, action.extraData);
+  for (const { type, extraData, keysToRemove } of actions) {
+    switch (type) {
+      case ADD:
+        Object.assign(cloneState, extraData);
         break;
 
-      case 'removeProperties': {
-        for (const key of action.keysToRemove) {
+      case REMOVE: {
+        for (const key of keysToRemove) {
           delete cloneState[key];
         }
         break;
       }
 
-      case 'clear': {
+      case CLEAR: {
         for (const key of Object.keys(cloneState)) {
           delete cloneState[key];
         }
         break;
       }
       default:
-        return (`Unknown action type ${action.type}`);
+        return (`Unknown action type ${type}`);
     }
     stateArray.push({ ...cloneState });
   }
@@ -38,9 +41,8 @@ function transformStateWithClones(state, actions) {
   return stateArray;
 }
 
-
-
 // And i did it in other way(i think this one isn't good)
+// eslint-disable-next-line no-unused-vars
 function transformStateWithClonesAnotherWay(state, actions) {
   const stateArray = [];
   let clonestate = { ...state };
@@ -69,20 +71,4 @@ function transformStateWithClonesAnotherWay(state, actions) {
   return stateArray;
 }
 
-const state = {
-  foo: 'bar',
-  bar: 'foo',
-};
-
-console.log(
-  transformStateWithClones(state, [
-    {
-      type: 'addProperties',
-      extraData: {
-        name: 'Jim',
-        hello: 'world',
-      },
-    },
-  ])
-);
 module.exports = transformStateWithClones;
