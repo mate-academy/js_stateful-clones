@@ -8,16 +8,9 @@
  */
 function transformStateWithClones(state, actions) {
   const res = [];
+  let temp = { ...state };
 
   for (let i = 0; i < actions.length; i++) {
-    let temp = null;
-
-    if (i === 0) {
-      temp = { ...state };
-    } else {
-      temp = { ...res[i - 1] };
-    }
-
     switch (actions[i].type) {
       case 'clear':
         temp = {};
@@ -30,13 +23,9 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        if (Object.keys(temp).length === 1) {
-          temp = {};
-        } else {
-          for (const rmKey of actions[i].keysToRemove) {
-            if (temp.hasOwnProperty(rmKey)) {
-              delete temp[rmKey];
-            }
+        for (const rmKey of actions[i].keysToRemove) {
+          if (temp.hasOwnProperty(rmKey)) {
+            delete temp[rmKey];
           }
         }
         break;
