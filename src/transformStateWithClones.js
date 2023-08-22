@@ -6,6 +6,7 @@
  *
  * @return {Object[]}
  */
+
 function transformStateWithClones(state, actions) {
   const CLONE_STATE = { ...state };
   const STATE_LOG = [];
