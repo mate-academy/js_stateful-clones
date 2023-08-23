@@ -12,19 +12,22 @@ function transformStateWithClones(state, actions) {
 
   for (const obj of actions) {
     const { type, extraData, keysToRemove } = obj;
+    const ADD_PROPERTIES = 'addProperties';
+    const REMOVE_PROPERTIES = 'removeProperties';
+    const CLEAR = 'clear';
 
     switch (type) {
-      case 'addProperties':
+      case ADD_PROPERTIES:
         currentState = {
           ...currentState, ...extraData,
         };
         break;
 
-      case 'removeProperties':
+      case REMOVE_PROPERTIES:
         keysToRemove.forEach(key => delete currentState[key]);
         break;
 
-      case 'clear':
+      case CLEAR:
         currentState = {};
         break;
     }
