@@ -60,16 +60,6 @@ function transformStateWithClones(state, actions) {
 
   RES.splice(0, 1);
 
-  for (let i = 0; i < RES.length; i++) {
-    let el = RES[i];
-
-    for (const key in state) {
-      delete state[key];
-    }
-
-    el = Object.assign(state, el);
-  }
-
   return RES;
 }
 
