@@ -1,59 +1,65 @@
 'use strict';
 
 function transformStateWithClones(state, actions) {
-  const COMP_ARR = [];
-  const COMP_OBJ = { ...state };
-  const RES = [];
+  const compArr = [];
+  const compObj = { ...state };
+  const result = [];
 
-  RES.push(state);
+  result.push(state);
 
   for (let i = 0; i < actions.length; i++) {
-    const OBJ_OF_ACTIONS = actions[i];
-    const OBJ_FOR_WORK_KEY = OBJ_OF_ACTIONS.type;
-    const OBJ_FOR_WORK_VALUE = OBJ_OF_ACTIONS.extraData
-    || OBJ_OF_ACTIONS.keysToRemove;
-    const OBJ_FOR_WORK = {};
+    const objOfActions = actions[i];
+    const objForWorkKey = objOfActions.type;
+    const objForWorkValue = objOfActions.extraData
+    || objOfActions.keysToRemove;
+    const objForWork = {};
 
-    OBJ_FOR_WORK[OBJ_FOR_WORK_KEY] = OBJ_FOR_WORK_VALUE;
-    COMP_ARR.push(OBJ_FOR_WORK);
+    objForWork[objForWorkKey] = objForWorkValue;
+    compArr.push(objForWork);
   }
 
-  for (let i = 0; i < COMP_ARR.length; i++) {
-    const el = COMP_ARR[i];
+  for (let i = 0; i < compArr.length; i++) {
+    const el = compArr[i];
+    const controlKey = Object.keys(el)[0];
 
-    if (el.hasOwnProperty('clear')) {
-      for (const key in COMP_OBJ) {
-        delete COMP_OBJ[key];
-      }
-      RES.push(COMP_OBJ);
-    }
+    switch (controlKey) {
+      case 'clear':
+        for (const key in compObj) {
+          delete compObj[key];
+        }
+        result.push(compObj);
+        break;
+      case 'addProperties':
+        const objForWorkAdd = { ...result[result.length - 1] };
 
-    if (el.hasOwnProperty('addProperties')) {
-      const OBJ_FOR_WORK = { ...RES[RES.length - 1] };
+        Object.assign(objForWorkAdd, el.addProperties);
+        result.push(objForWorkAdd);
+        break;
+      case 'removeProperties':
+        const objForWorkRem = { ...result[result.length - 1] };
+        const keysToDelete = el.removeProperties;
 
-      Object.assign(OBJ_FOR_WORK, el.addProperties);
-      RES.push(OBJ_FOR_WORK);
+        for (const itemToDel of keysToDelete) {
+          for (const key in objForWorkRem) {
+            if (itemToDel === key) {
+              delete objForWorkRem[itemToDel];
+            }
+          }
+        }
+        result.push(objForWorkRem);
+        break;
+      default:
+        return 'Нет таких значений';
     }
 
     if (el.hasOwnProperty('removeProperties')) {
-      const OBJ_FOR_WORK = { ...RES[RES.length - 1] };
-      const KEYS_TO_DELETE = el.removeProperties;
 
-      for (const ITEM_DEL of KEYS_TO_DELETE) {
-        for (const key in OBJ_FOR_WORK) {
-          if (ITEM_DEL === key) {
-            delete OBJ_FOR_WORK[ITEM_DEL];
-          }
-        }
-      }
-
-      RES.push(OBJ_FOR_WORK);
     }
   }
 
-  RES.splice(0, 1);
+  result.splice(0, 1);
 
-  return RES;
+  return result;
 }
 
 module.exports = transformStateWithClones;
