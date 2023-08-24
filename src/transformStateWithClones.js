@@ -52,9 +52,6 @@ function transformStateWithClones(state, actions) {
         return 'Нет таких значений';
     }
 
-    if (el.hasOwnProperty('removeProperties')) {
-
-    }
   }
 
   result.splice(0, 1);
