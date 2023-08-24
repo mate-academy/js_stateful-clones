@@ -51,7 +51,6 @@ function transformStateWithClones(state, actions) {
       default:
         return 'Нет таких значений';
     }
-
   }
 
   result.splice(0, 1);
