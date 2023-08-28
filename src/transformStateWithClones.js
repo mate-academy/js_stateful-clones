@@ -6,27 +6,43 @@
  *
  * @return {Object[]}
  */
-function transformStateWithClones(state, actions) {
-  const result = [];
-  let clone = { ...state };
+function transformStateWithcloneStates(state, actions) {
+  const resultTransformState = [];
+  let cloneState = { ...state };
+  const addProperExtraData = 'addProperties';
+  const removePropertyKeys = 'removeProperties';
+  const doEmptyState = 'clear';
 
-  for (const action of actions) {
-    if (action.type === 'addProperties') {
-      clone = {
-        ...clone, ...action.extraData,
-      };
-    } else if (action.type === 'removeProperties') {
-      for (const key of action.keysToRemove) {
-        delete clone[key];
+  for (const { type, extraData, keysToRemove } of actions) {
+    switch (type) {
+      case addProperExtraData: {
+        cloneState = {
+          ...cloneState, ...extraData,
+        };
+        break;
       }
-    } else if (action.type === 'clear') {
-      clone = {};
+
+      case removePropertyKeys: {
+        for (const key of keysToRemove) {
+          delete cloneState[key];
+        }
+        break;
+      }
+
+      case doEmptyState: {
+        cloneState = {};
+        break;
+      }
+
+      default: {
+        throw new Error(`Unknown action type: ${type}`);
+      }
     }
 
-    result.push({ ...clone });
+    resultTransformState.push({ ...cloneState });
   }
 
-  return result;
+  return resultTransformState;
 }
 
-module.exports = transformStateWithClones;
+module.exports = transformStateWithcloneStates;
