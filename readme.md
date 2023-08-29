@@ -52,7 +52,7 @@ Then after calling
 
 ```
 transformStateWithClones(state, [
-  {type: 'addProperties', extraData: {yet: 'another property'}}
+  {type: 'addProperties', extraData: {yet: 'another property'}},
   {type: 'clear'},
   {type: 'addProperties', extraData: {foo: 'bar', name: 'Jim'}}
 ])
