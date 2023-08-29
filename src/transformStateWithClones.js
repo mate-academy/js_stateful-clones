@@ -1,45 +1,34 @@
 'use strict';
 
 function transformStateWithClones(state, actions) {
-  const compArr = [];
   const compObj = { ...state };
+  const CLEAR = 'clear';
+  const ADD = 'addProperties';
+  const REMOVE = 'removeProperties';
   const result = [];
 
   result.push(state);
 
   for (let i = 0; i < actions.length; i++) {
-    const objOfActions = actions[i];
-    const objForWorkKey = objOfActions.type;
-    const objForWorkValue = objOfActions.extraData
-    || objOfActions.keysToRemove;
-    const objForWork = {};
+    const { type, extraData, keysToRemove } = actions[i];
 
-    objForWork[objForWorkKey] = objForWorkValue;
-    compArr.push(objForWork);
-  }
-
-  for (let i = 0; i < compArr.length; i++) {
-    const el = compArr[i];
-    const controlKey = Object.keys(el)[0];
-
-    switch (controlKey) {
-      case 'clear':
+    switch (type) {
+      case CLEAR:
         for (const key in compObj) {
           delete compObj[key];
         }
         result.push(compObj);
         break;
-      case 'addProperties':
+      case ADD:
         const objForWorkAdd = { ...result[result.length - 1] };
 
-        Object.assign(objForWorkAdd, el.addProperties);
+        Object.assign(objForWorkAdd, extraData);
         result.push(objForWorkAdd);
         break;
-      case 'removeProperties':
+      case REMOVE:
         const objForWorkRem = { ...result[result.length - 1] };
-        const keysToDelete = el.removeProperties;
 
-        for (const itemToDel of keysToDelete) {
+        for (const itemToDel of keysToRemove) {
           for (const key in objForWorkRem) {
             if (itemToDel === key) {
               delete objForWorkRem[itemToDel];
@@ -49,10 +38,9 @@ function transformStateWithClones(state, actions) {
         result.push(objForWorkRem);
         break;
       default:
-        return 'Нет таких значений';
+        return 'No such values';
     }
   }
-
   result.splice(0, 1);
 
   return result;
