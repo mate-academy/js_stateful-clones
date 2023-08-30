@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * @param {Object} state
@@ -14,21 +14,18 @@ function transformStateWithClones(state, actions) {
 
   for (const action of actions) {
     switch (action.type) {
-      case 'addProperties':
+      case "addProperties":
         Object.assign(newObj, action.extraData);
-        // newArray.push({ ...newObj });
         break;
 
-      case 'removeProperties':
+      case "removeProperties":
         for (const prop of action.keysToRemove) {
           delete newObj[prop];
         }
-        // newArray.push({ ...newObj });
         break;
 
-      case 'clear':
+      case "clear":
         newObj = {};
-        // newArray.push({ ...newObj });
         break;
 
       default:
