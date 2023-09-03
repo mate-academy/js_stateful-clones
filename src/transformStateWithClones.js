@@ -18,22 +18,29 @@ function transformStateWithClones(state, actions) {
     } = action;
 
     switch (type) {
-      case 'addProperties':
+      case 'addProperties': {
         Object.assign(stateClone, extraData);
 
         break;
-      case 'removeProperties':
-        for (const key of keysToRemove) {
+      }
+
+      case 'removeProperties': {
+        keysToRemove.forEach((key) => {
           delete stateClone[key];
-        }
+        });
 
         break;
-      case 'clear':
+      }
+
+      case 'clear': {
         stateClone = {};
 
         break;
-      default:
+      }
+
+      default: {
         throw new Error('Unexpected action type');
+      }
     }
 
     statesHistory.push({ ...stateClone });
