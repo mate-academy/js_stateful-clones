@@ -15,30 +15,27 @@ function transformStateWithClones(state, actions) {
   const CLEAR_PROP = 'clear';
 
   for (const action of actions) {
-    let cloneState = { ...newCopy };
-
     switch (action.type) {
       case ADD_PROP:
-        Object.assign(cloneState, action.extraData);
+        Object.assign(newCopy, action.extraData);
 
         break;
 
       case REMOVE_PROP: {
         for (const key of action.keysToRemove) {
-          delete cloneState[key];
+          delete newCopy[key];
         }
 
         break;
       }
 
       case CLEAR_PROP: {
-        cloneState = {};
+        newCopy = {};
 
         break;
       }
     }
-    newArray.push(cloneState);
-    newCopy = cloneState;
+    newArray.push({ ...newCopy });
   }
 
   return newArray;
