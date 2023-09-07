@@ -16,7 +16,6 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     switch (action.type) {
       case ADD: {
-        resultArray.push(Object.assign({}, resultObject, action.extraData));
         Object.assign(resultObject, action.extraData);
         break;
       }
@@ -27,16 +26,15 @@ function transformStateWithClones(state, actions) {
             delete resultObject[key];
           }
         }
-        resultArray.push({ ...resultObject });
         break;
       }
 
       case CLEAR: {
-        resultArray.push({});
         resultObject = {};
         break;
       }
     }
+    resultArray.push({ ...resultObject });
   }
 
   return resultArray;
