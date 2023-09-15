@@ -11,39 +11,38 @@ function transformStateWithClones(state, actions) {
   const result = [];
 
   for (const option of options) {
-    const { keysToRemove, type } = option;
+    const { keysToRemove, type, extraData } = option;
+    const stateCopy = { ...state };
 
-    if (type === 'clear') {
-      result.push({});
-    }
+    switch (type) {
+      case 'addProperties':
+        let lastElementOfArray = null;
 
-    if (type === 'addProperties') {
-      let lastElementOfArray;
-
-      if (result[result.length - 1]) {
-        lastElementOfArray = Object.assign({}, result[result.length - 1],
-          option.extraData);
-      } else {
-        lastElementOfArray = Object.assign({}, state, option.extraData);
-      }
-      result.push(lastElementOfArray);
-    }
-
-    if (type === 'removeProperties') {
-      let lastElementOfArray;
-
-      if (result[result.length - 1]) {
-        lastElementOfArray = Object.assign({}, result[result.length - 1]);
-      } else {
-        lastElementOfArray = Object.assign({}, state);
-      }
-
-      for (const prop of keysToRemove) {
-        if (lastElementOfArray[prop]) {
-          delete lastElementOfArray[prop];
+        if (result[result.length - 1]) {
+          lastElementOfArray = Object.assign({}, result[result.length - 1],
+            extraData);
+        } else {
+          lastElementOfArray = Object.assign(stateCopy, extraData);
         }
-      }
-      result.push(lastElementOfArray);
+        result.push(lastElementOfArray);
+        break;
+
+      case 'removeProperties':
+        let lastElementToRemove = null;
+
+        if (result[result.length - 1]) {
+          lastElementToRemove = Object.assign({}, result[result.length - 1]);
+        } else {
+          lastElementToRemove = Object.assign(stateCopy);
+        }
+
+        keysToRemove.forEach(key => delete lastElementToRemove[key]);
+
+        result.push(lastElementToRemove);
+        break;
+
+      default:
+        result.push({});
     }
   }
 
