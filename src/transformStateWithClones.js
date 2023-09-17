@@ -1,5 +1,11 @@
 'use strict';
 
+/**
+ * @param {Object} state
+ * @param {Object} action
+ *
+ * @return {Object}
+ */
 const procces = (state, action) => {
   const newState = { ...state };
 
