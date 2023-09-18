@@ -9,27 +9,32 @@
 function transformStateWithClones(state, actions) {
   const objectLog = [];
   const objectToModify = { ...state };
+  const ADD_PROPERTIES = 'addProperties';
+  const REMOVE_PROPERTIES = 'removeProperties';
+  const CLEAR = 'clear';
 
   for (const action of actions) {
-    switch (action.type) {
-      case 'addProperties':
-        const dataToAdd = action.extraData;
+    const { type, extraData, keysToRemove } = action;
+
+    switch (type) {
+      case ADD_PROPERTIES:
+        const dataToAdd = extraData;
 
         addProperty(objectToModify, dataToAdd);
         break;
 
-      case 'removeProperties':
-        const dataToRemove = action.keysToRemove;
+      case REMOVE_PROPERTIES:
+        const dataToRemove = keysToRemove;
 
         removeProperty(objectToModify, dataToRemove);
         break;
 
-      case 'clear':
+      case CLEAR:
         clearObject(objectToModify);
         break;
 
       default:
-        throw new Error(`Unknown action type: ${actions[action].type}`);
+        throw new Error(`Unknown action type: ${type}`);
     }
     objectLog.push({ ...objectToModify });
   }
