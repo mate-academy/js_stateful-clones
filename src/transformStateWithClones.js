@@ -9,44 +9,39 @@
 function transformStateWithClones(state, actions) {
   const options = Object.values(actions);
   const result = [];
+  const stateCopy = { ...state };
 
   for (const option of options) {
     const { keysToRemove, type, extraData } = option;
-    const stateCopy = { ...state };
 
     switch (type) {
       case 'addProperties':
-        let lastElementOfArray = null;
-
-        if (result[result.length - 1]) {
-          lastElementOfArray = Object.assign({}, result[result.length - 1],
-            extraData);
-        } else {
-          lastElementOfArray = Object.assign(stateCopy, extraData);
-        }
-        result.push(lastElementOfArray);
+        Object.assign(stateCopy, extraData);
+        result.push({ ...stateCopy });
         break;
 
       case 'removeProperties':
-        let lastElementToRemove = null;
-
-        if (result[result.length - 1]) {
-          lastElementToRemove = Object.assign({}, result[result.length - 1]);
-        } else {
-          lastElementToRemove = Object.assign(stateCopy);
-        }
-
-        keysToRemove.forEach(key => delete lastElementToRemove[key]);
-
-        result.push(lastElementToRemove);
+        removeProp(keysToRemove, stateCopy);
+        result.push({ ...stateCopy });
         break;
 
       default:
-        result.push({});
+        removeProp(stateCopy, stateCopy);
+        result.push({ ...stateCopy });
     }
   }
 
   return result;
+}
+
+function removeProp(properties, stateCopy) {
+  for (const key in properties) {
+    if (properties.length) {
+      delete stateCopy[properties[key]];
+    } else {
+      delete stateCopy[key];
+    }
+  }
 }
 
 module.exports = transformStateWithClones;
