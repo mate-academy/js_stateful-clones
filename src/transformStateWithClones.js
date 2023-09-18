@@ -2,33 +2,33 @@
 
 function transformStateWithClones(state, actions) {
   const newState = { ...state };
-  const masiv = [];
+  const arr = [];
 
   for (let i = 0; i < actions.length; i++) {
-    if (actions[i].type === 'addProperties') {
-      for (const add in actions[i].extraData) {
-        newState[add] = actions[i].extraData[add];
-      }
-      masiv.push({ ...newState });
-    }
+    switch (actions[i].type) {
+      case 'addProperties' :
+        for (const add in actions[i].extraData) {
+          newState[add] = actions[i].extraData[add];
+        }
+        break;
 
-    if (actions[i].type === 'removeProperties') {
-      for (let j = 0;
-        j < actions[i].keysToRemove.length; j++) {
-        delete newState[actions[i].keysToRemove[j]];
-      }
-      masiv.push({ ...newState });
-    }
+      case 'removeProperties' :
+        for (let j = 0;
+          j < actions[i].keysToRemove.length; j++) {
+          delete newState[actions[i].keysToRemove[j]];
+        }
+        break;
 
-    if (actions[i].type === 'clear') {
-      for (const element in newState) {
-        delete newState[element];
-      }
-      masiv.push({ ...newState });
+      case 'clear' :
+        for (const element in newState) {
+          delete newState[element];
+        }
+        break;
     }
+    arr.push({ ...newState });
   }
 
-  return masiv;
+  return arr;
 }
 
 module.exports = transformStateWithClones;
