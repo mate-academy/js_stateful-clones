@@ -8,42 +8,42 @@
  */
 function transformStateWithClones(state, actions) {
   const copyState = { ...state };
-  const modifyedObjects = [];
+  const modifiedObjects = [];
   const typeValueAdd = 'addProperties';
   const typeValueRemove = 'removeProperties';
   const typeValueClear = 'clear';
 
-  for (const actionObject of actions) {
-    switch (actionObject.type) {
-      case typeValueAdd:
-        const kyes = Object.keys(actionObject.extraData);
-        const values = Object.values(actionObject.extraData);
+  for (const action of actions) {
+    const { type, extraData, keysToRemove } = action;
 
-        for (let i = 0; i < kyes.length; i++) {
-          copyState[kyes[i]] = values[i];
+    switch (type) {
+      case typeValueAdd:
+        const keys = Object.keys(extraData);
+        const values = Object.values(extraData);
+
+        for (let i = 0; i < keys.length; i++) {
+          copyState[keys[i]] = values[i];
         }
-        pushValue(modifyedObjects, { ...copyState });
         break;
+
       case typeValueRemove:
-        const mustToDelete = actionObject.keysToRemove;
+        const mustToDelete = keysToRemove;
 
         deleteKey(mustToDelete, copyState);
-        pushValue(modifyedObjects, { ...copyState });
         break;
+
       case typeValueClear:
         deleteKey(Object.keys(copyState), copyState);
-        pushValue(modifyedObjects, { ...copyState });
         break;
+
       default:
-        return 'error';
+        throw new Error('Erorr! The value wasn\'t found');
     }
+
+    modifiedObjects.push({ ...copyState });
   }
 
-  return modifyedObjects;
-}
-
-function pushValue(array, value) {
-  array.push(value);
+  return modifiedObjects;
 }
 
 function deleteKey(array, object) {
