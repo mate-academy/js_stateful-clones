@@ -21,6 +21,8 @@ function transformStateWithClones(state, actions) {
       case 'removeProperties':
         action.keysToRemove.forEach(key => delete stateCopy[key]);
         break;
+      default:
+        throw new Error('something is wrong');
     }
 
     log.push({ ...stateCopy });
