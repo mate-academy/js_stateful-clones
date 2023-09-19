@@ -9,25 +9,28 @@
 function transformStateWithClones(state, actions) {
   const arrayOfStates = [];
   const stateCopy = Object.assign({}, state);
+  const addPropertiesAction = 'addProperties';
+  const removePropertiesAction = 'removeProperties';
+  const clearAction = 'clear';
 
   for (const action of actions) {
-    switch (action.type) {
-      case 'addProperties':
-        Object.assign(stateCopy, action.extraData);
+    const { type, extraData = null, keysToRemove = null } = { ...action };
+
+    switch (type) {
+      case addPropertiesAction:
+        Object.assign(stateCopy, extraData);
         break;
 
-      case 'removeProperties':
-        const arrayToRemove = action.keysToRemove;
-
-        for (const key of arrayToRemove) {
+      case removePropertiesAction:
+        for (const key of keysToRemove) {
           delete stateCopy[key];
         }
         break;
 
-      case 'clear':
-        const arrayToDelete = Object.keys(stateCopy);
+      case clearAction:
+        const keysToDelete = Object.keys(stateCopy);
 
-        for (const key of arrayToDelete) {
+        for (const key of keysToDelete) {
           delete stateCopy[key];
         }
         break;
@@ -36,7 +39,7 @@ function transformStateWithClones(state, actions) {
         throw new Error('This action is not possible.');
     }
 
-    arrayOfStates.push(Object.assign({}, stateCopy));
+    arrayOfStates.push({ ...stateCopy });
   }
 
   return arrayOfStates;
