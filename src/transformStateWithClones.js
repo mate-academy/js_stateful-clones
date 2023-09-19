@@ -1,44 +1,40 @@
 'use strict';
 
+const ACTION_ADD_PROPERTIES = 'addProperties';
+const ACTION_REMOVE_PROPERTIES = 'removeProperties';
+const ACTION_CLEAR_PROPERTIES = 'clear';
 /**
  * @param {Object} state
  * @param {Object[]} actions
  *
  * @return {Object[]}
  */
+
 function transformStateWithClones(state, actions) {
   const results = [];
-  let temporaryPreviousObject = { ...state };
+  let temporaryObject = { ...state };
 
-  for (const item of actions) {
-    const type = item.type;
-
+  for (const { type, extraData, keysToRemove } of actions) {
     switch (type) {
-      case 'addProperties':
-        const addPropertiesObj = {
-          ...temporaryPreviousObject,
-          ...item.extraData,
-        };
+      case ACTION_ADD_PROPERTIES:
+        temporaryObject = Object.assign(temporaryObject, extraData);
 
-        temporaryPreviousObject = addPropertiesObj;
-
-        results.push({ ...addPropertiesObj });
         break;
-      case 'removeProperties':
-        for (const key of item.keysToRemove) {
-          delete temporaryPreviousObject[key];
+      case ACTION_REMOVE_PROPERTIES:
+        for (const key of keysToRemove) {
+          delete temporaryObject[key];
         }
 
-        results.push({ ...temporaryPreviousObject });
         break;
-      case 'clear':
-        temporaryPreviousObject = {};
+      case ACTION_CLEAR_PROPERTIES:
+        temporaryObject = {};
 
-        results.push({});
         break;
       default:
-        continue;
+        throw new Error('Something went wrong!');
     }
+
+    results.push({ ...temporaryObject });
   }
 
   return results;
