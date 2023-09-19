@@ -35,7 +35,7 @@ function transformStateWithClones(state, actions) {
       default:
         throw new Error('wrong action type');
     }
-    currentState = stateCopy || currentState;
+    currentState = Object.assign({}, stateCopy || currentState);
     logs.push(stateCopy);
   }
 
