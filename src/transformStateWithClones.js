@@ -8,18 +8,14 @@
  */
 function transformStateWithClones(state, actions) {
   const states = [];
-  let currentState = { ...state };
+  const currentState = { ...state };
 
   for (const action of actions) {
-    if (states.length > 0) {
-      currentState = { ...states[states.length - 1] };
-    }
-
     switch (action.type) {
       case 'addProperties':
         const data = action.extraData;
 
-        currentState = Object.assign({}, currentState, data);
+        Object.assign(currentState, data);
         break;
 
       case 'removeProperties':
@@ -40,7 +36,7 @@ function transformStateWithClones(state, actions) {
         throw new Error('Non-existing action');
     }
 
-    states.push(currentState);
+    states.push({ ...currentState });
   }
 
   return states;
