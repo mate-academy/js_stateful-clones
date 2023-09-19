@@ -14,7 +14,11 @@ function transformStateWithClones(state, actions) {
   const clearAction = 'clear';
 
   for (const action of actions) {
-    const { type, extraData = null, keysToRemove = null } = { ...action };
+    const { 
+      type, 
+      extraData = null, 
+      keysToRemove = null,
+    } = { ...action };
 
     switch (type) {
       case addPropertiesAction:
