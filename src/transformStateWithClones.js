@@ -22,23 +22,22 @@ function transformStateWithClones(state, actions) {
 
         temporaryPreviousObject = addPropertiesObj;
 
-        results.push(addPropertiesObj);
+        results.push({ ...addPropertiesObj });
         break;
       case 'removeProperties':
-        const removePropertiesObj = { ...temporaryPreviousObject };
-
         for (const key of item.keysToRemove) {
-          delete removePropertiesObj[key];
+          delete temporaryPreviousObject[key];
         }
 
-        temporaryPreviousObject = removePropertiesObj;
-
-        results.push(removePropertiesObj);
+        results.push({ ...temporaryPreviousObject });
         break;
-      default:
+      case 'clear':
         temporaryPreviousObject = {};
 
         results.push({});
+        break;
+      default:
+        continue;
     }
   }
 
