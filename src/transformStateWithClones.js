@@ -7,26 +7,29 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateCopy = { ...state };
+  let stateCopy = { ...state };
   const changesArray = [];
 
-  for (const deed of actions) {
-    switch (deed.type) {
-      case 'addProperties':
-        for (const key in deed.extraData) {
-          stateCopy[key] = deed.extraData[key];
+  const ADD_PROPERTIES = 'addProperties';
+  const REMOVE_PROPERTIES = 'removeProperties';
+  const CLEAR = 'clear';
+
+  for (const { type, extraData, keysToRemove } of actions) {
+    // can deconstruct directly in cycle
+    switch (type) {
+      case ADD_PROPERTIES:
+        stateCopy = Object.assign(stateCopy, extraData);
+        break;
+
+      case REMOVE_PROPERTIES:
+        for (const key of keysToRemove) {
+          delete stateCopy[key];
         };
         break;
 
-      case 'removeProperties':
-        for (let j = 0; j < deed.keysToRemove.length; j++) {
-          delete stateCopy[deed.keysToRemove[j]];
-        };
-        break;
-
-      case 'clear':
-        for (const lock in stateCopy) {
-          delete stateCopy[lock];
+      case CLEAR:
+        for (const key in stateCopy) {
+          delete stateCopy[key];
         };
         break;
       default:
