@@ -8,21 +8,21 @@
  */
 function transformStateWithClones(state, actions) {
   const stateCopyArray = [];
-  const stateCopy = Object.assign({}, state);
+  let stateCopy = Object.assign({}, state);
 
   for (const i of actions) {
     switch (i.type) {
-      case 'addProperties': Object.assign(stateCopy, i.extraData);
+      case 'addProperties':
+        Object.assign(stateCopy, i.extraData);
         break;
 
-      case 'removeProperties': i.keysToRemove.forEach((el) => {
-        delete stateCopy[el];
-      }, {});
+      case 'removeProperties':
+        i.keysToRemove.forEach((el) => {
+          delete stateCopy[el];
+        }, {});
         break;
 
-      case 'clear': Object.keys(stateCopy).forEach((key) => {
-        delete stateCopy[key];
-      }, {});
+      case 'clear': stateCopy = {};
         break;
 
       default: throw new Error('Write a valid property');
