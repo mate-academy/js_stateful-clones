@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const newStates = [state];
+  const newStates = [];
   let newState = state;
   const addType = 'addProperties';
   const removeType = 'removeProperties';
@@ -42,7 +42,7 @@ function transformStateWithClones(state, actions) {
     newStates.push(newState);
   }
 
-  return newStates.slice(1);
+  return newStates;
 }
 
 module.exports = transformStateWithClones;
