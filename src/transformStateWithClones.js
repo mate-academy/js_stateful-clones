@@ -34,9 +34,7 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    totalArray.push({
-      ...{}, ...stateCopy,
-    });
+    totalArray.push({ ...stateCopy });
   }
 
   return totalArray;
