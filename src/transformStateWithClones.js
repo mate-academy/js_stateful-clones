@@ -29,7 +29,6 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        result.push({});
         break;
     }
 
