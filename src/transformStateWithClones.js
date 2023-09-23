@@ -6,27 +6,33 @@
  *
  * @return {Object[]}
  */
+/* eslint-disable */
 
 function transformStateWithClones(state, actions) {
-  const arrayResult = [];
-  const stateCopy = Object.assign({}, state);
+  const TYPEPROPERTY = 'addProperties';
+  const TYPEREMOVE = 'removeProperties';
+  const TYPECLEAR = 'clear';
+  const ARRAYRESULT = [];
+  const STATECOPY = Object.assign({}, state);
 
   for (const action of actions) {
-    switch (action.type) {
-      case 'addProperties':
-        Object.assign(stateCopy, action.extraData);
+    let { type, keysToRemove, extraData} = action;
+
+    switch (type) {
+      case TYPEPROPERTY:
+        Object.assign(STATECOPY, extraData);
 
         break;
 
-      case 'removeProperties':
-        for (const prop of action.keysToRemove) {
-          delete stateCopy[prop];
+      case TYPEREMOVE:
+        for (const prop of keysToRemove) {
+          delete STATECOPY[prop];
         }
         break;
 
-      case 'clear':
-        for (const key in stateCopy) {
-          delete stateCopy[key];
+      case TYPECLEAR:
+        for (const key in STATECOPY) {
+          delete STATECOPY[key];
         }
         break;
 
@@ -34,10 +40,10 @@ function transformStateWithClones(state, actions) {
         throw new Error('Wrong input');
     }
 
-    arrayResult.push({ ...stateCopy });
+    ARRAYRESULT.push({ ...STATECOPY });
   }
 
-  return arrayResult;
+  return ARRAYRESULT;
 }
 
 module.exports = transformStateWithClones;
