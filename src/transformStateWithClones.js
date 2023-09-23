@@ -38,11 +38,7 @@ function transform(state, action) {
     }
 
     case 'clear': {
-      for (const key of Object.keys(state)) {
-        delete clone[key];
-      }
-
-      return clone;
+      return {};
     }
   }
 }
