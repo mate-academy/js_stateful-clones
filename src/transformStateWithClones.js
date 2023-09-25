@@ -26,6 +26,9 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         copyOfState = {};
         break;
+
+      default:
+        throw Error;
     }
     arr.push({ ...copyOfState });
   }
