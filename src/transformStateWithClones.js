@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const versionHistory = [];
-  const stateCopy = { ...state };
+  let stateCopy = { ...state };
   const ADD_PROPERTIES = 'addProperties';
   const REMOVE_PROPERTIES = 'removeProperties';
   const CLEAR_PROPERTIES = 'clear';
@@ -22,13 +22,13 @@ function transformStateWithClones(state, actions) {
       case REMOVE_PROPERTIES: {
         for (const key of action.keysToRemove) {
           delete stateCopy[key];
-        } break;
+        };
+        break;
       }
 
       case CLEAR_PROPERTIES: {
-        for (const key of Object.keys(stateCopy)) {
-          delete stateCopy[key];
-        } break;
+        stateCopy = {};
+        break;
       }
 
       default: return 'please enter the correct action';
