@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const currState = { ...state };
+  let currState = { ...state };
   const stateHistory = [];
 
   for (const action of actions) {
