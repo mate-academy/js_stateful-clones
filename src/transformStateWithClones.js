@@ -17,6 +17,7 @@ function transformStateWithClones(state, actions) {
           stateClone[key] = action.extraData[key];
         }
         break;
+
       case 'removeProperties':
         for (let j = 0; j < action.keysToRemove.length; j++) {
           delete stateClone[action.keysToRemove[j]];
