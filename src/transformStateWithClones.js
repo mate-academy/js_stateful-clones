@@ -11,17 +11,17 @@ function transformStateWithClones(state, actions) {
   let currentState = { ...state };
 
   for (const action of actions) {
-    if (action.type === 'addProperties') {
-      if (action.extraData) {
+    switch (true) {
+      case (action.type === 'addProperties'
+      && action.hasOwnProperty('extraData')):
         currentState = {
           ...currentState, ...action.extraData,
         };
         finalState.push({ ...currentState });
-      }
-    }
+        break;
 
-    if (action.type === 'removeProperties') {
-      if (action.keysToRemove) {
+      case (action.type === 'removeProperties'
+      && action.hasOwnProperty('keysToRemove')):
         const newState = { ...currentState };
 
         for (const keyToRemove of action.keysToRemove) {
@@ -30,12 +30,12 @@ function transformStateWithClones(state, actions) {
 
         currentState = newState;
         finalState.push({ ...currentState });
-      }
-    }
+        break;
 
-    if (action.type === 'clear') {
-      currentState = {};
-      finalState.push({ ...currentState });
+      case (action.type === 'clear'):
+        currentState = {};
+        finalState.push({ ...currentState });
+        break;
     }
   }
 
