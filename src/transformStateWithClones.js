@@ -37,6 +37,8 @@ function transform(clone, action) {
       }
       break;
     }
+
+    default: return {};
   }
 }
 
