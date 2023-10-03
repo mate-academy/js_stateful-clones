@@ -14,9 +14,9 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     transform(newState, action);
 
-    const copyNewState = { ...newState };
+    const savedNewState = { ...newState };
 
-    arrayWithNewStates.push(copyNewState);
+    arrayWithNewStates.push(savedNewState);
   }
 
   return arrayWithNewStates;
