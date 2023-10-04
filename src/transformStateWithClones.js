@@ -7,31 +7,37 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
+  const ADD_PROPS = 'addProperties';
+  const REMOVE_PROPS = 'removeProperties';
+  const CLEAR_ALL_PROPS = 'clear';
+  const ERROR_MESSAGE = 'Invalid action type';
   const statesArray = [];
   const stateCopy = { ...state };
 
   for (const action of actions) {
-    switch (action.type) {
-      case 'addProperties': {
-        Object.assign(stateCopy, action.extraData);
+    const { type, extraData, keysToRemove } = action;
+
+    switch (type) {
+      case ADD_PROPS: {
+        Object.assign(stateCopy, extraData);
         break;
       }
 
-      case 'removeProperties': {
-        for (const key of action.keysToRemove) {
+      case REMOVE_PROPS: {
+        for (const key of keysToRemove) {
           delete stateCopy[key];
         }
         break;
       }
 
-      case 'clear': {
+      case CLEAR_ALL_PROPS: {
         for (const key of Object.keys(stateCopy)) {
           delete stateCopy[key];
         }
         break;
       }
 
-      default: throw new Error('Invalid action type');
+      default: throw new Error(ERROR_MESSAGE);
     }
     statesArray.push({ ...stateCopy });
   }
