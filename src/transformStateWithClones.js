@@ -8,31 +8,34 @@
  */
 function transformStateWithClones(state, actions) {
   const allStates = [];
+  let eachState = { ...state };
 
   for (const action of actions) {
     const { type, extraData, keysToRemove } = action;
-    const clone = { ...state };
+    let cloneVersion = { ...eachState };
 
     switch (type) {
       case 'addProperties':
-        Object.assign(clone, extraData);
+        Object.assign(cloneVersion, extraData);
         break;
 
       case 'removeProperties':
         for (const key of keysToRemove) {
-          delete clone[key];
+          delete cloneVersion[key];
         }
         break;
 
       case 'clear':
-        for (const key in clone) {
-          delete clone[key];
-        }
+        cloneVersion = {};
         break;
 
       default:
         return 'Error : Type Unknown';
     }
+    eachState = { ...cloneVersion };
+
+    const clone = { ...cloneVersion };
+
     allStates.push(clone);
   }
 
