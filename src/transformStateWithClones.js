@@ -32,9 +32,8 @@ function transformStateWithClones(state, actions) {
 
         break;
 
-      default : {
+      default :
         throw new Error('Wrong action specified');
-      }
     }
 
     stateClones.push({ ...stateClone });
