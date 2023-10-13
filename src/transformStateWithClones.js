@@ -22,7 +22,9 @@ function transformStateWithClones(state, actions) {
 }
 
 function transform(state, action) {
-  switch (action.type) {
+  const varAction = action.type;
+
+  switch (varAction) {
     case 'addProperties':
       Object.assign(state, action.extraData);
       break;
