@@ -17,7 +17,7 @@ function transformStateWithClones(state, actions) {
       const updatedState = { ...currentState };
       for (const key of keysToRemove) {
           delete updatedState[key];
-          
+      
       }
       result.push(updatedState);
     } else if (action.type === 'clear') {
