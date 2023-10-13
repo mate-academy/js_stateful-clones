@@ -217,6 +217,7 @@ test('Should handle multiple types', () => {
       {
         foo: 'bar', bar: 'foo', name: 'Jim', hello: 'world',
       },
+
       {
         foo: 'bar', name: 'Jim',
       },
