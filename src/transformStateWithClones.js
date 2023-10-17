@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const result = [];
-  const currentState = { ...state };
+  let currentState = { ...state };
 
   for (const action of actions) {
     const { type, extraData, keysToRemove } = action;
@@ -22,8 +22,8 @@ function transformStateWithClones(state, actions) {
         keysToRemove.forEach((key) => delete currentState[key]);
         break;
 
-      default:
-        Object.keys(currentState).forEach((key) => delete currentState[key]);
+      case 'clear':
+        currentState = {};
     }
 
     result.push({ ...currentState });
