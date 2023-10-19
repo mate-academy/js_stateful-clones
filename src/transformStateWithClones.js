@@ -31,7 +31,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        console.log('Incorrect operation');
+        return stateClone;
     }
 
     resultArray.push({ ...stateClone });
