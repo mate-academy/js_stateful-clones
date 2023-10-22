@@ -8,35 +8,32 @@
  */
 function transformStateWithClones(state, actions) {
   const result = [];
-  const instuction = Object.assign(actions);
   const loopResult = { ...state };
 
-  for (let i = 0; i < instuction.length; i++) {
-    switch (instuction[i].type) {
+  for (let i = 0; i < actions.length; i++) {
+    switch (actions[i].type) {
       case 'addProperties':
-        for (const key in instuction[i].extraData) {
-          loopResult[key] = instuction[i].extraData[key];
+        for (const key in actions[i].extraData) {
+          loopResult[key] = actions[i].extraData[key];
         }
-        result.push({ ...loopResult });
         break;
 
       case 'removeProperties':
-        for (const key of instuction[i].keysToRemove) {
+        for (const key of actions[i].keysToRemove) {
           delete loopResult[key];
         }
-        result.push({ ...loopResult });
         break;
 
       case 'clear':
         for (const key in loopResult) {
           delete loopResult[key];
         }
-        result.push({ ...loopResult });
         break;
 
       default:
         return 'Sorry, but you entered values that are not as expected';
     }
+    result.push({ ...loopResult });
   }
 
   return result;
