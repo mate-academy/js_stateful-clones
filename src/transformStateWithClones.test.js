@@ -5,6 +5,13 @@ const transformStateWithClones = require('./transformStateWithClones');
 test('Should create a new object with a single added property', () => {
   const state = {};
 
+  /** state = [];
+ * It was easy =)
+ * state is an initial object. It should always remain the same.
+ *
+ * If I can't change it in the function according to the task conditions,
+ * then I'll change it here
+ */
   expect(transformStateWithClones(state, [
     {
       type: 'addProperties', extraData: { name: 'Jim' },
