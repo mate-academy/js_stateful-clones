@@ -19,7 +19,6 @@ function transformStateWithClones(state, actions) {
       case 'addProperties':
         Object.assign(result, action.extraData);
 
-        array.push({ ...result });
         break;
 
       case 'removeProperties': {
@@ -27,7 +26,6 @@ function transformStateWithClones(state, actions) {
           delete result[word];
         }
 
-        array.push({ ...result });
         break;
       }
 
@@ -35,10 +33,10 @@ function transformStateWithClones(state, actions) {
         for (const key of Object.keys(result)) {
           delete result[key];
         }
-
-        array.push({ ...result });
       }
     }
+
+    array.push({ ...result });
   }
 
   return array;
