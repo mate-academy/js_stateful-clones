@@ -8,15 +8,15 @@
  */
 
 function transformStateWithClones(state, actions) {
-  const states = [];
-  const clone = { ...state };
+  const statesHistory = [];
+  const stateCopy = { ...state };
 
   for (const action of actions) {
-    transform(clone, action);
-    states.push({ ...clone });
+    transform(stateCopy, action);
+    statesHistory.push({ ...stateCopy });
   }
 
-  return states;
+  return statesHistory;
 }
 
 function transform(state, action) {
