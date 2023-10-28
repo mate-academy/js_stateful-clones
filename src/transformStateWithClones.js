@@ -12,30 +12,36 @@ function transformStateWithClones(state, actions) {
 
   if (actions) {
     actions.forEach(function(item) {
-      if (item.type === 'addProperties') {
-        for (const [key, value] of Object.entries(item.extraData)) {
-          clonedState[key] = value;
+      switch (item.type) {
+        case 'addProperties': {
+          for (const [key, value] of Object.entries(item.extraData)) {
+            clonedState[key] = value;
+          }
+          break;
         }
-        arr.push({ ...clonedState });
-      } else if (item.type === 'removeProperties') {
-        if (item.keysToRemove !== undefined && item.keysToRemove !== null) {
+
+        case 'removeProperties': {
           item.keysToRemove.forEach(function(value) {
             delete clonedState[value];
           });
+          break;
         }
-        arr.push({ ...clonedState });
-      } else if (item.type === 'clear') {
-        for (const key in clonedState) {
-          if (clonedState.hasOwnProperty(key)) {
-            delete clonedState[key];
-          }
-        }
-        arr.push({ ...clonedState });
-      }
-    });
 
-    return arr;
+        case 'clear': {
+          for (const key in clonedState) {
+            if (clonedState.hasOwnProperty(key)) {
+              delete clonedState[key];
+            }
+          }
+          break;
+        }
+      }
+
+      arr.push({ ...clonedState });
+    });
   }
+
+  return arr;
 }
 
 transformStateWithClones();
