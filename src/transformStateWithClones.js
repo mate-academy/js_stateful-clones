@@ -23,8 +23,14 @@ function transformStateWithClones(state, actions) {
           delete currentState[key];
         }
         break;
+
       case 'clear' :
         currentState = {};
+        break;
+
+      default: {
+        break;
+      }
     }
 
     stateArr.push(currentState);
