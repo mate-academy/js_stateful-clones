@@ -13,33 +13,33 @@ const clear = 'clear';
 
 function transformStateWithClones(state, actions) {
   const result = [];
-  let copy = { ...state };
+  let stateCopy = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
       case add:
         for (const key in action.extraData) {
-          copy[key] = action.extraData[key];
+          stateCopy[key] = action.extraData[key];
         }
         break;
 
       case remove:
         for (const key of action.keysToRemove) {
-          if (copy.hasOwnProperty(key)) {
-            delete copy[key];
+          if (stateCopy.hasOwnProperty(key)) {
+            delete stateCopy[key];
           }
         }
         break;
 
       case clear:
-        copy = {};
+        stateCopy = {};
         break;
 
       default:
         return 'Unknown action type';
     }
 
-    result.push({ ...copy });
+    result.push({ ...stateCopy });
   }
 
   return result;
