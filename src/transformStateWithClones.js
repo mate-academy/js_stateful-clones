@@ -36,6 +36,11 @@ function transform(copyState, action) {
       for (const key in copyState) {
         delete copyState[key];
       }
+      break;
+
+    default : {
+      throw new Error('Enter correct value');
+    }
   }
 }
 
