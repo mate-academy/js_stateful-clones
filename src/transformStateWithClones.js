@@ -24,8 +24,7 @@ function createClone(newClone, action) {
       for (const key in action.extraData) {
         newClone[key] = action.extraData[key];
       };
-
-      return { ...newClone };
+      break;
 
     case 'removeProperties':
       for (const el in action.keysToRemove) {
@@ -33,18 +32,18 @@ function createClone(newClone, action) {
           delete newClone[action.keysToRemove[el]];
         }
       };
-
-      return Object.keys(newClone).length === 0 ? {} : { ...newClone };
+      break;
 
     case 'clear':
       for (const key in newClone) {
         delete newClone[key];
       }
-
-      return {};
+      break;
 
     default: throw new Error('Enter correct value');
   }
+
+  return { ...newClone };
 }
 
 module.exports = transformStateWithClones;
