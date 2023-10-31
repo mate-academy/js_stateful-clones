@@ -7,7 +7,6 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
   const result = [];
   let prevState = { ...state };
 
@@ -41,16 +40,12 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        stepResult = {};
-
-        result.push(stepResult);
-
-        prevState = { ...stepResult };
+        result.push({});
 
         break;
 
       default:
-        throw Error;
+        throw new Error('uncertain action type');
     }
   }
 
