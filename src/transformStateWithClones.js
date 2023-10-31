@@ -17,7 +17,6 @@ function transformStateWithClones(state, actions) {
     switch (action.type) {
       case 'addProperties': {
         Object.assign(tempState, action.extraData);
-        copyState.push(Object.assign({}, tempState));
 
         break;
       }
@@ -26,7 +25,6 @@ function transformStateWithClones(state, actions) {
         for (const key of action.keysToRemove) {
           delete tempState[key];
         }
-        copyState.push(Object.assign({}, tempState));
 
         break;
       }
@@ -35,7 +33,6 @@ function transformStateWithClones(state, actions) {
         for (const key of Object.keys(tempState)) {
           delete tempState[key];
         }
-        copyState.push(Object.assign({}, tempState));
 
         break;
       }
@@ -44,6 +41,8 @@ function transformStateWithClones(state, actions) {
         return 'Unexpected type of action';
       }
     }
+
+    copyState.push(Object.assign({}, tempState));
   }
 
   return copyState;
