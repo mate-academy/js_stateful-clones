@@ -24,20 +24,21 @@ function transformStateWithClones(state, actions) {
         for (const [key, value] of Object.entries(extraData)) {
           currentStep[key] = value;
         }
-        result.push(currentStep);
         break;
       case 'removeProperties':
         for (const key of keysToRemove) {
           delete currentStep[key];
         }
-        result.push(currentStep);
         break;
       case 'clear':
-        result.push({});
+        for (const key in currentStep) {
+          delete currentStep[key];
+        }
         break;
       default:
         throw new Error('Unknown action type');
     }
+    result.push(currentStep);
   }
   result.shift();
 
