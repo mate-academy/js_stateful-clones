@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const STATE_COPYS = [];
+  const stateCopys = [];
   let currentState = { ...state };
 
   for (const action of actions) {
@@ -29,13 +29,16 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         stateCopy = {};
         break;
+
+      default:
+        throw new Error(`The type of action is not known: ${action.type}`);
     }
 
-    STATE_COPYS.push(stateCopy);
+    stateCopys.push(stateCopy);
     currentState = stateCopy;
   }
 
-  return STATE_COPYS;
+  return stateCopys;
 }
 
 module.exports = transformStateWithClones;
