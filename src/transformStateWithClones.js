@@ -7,22 +7,25 @@
  * @return {Object[]}
  */
 function transformState(currentState, action) {
-  switch (true) {
-    case (action.type === 'addProperties'):
+  switch (action.type) {
+    case ('addProperties'):
       Object.assign(currentState, action.extraData);
       break;
 
-    case (action.type === 'removeProperties'):
+    case ('removeProperties'):
       for (const key of action.keysToRemove) {
         delete currentState[key];
       }
       break;
 
-    case (action.type === 'clear'):
+    case ('clear'):
       for (const key of Object.keys(currentState)) {
         delete currentState[key];
       }
       break;
+
+    default:
+      throw new Error('Unknown action.type: ' + action.type);
   }
 }
 
