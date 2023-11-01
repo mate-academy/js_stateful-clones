@@ -7,36 +7,31 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const tmpState = {};
-
-  Object.assign(tmpState, state);
+  const tmpState = Object.assign({}, state);
 
   const arrRes = [];
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        addProperties(tmpState, action.extraData);
-
         const obj1 = {};
 
-        assignObj(obj1, tmpState, arrRes);
+        addProperties(tmpState, action.extraData, obj1, arrRes);
+
         break;
 
       case 'removeProperties':
-        removeProperties(tmpState, action.keysToRemove);
-
         const obj2 = {};
 
-        assignObj(obj2, tmpState, arrRes);
+        removeProperties(tmpState, action.keysToRemove, obj2, arrRes);
+
         break;
 
       case 'clear':
-        removeProperties(tmpState, Object.keys(tmpState));
-
         const obj3 = {};
 
-        assignObj(obj3, tmpState, arrRes);
+        removeProperties(tmpState, Object.keys(tmpState), obj3, arrRes);
+
         break;
     }
   }
@@ -44,23 +39,22 @@ function transformStateWithClones(state, actions) {
   return arrRes;
 }
 
-function assignObj(newObj, initialObj, arrayRes) {
-  Object.assign(newObj, initialObj);
+function addProperties(tmpState, extraData, newObj, arrayRes) {
+  Object.assign(tmpState, extraData);
+  Object.assign(newObj, tmpState);
   arrayRes.push(newObj);
 
   return arrayRes;
 }
 
-function addProperties(tmpState, extraData) {
-  return Object.assign(tmpState, extraData);
-}
-
-function removeProperties(tmpState, keysToRemove) {
+function removeProperties(tmpState, keysToRemove, newObj, arrayRes) {
   for (const key of keysToRemove) {
     delete tmpState[key];
   }
+  Object.assign(newObj, tmpState);
+  arrayRes.push(newObj);
 
-  return tmpState;
+  return arrayRes;
 }
 
 module.exports = transformStateWithClones;
