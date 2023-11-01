@@ -16,30 +16,27 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        addP(tmpState, action.extraData);
+        addProperties(tmpState, action.extraData);
 
         const obj1 = {};
 
-        Object.assign(obj1, tmpState);
-        arrRes.push(obj1);
+        assignObj(obj1, tmpState, arrRes);
         break;
 
       case 'removeProperties':
-        removeP(tmpState, action.keysToRemove);
+        removeProperties(tmpState, action.keysToRemove);
 
         const obj2 = {};
 
-        Object.assign(obj2, tmpState);
-        arrRes.push(obj2);
+        assignObj(obj2, tmpState, arrRes);
         break;
 
       case 'clear':
-        removeP(tmpState, Object.keys(tmpState));
+        removeProperties(tmpState, Object.keys(tmpState));
 
         const obj3 = {};
 
-        Object.assign(obj3, tmpState);
-        arrRes.push(obj3);
+        assignObj(obj3, tmpState, arrRes);
         break;
     }
   }
@@ -47,11 +44,18 @@ function transformStateWithClones(state, actions) {
   return arrRes;
 }
 
-function addP(tmpState, extraData) {
+function assignObj(newObj, initialObj, arrayRes) {
+  Object.assign(newObj, initialObj);
+  arrayRes.push(newObj);
+
+  return arrayRes;
+}
+
+function addProperties(tmpState, extraData) {
   return Object.assign(tmpState, extraData);
 }
 
-function removeP(tmpState, keysToRemove) {
+function removeProperties(tmpState, keysToRemove) {
   for (const key of keysToRemove) {
     delete tmpState[key];
   }
