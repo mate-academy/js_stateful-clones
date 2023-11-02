@@ -27,6 +27,10 @@ function transformStateWithClones(state, actions) {
         for (const d in stateCopy) {
           delete stateCopy[d];
         }
+        break;
+
+      default:
+        throw new Error('Unknown action');
     }
     result.push({ ...stateCopy });
   }
