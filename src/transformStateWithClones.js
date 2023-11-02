@@ -1,33 +1,36 @@
 'use strict';
-
 /**
  * @param {Object} state
  * @param {Object[]} actions
  */
-function transformState(state, actions) {
+function transformStateWithClones(state, actions) {
+  let currentState = { ...state };
+  const resultStates = [];
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        return Object.assign(state, action.extraData);
+        currentState = {
+          ...currentState, ...action.extraData,
+        };
+        break;
 
       case 'removeProperties':
-        action.keysToRemove.forEach(key => {
-          delete state[key];
-        });
-
-        return state;
+        for (const key of action.keysToRemove) {
+          delete currentState[key];
+        }
+        break;
 
       case 'clear':
-        Object.keys(state).forEach(key => {
-          delete state[key];
-        });
-
-        return state;
+        currentState = {};
+        break;
 
       default:
         throw new Error('Unknown action');
     }
+
+    resultStates.push({ ...currentState });
   }
+  return resultStates;
 }
 
-module.exports = transformState;
+module.exports = transformStateWithClones;
