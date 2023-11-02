@@ -10,30 +10,23 @@
 function transformStateWithClones(state, actions) {
   // write code here
   const array = [];
-  const stateCopy = { ...state };
+  let stateCopy = { ...state };
   let pushedCopy = {};
 
   for (const object of actions) {
     switch (object.type) {
       case 'addProperties':
-      // tried spread operator, but somethig is off with it,
-      // so let's go with for loop.
-
-        for (const key in object.extraData) {
-          stateCopy[key] = object.extraData[key];
-        }
+        Object.assign(stateCopy, object.extraData);
         break;
 
       case 'removeProperties':
-        for (const key of object.keysToRemove) {
-          delete stateCopy[key];
-        }
+        object.keysToRemove.forEach(Element => {
+          delete stateCopy[Element];
+        });
         break;
 
       case 'clear':
-        for (const key in stateCopy) {
-          delete stateCopy[key];
-        }
+        stateCopy = {};
         break;
 
       default:
