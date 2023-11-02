@@ -7,18 +7,6 @@
  * @return {Object[]}
  */
 
-// transformStateWithClones({foo: 'bar', bar: 'foo'}, [
-//   {type: 'addProperties', extraData: {name: 'Jim', hello: 'world'}},done
-//   {type: 'removeProperties', keysToRemove: ['bar', 'hello']},
-//   {type: 'addProperties', extraData: {another: 'one'}}
-// ])
-
-// [
-//   {foo: 'bar', bar: 'foo', name: 'Jim', hello: 'world'}, done
-//   {foo: 'bar', name: 'Jim'},
-//   {foo: 'bar', name: 'Jim', another: 'one'}
-// ]
-
 function transformStateWithClones(state, actions) {
   const result = [];
 
