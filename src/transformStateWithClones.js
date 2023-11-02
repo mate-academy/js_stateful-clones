@@ -3,11 +3,31 @@
 /**
  * @param {Object} state
  * @param {Object[]} actions
- *
- * @return {Object[]}
  */
-function transformStateWithClones(state, actions) {
-  // write code here
+function transformState(state, actions) {
+  for (const action of actions) {
+    switch (action.type) {
+      case 'addProperties':
+        return Object.assign(state, action.extraData);
+
+      case 'removeProperties':
+        action.keysToRemove.forEach(key => {
+          delete state[key];
+        });
+
+        return state;
+
+      case 'clear':
+        Object.keys(state).forEach(key => {
+          delete state[key];
+        });
+
+        return state;
+
+      default:
+        throw new Error('Unknown action');
+    }
+  }
 }
 
-module.exports = transformStateWithClones;
+module.exports = transformState;
