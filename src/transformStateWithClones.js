@@ -8,27 +8,31 @@
  */
 
 function transformStateWithClones(state, actions) {
-  const result = [];
+  const transformatedState = [];
 
-  const copy = { ...state };
+  const stateCopy = { ...state };
 
   for (const action of actions) {
-    if (action.type === 'addProperties') {
-      adding(copy, action);
-    }
+    switch (action.type) {
+      case 'addProperties':
+        adding(stateCopy, action);
+        break;
 
-    if (action.type === 'removeProperties') {
-      removing(copy, action);
-    }
+      case 'removeProperties':
+        removing(stateCopy, action);
+        break;
 
-    if (action.type === 'clear') {
-      clearing(copy);
-    }
+      case 'clear':
+        clearing(stateCopy);
+        break;
 
-    result.push({ ...copy });
+      default:
+        throw new Error('Invalid action type received');
+    }
+    transformatedState.push({ ...stateCopy });
   }
 
-  return result;
+  return transformatedState;
 }
 
 function adding(state, action) {
