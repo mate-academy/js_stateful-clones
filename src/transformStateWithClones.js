@@ -7,34 +7,41 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const obj = { ...state };
+  const obj = {
+    ...state,
+  };
   const result = [];
 
   for (const action of actions) {
-    // якщо key.type === 'addProperties'
-    if (action.type === 'addProperties') {
-      // додаємо name: 'Jim' до state
-      Object.assign(obj, action.extraData);
+    switch (action.type) {
+      case 'addProperties':
 
-      result.push({ ...obj });
-    }
+        Object.assign(obj, action.extraData);
 
-    if (action.type === 'removeProperties') {
-      for (const key of action.keysToRemove) {
-        // видаляє на кожній ітерації циклу key зі state, якщо такий ключ є
-        delete obj[key];
-      }
+        result.push({
+          ...obj,
+        });
 
-      result.push({ ...obj });
-    }
+        break;
 
-    if (action.type === 'clear') {
-      // потрібно циклом пройтись по state
-      for (const key in obj) {
-        delete obj[key];
-      }
+      case 'removeProperties':
+        for (const key of action.keysToRemove) {
+          delete obj[key];
+        }
 
-      result.push({});
+        result.push({
+          ...obj,
+        });
+
+        break;
+
+      case 'clear':
+        for (const key in obj) {
+          delete obj[key];
+        }
+
+        result.push({});
+        break;
     }
   }
 
