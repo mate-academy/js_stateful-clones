@@ -25,11 +25,14 @@ function transformStateWithClones(state, actions) {
         }
         break;
 
-      default:
+      case 'clear':
         for (const key in clonedState) {
           delete clonedState[key];
         }
         break;
+
+      default:
+        throw new Error('Unknown action type');
     }
     result.push({ ...clonedState });
   }
