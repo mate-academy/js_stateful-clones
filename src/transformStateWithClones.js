@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 'use strict';
 
 /**
@@ -9,29 +10,32 @@
 function transformStateWithClones(state, actions) {
   const stateCopy = { ...state };
   const stateHistory = [];
+  const ADD_PROPERTIES = 'addProperties';
+  const REMOVE_PROPERTIES = 'removeProperties';
+  const CLEAR = 'clear';
 
   for (const action of actions) {
     const { type, extraData, keysToRemove } = action;
 
     switch (type) {
-      case 'addProperties':
+      case ADD_PROPERTIES:
         Object.assign(stateCopy, extraData);
         break;
 
-      case 'removeProperties':
+      case REMOVE_PROPERTIES:
         for (const key of keysToRemove) {
           delete stateCopy[key];
         }
         break;
 
-      case 'clear':
+      case CLEAR:
         for (const key in stateCopy) {
           delete stateCopy[key];
         }
         break;
 
       default:
-        throw new Error('Unknown Action');
+        console.error('Unknown Action');
     }
 
     stateHistory.push({ ...stateCopy });
