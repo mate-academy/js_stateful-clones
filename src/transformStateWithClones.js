@@ -7,30 +7,34 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateHistory = []; // empty array that holds history of changes
+  const STATE_HISTORY = []; // empty array that holds history of changes
+  const ADD_PROPERTIES = 'addProperties';
+  const REMOVE_PROPERTIES = 'removeProperties';
+  const CLEAR = 'clear';
   let currentState = { ...state }; // deep copy of the initial state object
 
   actions.forEach(action => {
     switch (action.type) {
-      case 'addProperties':
+      case ADD_PROPERTIES:
         currentState = {
           ...currentState, ...action.extraData, // copy the current state
           // and adds extra action
         };
         break;
-      case 'removeProperties':
+      case REMOVE_PROPERTIES:
         action.keysToRemove.forEach(key => delete currentState[key]);
         break;
-      case 'clear':
+      case CLEAR:
         currentState = {};
         break;
       default:
-        throw new Error();
+        // eslint-disable-next-line no-console
+        console.error('Proper action was not defined');
     }
-    stateHistory.push({ ...currentState });
+    STATE_HISTORY.push({ ...currentState });
   });
 
-  return stateHistory;
+  return STATE_HISTORY;
 }
 
 module.exports = transformStateWithClones;
