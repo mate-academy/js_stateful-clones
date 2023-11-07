@@ -10,29 +10,32 @@
 //
 
 function transformStateWithClones(state, actions) {
+  const ADD_PROPERTIES = 'addProperties';
+  const REMOVE_PROPERTIES = 'removeProperties';
+  const CLEAR = 'clear';
   const clonedState = { ...state };
   const result = [];
 
   for (const action of actions) {
     switch (action.type) {
-      case 'addProperties':
+      case ADD_PROPERTIES:
         Object.assign(clonedState, action.extraData);
         break;
 
-      case 'removeProperties':
+      case REMOVE_PROPERTIES:
         for (const key of action.keysToRemove) {
           delete clonedState[key];
         }
         break;
 
-      case 'clear':
+      case CLEAR:
         for (const key in clonedState) {
           delete clonedState[key];
         }
         break;
 
       default:
-        throw new Error('Unknown action type');
+        throw new Error('Your message');
     }
     result.push({ ...clonedState });
   }
