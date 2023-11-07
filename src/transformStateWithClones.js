@@ -33,8 +33,8 @@ function transformStateWithClones(state, actions) {
     }
 
     cloneOfStates.push({ ...cloneState });
-
-    return cloneOfStates;
   }
+
+  return cloneOfStates;
 }
 module.exports = transformStateWithClones;
