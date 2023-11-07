@@ -8,10 +8,9 @@
  */
 function transformStateWithClones(state, actions) {
   const result = [];
+  const stateCopy = { ...state };
 
   for (const action of actions) {
-    const stateCopy = { ...state };
-
     switch (action.type) {
       case 'addProperties':
         for (const key in action.extraData) {
@@ -29,10 +28,9 @@ function transformStateWithClones(state, actions) {
         }
         break;
       default:
-        throw new Error('Error message');
+        throw new Error('Unknown action type: ' + action.type);
     }
-
-    result.push(stateCopy);
+    result.push({ ...stateCopy });
   }
 
   return result;
