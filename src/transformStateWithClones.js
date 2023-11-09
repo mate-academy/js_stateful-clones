@@ -8,15 +8,9 @@
  */
 function transformStateWithClones(state, actions) {
   const result = [];
-  let clon;
+  let clon = { ...state };
 
   for (const action of actions) {
-    if (result.length === 0) {
-      clon = { ...state };
-    } else {
-      clon = { ...result[result.length - 1] };
-    }
-
     switch (action.type) {
       case 'addProperties':
         Object.assign(clon, action.extraData);
@@ -35,7 +29,7 @@ function transformStateWithClones(state, actions) {
       default:
         break;
     }
-    result.push(clon);
+    result.push({ ...clon });
   }
 
   return result;
