@@ -213,7 +213,6 @@ test('Should handle multiple types', () => {
       type: 'addProperties', extraData: { another: 'one' },
     },
   ]))
-
     .toEqual([
       {
         foo: 'bar', bar: 'foo', name: 'Jim', hello: 'world',
@@ -258,7 +257,6 @@ test('Should handle a long list of types', () => {
       type: 'removeProperties', keysToRemove: ['name', 'hello'],
     },
   ]))
-
     .toEqual([
       {
         foo: 'bar', name: 'Jim',
