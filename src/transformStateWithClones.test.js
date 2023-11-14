@@ -6,7 +6,7 @@ test('Should create a new object with a single added property', () => {
   const state = {};
 
   expect(transformStateWithClones(state, [
-    {
+    
       type: 'addProperties', extraData: { name: 'Jim' },
     },
   ]))
