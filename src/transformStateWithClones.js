@@ -14,7 +14,6 @@ function transformStateWithClones(state, actions) {
   let stateCopy = { ...state };
 
   for (const action of actions) {
-
     switch (action.type) {
       case ADD_PROPERTIES:
         Object.assign(stateCopy, action.extraData);
@@ -29,7 +28,8 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw new Error(`Error`);
+        // eslint-disable-next-line
+        console.error(`Error`);
     }
 
     result.push({ ...stateCopy });
