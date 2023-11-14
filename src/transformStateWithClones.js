@@ -29,7 +29,7 @@ function transformStateWithClones(state, actions) {
 
       default:
         // eslint-disable-next-line
-        console.error(`Error`);
+        console.error(`Unknown action type`);
     }
 
     result.push({ ...stateCopy });
