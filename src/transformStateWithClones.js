@@ -14,7 +14,6 @@ function transformStateWithClones(state, actions) {
   let stateCopy = { ...state };
 
   for (const action of actions) {
-    stateCopy = { ...stateCopy };
 
     switch (action.type) {
       case ADD_PROPERTIES:
@@ -33,7 +32,7 @@ function transformStateWithClones(state, actions) {
         throw new Error(`Error`);
     }
 
-    result.push(stateCopy);
+    result.push({ ...stateCopy });
   }
 
   return result;
