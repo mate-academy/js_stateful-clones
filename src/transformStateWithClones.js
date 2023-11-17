@@ -14,31 +14,26 @@ function transformStateWithClones({ ...state }, actions) {
       switch (action[property]) {
         case 'addProperties':
           Object.assign(state, action.extraData);
-          addObjectStateToArray(stateClones, state);
           break;
 
         case 'removeProperties':
           for (const key of action.keysToRemove) {
             delete state[key];
           }
-          addObjectStateToArray(stateClones, state);
           break;
 
         case 'clear':
           for (const key in state) {
             delete state[key];
           }
-          addObjectStateToArray(stateClones, state);
           break;
       }
     }
+
+    stateClones.push({ ...state });
   }
 
   return stateClones;
-}
-
-function addObjectStateToArray(arr, obj) {
-  arr.push({ ...obj });
 }
 
 module.exports = transformStateWithClones;
