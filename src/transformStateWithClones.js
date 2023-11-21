@@ -1,4 +1,5 @@
 'use strict';
+
 /**
  * @param {Object} state
  * @param {Object[]} actions
@@ -6,6 +7,7 @@
 function transformStateWithClones(state, actions) {
   let currentState = { ...state };
   const resultStates = [];
+
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
@@ -30,6 +32,7 @@ function transformStateWithClones(state, actions) {
 
     resultStates.push({ ...currentState });
   }
+
   return resultStates;
 }
 
