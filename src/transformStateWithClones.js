@@ -1,5 +1,11 @@
 'use strict';
 
+const ActionType = {
+  ADD_PROPERTIES: 'addProperties',
+  REMOVE_PROPERTIES: 'removeProperties',
+  CLEAR: 'clear',
+};
+
 /**
  * @param {Object} state
  * @param {Object[]} actions
@@ -10,24 +16,29 @@ function transformStateWithClones(state, actions) {
 
   for (const action of actions) {
     switch (action.type) {
-      case 'addProperties':
+      case ActionType.ADD_PROPERTIES: {
         currentState = {
-          ...currentState, ...action.extraData,
+          ...currentState,
+          ...action.extraData,
         };
         break;
+      }
 
-      case 'removeProperties':
+      case ActionType.REMOVE_PROPERTIES: {
         for (const key of action.keysToRemove) {
           delete currentState[key];
         }
         break;
+      }
 
-      case 'clear':
+      case ActionType.CLEAR: {
         currentState = {};
         break;
+      }
 
       default:
-        throw new Error('Unknown action');
+        // eslint-disable-next-line no-console
+        console.error('Unknown action');
     }
 
     resultStates.push({ ...currentState });
