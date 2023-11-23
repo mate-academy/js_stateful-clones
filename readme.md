@@ -2,6 +2,8 @@
 
 **Read [the guideline](https://github.com/mate-academy/js_task-guideline/blob/master/README.md) before start**
 
+## ❗️❗️❗️ DON'T FORGET TO PROOFREAD YOUR CODE WITH [CHECKLIST](https://github.com/mate-academy/js_stateful-clones/blob/master/checklist.md) BEFORE SENDING YOUR PULL REQUEST❗️❗️❗️
+
 # Task description
 
 Write a function `transformStateWithClones` that take a `state` object and an `actions` array

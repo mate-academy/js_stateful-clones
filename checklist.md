@@ -3,7 +3,7 @@
 3. [CODE STYLE]: switch/case should always have default case for error handling.
 4. [DONT REPEAT YOURSELF] - If you perform same action in all `switch` cases - do it just once afterwards.
 
-6. [NAMING] - use proper names for object copy 
+5. [NAMING] - use proper names for object copy 
 
 
 BAD EXAMPLE:
