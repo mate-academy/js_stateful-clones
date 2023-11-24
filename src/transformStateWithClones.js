@@ -27,22 +27,21 @@ function transformStateWithClones(state, actions) {
       case ACTIONS.add:
         Object.assign(stateCopy, action.extraData);
 
-        stateChainAdder();
         break;
 
       case ACTIONS.remove:
         deleteObjectKeys(action.keysToRemove, stateCopy);
-        stateChainAdder();
         break;
 
       case ACTIONS.clear:
         deleteObjectKeys(Object.keys(stateCopy), stateCopy);
-        stateChainAdder();
         break;
 
       default:
         return null;
     }
+
+    stateChainAdder();
   }
 
   return stateChain;
