@@ -7,7 +7,6 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
   const copyState = { ...state };
 
   for (const action of actions) {
