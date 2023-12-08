@@ -13,9 +13,7 @@ function transformStateWithClones(state, actions) {
 
   const arrStateClone = [];
 
-  for (let obj = 0; obj < actions.length; obj++) {
-    const action = actions[obj];
-
+  for (const action of actions) {
     if (action.type === 'clear') {
       Object.keys(newState).forEach(key => {
         delete newState[key];
