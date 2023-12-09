@@ -8,10 +8,10 @@
  */
 function transformStateWithClones(state, actions) {
   const resultArray = [];
-  let resultObject = { ...state };
+  let stateCopy = { ...state };
 
   for (const action of actions) {
-    const oneTypeObject = { ...resultObject };
+    const oneTypeObject = { ...stateCopy };
 
     switch (action.type) {
       case 'addProperties':
@@ -37,7 +37,7 @@ function transformStateWithClones(state, actions) {
       default:
         throw new Error('Wrong type');
     }
-    resultObject = oneTypeObject;
+    stateCopy = oneTypeObject;
     resultArray.push(oneTypeObject);
   }
 
