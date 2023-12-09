@@ -39,24 +39,4 @@ function transformStateWithClones(state, actions) {
   return arrAfterActions;
 }
 
-
-const state = { foo: 'bar', bar: 'foo' };
-
-
-console.log(transformStateWithClones(state, [
-  {type: 'addProperties', extraData: {yet: 'another property'}},
-  {type: 'clear'},
-  {type: 'addProperties', extraData: {foo: 'bar', name: 'Jim'}}
-]));
-
-
-
-console.log(transformStateWithClones(state, [
-  {type: 'addProperties', extraData: {name: 'Jim', hello: 'world'}},
-  {type: 'removeProperties', keysToRemove: ['bar', 'hello']},
-  {type: 'addProperties', extraData: {another: 'one'}}
-]));
-
-// console.log(state);//{ foo: 'bar', bar: 'foo' }
-
 module.exports = transformStateWithClones;
