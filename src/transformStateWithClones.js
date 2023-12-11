@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
+  // create copy to protect input data from changes
   const stateCopy = { ...state };
   const result = [];
 
