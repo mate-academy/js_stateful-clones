@@ -17,28 +17,25 @@ function transformStateWithClones(state, actions) {
         for (const key in item.extraData) {
           stateCopy[key] = item.extraData[key];
         };
-        // пушимо через деструктурізацію, зберігаючи модифікований об'єкт
-        result.push({ ...stateCopy });
         break;
 
       case 'removeProperties':
         for (const key of item.keysToRemove) {
           delete stateCopy[key];
         };
-        // пушимо через деструктурізацію, зберігаючи модифікований об'єкт
-        result.push({ ...stateCopy });
         break;
 
       case 'clear':
         for (const key in stateCopy) {
           delete stateCopy[key];
         }
-        // пушимо через деструктурізацію
-        result.push({ ...stateCopy });
         break;
 
-      default: break;
+      default: return 'Unknown action';
     }
+
+    // пушимо через деструктурізацію
+    result.push({ ...stateCopy });
   }
 
   return result;
