@@ -14,17 +14,16 @@ function transformStateWithClones(state, actions) {
     switch (action.type) {
       case 'addProperties':
         resultedArray.push(addProperties(currentObj, action.extraData));
-        currentObj = { ...resultedArray[resultedArray.length - 1] };
         break;
       case 'removeProperties':
         resultedArray.push(removeProperties(currentObj, action.keysToRemove));
-        currentObj = { ...resultedArray[resultedArray.length - 1] };
         break;
       case 'clear':
         resultedArray.push(clearObj(currentObj));
-        currentObj = { ...resultedArray[resultedArray.length - 1] };
         break;
+      default: return 'Unknown command.';
     }
+    currentObj = { ...resultedArray[resultedArray.length - 1] };
   }
 
   return resultedArray;
