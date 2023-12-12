@@ -18,6 +18,7 @@ function transformStateWithClones(state, actions) {
           ...action.extraData,
         };
         break;
+
       case 'removeProperties':
         const keysToRemove = action.keysToRemove || [];
 
@@ -27,9 +28,11 @@ function transformStateWithClones(state, actions) {
           }
         }
         break;
+
       case 'clear':
         stateCopy = {};
         break;
+
       default:
         break;
     }
