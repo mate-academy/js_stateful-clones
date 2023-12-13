@@ -8,55 +8,55 @@
  */
 function transformStateWithClones(state, actions) {
   const resultedArray = [];
-  let currentObj = { ...state };
+  const currentObj = { ...state };
+  const ACTION_CASES = {
+    add: 'addProperties',
+    remove: 'removeProperties',
+    clear: 'clear',
+  };
 
   for (const action of actions) {
     switch (action.type) {
-      case 'addProperties':
-        resultedArray.push(addProperties(currentObj, action.extraData));
+      case ACTION_CASES.add:
+        addProperties(currentObj, action.extraData);
         break;
-      case 'removeProperties':
-        resultedArray.push(removeProperties(currentObj, action.keysToRemove));
+      case ACTION_CASES.remove:
+        removeProperties(currentObj, action.keysToRemove);
         break;
-      case 'clear':
-        resultedArray.push(clearObj(currentObj));
+      case ACTION_CASES.clear:
+        clearObj(currentObj);
         break;
       default: return 'Unknown command.';
     }
-    currentObj = { ...resultedArray[resultedArray.length - 1] };
+
+    resultedArray.push({ ...currentObj });
   }
 
   return resultedArray;
 }
 
 function addProperties(obj, extraData) {
-  const newObj = { ...obj };
-
   for (const key in extraData) {
-    newObj[key] = extraData[key];
+    obj[key] = extraData[key];
   }
 
-  return newObj;
+  return obj;
 }
 
 function removeProperties(obj, keyList = []) {
-  const newObj = { ...obj };
-
   for (const key of keyList) {
-    delete newObj[key];
+    delete obj[key];
   }
 
-  return newObj;
+  return obj;
 }
 
 function clearObj(obj) {
-  const newObj = { ...obj };
-
   for (const key in obj) {
-    delete newObj[key];
+    delete obj[key];
   }
 
-  return newObj;
+  return obj;
 }
 
 module.exports = transformStateWithClones;
