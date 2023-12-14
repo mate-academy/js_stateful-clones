@@ -7,21 +7,27 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
+  const ACTION_TYPES = {
+    add: 'addProperties',
+    remove: 'removeProperties',
+    clear: 'clear',
+  };
   const result = [];
   let stateCopy = { ...state };
 
   for (const action of actions) {
-    switch (action.type) {
-      case 'addProperties':
+    const { type, extraData, keysToRemove } = action;
+    const { add, remove, clear } = ACTION_TYPES;
+
+    switch (type) {
+      case add:
         stateCopy = {
           ...stateCopy,
-          ...action.extraData,
+          ...extraData,
         };
         break;
 
-      case 'removeProperties':
-        const keysToRemove = action.keysToRemove || [];
-
+      case remove:
         for (const key of keysToRemove) {
           if (stateCopy.hasOwnProperty(key)) {
             delete stateCopy[key];
@@ -29,7 +35,7 @@ function transformStateWithClones(state, actions) {
         }
         break;
 
-      case 'clear':
+      case clear:
         stateCopy = {};
         break;
 
