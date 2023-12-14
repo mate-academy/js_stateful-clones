@@ -19,7 +19,6 @@ function transformStateWithClones(state, actions) {
           ...element.extraData,
         };
 
-        result.push({ ...newObject });
         break;
 
       case 'removeProperties':
@@ -28,18 +27,18 @@ function transformStateWithClones(state, actions) {
             delete newObject[key];
           }
         }
-        result.push({ ...newObject });
         break;
 
       case 'clear':
         newObject = {};
-        result.push({ ...newObject });
         break;
 
       default:
         break;
     }
-  });
+    result.push({ ...newObject });
+  }
+  );
 
   return result;
 }
