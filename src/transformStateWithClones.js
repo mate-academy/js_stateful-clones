@@ -33,15 +33,13 @@ function transformStateWithClones(state, actions) {
 
       case 'clear':
         newObject = {};
-        result.push(newObject);
+        result.push({ ...newObject });
         break;
 
       default:
         break;
     }
   });
-
-  console.log(result);
 
   return result;
 }
