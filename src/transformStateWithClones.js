@@ -9,32 +9,34 @@ function transformStateWithClones(state, actions) {
   const resultArray = [simpleClone(state)];
 
   for (const action of actions) {
-    let currentStateCopy = simpleClone(resultArray[resultArray.length - 1]);
+    const currentStateCopy = simpleClone(resultArray[resultArray.length - 1]);
 
-    switch (action.type) {
-      case 'addProperties':
-        currentStateCopy = {
-          ...currentStateCopy, ...action.extraData,
-        };
-        break;
-      case 'removeProperties':
-        action.keysToRemove.forEach(key => delete currentStateCopy[key]);
-        break;
-      case 'clear':
-        currentStateCopy = {};
-        break;
-      default:
-        break;
-    }
-
-    resultArray.push(currentStateCopy);
+    resultArray.push(transformState(currentStateCopy, action));
   }
 
   return resultArray.slice(1);
 }
 
-function simpleClone(obj) { // Странный костыль. Очень долго мучался
-  if (obj === null || typeof obj !== 'object') {
+function transformState(currentStateCopy, action) {
+  switch (action.type) {
+    case ACTION_CASES.add:
+      return {
+        ...currentStateCopy,
+        ...action.extraData,
+      };
+    case 'removeProperties':
+      action.keysToRemove.forEach(key => delete currentStateCopy[key]);
+
+      return currentStateCopy;
+    case 'clear':
+      return {};
+    default:
+      return currentStateCopy;
+  }
+}
+
+function simpleClone(obj) {
+  if (!obj || typeof obj !== 'object') {
     return obj;
   }
 
@@ -52,5 +54,9 @@ function simpleClone(obj) { // Странный костыль. Очень до�
 
   return objCopy;
 }
+
+const ACTION_CASES = {
+  add: 'addProperties',
+};
 
 module.exports = transformStateWithClones;
