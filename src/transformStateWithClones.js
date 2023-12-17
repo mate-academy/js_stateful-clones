@@ -22,13 +22,19 @@ function transformStateWithClones(state, actions) {
 
     if (type === 'addProperties') {
       nextState = {
-        ...currentState, ...action.extraData,
+        ...currentState,
+        ...action.extraData,
       };
     }
 
     if (type === 'removeProperties') {
       nextState = { ...currentState };
-      action.keysToRemove.forEach((key) => delete nextState[key]);
+
+      nextState = action.keysToRemove.reduce((acc, key) => {
+        const { [key]: deletedKey, ...rest } = acc;
+
+        return rest;
+      }, nextState);
     }
 
     if (type === 'clear') {
