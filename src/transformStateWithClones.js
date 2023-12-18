@@ -6,40 +6,40 @@
  *
  * @return {Object[]}
  */
-function transformState(state, actions) {
-  for (const action of actions) {
-    switch (action.type) {
+function transformStateWithClones(state, actions) {
+  const result = [];
+
+  function applyAction(prevState, action) {
+    const { type } = action;
+
+    switch (type) {
       case 'addProperties':
-        addProperties(state, action.extraData);
-        break;
+        return Object.assign({}, prevState, action.extraData);
 
       case 'removeProperties':
-        removeProperties(state, action.keysToRemove);
-        break;
+        const newState = Object.assign({}, prevState);
+
+        action.keysToRemove.forEach(key => delete newState[key]);
+
+        return newState;
 
       case 'clear':
-        clearProperties(state);
-        break;
+        return {};
+
+      default:
+        throw new Error(`Unknown action type: ${type}`);
     }
   }
-}
 
-transformState();
+  // Process each action in the actions array
+  actions.forEach(action => {
+    const prevState = result.length > 0 ? result[result.length - 1] : state;
+    const nextState = applyAction(prevState, action);
 
-function addProperties(state, extraData) {
-  Object.assign(state, extraData);
-}
+    result.push(nextState);
+  }); 
 
-function removeProperties(state, keysToRemove) {
-  for (const key of keysToRemove) {
-    delete state[key];
-  }
-}
-
-function clearProperties(state) {
-  for (const key in state) {
-    delete state[key];
-  }
+  return result;
 }
 
 module.exports = transformStateWithClones;
