@@ -37,7 +37,7 @@ function transformStateWithClones(state, actions) {
     const nextState = applyAction(prevState, action);
 
     result.push(nextState);
-  }); 
+  });
 
   return result;
 }
