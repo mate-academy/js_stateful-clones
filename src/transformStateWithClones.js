@@ -1,5 +1,11 @@
 'use strict';
 
+const ACTION_TYPES = {
+  add: 'addProperties',
+  remove: 'removeProperties',
+  clear: 'clear',
+};
+
 /**
  * @param {Object} state
  * @param {Object[]} actions
@@ -11,25 +17,23 @@ function transformStateWithClones(state, actions) {
   let currentState = { ...state };
 
   for (const action of actions) {
-    const { type } = action;
+    const { type, extraData, keysToRemove = [] } = action;
 
     switch (type) {
-      case 'addProperties':
+      case ACTION_TYPES.add:
         currentState = {
           ...currentState,
-          ...action.extraData,
+          ...extraData,
         };
         break;
 
-      case 'removeProperties':
-        const { keysToRemove = [] } = action;
-
+      case ACTION_TYPES.remove:
         for (const key of keysToRemove) {
           delete currentState[key];
         }
         break;
 
-      case 'clear':
+      case ACTION_TYPES.clear:
         currentState = {};
         break;
     }
