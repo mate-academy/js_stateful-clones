@@ -7,12 +7,12 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const initialStateCopy = JSON.parse(JSON.stringify(state));
+  const initialStateCopy = { ...state };
 
   const resultArray = [];
 
   const applyAction = (currentState, action) => {
-    const currentStateCopy = JSON.parse(JSON.stringify(currentState));
+    const currentStateCopy = { ...currentState };
 
     switch (action.type) {
       case 'addProperties':
