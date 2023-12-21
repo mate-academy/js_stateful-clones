@@ -28,16 +28,18 @@ function simpleClone(obj) {
 }
 
 function transformState(currentStateCopy, action) {
-  switch (action.type) {
+  const { type, extraData, keysToRemove } = action;
+
+  switch (type) {
     case ACTION_CASES.add:
       return {
         ...currentStateCopy,
-        ...action.extraData,
+        ...extraData,
       };
     case ACTION_CASES.remove:
       const newStateCopy = simpleClone(currentStateCopy);
 
-      action.keysToRemove.forEach(key => delete newStateCopy[key]);
+      keysToRemove.forEach(key => delete newStateCopy[key]);
 
       return newStateCopy;
     case ACTION_CASES.clear:
