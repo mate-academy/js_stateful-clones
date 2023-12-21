@@ -53,15 +53,7 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     const currentStateCopy = simpleClone(resultArray[resultArray.length - 1]);
 
-    switch (action.type) {
-      case ACTION_CASES.add:
-      case ACTION_CASES.remove:
-      case ACTION_CASES.clear:
-        resultArray.push(transformState(currentStateCopy, action));
-        break;
-      default:
-        break;
-    }
+    resultArray.push(transformState(currentStateCopy, action));
   }
 
   return resultArray.slice(1);
