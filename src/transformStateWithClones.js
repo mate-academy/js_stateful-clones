@@ -8,7 +8,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let newObject = { ...state };
+  const newObject = Object.assign({}, state);
   const result = [];
   const ACTION_CASES = {
     add: 'addProperties',
@@ -21,11 +21,7 @@ function transformStateWithClones(state, actions) {
 
     switch (type) {
       case add:
-        newObject = {
-          ...newObject,
-          ...extraData,
-        };
-
+        Object.assign(newObject, extraData);
         break;
 
       case remove:
@@ -37,13 +33,15 @@ function transformStateWithClones(state, actions) {
         break;
 
       case clear:
-        newObject = {};
+        Object.keys(newObject).forEach(key => {
+          delete newObject[key];
+        });
         break;
 
       default:
         break;
     }
-    result.push({ ...newObject });
+    result.push(Object.assign({}, newObject));
   }
   );
 
