@@ -7,18 +7,17 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateCopy = JSON.parse(JSON.stringify(state));
-  const result = [stateCopy];
+  const result = [];
+  let newState = JSON.parse(JSON.stringify(state));
 
   for (const action of actions) {
-    // Creating new copy for each iteration
-    const newState = JSON.parse(JSON.stringify(result[result.length - 1]));
-
     switch (action.type) {
       case 'addProperties': {
         const { extraData } = action;
 
-        Object.assign(newState, extraData);
+        newState = {
+          ...newState, ...extraData,
+        };
         break;
       }
 
@@ -30,15 +29,14 @@ function transformStateWithClones(state, actions) {
       }
       case 'clear':
         // next create new epty state
-        Object.keys(newState).forEach(key => delete newState[key]);
+        newState = {};
         break;
       default:
         // handle an error
         throw new Error(`Invalid action type: ${action.type}`);
     }
-    result.push(newState);
+    result.push({ ...newState });
   }
-  result.shift();
 
   return result;
 }
