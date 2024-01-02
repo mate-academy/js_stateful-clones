@@ -1,13 +1,39 @@
 'use strict';
 
+const ACTION_CASES = {
+  ADD_PROPERTIES: 'addProperties',
+  REMOVE_PROPERTIES: 'removeProperties',
+  CLEAR: 'clear',
+};
+
 /**
  * @param {Object} state
  * @param {Object[]} actions
- *
- * @return {Object[]}
+ * @returns {Object[]}
  */
 function transformStateWithClones(state, actions) {
   const initialStateClone = { ...state };
+
+  function handleAction(currentStateClone, action) {
+    switch (action.type) {
+      case ACTION_CASES.ADD_PROPERTIES:
+        Object.assign(currentStateClone, action.extraData);
+        break;
+      case ACTION_CASES.REMOVE_PROPERTIES:
+        for (const keyToRemove of action.keysToRemove) {
+          delete currentStateClone[keyToRemove];
+        }
+        break;
+      case ACTION_CASES.CLEAR:
+        for (const key in currentStateClone) {
+          if (currentStateClone.hasOwnProperty(key)) {
+            delete currentStateClone[key];
+          }
+        }
+        break;
+      default:
+    }
+  }
 
   const clonedStates = [];
 
@@ -16,19 +42,7 @@ function transformStateWithClones(state, actions) {
       ? { ...clonedStates[clonedStates.length - 1] }
       : { ...initialStateClone };
 
-    switch (action.type) {
-      case 'addProperties':
-        Object.assign(currentStateClone, action.extraData);
-        break;
-      case 'removeProperties':
-        action.keysToRemove.forEach(key => delete currentStateClone[key]);
-        break;
-      case 'clear':
-        Object.keys(currentStateClone).forEach(key =>
-          delete currentStateClone[key]);
-        break;
-      default:
-    }
+    handleAction(currentStateClone, action);
 
     clonedStates.push(currentStateClone);
   }
