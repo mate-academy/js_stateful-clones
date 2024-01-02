@@ -7,20 +7,20 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let objToAddInArrRes = { ...state };
+  let objToAddInArrResult = { ...state };
   const result = [];
 
   for (const action of actions) {
     if (action.type === 'addProperties') {
       Object.entries(action.extraData).forEach(([key, value]) => {
-        objToAddInArrRes[key] = value;
+        objToAddInArrResult[key] = value;
       });
     } else if (action.type === 'removeProperties') {
-      action.keysToRemove.forEach(key => delete objToAddInArrRes[key]);
+      action.keysToRemove.forEach(key => delete objToAddInArrResult[key]);
     } else {
-      objToAddInArrRes = {};
+      objToAddInArrResult = {};
     }
-    result.push({ ...objToAddInArrRes });
+    result.push({ ...objToAddInArrResult });
   }
 
   return result;
