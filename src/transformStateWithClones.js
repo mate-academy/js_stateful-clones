@@ -25,6 +25,8 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         statesArr.push(clearProperties(newState));
         break;
+      default:
+        throw new Error('action.type not found');
     }
   }
 
