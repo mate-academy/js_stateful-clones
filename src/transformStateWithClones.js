@@ -31,6 +31,9 @@ function transformStateWithClones(state, actions) {
 
         allStates.push({ ...newState });
         break;
+
+      default:
+        return 'Something wrong:( Try again later';
     }
   }
 
