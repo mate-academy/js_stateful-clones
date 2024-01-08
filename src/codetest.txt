@@ -54,4 +54,15 @@ function transformStateWithClones(state, actions) {
   return allSteps;
 }
 
+const state1 = {
+  foo: 'bar',
+  bar: 'foo',
+};
+const type = [{
+  type: 'addProperties', extraData: { name: 'Jim' },
+},
+];
+
+transformStateWithClones(state1, type);
+
 module.exports = transformStateWithClones;
