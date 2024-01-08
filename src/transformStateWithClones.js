@@ -14,17 +14,14 @@ function transformStateWithClones(state, actions) {
     switch (types) {
       case 'addProperties':
         addProperties(modState, action.extraData);
-        allSteps.push({ ...modState });
         break;
 
       case 'removeProperties':
         removeProperties(modState, action.keysToRemove);
-        allSteps.push({ ...modState });
         break;
 
       case 'clear':
         clear(modState);
-        allSteps.push({ ...modState });
         break;
     }
   }
@@ -49,6 +46,7 @@ function transformStateWithClones(state, actions) {
 
   for (const action of actions) {
     doAction(stateCopy, action.type, action);
+    allSteps.push({ ...stateCopy });
   }
 
   return allSteps;
