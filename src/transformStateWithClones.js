@@ -16,7 +16,7 @@ function transformStateWithClones(state, actions) {
         for (const key in actions[item].extraData) {
           obj[key] = actions[item].extraData[key];
         }
-        resultArray.push({ ...obj });
+
         break;
 
       case 'removeProperties':
@@ -24,16 +24,17 @@ function transformStateWithClones(state, actions) {
           delete obj[actions[item].keysToRemove[key]];
         }
 
-        resultArray.push({ ...obj });
         break;
 
       case 'clear':
         for (const key in obj) {
           delete obj[key];
         }
-        resultArray.push({ ...obj });
+
         break;
     }
+
+    resultArray.push({ ...obj });
   }
 
   return resultArray;
