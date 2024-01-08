@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const newState = Object.assign({}, state);
+  const stateCopy = Object.assign({}, state);
   const allSteps = [];
 
   function doAction(modState, types, action) {
@@ -48,7 +48,7 @@ function transformStateWithClones(state, actions) {
   }
 
   for (const action of actions) {
-    doAction(newState, action.type, action);
+    doAction(stateCopy, action.type, action);
   }
 
   return allSteps;
