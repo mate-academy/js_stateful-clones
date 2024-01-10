@@ -13,7 +13,6 @@ function transformStateWithClones(state, actions) {
     switch (action.type) {
       case 'addProperties':
         Object.assign(stateCopy, action.extraData);
-        stateClones.push({ ...stateCopy });
         break;
       case 'removeProperties':
         const filteredEntries = Object.entries(stateCopy).filter(
@@ -21,15 +20,14 @@ function transformStateWithClones(state, actions) {
         );
 
         stateCopy = Object.fromEntries(filteredEntries);
-        stateClones.push({ ...stateCopy });
         break;
       case 'clear':
         stateCopy = {};
-        stateClones.push({ ...stateCopy });
         break;
       default:
         break;
     }
+    stateClones.push({ ...stateCopy });
   }
 
   return stateClones;
