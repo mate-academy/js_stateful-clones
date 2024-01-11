@@ -29,7 +29,6 @@ function transformStateWithClones(state, actions) {
           obj[key.toString()] = extraData[key.toString()];
         }
 
-        copyState.push(obj);
         break;
 
       case ACTION_REM:
@@ -39,17 +38,17 @@ function transformStateWithClones(state, actions) {
           delete obj[iterator.toString()];
         }
 
-        copyState.push(obj);
         break;
 
       case ACTION_CLR:
-        copyState.push({});
+        obj = {};
         break;
 
       default:
-
         break;
     }
+
+    copyState.push(obj);
   }
 
   return copyState;
