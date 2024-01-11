@@ -15,11 +15,14 @@ function transformStateWithClones(state, actions) {
         Object.assign(stateCopy, action.extraData);
         break;
       case 'removeProperties':
-        const filteredEntries = Object.entries(stateCopy).filter(
-          ([key]) => !action.keysToRemove.includes(key)
-        );
+        const objectWithoutRemovedProperties = {};
 
-        stateCopy = Object.fromEntries(filteredEntries);
+        for (const key in stateCopy) {
+          if (!action.keysToRemove.includes(key)) {
+            objectWithoutRemovedProperties[key] = stateCopy[key];
+          }
+        }
+        stateCopy = objectWithoutRemovedProperties;
         break;
       case 'clear':
         stateCopy = {};
