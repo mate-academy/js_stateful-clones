@@ -13,10 +13,7 @@ function transformStateWithClones(state, actions) {
   for (const obj of actions) {
     switch (obj.type) {
       case 'addProperties' :
-        for (const key in obj.extraData) {
-          newState[key] = obj.extraData[key];
-        }
-        collectionStates.push({ ...newState });
+        Object.assign(newState, obj.extraData);
 
         break;
 
@@ -24,7 +21,6 @@ function transformStateWithClones(state, actions) {
         for (const key in obj.keysToRemove) {
           delete newState[obj.keysToRemove[key]];
         }
-        collectionStates.push({ ...newState });
 
         break;
 
@@ -32,12 +28,16 @@ function transformStateWithClones(state, actions) {
         for (const key in newState) {
           delete newState[key];
         }
-        collectionStates.push({ ...newState });
 
         break;
 
-      default: break;
+      default:
+        const error = new Error('unexpected action');
+
+        throw error;
     }
+
+    collectionStates.push({ ...newState });
   }
 
   return collectionStates;
