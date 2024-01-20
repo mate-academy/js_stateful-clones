@@ -11,14 +11,18 @@ function transformStateWithClones(state, actions) {
   const result = [];
 
   for (const action of actions) {
-    if (action.type === 'addProperties') {
-      Object.entries(action.extraData).forEach(([key, value]) => {
-        objToAddInArrResult[key] = value;
-      });
-    } else if (action.type === 'removeProperties') {
-      action.keysToRemove.forEach(key => delete objToAddInArrResult[key]);
-    } else {
-      objToAddInArrResult = {};
+    switch (action.type) {
+      case 'addProperties':
+        Object.entries(action.extraData).forEach(([key, value]) => {
+          objToAddInArrResult[key] = value;
+        });
+        break;
+      case 'removeProperties':
+        action.keysToRemove.forEach(key => delete objToAddInArrResult[key]);
+        break;
+      default:
+        objToAddInArrResult = {};
+        break;
     }
     result.push({ ...objToAddInArrResult });
   }
