@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const states = [state];
+  const states = [];
 
   function addProperties(st, extraData) {
     return {
@@ -41,11 +41,9 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    states.push(clonedState);
+    states.push({ ...clonedState });
     clonedState = states[states.length - 1];
   });
-
-  states.shift();
 
   return states;
 }
