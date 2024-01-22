@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const states = [state];
+  const states = [];
 
   function addProperties(st, extraData) {
     return {
@@ -17,15 +17,17 @@ function transformStateWithClones(state, actions) {
   }
 
   function removeProperties(st, keysToRemove) {
-    const newState = { ...st }; // Change from state to st
+    const newState = { ...st };
 
     keysToRemove.forEach(key => delete newState[key]);
 
     return newState;
   }
 
+  let clonedState;
+
   actions.forEach(action => {
-    let clonedState = states[states.length - 1];
+    clonedState = states[states.length - 1];
 
     switch (action.type) {
       case 'addProperties':
@@ -41,10 +43,8 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    states.push(clonedState);
+    states.push({ ...clonedState });
   });
-
-  states.shift();
 
   return states;
 }
