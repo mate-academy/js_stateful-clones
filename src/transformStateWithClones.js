@@ -8,7 +8,7 @@
  *
  * @return {Object[]}
  */
-function transformStateWithClones(initialState, actions) {
+function transformStateWithClones(state, actions) {
   const stateVersions = [];
 
   actions.reduce((currentState, action) => {
@@ -36,7 +36,7 @@ function transformStateWithClones(initialState, actions) {
     stateVersions.push(nextState);
 
     return nextState;
-  }, initialState);
+  }, state);
 
   return stateVersions;
 }
