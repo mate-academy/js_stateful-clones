@@ -10,6 +10,8 @@ function transformStateWithClones(state, actions) {
   const stateHistory = [];
 
   for (const action of actions) {
+    const { type, ...... } = action;
+  
     let newState;
     const lastState = stateHistory[stateHistory.length - 1];
 
