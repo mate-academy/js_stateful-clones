@@ -11,16 +11,14 @@ function transformStateWithClones(state, actions) {
 
   for (const action of actions) {
     let newState;
+    const lastState = stateHistory[stateHistory.length - 1];
 
-    if (action.type === 'clear') {
-      newState = {};
-    } else {
-      const lastState = stateHistory[stateHistory.length - 1];
-
-      newState = JSON.parse(JSON.stringify(lastState || state));
-    }
+    newState = JSON.parse(JSON.stringify(lastState || state));
 
     switch (action.type) {
+      case 'clear':
+        newState = {};
+        break;
       case 'addProperties':
         Object.assign(newState, action.extraData);
         break;
@@ -30,11 +28,6 @@ function transformStateWithClones(state, actions) {
             delete newState[key];
           }
         });
-        break;
-      case 'clear':
-        for (const key in newState) {
-          delete newState[key];
-        }
         break;
     }
 
