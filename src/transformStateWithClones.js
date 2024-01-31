@@ -9,31 +9,23 @@
 function transformStateWithClones(state, actions) {
   const result = [];
   let resultObj = Object.assign({}, state);
-  let action = [];
-  let masiveWithAction = [];
 
-  for (const i of actions) {
-    action = i;
-    masiveWithAction = [];
+  for (const action of actions) {
+    switch (action.type) {
+      case 'addProperties':
+        for (const key in action.extraData) {
+          resultObj[key] = action.extraData[key];
+        }
+        break;
 
-    for (const ggt in action) {
-      masiveWithAction.push(action[ggt]);
+      case 'removeProperties':
+        action.keysToRemove.forEach(key => delete resultObj[key]);
+        break;
+
+      case 'clear':
+        resultObj = {};
+        break;
     }
-
-    if (action.type === 'addProperties') {
-      for (const key in action.extraData) {
-        resultObj[key] = action.extraData[key];
-      }
-    }
-
-    if (action.type === 'removeProperties') {
-      masiveWithAction[1].forEach(key => delete resultObj[key]);
-    }
-
-    if (action.type === 'clear') {
-      resultObj = {};
-    }
-
     result.push(Object.assign({}, resultObj));
   }
 
