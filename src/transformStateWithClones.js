@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * @param {Object} state
@@ -8,28 +8,30 @@
  */
 
 function transformStateWithClones(state, actions) {
-  let stansAfterAction = [];
-  let copyState = { ...state};
+  let statesAfterAction = [];
+  let copyState = { ...state };
 
-actions.forEach((action) => {
-if (action.type === 'addProperties') {
-Object.assign(copyState, action.extraData);
-let doubleCopyState = { ...copyState};
-stansAfterAction.push(doubleCopyState);
-}
-if (action.type === 'removeProperties') {
-  action.keysToRemove.forEach(key => delete copyState[key]);
-  let doubleCopyState = { ...copyState};
-  stansAfterAction.push(doubleCopyState);
-}
-if (action.type === 'clear') {
-  Object.keys(copyState).forEach(key => delete copyState[key]);
-  let doubleCopyState = { ...copyState};
-  stansAfterAction.push(doubleCopyState);
-}
-});
-    return stansAfterAction
-}
+  actions.forEach((action) => {
+    switch (action.type) {
+      case "addProperties":
+        Object.assign(copyState, action.extraData);
+        break;
 
+      case "removeProperties":
+        action.keysToRemove.forEach((key) => delete copyState[key]);
+        break;
+
+      case "clear":
+        Object.keys(copyState).forEach((key) => delete copyState[key]);
+        break;
+
+    }
+
+    let doubleCopyState = { ...copyState };
+    statesAfterAction.push(doubleCopyState);
+  });
+
+  return statesAfterAction;
+}
 
 module.exports = transformStateWithClones;
