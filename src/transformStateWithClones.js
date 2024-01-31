@@ -10,32 +10,27 @@ function transformStateWithClones(state, actions) {
   const result = [];
   let resultObj = Object.assign({}, state);
   let action = [];
-  let actionWithWork = [];
-  let keysesToRem = null;
-  let keysesToAdd = null;
+  let masiveWithAction = [];
 
-  for (let i = 0; i < actions.length; i++) {
-    action = actions[i];
-    actionWithWork = [];
+  for (const i of actions) {
+    action = i;
+    masiveWithAction = [];
 
     for (const ggt in action) {
-      actionWithWork.push(action[ggt]);
+      masiveWithAction.push(action[ggt]);
     }
 
-    if (actionWithWork[0] === 'addProperties') {
-      keysesToAdd = actionWithWork[1];
-
-      for (const key in keysesToAdd) {
-        resultObj[key] = keysesToAdd[key];
+    if (action.type === 'addProperties') {
+      for (const key in action.extraData) {
+        resultObj[key] = action.extraData[key];
       }
     }
 
-    if (actionWithWork[0] === 'removeProperties') {
-      keysesToRem = actionWithWork[1];
-      keysesToRem.forEach(key => delete resultObj[key]);
+    if (action.type === 'removeProperties') {
+      masiveWithAction[1].forEach(key => delete resultObj[key]);
     }
 
-    if (actionWithWork[0] === 'clear') {
+    if (action.type === 'clear') {
       resultObj = {};
     }
 
@@ -46,24 +41,3 @@ function transformStateWithClones(state, actions) {
 }
 
 module.exports = transformStateWithClones;
-
-// if (ffir[0] === 'removeProperties') {
-//   // for (const j of ffir[1]) {
-//   //   removeProp = ffir[1][j];
-//   //   delete resultObj[removeProp];
-//   // }
-
-//   if (ffir[1].length === 0) {
-//     Object.assign(resultObj, state);
-//     resultMas.push(resultObj);
-//   }
-//   resultMas.push({}) need to think;
-// }
-//
-// return result;
-
-// for (let i = 0; i < actions.length; i++) {
-//   if (actions[i] === 'addProperties') {
-//     result.push(actions[i + 1]);
-//   }
-// }
