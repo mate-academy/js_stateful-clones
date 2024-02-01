@@ -6,108 +6,46 @@
  *
  * @return {Object[]}
  */
-// #region FIRST-SOLUTION
+
 function transformStateWithClones(state, actions) {
   const finalStateHistory = [];
-  const stateVersions = [];
-
-  stateVersions[0] = { ...state };
+  let currentState = { ...state };
 
   for (const action of actions) {
-    const lastStateVersion = stateVersions[stateVersions.length - 1];
-    let changedState;
-
     switch (action.type) {
       case 'addProperties':
-        changedState = addProperties(lastStateVersion, action.extraData);
+        currentState = addProperties(currentState, action.extraData);
         break;
       case 'removeProperties':
-        changedState = removeProperties(
-          lastStateVersion, action.keysToRemove
-        );
+        currentState = removeProperties(currentState, action.keysToRemove);
         break;
       default:
-        changedState = {};
+        currentState = {};
     }
 
-    finalStateHistory.push(changedState);
-    stateVersions.push(changedState);
+    finalStateHistory.push({ ...currentState });
   }
 
   return finalStateHistory;
 }
 
 function addProperties(state, extraData) {
-  const changedState = {
+  const newState = {
     ...state,
     ...extraData,
   };
 
-  return changedState;
+  return newState;
 }
 
 function removeProperties(state, extraData) {
-  const changedState = { ...state };
+  const newState = { ...state };
 
   for (const key of extraData) {
-    delete changedState[key];
+    delete newState[key];
   }
 
-  return changedState;
+  return newState;
 }
-// #endregion
-
-// #region SECOND-SOLUTION
-// function transformStateWithClones(state, actions) {
-//   const stateHistory = [];
-
-//   for (let i = 0; i < actions.length; i++) {
-//     let stateToChange;
-//     let changedState;
-
-//     if (i === 0) {
-//       stateToChange = { ...state };
-//     } else {
-//       stateToChange = stateHistory[stateHistory.length - 1];
-//     }
-
-//     switch (actions[i].type) {
-//       case 'addProperties':
-//         changedState = addProperties(stateToChange, actions[i].extraData);
-//         break;
-//       case 'removeProperties':
-//         changedState = removeProperties(
-//           stateToChange, actions[i].keysToRemove
-//         );
-//         break;
-//       default:
-//         changedState = {};
-//     }
-
-//     stateHistory.push(changedState);
-//   }
-
-//   return stateHistory;
-// }
-
-// function addProperties(state, extraData) {
-//   const changedState = {
-//     ...state,
-//     ...extraData,
-//   };
-
-//   return changedState;
-// }
-
-// function removeProperties(state, extraData) {
-//   const changedState = { ...state };
-
-//   for (const key of extraData) {
-//     delete changedState[key];
-//   }
-
-//   return changedState;
-// }
-// #endregion
 
 module.exports = transformStateWithClones;
