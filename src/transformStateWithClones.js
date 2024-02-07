@@ -16,19 +16,18 @@ function transformStateWithClones(state, actions) {
     switch (action.type) {
       case 'addProperties':
         newState = addProperties(newState, action.extraData);
-        result.push(newState);
         break;
 
       case 'removeProperties':
         newState = removeProperties(newState, action.keysToRemove);
-        result.push(newState);
         break;
 
       case 'clear':
         newState = clear(newState);
-        result.push(newState);
         break;
     }
+
+    result.push(newState);
   }
 
   return result;
@@ -54,21 +53,11 @@ function removeProperties(state, keysToRemove) {
     }
   }
 
-  if (Object.keys(newState).length === 0) {
-    return newState;
-  }
-
   return newState;
 }
 
 function clear(state) {
-  const newState = { ...state };
-
-  for (const key in newState) {
-    delete newState[key];
-  }
-
-  return newState;
+  return {};
 }
 
 module.exports = transformStateWithClones;
