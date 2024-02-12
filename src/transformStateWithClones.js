@@ -14,19 +14,15 @@ function transformStateWithClones(state, actions) {
     switch (action.type) {
       case 'clear':
         modifiedObject = {};
-        finalHistoryArray.push({ ...modifiedObject });
         break;
       case 'addProperties':
         Object.assign(modifiedObject, action.extraData);
-        finalHistoryArray.push({ ...modifiedObject });
         break;
       case 'removeProperties':
         action.keysToRemove.forEach((key) => delete modifiedObject[key]);
-        finalHistoryArray.push({ ...modifiedObject });
         break;
-      default:
-        finalHistoryArray.push({ ...modifiedObject });
     }
+    finalHistoryArray.push({ ...modifiedObject });
   });
 
   return finalHistoryArray;
