@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const newState = { ...state };
-  const resultArr = [];
+  const transformedStates = [];
 
   for (const { type, extraData, keysToRemove } of actions) {
     switch (type) {
@@ -18,9 +18,9 @@ function transformStateWithClones(state, actions) {
       }
 
       case 'removeProperties': {
-        for (let j = 0; j < keysToRemove.length; j++) {
-          if (newState[keysToRemove[j]]) {
-            delete newState[keysToRemove[j]];
+        for (const key of keysToRemove) {
+          if (newState[key]) {
+            delete newState[key];
           }
         }
         break;
@@ -38,10 +38,10 @@ function transformStateWithClones(state, actions) {
       }
     }
 
-    resultArr.push({ ...newState }); // Pushing a clone of the modified state
+    transformedStates.push({ ...newState });
   }
 
-  return resultArr;
+  return transformedStates;
 }
 
 module.exports = transformStateWithClones;
