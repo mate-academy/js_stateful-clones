@@ -12,7 +12,6 @@ function transformStateWithClones(state, actions) {
   for (const key of actions) {
     const lastOfArray = arrayOfActions[arrayOfActions.length - 1];
     const removeProperties = { ...lastOfArray };
-    const addProperties = {};
 
     if (key.type === 'clear') {
       arrayOfActions.push({});
@@ -27,7 +26,7 @@ function transformStateWithClones(state, actions) {
 
     if (key.type === 'addProperties') {
       arrayOfActions.push(
-        Object.assign(addProperties, lastOfArray, key.extraData)
+        Object.assign({}, lastOfArray, key.extraData)
       );
     }
   }
