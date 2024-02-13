@@ -10,17 +10,17 @@ function transformStateWithClones(state, actions) {
   const newState = { ...state };
   const resultArr = [];
 
-  for (let i = 0; i < actions.length; i++) {
-    switch (actions[i].type) {
+  for (const { type, extraData, keysToRemove } of actions) {
+    switch (type) {
       case 'addProperties': {
-        Object.assign(newState, actions[i].extraData);
+        Object.assign(newState, extraData);
         break;
       }
 
       case 'removeProperties': {
-        for (let j = 0; j < actions[i].keysToRemove.length; j++) {
-          if (newState[actions[i].keysToRemove[j]]) {
-            delete newState[actions[i].keysToRemove[j]];
+        for (let j = 0; j < keysToRemove.length; j++) {
+          if (newState[keysToRemove[j]]) {
+            delete newState[keysToRemove[j]];
           }
         }
         break;
@@ -34,7 +34,7 @@ function transformStateWithClones(state, actions) {
       }
 
       default: {
-        throw new Error(`Unhandled action type: ${actions[i].type}`);
+        throw new Error(`Unhandled action type: ${type}`);
       }
     }
 
