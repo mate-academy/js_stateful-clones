@@ -5,14 +5,9 @@ function addProperties(target, source) {
 }
 
 function removeProperties(obj, properties) {
-  return Object.keys(obj)
-    .reduce((result, key) => {
-      if (!properties.includes(key)) {
-        result[key] = obj[key];
-      }
-
-      return result;
-    }, {});
+  properties.forEach(key => {
+    delete obj[key];
+  });
 }
 
 /**
@@ -28,15 +23,18 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        object = addProperties(object, action.extraData);
+        addProperties(object, action.extraData);
         break;
       case 'removeProperties':
-        object = removeProperties(object, action.keysToRemove);
+        removeProperties(object, action.keysToRemove);
         break;
       case 'clear':
         object = {};
         break;
+      default:
+        break;
     }
+
     history.push({ ...object });
   }
 
