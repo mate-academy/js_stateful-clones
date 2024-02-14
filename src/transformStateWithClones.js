@@ -31,6 +31,9 @@ function transformStateWithClones(state, actions) {
           delete stateCopy[keysToRemove[key]];
         }
         break;
+        
+      default:
+        throw new Error('Unknown type');  
     }
 
     resArr.push({ ...stateCopy });
