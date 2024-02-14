@@ -30,7 +30,7 @@ function transformStateWithClones(state, actions) {
 
 function addProperties(state, data) {
   Object.assign(state, data);
-};
+}
 
 function removeProperties(state, keysToRemove) {
   for (const key of keysToRemove) {
