@@ -21,6 +21,8 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         clear(copiedState);
         break;
+      default:
+        throw new Error(`Such type of action is not found, try again`);
     }
     stateHistory.push({ ...copiedState });
   }
