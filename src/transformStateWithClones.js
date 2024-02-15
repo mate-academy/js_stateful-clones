@@ -34,6 +34,8 @@ function transformStateWithClones(state, actions) {
         }
         historyState.push({ ...cloneState });
         break;
+      default:
+        return 'Error with input';
     }
   }
 
