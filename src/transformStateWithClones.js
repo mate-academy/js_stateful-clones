@@ -14,18 +14,17 @@ function transformStateWithClones(state, actions) {
     switch (action.type) {
       case 'addProperties':
         addProperties(stateCopy, action.extraData);
-        stateHistory.push({ ...stateCopy });
         break;
 
       case 'removeProperties':
         removeProperties(stateCopy, action.keysToRemove);
-        stateHistory.push({ ...stateCopy });
         break;
 
       default:
         clearProperties(stateCopy);
-        stateHistory.push({ ...stateCopy });
     }
+
+    stateHistory.push({ ...stateCopy });
   }
 
   return stateHistory;
