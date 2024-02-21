@@ -1,0 +1,370 @@
+{
+    "sourceFile": "src/transformStateWithClones.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 88,
+            "patches": [
+                {
+                    "date": 1708437608287,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1708438625755,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,8 @@\n  *\n  * @return {Object[]}\n  */\n function transformStateWithClones(state, actions) {\n-  \n+  const \n }\n \n module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708438648659,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,8 @@\n  *\n  * @return {Object[]}\n  */\n function transformStateWithClones(state, actions) {\n-  const \n+  const STATE_HISTORY\n }\n \n module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708438654148,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,13 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = []\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708438679650,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,21 +6,8 @@\n  *\n  * @return {Object[]}\n  */\n function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = []\n+  const STATE_HISTORY = [o]\n }\n \n module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY\n-}\n-\n-module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708438685693,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,8 @@\n  *\n  * @return {Object[]}\n  */\n function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = [o]\n+  const STATE_HISTORY = [Object.assign]\n }\n \n module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708438691170,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,13 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = [Object.assign({}, )]\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708438697109,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,13 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = [Object.assign({}, state)]\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708438725456,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,34 +6,11 @@\n  *\n  * @return {Object[]}\n  */\n function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = [Object.assign({}, state)]\n-}\n+  const STATE_HISTORY = [Object.assign({}, state)];\n \n-module.exports = transformStateWithClones;\n-'use strict';\n+  for \n \n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = [Object.assign({}, )]\n }\n \n module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = [Object.assign]\n-}\n-\n-module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708438923809,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n  */\n function transformStateWithClones(state, actions) {\n   const STATE_HISTORY = [Object.assign({}, state)];\n \n-  for \n+  for (const action )\n \n }\n \n module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708438931348,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,16 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = [Object.assign({}, state)];\n+\n+  for (const action of actions) \n+\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708438937347,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,25 +8,11 @@\n  */\n function transformStateWithClones(state, actions) {\n   const STATE_HISTORY = [Object.assign({}, state)];\n \n-  for (const action of actions) \n+  for (const action of actions) {\n+    const \n+  }\n \n }\n \n module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = [Object.assign({}, state)];\n-\n-  for (const action )\n-\n-}\n-\n-module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708438945123,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n function transformStateWithClones(state, actions) {\n   const STATE_HISTORY = [Object.assign({}, state)];\n \n   for (const action of actions) {\n-    const \n+    const newSta\n   }\n \n }\n \n"
+                },
+                {
+                    "date": 1708438953390,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,18 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = [Object.assign({}, state)];\n+\n+  for (const action of actions) {\n+    const NEW_STATE\n+  }\n+\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708438961889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,28 +9,10 @@\n function transformStateWithClones(state, actions) {\n   const STATE_HISTORY = [Object.assign({}, state)];\n \n   for (const action of actions) {\n-    const NEW_STATE\n+    const NEW_STATE = Object.assign\n   }\n \n }\n \n module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = [Object.assign({}, state)];\n-\n-  for (const action of actions) {\n-    const newSta\n-  }\n-\n-}\n-\n-module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708438977415,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n function transformStateWithClones(state, actions) {\n   const STATE_HISTORY = [Object.assign({}, state)];\n \n   for (const action of actions) {\n-    const NEW_STATE = Object.assign\n+    const NEW_STATE = Object.assign()\n   }\n \n }\n \n"
+                },
+                {
+                    "date": 1708438983833,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n function transformStateWithClones(state, actions) {\n   const STATE_HISTORY = [Object.assign({}, state)];\n \n   for (const action of actions) {\n-    const NEW_STATE = Object.assign()\n+    const NEW_STATE = Object.assign({}, )\n   }\n \n }\n \n"
+                },
+                {
+                    "date": 1708438994461,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,18 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = [Object.assign({}, state)];\n+\n+  for (const action of actions) {\n+    const NEW_STATE = Object.assign({}, STATE_HISTORY);\n+  }\n+\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439001367,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,28 +9,10 @@\n function transformStateWithClones(state, actions) {\n   const STATE_HISTORY = [Object.assign({}, state)];\n \n   for (const action of actions) {\n-    const NEW_STATE = Object.assign({}, STATE_HISTORY);\n+    const NEW_STATE = Object.assign({}, STATE_HISTORY[]);\n   }\n \n }\n \n module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = [Object.assign({}, state)];\n-\n-  for (const action of actions) {\n-    const NEW_STATE = Object.assign({}, )\n-  }\n-\n-}\n-\n-module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439006869,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n function transformStateWithClones(state, actions) {\n   const STATE_HISTORY = [Object.assign({}, state)];\n \n   for (const action of actions) {\n-    const NEW_STATE = Object.assign({}, STATE_HISTORY[]);\n+    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length]);\n   }\n \n }\n \n"
+                },
+                {
+                    "date": 1708439014591,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,11 @@\n function transformStateWithClones(state, actions) {\n   const STATE_HISTORY = [Object.assign({}, state)];\n \n   for (const action of actions) {\n-    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length]);\n+    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n+\n+    \n   }\n \n }\n \n"
+                },
+                {
+                    "date": 1708439045820,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,14 +6,14 @@\n  *\n  * @return {Object[]}\n  */\n function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = [Object.assign({}, state)];\n+  const STATE_HISTORY = Object.assign({}, state)];\n \n   for (const action of actions) {\n     const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n \n-    \n+\n   }\n \n }\n \n"
+                },
+                {
+                    "date": 1708439052183,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n  *\n  * @return {Object[]}\n  */\n function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = Object.assign({}, state)];\n+  const STATE_HISTORY = Object.assign({}, state);\n \n   for (const action of actions) {\n     const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n \n"
+                },
+                {
+                    "date": 1708439066332,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,10 @@\n   const STATE_HISTORY = Object.assign({}, state);\n \n   for (const action of actions) {\n     const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n+    \n \n-\n   }\n \n }\n \n"
+                },
+                {
+                    "date": 1708439071634,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,21 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = Object.assign({}, state);\n+\n+  for (const action of actions) {\n+    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n+\n+    switch \n+\n+  }\n+\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439077694,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,31 +11,11 @@\n \n   for (const action of actions) {\n     const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n \n-    switch \n+    switch (action.ty)\n \n   }\n \n }\n \n module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = Object.assign({}, state);\n-\n-  for (const action of actions) {\n-    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n-    \n-\n-  }\n-\n-}\n-\n-module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439083585,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,11 @@\n \n   for (const action of actions) {\n     const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n \n-    switch (action.ty)\n+    switch (action.type) {\n+      \n+    }\n \n   }\n \n }\n"
+                },
+                {
+                    "date": 1708439089775,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n   for (const action of actions) {\n     const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n \n     switch (action.type) {\n-      \n+      case ''\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439095973,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n   for (const action of actions) {\n     const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n \n     switch (action.type) {\n-      case ''\n+      case 'clear':\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439102093,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,25 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = Object.assign({}, state);\n+\n+  for (const action of actions) {\n+    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n+\n+    switch (action.type) {\n+      case 'clear':\n+\n+        \n+    }\n+\n+  }\n+\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439107382,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,35 +14,12 @@\n \n     switch (action.type) {\n       case 'clear':\n \n-        \n+        Object.assign\n     }\n \n   }\n \n }\n \n module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = Object.assign({}, state);\n-\n-  for (const action of actions) {\n-    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n-\n-    switch (action.type) {\n-      case 'clear':\n-    }\n-\n-  }\n-\n-}\n-\n-module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439114066,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n \n     switch (action.type) {\n       case 'clear':\n \n-        Object.assign\n+        Object.keys\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439124686,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n \n     switch (action.type) {\n       case 'clear':\n \n-        Object.keys\n+        Object.keys(NEW_STATE);\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439139462,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n \n     switch (action.type) {\n       case 'clear':\n \n-        Object.keys(NEW_STATE);\n+        Object.keys(NEW_STATE).;\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439146977,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n \n     switch (action.type) {\n       case 'clear':\n \n-        Object.keys(NEW_STATE).;\n+        Object.keys(NEW_STATE).forEach(());\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439152092,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n \n     switch (action.type) {\n       case 'clear':\n \n-        Object.keys(NEW_STATE).forEach(());\n+        Object.keys(NEW_STATE).forEach((key) =);\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439157859,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n \n     switch (action.type) {\n       case 'clear':\n \n-        Object.keys(NEW_STATE).forEach((key) =);\n+        Object.keys(NEW_STATE).forEach((key) => delete);\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439163296,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n \n     switch (action.type) {\n       case 'clear':\n \n-        Object.keys(NEW_STATE).forEach((key) => delete);\n+        Object.keys(NEW_STATE).forEach((key) => delete ne);\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439168524,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n \n     switch (action.type) {\n       case 'clear':\n \n-        Object.keys(NEW_STATE).forEach((key) => delete ne);\n+        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439175961,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,9 @@\n     switch (action.type) {\n       case 'clear':\n \n         Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n+        break\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439181386,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,10 @@\n     switch (action.type) {\n       case 'clear':\n \n         Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n-        break\n+        break;\n+      case\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439186581,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,27 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = Object.assign({}, state);\n+\n+  for (const action of actions) {\n+    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n+\n+    switch (action.type) {\n+      case 'clear':\n+\n+        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n+        break;\n+      case 'add'\n+    }\n+\n+  }\n+\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439196956,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,39 +16,12 @@\n       case 'clear':\n \n         Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n         break;\n-      case 'add'\n+      case 'addProp'\n     }\n \n   }\n \n }\n \n module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = Object.assign({}, state);\n-\n-  for (const action of actions) {\n-    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n-\n-    switch (action.type) {\n-      case 'clear':\n-\n-        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n-        break;\n-      case\n-    }\n-\n-  }\n-\n-}\n-\n-module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439202151,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,27 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = Object.assign({}, state);\n+\n+  for (const action of actions) {\n+    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n+\n+    switch (action.type) {\n+      case 'clear':\n+\n+        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n+        break;\n+      case 'addProperties':\n+    }\n+\n+  }\n+\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439209439,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,38 +17,12 @@\n \n         Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n         break;\n       case 'addProperties':\n+        Object.assign\n     }\n \n   }\n \n }\n \n module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = Object.assign({}, state);\n-\n-  for (const action of actions) {\n-    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n-\n-    switch (action.type) {\n-      case 'clear':\n-\n-        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n-        break;\n-      case 'addProp'\n-    }\n-\n-  }\n-\n-}\n-\n-module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439216675,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n \n         Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n         break;\n       case 'addProperties':\n-        Object.assign\n+        Object.assign(NEW_STATE, )\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439222653,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n \n         Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n         break;\n       case 'addProperties':\n-        Object.assign(NEW_STATE, )\n+        Object.assign(NEW_STATE, action.e)\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439231130,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n \n         Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n         break;\n       case 'addProperties':\n-        Object.assign(NEW_STATE, action.e)\n+        Object.assign(NEW_STATE, action.extra)\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439318081,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,28 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = Object.assign({}, state);\n+\n+  for (const action of actions) {\n+    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n+\n+    switch (action.type) {\n+      case 'clear':\n+\n+        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n+        break;\n+      case 'addProperties':\n+        Object.assign(NEW_STATE, action.extraData);\n+    }\n+\n+  }\n+\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439327947,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,39 +18,12 @@\n         Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n         break;\n       case 'addProperties':\n         Object.assign(NEW_STATE, action.extraData);\n+        break\n     }\n \n   }\n \n }\n \n module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = Object.assign({}, state);\n-\n-  for (const action of actions) {\n-    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n-\n-    switch (action.type) {\n-      case 'clear':\n-\n-        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n-        break;\n-      case 'addProperties':\n-        Object.assign(NEW_STATE, action.extra)\n-    }\n-\n-  }\n-\n-}\n-\n-module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439333332,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,10 @@\n         Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n         break;\n       case 'addProperties':\n         Object.assign(NEW_STATE, action.extraData);\n-        break\n+        break;\n+      case \n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439342498,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n         break;\n       case 'addProperties':\n         Object.assign(NEW_STATE, action.extraData);\n         break;\n-      case \n+      case 'removeProperties'\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439348806,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,10 @@\n         break;\n       case 'addProperties':\n         Object.assign(NEW_STATE, action.extraData);\n         break;\n-      case 'removeProperties'\n+      case 'removeProperties':\n+        action\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439354697,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n       case 'addProperties':\n         Object.assign(NEW_STATE, action.extraData);\n         break;\n       case 'removeProperties':\n-        action\n+        action.keys\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439360709,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n       case 'addProperties':\n         Object.assign(NEW_STATE, action.extraData);\n         break;\n       case 'removeProperties':\n-        action.keys\n+        action.keysToRemo\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439366436,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n       case 'addProperties':\n         Object.assign(NEW_STATE, action.extraData);\n         break;\n       case 'removeProperties':\n-        action.keysToRemo\n+        action.keysToRemove.forEach\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439374961,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n       case 'addProperties':\n         Object.assign(NEW_STATE, action.extraData);\n         break;\n       case 'removeProperties':\n-        action.keysToRemove.forEach\n+        action.keysToRemove.forEach((key) )\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439382370,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,31 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = Object.assign({}, state);\n+\n+  for (const action of actions) {\n+    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n+\n+    switch (action.type) {\n+      case 'clear':\n+\n+        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n+        break;\n+      case 'addProperties':\n+        Object.assign(NEW_STATE, action.extraData);\n+        break;\n+      case 'removeProperties':\n+        action.keysToRemove.forEach((key) => delete new)\n+    }\n+\n+  }\n+\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439390274,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,31 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = Object.assign({}, state);\n+\n+  for (const action of actions) {\n+    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n+\n+    switch (action.type) {\n+      case 'clear':\n+\n+        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n+        break;\n+      case 'addProperties':\n+        Object.assign(NEW_STATE, action.extraData);\n+        break;\n+      case 'removeProperties':\n+        action.keysToRemove.forEach((key) => delete NEW_STATE[key])\n+    }\n+\n+  }\n+\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439397258,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,32 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = Object.assign({}, state);\n+\n+  for (const action of actions) {\n+    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n+\n+    switch (action.type) {\n+      case 'clear':\n+\n+        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n+        break;\n+      case 'addProperties':\n+        Object.assign(NEW_STATE, action.extraData);\n+        break;\n+      case 'removeProperties':\n+        action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n+        break\n+    }\n+\n+  }\n+\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439403264,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,105 +21,13 @@\n         Object.assign(NEW_STATE, action.extraData);\n         break;\n       case 'removeProperties':\n         action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n-        break\n-    }\n-\n-  }\n-\n-}\n-\n-module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = Object.assign({}, state);\n-\n-  for (const action of actions) {\n-    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n-\n-    switch (action.type) {\n-      case 'clear':\n-\n-        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n         break;\n-      case 'addProperties':\n-        Object.assign(NEW_STATE, action.extraData);\n-        break;\n-      case 'removeProperties':\n-        action.keysToRemove.forEach((key) => delete NEW_STATE[key])\n+      default:\n     }\n \n   }\n \n }\n \n module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = Object.assign({}, state);\n-\n-  for (const action of actions) {\n-    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n-\n-    switch (action.type) {\n-      case 'clear':\n-\n-        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n-        break;\n-      case 'addProperties':\n-        Object.assign(NEW_STATE, action.extraData);\n-        break;\n-      case 'removeProperties':\n-        action.keysToRemove.forEach((key) => delete new)\n-    }\n-\n-  }\n-\n-}\n-\n-module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = Object.assign({}, state);\n-\n-  for (const action of actions) {\n-    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n-\n-    switch (action.type) {\n-      case 'clear':\n-\n-        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n-        break;\n-      case 'addProperties':\n-        Object.assign(NEW_STATE, action.extraData);\n-        break;\n-      case 'removeProperties':\n-        action.keysToRemove.forEach((key) )\n-    }\n-\n-  }\n-\n-}\n-\n-module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439412126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,9 @@\n       case 'removeProperties':\n         action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n         break;\n       default:\n+        \n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439419398,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       case 'removeProperties':\n         action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n         break;\n       default:\n-        \n+        console\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439452044,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,11 +21,8 @@\n         Object.assign(NEW_STATE, action.extraData);\n         break;\n       case 'removeProperties':\n         action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n-        break;\n-      default:\n-        console\n     }\n \n   }\n \n"
+                },
+                {
+                    "date": 1708439461039,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,8 @@\n         break;\n       case 'removeProperties':\n         action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n     }\n-\n   }\n \n }\n \n"
+                },
+                {
+                    "date": 1708439473807,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,30 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = Object.assign({}, state);\n+\n+  for (const action of actions) {\n+    const NEW_STATE = Object.assign({},\n+      STATE_HISTORY[STATE_HISTORY.length - 1]);\n+\n+    switch (action.type) {\n+      case 'clear':\n+\n+        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n+        break;\n+      case 'addProperties':\n+        Object.assign(NEW_STATE, action.extraData);\n+        break;\n+      case 'removeProperties':\n+        action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n+    }\n+  }\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439663057,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,38 +23,9 @@\n         break;\n       case 'removeProperties':\n         action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n     }\n+    \n   }\n }\n \n module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = Object.assign({}, state);\n-\n-  for (const action of actions) {\n-    const NEW_STATE = Object.assign({}, STATE_HISTORY[STATE_HISTORY.length - 1]);\n-\n-    switch (action.type) {\n-      case 'clear':\n-\n-        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n-        break;\n-      case 'addProperties':\n-        Object.assign(NEW_STATE, action.extraData);\n-        break;\n-      case 'removeProperties':\n-        action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n-    }\n-  }\n-\n-}\n-\n-module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439669341,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,31 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = Object.assign({}, state);\n+\n+  for (const action of actions) {\n+    const NEW_STATE = Object.assign({},\n+      STATE_HISTORY[STATE_HISTORY.length - 1]);\n+\n+    switch (action.type) {\n+      case 'clear':\n+\n+        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n+        break;\n+      case 'addProperties':\n+        Object.assign(NEW_STATE, action.extraData);\n+        break;\n+      case 'removeProperties':\n+        action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n+    }\n+    STATE_HISTORY.\n+  }\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439677142,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,31 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = Object.assign({}, state);\n+\n+  for (const action of actions) {\n+    const NEW_STATE = Object.assign({},\n+      STATE_HISTORY[STATE_HISTORY.length - 1]);\n+\n+    switch (action.type) {\n+      case 'clear':\n+\n+        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n+        break;\n+      case 'addProperties':\n+        Object.assign(NEW_STATE, action.extraData);\n+        break;\n+      case 'removeProperties':\n+        action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n+    }\n+    STATE_HISTORY.push(new)\n+  }\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439683948,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,32 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = Object.assign({}, state);\n+\n+  for (const action of actions) {\n+    const NEW_STATE = Object.assign({},\n+      STATE_HISTORY[STATE_HISTORY.length - 1]);\n+\n+    switch (action.type) {\n+      case 'clear':\n+\n+        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n+        break;\n+      case 'addProperties':\n+        Object.assign(NEW_STATE, action.extraData);\n+        break;\n+      case 'removeProperties':\n+        action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n+    }\n+    STATE_HISTORY.push(NEW_STATE);\n+  }\n+  \n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439691887,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,101 +25,8 @@\n         action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n     }\n     STATE_HISTORY.push(NEW_STATE);\n   }\n-  \n+  return STATE_HISTORY;\n }\n \n module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = Object.assign({}, state);\n-\n-  for (const action of actions) {\n-    const NEW_STATE = Object.assign({},\n-      STATE_HISTORY[STATE_HISTORY.length - 1]);\n-\n-    switch (action.type) {\n-      case 'clear':\n-\n-        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n-        break;\n-      case 'addProperties':\n-        Object.assign(NEW_STATE, action.extraData);\n-        break;\n-      case 'removeProperties':\n-        action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n-    }\n-    STATE_HISTORY.push(new)\n-  }\n-}\n-\n-module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = Object.assign({}, state);\n-\n-  for (const action of actions) {\n-    const NEW_STATE = Object.assign({},\n-      STATE_HISTORY[STATE_HISTORY.length - 1]);\n-\n-    switch (action.type) {\n-      case 'clear':\n-\n-        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n-        break;\n-      case 'addProperties':\n-        Object.assign(NEW_STATE, action.extraData);\n-        break;\n-      case 'removeProperties':\n-        action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n-    }\n-    STATE_HISTORY.\n-  }\n-}\n-\n-module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = Object.assign({}, state);\n-\n-  for (const action of actions) {\n-    const NEW_STATE = Object.assign({},\n-      STATE_HISTORY[STATE_HISTORY.length - 1]);\n-\n-    switch (action.type) {\n-      case 'clear':\n-\n-        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n-        break;\n-      case 'addProperties':\n-        Object.assign(NEW_STATE, action.extraData);\n-        break;\n-      case 'removeProperties':\n-        action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n-    }\n-    \n-  }\n-}\n-\n-module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439698336,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,8 +25,9 @@\n         action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n     }\n     STATE_HISTORY.push(NEW_STATE);\n   }\n+\n   return STATE_HISTORY;\n }\n \n module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439841716,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,28 +6,7 @@\n  *\n  * @return {Object[]}\n  */\n function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = Object.assign({}, state);\n \n-  for (const action of actions) {\n-    const NEW_STATE = Object.assign({},\n-      STATE_HISTORY[STATE_HISTORY.length - 1]);\n \n-    switch (action.type) {\n-      case 'clear':\n-\n-        Object.keys(NEW_STATE).forEach((key) => delete NEW_STATE[key]);\n-        break;\n-      case 'addProperties':\n-        Object.assign(NEW_STATE, action.extraData);\n-        break;\n-      case 'removeProperties':\n-        action.keysToRemove.forEach((key) => delete NEW_STATE[key]);\n-    }\n-    STATE_HISTORY.push(NEW_STATE);\n-  }\n-\n-  return STATE_HISTORY;\n-}\n-\n module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439847130,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,7 +6,8 @@\n  *\n  * @return {Object[]}\n  */\n function transformStateWithClones(state, actions) {\n+  con\n+}\n \n-\n module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439854037,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,8 @@\n  *\n  * @return {Object[]}\n  */\n function transformStateWithClones(state, actions) {\n-  con\n+  const state\n }\n \n module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439860935,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,8 @@\n  *\n  * @return {Object[]}\n  */\n function transformStateWithClones(state, actions) {\n-  const state\n+  const STATE_HISTORY\n }\n \n module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439866773,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,8 @@\n  *\n  * @return {Object[]}\n  */\n function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY\n+  const STATE_HISTORY = []\n }\n \n module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439876530,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,14 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = [];\n+  let curre\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439881772,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,21 +7,8 @@\n  * @return {Object[]}\n  */\n function transformStateWithClones(state, actions) {\n   const STATE_HISTORY = [];\n-  let curre\n+  let currentState = \n }\n \n module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = []\n-}\n-\n-module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439888360,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,8 @@\n  * @return {Object[]}\n  */\n function transformStateWithClones(state, actions) {\n   const STATE_HISTORY = [];\n-  let currentState = \n+  let currentState = { ...ini}\n }\n \n module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439895265,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,8 @@\n  * @return {Object[]}\n  */\n function transformStateWithClones(state, actions) {\n   const STATE_HISTORY = [];\n-  let currentState = { ...ini}\n+  let currentState = { ...initialState}\n }\n \n module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439912167,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,16 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = [];\n+  let currentState = { ...initialState };\n+\n+  for (const action of actions)\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439918321,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,22 +9,10 @@\n function transformStateWithClones(state, actions) {\n   const STATE_HISTORY = [];\n   let currentState = { ...initialState };\n \n-  for (const action of actions)\n+  for (const action of actions) {\n+    switch\n+  }\n }\n \n module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = [];\n-  let currentState = { ...initialState}\n-}\n-\n-module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439924008,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   const STATE_HISTORY = [];\n   let currentState = { ...initialState };\n \n   for (const action of actions) {\n-    switch\n+    switch (action)\n   }\n }\n \n module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439929909,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,11 @@\n   const STATE_HISTORY = [];\n   let currentState = { ...initialState };\n \n   for (const action of actions) {\n-    switch (action)\n+    switch (action.type) {\n+      \n+    }\n   }\n }\n \n module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439935822,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,20 @@\n+'use strict';\n+\n+/**\n+ * @param {Object} state\n+ * @param {Object[]} actions\n+ *\n+ * @return {Object[]}\n+ */\n+function transformStateWithClones(state, actions) {\n+  const STATE_HISTORY = [];\n+  let currentState = { ...initialState };\n+\n+  for (const action of actions) {\n+    switch (action.type) {\n+      case 'cle'\n+    }\n+  }\n+}\n+\n+module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439953992,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,30 +11,10 @@\n   let currentState = { ...initialState };\n \n   for (const action of actions) {\n     switch (action.type) {\n-      case 'cle'\n+      case 'clear':\n     }\n   }\n }\n \n module.exports = transformStateWithClones;\n-'use strict';\n-\n-/**\n- * @param {Object} state\n- * @param {Object[]} actions\n- *\n- * @return {Object[]}\n- */\n-function transformStateWithClones(state, actions) {\n-  const STATE_HISTORY = [];\n-  let currentState = { ...initialState };\n-\n-  for (const action of actions) {\n-    switch (action.type) {\n-      \n-    }\n-  }\n-}\n-\n-module.exports = transformStateWithClones;\n"
+                },
+                {
+                    "date": 1708439960500,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n \n   for (const action of actions) {\n     switch (action.type) {\n       case 'clear':\n-        currentState\n+        currentState \n     }\n   }\n }\n \n"
+                },
+                {
+                    "date": 1708439980861,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n       case 'clear':\n         currentState = {};\n \n         break;\n-      case 'ad'\n+      case 'addProperties'\n     }\n   }\n }\n \n"
+                }
+            ],
+            "date": 1708437608287,
+            "name": "Commit-0",
+            "content": "'use strict';\n\n/**\n * @param {Object} state\n * @param {Object[]} actions\n *\n * @return {Object[]}\n */\nfunction transformStateWithClones(state, actions) {\n  \n}\n\nmodule.exports = transformStateWithClones;\n"
+        }
+    ]
+}
