@@ -17,7 +17,6 @@ function transformStateWithClones(state, actions) {
   for (let i = 0; i < actions.length; i++) {
     if (actions[i].type === 'addProperties') {
       Object.assign(obj, actions[i].extraData);
-      massAction.push({ ...obj });
     }
 
     if (actions[i].type === 'removeProperties') {
@@ -26,15 +25,15 @@ function transformStateWithClones(state, actions) {
       for (let keys = 0; keys < mass.length; keys++) {
         Reflect.deleteProperty(obj, mass[keys]);
       }
-      massAction.push({ ...obj });
     }
 
     if (actions[i].type === 'clear') {
       for (const q in obj) {
         delete obj[q];
       }
-      massAction.push({ ...obj });
     }
+
+    massAction.push({ ...obj });
   }
 
   return massAction;
