@@ -17,17 +17,18 @@ function transformStateWithClones(state, actions) {
         break;
       case 'addProperties':
         currentState = {
-          ...currentState, ...action.extraData,
+          ...currentState,
+          ...action.extraData,
         };
         break;
       case 'removeProperties':
         const keysToRemove = new Set(action.keysToRemove);
 
-        currentState = Object.fromEntries(Object.entries(currentState)
-          .filter(([key, _]) => !keysToRemove.has(key)));
+        for (const key of keysToRemove) {
+          delete currentState[key];
+        }
         break;
       default:
-
         break;
     }
     result.push({ ...currentState });
