@@ -1,13 +1,15 @@
 'use strict';
 
 /**
- * @param {Object} initialState
+ * @param {Object} state
  * @param {Object[]} actions
+ *
  * @return {Object[]}
  */
-function transformStateWithClones(initialState, actions) {
+function transformStateWithClones(state, actions) {
+  // write code here
   const stateHistory = [];
-  let currentState = { ...initialState };
+  let currentState = { ...state };
 
   for (const action of actions) {
     let nextState;
