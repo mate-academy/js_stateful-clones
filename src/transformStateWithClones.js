@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const result = [];
-  let currentState = { ...state };
+  let currentState = Object.assign({}, state);
 
   for (const action of actions) {
     switch (action.type) {
@@ -16,10 +16,11 @@ function transformStateWithClones(state, actions) {
         currentState = {};
         break;
       case 'addProperties':
-        currentState = {
-          ...currentState,
-          ...action.extraData,
-        };
+        for (const key in action.extraData) {
+          if (action.extraData.hasOwnProperty(key)) {
+            currentState[key] = action.extraData[key];
+          }
+        }
         break;
       case 'removeProperties':
         const keysToRemove = new Set(action.keysToRemove);
@@ -31,10 +32,9 @@ function transformStateWithClones(state, actions) {
       default:
         break;
     }
-    result.push({ ...currentState });
+    result.push(Object.assign({}, currentState));
   }
 
   return result;
 }
-
 module.exports = transformStateWithClones;
