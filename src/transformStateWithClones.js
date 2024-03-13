@@ -1,7 +1,7 @@
 'use strict';
 
 function transformStateWithClones(state, actions) {
-  const copyActions = [];
+  const newActions = [];
   const copyState = { ...state };
 
   for (const action of actions) {
@@ -23,10 +23,10 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    copyActions.push({ ...copyState });
+    newActions.push({ ...copyState });
   }
 
-  return copyActions;
+  return newActions;
 }
 
 module.exports = transformStateWithClones;
