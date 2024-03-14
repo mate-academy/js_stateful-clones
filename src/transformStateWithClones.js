@@ -1,8 +1,10 @@
 'use strict';
 
-const ADD_ACTION = 'addProperties';
-const REMOVE_ACTION = 'removeProperties';
-const CLEAR_ACTION = 'clear';
+const Action = Object.freeze({
+  ADD: 'addProperties',
+  REMOVE: 'removeProperties',
+  CLEAR: 'clear',
+});
 
 /**
  * @param {Object} state
@@ -11,25 +13,29 @@ const CLEAR_ACTION = 'clear';
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
+  const { ADD, REMOVE, CLEAR } = Action;
   let temp = { ...state };
   const states = [];
 
-  actions.forEach(action => {
-    if (action.type === ADD_ACTION) {
+  for (const action of actions) {
+    if (action.type === ADD) {
       temp = Object.assign({}, temp, action.extraData);
     }
 
-    if (action.type === REMOVE_ACTION) {
-      temp = Object.fromEntries(Object.entries(temp)
-        .filter(entry => !action.keysToRemove.includes(entry[0])));
+    if (action.type === REMOVE) {
+      temp = { ...temp };
+
+      for (const key of action.keysToRemove) {
+        delete temp[key];
+      }
     }
 
-    if (action.type === CLEAR_ACTION) {
+    if (action.type === CLEAR) {
       temp = {};
     }
 
     states.push(temp);
-  });
+  }
 
   return states;
 }
