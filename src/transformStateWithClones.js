@@ -13,7 +13,7 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     switch (action.type) {
       case 'clear':
-        stateCopy = clearProperties({});
+        stateCopy = {};
         break;
 
       case 'addProperties':
@@ -43,10 +43,6 @@ function removeProperties(state, keysToRemove) {
   }
 
   return state;
-}
-
-function clearProperties(state) {
-  return {};
 }
 
 module.exports = transformStateWithClones;
