@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * @param {Object} state
@@ -8,26 +8,23 @@
  */
 function transformStateWithClones(state, actions) {
   const stateHistory = [];
-
   let currentState = { ...state };
 
-  actions.forEach(action => {
-    const nextState = { ...currentState };
+  actions.forEach((action) => {
+    let nextState = { ...currentState };
 
     switch (action.type) {
-      case 'clear':
-        for (const key in nextState) {
-          delete nextState[key];
-        }
+      case "clear":
+        nextState = {};
         break;
-      case 'addProperties':
+      case "addProperties":
         Object.assign(nextState, action.extraData);
         break;
-      case 'removeProperties':
-        action.keysToRemove.forEach(key => delete nextState[key]);
+      case "removeProperties":
+        action.keysToRemove.forEach((key) => delete nextState[key]);
         break;
       default:
-        break;
+        throw new Error("Unknown action type: " + action.type);
     }
 
     stateHistory.push(nextState);
