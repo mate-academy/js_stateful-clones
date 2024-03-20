@@ -14,34 +14,30 @@ function copyStateAndPush(Obj, arr) {
 
 function transformStateWithClones(state, actions) {
   const historyArray = [];
-  const copyState = { ...state };
+  let copyState = { ...state };
 
   for (const act in actions) {
-    const typeAction = Object.values(actions[act]);
-    const commandData = typeAction[1];
+    if (actions[act].type === 'addProperties') {
+      const commandData = actions[act].extraData;
 
-    if (typeAction[0] === 'addProperties') {
-      for (const data in commandData) {
-        copyState[data] = commandData[data];
+      Object.assign(copyState, commandData);
+
+      copyStateAndPush(copyState, historyArray);
+      continue;
+    }
+
+    if (actions[act].type === 'removeProperties') {
+      const commandData = actions[act].keysToRemove;
+
+      for (const removeData of commandData) {
+        delete copyState[removeData];
       }
       copyStateAndPush(copyState, historyArray);
       continue;
     }
 
-    if (typeAction[0] === 'removeProperties') {
-      for (const removeData in commandData) {
-        const keyToDelete = commandData[removeData];
-
-        delete copyState[keyToDelete];
-      }
-      copyStateAndPush(copyState, historyArray);
-      continue;
-    }
-
-    if (typeAction[0] === 'clear') {
-      for (const key in copyState) {
-        delete copyState[key];
-      }
+    if (actions[act].type === 'clear') {
+      copyState = {};
       copyStateAndPush(copyState, historyArray);
       continue;
     }
