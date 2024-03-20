@@ -23,9 +23,7 @@ const removeProperties = (state, keysToRemove) => {
   const stateCopy = { ...state };
 
   for (const key of keysToRemove) {
-    if (stateCopy[key]) {
-      delete stateCopy[key];
-    }
+    delete stateCopy[key];
   }
 
   return stateCopy;
@@ -36,22 +34,23 @@ function transformStateWithClones(state, actions) {
   let currentState = state;
 
   for (const action of actions) {
-    switch (action.type) {
+    const { type, extraData, keysToRemove } = action;
+
+    switch (type) {
       case 'addProperties':
-        currentState = addProperties(currentState, action.extraData);
-        stateHistory.push(currentState);
-        continue;
+        currentState = addProperties(currentState, extraData);
+        break;
       case 'removeProperties':
-        currentState = removeProperties(currentState, action.keysToRemove);
-        stateHistory.push(currentState);
-        continue;
+        currentState = removeProperties(currentState, keysToRemove);
+        break;
       case 'clear':
         currentState = clear();
-        stateHistory.push(currentState);
-        continue;
+        break;
       default:
-        throw new Error(`Invalid action type: ${action.type}`);
+        throw new Error(`Invalid action type: ${type}`);
     }
+
+    stateHistory.push(currentState);
   }
 
   return stateHistory;
