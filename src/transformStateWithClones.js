@@ -50,7 +50,7 @@ function transformStateWithClones(state, actions) {
         stateHistory.push(currentState);
         continue;
       default:
-        continue;
+        throw new Error(`Invalid action type: ${action.type}`);
     }
   }
 
