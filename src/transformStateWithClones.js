@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const result = [];
+  const copyState = [];
 
   let newState = { ...state };
 
@@ -29,10 +29,10 @@ function transformStateWithClones(state, actions) {
         newState = {};
         break;
     }
-    result.push({ ...newState });
+    copyState.push({ ...newState });
   }
 
-  return result;
+  return copyState;
 }
 
 module.exports = transformStateWithClones;
