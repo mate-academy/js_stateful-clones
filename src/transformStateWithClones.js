@@ -7,10 +7,12 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let currentState = { ...state };
   const result = [];
+  let previousState = { ...state };
 
   for (const action of actions) {
+    let currentState = { ...previousState };
+
     if (action.type === 'addProperties') {
       Object.assign(currentState, action.extraData);
     }
@@ -25,6 +27,7 @@ function transformStateWithClones(state, actions) {
       currentState = {};
     }
     result.push(currentState);
+    previousState = currentState;
   }
 
   return result;
