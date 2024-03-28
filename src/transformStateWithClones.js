@@ -25,6 +25,8 @@ function transformStateWithClones(state, actions) {
       case 'addProperties':
         Object.assign(obj, action.extraData);
         break;
+      default:
+        break;
     }
     array.push(Object.assign({}, obj));
   }
