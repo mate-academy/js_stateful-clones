@@ -28,7 +28,7 @@ function transformStateWithClones(state, actions) {
 
       case 'clear':
         obj = {};
-        res.push(Object.assign({}, obj));
+        res.push({ ...obj });
         break;
     }
   }
