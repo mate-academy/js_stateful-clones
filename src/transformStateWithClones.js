@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const array = [];
-  let stateCopy = structuredClone(state);
+  let stateCopy = JSON.parse(JSON.stringify(state));
 
   for (const action of actions) {
     switch (action.type) {
