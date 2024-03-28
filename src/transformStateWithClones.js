@@ -16,14 +16,14 @@ function transformStateWithClones(state, actions) {
     switch (type) {
       case 'addProperties':
         obj = { ...obj, ...extraData };
-        res.push(Object.assign({}, obj));
+        res.push({ ...obj });
         break;
 
       case 'removeProperties':
         for (const removeElement of keysToRemove) {
           delete obj[removeElement];
         }
-        res.push(Object.assign({}, obj));
+        res.push({ ...obj });
         break;
 
       case 'clear':
