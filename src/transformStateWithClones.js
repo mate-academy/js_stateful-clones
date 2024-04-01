@@ -27,6 +27,9 @@ function transformStateWithClones(state, actions) {
         clearProperties(newObj);
         stateHistory.push(Object.assign({}, newObj));
         break;
+
+      default:
+        break;
     }
   }
 
