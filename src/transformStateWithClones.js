@@ -29,7 +29,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        return 'some error';
     }
   }
 
