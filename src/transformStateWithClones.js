@@ -12,7 +12,7 @@ function transformStateWithClones(state, actions) {
   let currentState = { ...state };
 
   actions.forEach((action) => {
-
+    const { type, extraData, keysToRemove } = action;
     switch (action.type) {
       case 'clear':
         currentState = {};
