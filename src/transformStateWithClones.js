@@ -12,7 +12,6 @@ function transformStateWithClones(state, actions) {
   let currentState = { ...state };
 
   actions.forEach((action) => {
-    let newState = { ...currentState };
 
     switch (action.type) {
       case 'clear':
