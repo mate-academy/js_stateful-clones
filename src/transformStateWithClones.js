@@ -24,8 +24,8 @@ function transformStateWithClones(state, actions) {
 
       case 'removeProperties':
         action.keysToRemove.forEach((key) => {
-          if (newState.hasOwnProperty(key)) {
-            delete newState[key];
+          if (currentState.hasOwnProperty(key)) {
+            delete currentState[key];
           }
         });
         break;
