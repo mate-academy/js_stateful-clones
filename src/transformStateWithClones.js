@@ -10,6 +10,7 @@ function transformStateWithClones(state, actions) {
   const statesArray = [];
 
   let currentState = { ...state };
+  const { type, extraData, keysToRemove } = actions;
 
   actions.forEach((action) => {
     let newState = { ...currentState };
