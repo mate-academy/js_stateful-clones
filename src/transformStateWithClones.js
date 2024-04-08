@@ -12,21 +12,21 @@ function transformStateWithClones(state, actions) {
   let currentState = { ...state };
 
   actions.forEach((action) => {
-    const { type, extraData, keysToRemove } = action;
+    let newState = { ...currentState };
 
-    switch (type) {
+    switch (action.type) {
       case 'clear':
         currentState = {};
         break;
 
       case 'addProperties':
-        currentState = { ...currentState, ...extraData };
+        newState = { ...newState, ...action.extraData };
         break;
 
       case 'removeProperties':
-        keysToRemove.forEach((key) => {
-          if (currentState.hasOwnProperty(key)) {
-            delete currentState[key];
+        action.keysToRemove.forEach((key) => {
+          if (newState.hasOwnProperty(key)) {
+            delete newState[key];
           }
         });
         break;
@@ -34,7 +34,9 @@ function transformStateWithClones(state, actions) {
       default:
         break;
     }
-    statesArray.push({ ...currentState });
+    statesArray.push(newState);
+
+    currentState = newState;
   });
 
   return statesArray;
