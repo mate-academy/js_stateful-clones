@@ -8,11 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const storage = [];
-  const modifiedState = {};
-
-  for (const copy in state) {
-    modifiedState[copy] = state[copy];
-  }
+  const modifiedState = {...state};
 
   for (const action of actions) {
     switch (action.type) {
