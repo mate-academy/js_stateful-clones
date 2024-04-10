@@ -32,7 +32,7 @@ function transformStateWithClones(state, actions) {
         }
         break;
     }
-    storage.push({...modifiedState})
+    storage.push({ ...modifiedState });
   }
 
   return storage;
