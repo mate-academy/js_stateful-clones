@@ -35,7 +35,7 @@ function add(state, data) {
 
 function remove(state, data) {
   for (const key of data) {
-    if (Object.hasOwn(state, key)) {
+    if (state.hasOwnProperty(key)) {
       delete state[key];
     }
   }
