@@ -11,21 +11,18 @@ function transformStateWithClones(state, actions) {
   const stateHistory = [];
   let currentState = { ...state };
 
-    for (const action of actions) {
-    const { type, ........ } = action;
-    
+  for (const action of actions) {
+    const { type, extraData, keysToRemove } = action; // Виправлення 1: Визначення деструктуризації
+
     switch (type) {
       case 'addProperties':
-        currentState = { ...currentState, ...action.extraData };
+        currentState = { ...currentState, ...extraData }; // Виправлення 2: Виправлено extraData
         break;
       case 'clear':
         currentState = {};
         break;
-
       case 'removeProperties':
-        currentState = { ...currentState };
-
-        for (const prop of action.keysToRemove) {
+        for (const prop of keysToRemove) {
           delete currentState[prop];
         }
         break;
