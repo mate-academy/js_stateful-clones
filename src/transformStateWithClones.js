@@ -12,11 +12,14 @@ function transformStateWithClones(state, actions) {
   let currentState = { ...state };
 
   for (const action of actions) {
-    const { type, extraData, keysToRemove } = action; // Виправлення 1: Визначення деструктуризації
+    const { type, extraData, keysToRemove } = action;
 
     switch (type) {
       case 'addProperties':
-        currentState = { ...currentState, ...extraData }; // Виправлення 2: Виправлено extraData
+        currentState = {
+          ...currentState,
+          ...extraData
+        };
         break;
       case 'clear':
         currentState = {};
