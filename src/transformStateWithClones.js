@@ -7,8 +7,6 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
-
   let newObject = { ...state };
   const actionsArray = [];
 
