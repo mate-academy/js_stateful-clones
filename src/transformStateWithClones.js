@@ -30,7 +30,6 @@ function transformStateWithClones(state, actions) {
         });
         break;
       default:
-        // Handle unknown action types
         break;
     }
 
