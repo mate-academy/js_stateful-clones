@@ -18,7 +18,7 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         stateHistory.push({});
 
-        return; // Exit the loop after clear action
+        return;
       case 'addProperties':
         Object.assign(nextState, action.extraData);
         break;
