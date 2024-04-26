@@ -18,8 +18,8 @@ function transformStateWithClones(state, actions) {
         delete clone[key];
       }
     } else if (action.type === 'clear') {
-      for (const key in state) {
-        delete clone[key];
+      for (const Key in clone) {
+        delete clone[Key];
       }
     }
     result.push({ ...clone });
