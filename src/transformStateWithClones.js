@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const result = [];
-  const clone = { ...state }
+  const clone = { ...state };
 
   for (const action of actions) {
     if (action.type === 'addProperties') {
@@ -22,7 +22,7 @@ function transformStateWithClones(state, actions) {
         delete clone[key];
       }
     }
-    result.push(clone);
+    result.push({ ...clone });
   }
 
   return result;
