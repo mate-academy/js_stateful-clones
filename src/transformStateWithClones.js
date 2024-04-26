@@ -14,13 +14,14 @@ function transformStateWithClones(state, actions) {
     if (action.type === 'addProperties') {
       Object.assign(clonedState, action.extraData);
     } else if (action.type === 'removeProperties') {
-      for (const key in action.extraData) {
+      for (const key of action.keysToRemove) {
         delete clonedState[key];
       }
     } else if (action.type === 'clear') {
       clonedState = {};
     }
-    stateHistory.push(clonedState);
+
+    stateHistory.push({ ...clonedState });
   }
 
   return stateHistory;
