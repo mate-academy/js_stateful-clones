@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * @param {Object} state
@@ -7,28 +7,31 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateHistory = [Object.assign({}, state)];
+  let localState = { ...state };
+  const result = [];
 
-  actions.forEach(action => {
-    const nextState = Object.assign({}, stateHistory[stateHistory.length - 1]);
-
+  for (const action of actions) {
     switch (action.type) {
-      case 'clear':
-        return stateHistory.push({});
-      case 'addProperties':
-        Object.assign(nextState, action.extraData);
+      case "addProperties":
+        localState = { ...localState, ...action.extraData };
+        result.push({ ...localState });
         break;
-      case 'removeProperties':
-        action.keysToRemove.forEach(key => delete nextState[key]);
+      case "removeProperties":
+        for (const key of action.keysToRemove) {
+          delete localState[key];
+        }
+        result.push(localState);
+        break;
+      case "clear":
+        localState = {};
+        result.push(localState);
         break;
       default:
-        break;
+        return;
     }
+  }
 
-    stateHistory.push(nextState);
-  });
-
-  return stateHistory;
+  return result;
 }
 
 module.exports = transformStateWithClones;
