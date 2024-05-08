@@ -11,23 +11,25 @@ function transformStateWithClones(state, actions) {
   const result = [];
 
   for (const action of actions) {
-    switch (action.type) {
+    const { type, extraData, keysToRemove } = action; // Object destructuring
+
+    switch (type) {
       case 'addProperties':
-        localState = { ...localState, ...action.extraData };
+        localState = { ...localState, ...extraData };
         result.push({ ...localState });
         break;
       case 'removeProperties':
-        for (const key of action.keysToRemove) {
+        for (const key of keysToRemove) {
           delete localState[key];
         }
-        result.push(localState);
+        result.push({ ...localState }); // Clone localState before pushing
         break;
       case 'clear':
         localState = {};
-        result.push(localState);
+        result.push({ ...localState }); // Clone localState before pushing
         break;
       default:
-        return;
+        throw new Error('Unknown action type');
     }
   }
 
