@@ -7,19 +7,20 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let result = [];
+  const result = [];
 
   for (const action of actions) {
     const newState = structuredClone(state);
+    const { type, extraData, keysToRemove } = action;
 
-    switch (action.type) {
+    switch (type) {
       case 'addProperties':
-        for (const key in action.extraData) {
-          newState[key] = action.extraData[key];
+        for (const key in extraData) {
+          newState[key] = extraData[key];
         }
         break;
       case 'removeProperties':
-        for (const key of action.keysToRemove) {
+        for (const key of keysToRemove) {
           delete newState[key];
         }
         break;
