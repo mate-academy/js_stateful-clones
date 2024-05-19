@@ -1,17 +1,18 @@
 'use strict';
 
 /**
- * @param {Object} state
+ * @param {Object} initialState
  * @param {Object[]} actions
  *
  * @return {Object[]}
  */
-function transformStateWithClones(state, actions) {
-  let copyState = { ...state };
-  let newState = {};
-  const historyState = [];
+function transformStateWithClones(initialState, actions) {
+  const stateHistory = [];
+  let copyState = { ...initialState };
 
   actions.forEach((action) => {
+    let newState;
+
     switch (action.type) {
       case 'addProperties':
         newState = { ...copyState, ...action.extraData };
@@ -24,15 +25,15 @@ function transformStateWithClones(state, actions) {
         newState = {};
         break;
       default:
-        newState = copyState;
+        newState = { ...copyState };
         break;
     }
 
-    historyState.push(newState);
+    stateHistory.push(newState);
     copyState = newState;
   });
 
-  return historyState;
+  return stateHistory;
 }
 
 module.exports = transformStateWithClones;
