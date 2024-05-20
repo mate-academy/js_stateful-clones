@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   let stateAtTheMoment = { ...state }; // clone the state at the beginning
-  const stateHistory = []; // const, because an array is an object in JS.
+  const stateHistory = []; // const, because an array is an object in JS
 
   for (const action of actions) {
     let newState = { ...stateAtTheMoment };
