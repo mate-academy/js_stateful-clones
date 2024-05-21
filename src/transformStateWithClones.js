@@ -7,31 +7,30 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let stateAtTheMoment = { ...state }; // clone the state at the beginning
-  const stateHistory = []; // const, because an array is an object in JS
+  let stateAtTheMoment = { ...state };
+  const stateHistory = [];
 
   for (const action of actions) {
-    let newState = { ...stateAtTheMoment };
-    // Clone the current state to the new state
+    let stateCopy = { ...stateAtTheMoment };
 
-    if (action.type === 'clear') {
-      newState = {};
+    switch (action.type) {
+      case 'clear':
+        stateCopy = {};
+        break;
+      case 'addProperties':
+        Object.assign(stateCopy, action.extraData);
+        break;
+      case 'removeProperties':
+        for (const key of action.keysToRemove) {
+          delete stateCopy[key];
+        }
+        break;
+      default:
+        return 'error';
     }
 
-    if (action.type === 'addProperties') {
-      Object.assign(newState, action.extraData);
-    }
-
-    if (action.type === 'removeProperties') {
-      for (const key of action.keysToRemove) {
-        delete newState[key];
-      }
-    }
-
-    stateHistory.push(newState);
-    // push the new state to the empty array, where the result is collected
-
-    stateAtTheMoment = newState; // update the current state to the new state
+    stateHistory.push(stateCopy);
+    stateAtTheMoment = stateCopy;
   }
 
   return stateHistory;
