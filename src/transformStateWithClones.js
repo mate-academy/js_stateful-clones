@@ -21,12 +21,11 @@ function transformStateWithClones(state, actions) {
         }
         break;
       case 'clear':
-        for (const key in stateCopy) {
-          delete stateCopy[key];
-        }
+        Object.keys(stateCopy).forEach((key) => delete stateCopy[key]);
         break;
+      default:
+        throw new Error('Unexpected action type');
     }
-
     stateHistory.push({ ...stateCopy });
   }
 
