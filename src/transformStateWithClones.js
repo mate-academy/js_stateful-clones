@@ -31,7 +31,6 @@ function transformStateWithClones(state, actions) {
         return 'error';
     }
 
-    // Push a clone of the stateCopy to the history
     stateHistory.push({ ...stateCopy });
   }
 
