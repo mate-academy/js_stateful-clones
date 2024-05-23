@@ -16,16 +16,15 @@ function transformStateWithClones(state, actions) {
         newState = { ...newState, ...action.extraData };
         break;
       case 'removeProperties':
-        newState = { ...newState };
         action.keysToRemove.forEach((key) => delete newState[key]);
         break;
       case 'clear':
         newState = {};
         break;
       default:
-        break;
+        throw new Error(`Unknown action type: ${action.type}`);
     }
-    stateHistory.push(newState);
+    stateHistory.push({ ...newState });
   }
 
   return stateHistory;
