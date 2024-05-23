@@ -1,12 +1,13 @@
 'use strict';
-
 /**
  * @param {Object} state
  * @param {Object[]} actions
  *
  * @return {Object[]}
  */
+
 function transformStateWithClones(state, actions) {
+  // write code here
   const states = [];
   const currentState = { ...state };
 
@@ -27,6 +28,9 @@ function transformStateWithClones(state, actions) {
           delete currentState[key];
         }
         break;
+
+      default:
+        throw new Error(`Invalid action type: ${action.type}`);
     }
 
     states.push({ ...currentState });
