@@ -3,13 +3,12 @@
 /**
  * @param {Object} state
  * @param {Object[]} actions
- *
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
   const resultStates = [];
 
-  let stateCopy = Object.assign({}, state);
+  let stateCopy = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
@@ -31,8 +30,9 @@ function transformStateWithClones(state, actions) {
       }
 
       default:
-        continue;
+        throw new Error(`Unknown action type: ${action.type}`);
     }
+
     resultStates.push({ ...stateCopy });
   }
 
