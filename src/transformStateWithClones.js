@@ -23,6 +23,9 @@ function transformStateWithClones(state, actions) {
       case 'addProperties':
         Object.assign(currentState, action.extraData);
         break;
+
+      default:
+        throw new Error(`Action type is invalid: ${action.type}!`);
     }
     stateHistory.push({ ...currentState });
   }
@@ -31,4 +34,3 @@ function transformStateWithClones(state, actions) {
 }
 
 module.exports = transformStateWithClones;
-
