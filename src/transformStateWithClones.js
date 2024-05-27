@@ -8,11 +8,9 @@
  */
 function transformStateWithClones(state, actions) {
   const stateHistory = [];
-  let currentState = { ...state };
+  const nextState = { ...state };
 
   for (const action of actions) {
-    const nextState = { ...currentState };
-
     switch (action.type) {
       case 'clear':
         Object.keys(nextState).forEach((key) => delete nextState[key]);
@@ -30,8 +28,7 @@ function transformStateWithClones(state, actions) {
         throw new Error(`Unknown action type: ${action.type}`);
     }
 
-    stateHistory.push(nextState);
-    currentState = nextState;
+    stateHistory.push({ ...nextState });
   }
 
   return stateHistory;
