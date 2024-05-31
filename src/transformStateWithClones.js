@@ -10,23 +10,29 @@ function transformStateWithClones(state, actions) {
   const stateHistory = [];
   let currentState = { ...state };
 
-  for (let i = 0; i < actions.length; i++) {
-    const action = actions[i];
+  for (const action of actions) {
+    switch (action.type) {
+      case 'clear':
+        currentState = {};
+        break;
 
-    if (action.type === 'clear') {
-      currentState = {};
-    } else if (action.type === 'addProperties') {
-      currentState = { ...currentState, ...action.extraData };
-    } else if (action.type === 'removeProperties') {
-      currentState = { ...currentState };
+      case 'addProperties':
+        currentState = { ...currentState, ...action.extraData };
+        break;
 
-      for (let j = 0; j < action.keysToRemove.length; j++) {
-        const key = action.keysToRemove[j];
+      case 'removeProperties':
+        currentState = { ...currentState };
 
-        delete currentState[key];
-      }
+        for (let j = 0; j < action.keysToRemove.length; j++) {
+          const key = action.keysToRemove[j];
+
+          delete currentState[key];
+        }
+        break;
+
+      default:
+        return 'write correct action type';
     }
-
     stateHistory.push(currentState);
   }
 
