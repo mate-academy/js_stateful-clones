@@ -17,36 +17,34 @@ function transformStateWithClones(state, actions) {
   const history = [];
 
   for (const { type, extraData, keysToRemove } of actions) {
+    const stateCopy = { ...(history.at(-1) ?? state) };
+    let historyItem = {};
+
     switch (type) {
       case ACTION_TYPES.add: {
-        const prevStateCopy = { ...(history.at(-1) ?? state) };
-
-        history.push({ ...prevStateCopy, ...extraData });
-
-        continue;
+        historyItem = { ...stateCopy, ...extraData };
+        break;
       }
 
       case ACTION_TYPES.remove: {
-        const prevStateCopy = { ...(history.at(-1) ?? state) };
-
         for (const key of keysToRemove) {
-          delete prevStateCopy[key];
+          delete stateCopy[key];
         }
 
-        history.push(prevStateCopy);
-        continue;
+        historyItem = stateCopy;
+        break;
       }
 
       case ACTION_TYPES.clear: {
-        history.push({});
-
-        continue;
+        break;
       }
 
       default: {
         throw new Error('Unexpected action type!');
       }
     }
+
+    history.push(historyItem);
   }
 
   return history;
