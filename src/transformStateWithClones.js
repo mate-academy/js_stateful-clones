@@ -17,7 +17,7 @@ function transformStateWithClones(state, actions) {
   const history = [];
 
   for (const { type, extraData, keysToRemove } of actions) {
-    const stateCopy = { ...(history.at(-1) ?? state) };
+    const stateCopy = { ...(history[history.length - 1] ?? state) };
     let historyItem = {};
 
     switch (type) {
