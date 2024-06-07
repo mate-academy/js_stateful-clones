@@ -31,9 +31,10 @@ function transformStateWithClones(state, actions) {
       }
     }
 
-    result.push(newObject);
+    result.push({ ...newObject });
   }
 
   return result;
 }
+
 module.exports = transformStateWithClones;
