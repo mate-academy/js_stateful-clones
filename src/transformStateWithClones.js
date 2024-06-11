@@ -35,6 +35,10 @@ function transformStateWithClones(state, actions) {
         currentState = {};
         break;
       }
+
+      default: {
+        return `I cant find anything for work with`;
+      }
     }
 
     array.push(currentState);
