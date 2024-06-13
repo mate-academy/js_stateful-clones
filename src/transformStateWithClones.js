@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   let anotherState = {};
-  let massState = [];
+  const massState = [];
 
   if (state) {
     anotherState = { ...state };
