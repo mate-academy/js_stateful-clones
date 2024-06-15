@@ -18,7 +18,7 @@ function transformStateWithClones(state, actions) {
       case 'removeProperties':
         removeProps(currentState, keysToRemove);
         break;
-      default:
+      case 'clear':
         currentState = {};
     }
 
