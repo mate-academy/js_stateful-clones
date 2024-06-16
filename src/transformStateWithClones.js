@@ -11,6 +11,10 @@ function transformStateWithClones(state, actions) {
   let currentState = { ...state };
 
   actions.forEach((action) => {
+    if (!action || !action.type) {
+      throw new Error('Invalid action structure');
+    }
+
     switch (action.type) {
       case 'clear':
         currentState = {};
@@ -26,8 +30,9 @@ function transformStateWithClones(state, actions) {
         }
         break;
       default:
-        break;
+        throw new Error(`Unknown action type: ${action.type}`);
     }
+
     states.push({ ...currentState });
   });
 
