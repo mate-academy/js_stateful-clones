@@ -15,6 +15,13 @@ function transformStateWithClones(state, actions) {
       throw new Error('Invalid action structure');
     }
 
+    if (
+      action.type === 'removeProperties' &&
+      !Array.isArray(action.keysToRemove)
+    ) {
+      throw new Error('keysToRemove must be an array');
+    }
+
     switch (action.type) {
       case 'clear':
         currentState = {};
@@ -23,11 +30,9 @@ function transformStateWithClones(state, actions) {
         currentState = { ...currentState, ...action.extraData };
         break;
       case 'removeProperties':
-        if (Array.isArray(action.keysToRemove)) {
-          action.keysToRemove.forEach((key) => {
-            delete currentState[key];
-          });
-        }
+        action.keysToRemove.forEach((key) => {
+          delete currentState[key];
+        });
         break;
       default:
         throw new Error(`Unknown action type: ${action.type}`);
