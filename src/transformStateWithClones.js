@@ -5,47 +5,34 @@
  * @param {Object[]} actions
  *
  * @return {Object[]}
- *
  */
 function transformStateWithClones(state, actions) {
-  /**  write code here
-  const stateHistory = [];
-  const copyState = { ...state };
+  const states = [];
+  let currentState = { ...state };
 
-  for (const action of actions) {
-    if (action.type === 'addProperties') {
-      Object.assign(copyState, action.extraData);
-    } else if (action.type === 'removeProperties') {
-      for (const element of action.keysToRemove) {
-        delete copyState[element];
-      }
-    } else if (action.type === 'clear') {
-      for (const key of Object.keys(copyState)) {
-        delete copyState[key];
-      }
+  actions.forEach((action) => {
+    switch (action.type) {
+      case 'clear':
+        currentState = {};
+        break;
+      case 'addProperties':
+        currentState = { ...currentState, ...action.extraData };
+        break;
+      case 'removeProperties':
+        currentState = { ...currentState };
+
+        action.keysToRemove.forEach((key) => {
+          delete currentState[key];
+        });
+        break;
+
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
     }
-  */
+    states.push(currentState);
+  });
 
-  const stateHistory = [];
-  const stateCopy = { ...state };
-
-  for (const action of actions) {
-    if (action.type === 'addProperties') {
-      Object.assign(stateCopy, action.extraData);
-    } else if (action.type === 'removeProperties') {
-      for (const element of action.keysToRemove) {
-        delete stateCopy[element];
-      }
-    } else if (action.type === 'clear') {
-      for (const key of Object.keys(stateCopy)) {
-        delete stateCopy[key];
-      }
-    }
-
-    stateHistory.push(Object.assign({}, stateCopy));
-  }
-
-  return stateHistory;
+  return states;
 }
 
 module.exports = transformStateWithClones;
