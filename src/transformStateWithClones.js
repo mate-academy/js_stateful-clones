@@ -8,33 +8,36 @@
  */
 function transformStateWithClones(state, actions) {
   const transformState = [];
-  const cloneState = { ...state };
+  const currentState = { ...state };
 
   for (const action of actions) {
-    let newObj = {};
-
     switch (action.type) {
       case 'clear':
-        newObj = { ...clear(cloneState) };
+        transformState.push(clear(currentState));
         break;
 
       case 'addProperties':
-        newObj = { ...addProperties(cloneState, action.extraData) };
+        transformState.push(addProperties(currentState, action.extraData));
         break;
 
       case 'removeProperties':
-        newObj = { ...removeProperties(cloneState, action.keysToRemove) };
+        transformState.push(
+          removeProperties(currentState, action.keysToRemove),
+        );
+        break;
+
+      default:
         break;
     }
-
-    transformState.push(newObj);
   }
 
   return transformState;
 }
 
 function addProperties(cloneState, extraData) {
-  return Object.assign(cloneState, extraData);
+  Object.assign(cloneState, extraData);
+
+  return { ...cloneState };
 }
 
 function removeProperties(cloneState, keysToRemove) {
@@ -42,7 +45,7 @@ function removeProperties(cloneState, keysToRemove) {
     delete cloneState[key];
   }
 
-  return cloneState;
+  return { ...cloneState };
 }
 
 function clear(cloneState) {
@@ -50,7 +53,7 @@ function clear(cloneState) {
     delete cloneState[key];
   }
 
-  return cloneState;
+  return {};
 }
 
 module.exports = transformStateWithClones;
