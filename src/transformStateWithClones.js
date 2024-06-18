@@ -28,7 +28,7 @@ function transformStateWithClones(state, actions) {
         });
         break;
     }
-    result.push({ ...stateCopy });
+    result.push(stateCopy);
   });
 
   return result;
