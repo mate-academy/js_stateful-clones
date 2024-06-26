@@ -22,14 +22,14 @@ function transformStateWithClones(state, actions) {
         }
         break;
 
-      case 'clear':
+      default:
         for (const key in stateClone) {
           delete stateClone[key];
         }
         break;
     }
 
-    result.push({ ...stateClone });
+    result.push({...stateClone});
   }
 
   return result;
