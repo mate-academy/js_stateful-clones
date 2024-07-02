@@ -15,20 +15,22 @@ function transformStateWithClones(state, actions) {
   const stateHistory = [];
 
   for (const obj of actions) {
-    if (obj.type === 'addProperties') {
-      Object.assign(newState, obj.extraData);
-    }
-
-    if (obj.type === 'removeProperties') {
-      for (let i = 0; i < obj.keysToRemove.length; i++) {
-        delete newState[obj.keysToRemove[i]];
-      }
-    }
-
-    if (obj.type === 'clear') {
-      for (const key of Object.keys(newState)) {
-        delete newState[key];
-      }
+    switch (obj.type) {
+      case 'addProperties':
+        Object.assign(newState, obj.extraData);
+        break;
+      case 'removeProperties':
+        for (let i = 0; i < obj.keysToRemove.length; i++) {
+          delete newState[obj.keysToRemove[i]];
+        }
+        break;
+      case 'clear':
+        for (const key of Object.keys(newState)) {
+          delete newState[key];
+        }
+        break;
+      default:
+        break;
     }
 
     stateHistory.push(deepClone(newState));
