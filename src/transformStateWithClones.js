@@ -7,30 +7,33 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const sumObject = [];
-  let newState = { ...state };
+  const stateHistory = [];
+  let currentState = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        Object.assign(newState, action.extraData);
+        Object.assign(currentState, action.extraData);
         break;
 
       case 'removeProperties':
         action.keysToRemove.forEach((key) => {
-          delete newState[key];
+          delete currentState[key];
         });
         break;
 
       case 'clear':
-        newState = {};
+        currentState = {};
+        break;
+
+      default:
         break;
     }
 
-    sumObject.push({ ...newState });
+    stateHistory.push({ ...currentState });
   }
 
-  return sumObject;
+  return stateHistory;
 }
 
 module.exports = transformStateWithClones;
