@@ -27,6 +27,8 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         stateCopy = {};
         break;
+      default:
+        throw new Error(`Unhandled action type: ${obj.type}`);
     }
 
     stateHistory.push(deepClone(stateCopy));
