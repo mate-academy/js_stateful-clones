@@ -10,30 +10,29 @@ function deepClone(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
 
-function transformStateWithClones(state, actions) {
-  const newState = deepClone(state);
+function transformStateWithClones(state, actions, logger = console.warn) {
+  let stateCopy = deepClone(state);
   const stateHistory = [];
 
   for (const obj of actions) {
     switch (obj.type) {
       case 'addProperties':
-        Object.assign(newState, obj.extraData);
+        Object.assign(stateCopy, obj.extraData);
         break;
       case 'removeProperties':
-        for (let i = 0; i < obj.keysToRemove.length; i++) {
-          delete newState[obj.keysToRemove[i]];
+        for (const key of obj.keysToRemove) {
+          delete stateCopy[key];
         }
         break;
       case 'clear':
-        for (const key of Object.keys(newState)) {
-          delete newState[key];
-        }
+        stateCopy = {}; // Reset stateCopy to an empty object
         break;
       default:
+        logger(`Unknown action type: ${obj.type}`);
         break;
     }
 
-    stateHistory.push(deepClone(newState));
+    stateHistory.push(deepClone(stateCopy));
   }
 
   return stateHistory;
