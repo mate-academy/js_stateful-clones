@@ -10,7 +10,7 @@ function deepClone(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
 
-function transformStateWithClones(state, actions, logger = console.warn) {
+function transformStateWithClones(state, actions) {
   let stateCopy = deepClone(state);
   const stateHistory = [];
 
@@ -25,10 +25,7 @@ function transformStateWithClones(state, actions, logger = console.warn) {
         }
         break;
       case 'clear':
-        stateCopy = {}; // Reset stateCopy to an empty object
-        break;
-      default:
-        logger(`Unknown action type: ${obj.type}`);
+        stateCopy = {};
         break;
     }
 
