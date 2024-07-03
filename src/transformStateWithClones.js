@@ -8,34 +8,40 @@
  */
 function transformStateWithClones(state, actions) {
   const history = [];
-  let previousState = state;
+  let previousState = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        previousState = combineProperties(previousState, action.extraData);
+        previousState = createStateWithAddedProperties(
+          previousState,
+          action.extraData,
+        );
         break;
       case 'removeProperties':
-        previousState = removeProperties(previousState, action.keysToRemove);
+        previousState = createStateWithRemovedProperties(
+          previousState,
+          action.keysToRemove,
+        );
         break;
       case 'clear':
-        previousState = clearState(previousState);
+        previousState = createClearState(previousState);
         break;
       default:
         throw new Error(`Unknown action type: ${action.type}`);
     }
 
-    history.push(previousState);
+    history.push({ ...previousState });
   }
 
   return history;
 }
 
-function combineProperties(state, properties) {
+function createStateWithAddedProperties(state, properties) {
   return Object.assign({}, state, properties);
 }
 
-function removeProperties(state, properties) {
+function createStateWithRemovedProperties(state, properties) {
   const newState = { ...state };
 
   for (const property of properties) {
@@ -45,7 +51,7 @@ function removeProperties(state, properties) {
   return newState;
 }
 
-function clearState(state) {
+function createClearState(state) {
   return {};
 }
 
