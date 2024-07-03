@@ -14,13 +14,13 @@ function transformStateWithClones(state, actions) {
   let stateCopy = deepClone(state);
   const stateHistory = [];
 
-  for (const obj of actions) {
-    switch (obj.type) {
+  for (const action of actions) {
+    switch (action.type) {
       case 'addProperties':
-        Object.assign(stateCopy, obj.extraData);
+        Object.assign(stateCopy, action.extraData);
         break;
       case 'removeProperties':
-        for (const key of obj.keysToRemove) {
+        for (const key of action.keysToRemove) {
           delete stateCopy[key];
         }
         break;
@@ -28,7 +28,7 @@ function transformStateWithClones(state, actions) {
         stateCopy = {};
         break;
       default:
-        throw new Error(`Unhandled action type: ${obj.type}`);
+        throw new Error(`Unhandled action type: ${action.type}`);
     }
 
     stateHistory.push(deepClone(stateCopy));
