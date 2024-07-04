@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const stateHistory = [];
-  const stateCopy = { ...state };
+  let stateCopy = { ...state };
 
   for (const obj of actions) {
     switch (obj.type) {
@@ -16,23 +16,22 @@ function transformStateWithClones(state, actions) {
         for (const key in obj.extraData) {
           stateCopy[key] = obj.extraData[key];
         }
-        stateHistory.push({ ...stateCopy });
         break;
 
       case 'removeProperties':
         for (const key of obj.keysToRemove) {
           delete stateCopy[key];
         }
-        stateHistory.push({ ...stateCopy });
         break;
 
       case 'clear':
-        for (const key in stateCopy) {
-          delete stateCopy[key];
-        }
-        stateHistory.push({ ...stateCopy });
+        stateCopy = {};
         break;
+
+      default:
+        throw new Error('Something went wrong');
     }
+    stateHistory.push({ ...stateCopy });
   }
 
   return stateHistory;
