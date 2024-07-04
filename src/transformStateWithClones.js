@@ -7,33 +7,33 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const RESULT = [];
-  let newState = { ...state };
+  const result = [];
+  let stateCopy = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        newState = { ...newState, ...action.extraData };
+        stateCopy = { ...stateCopy, ...action.extraData };
         break;
 
       case 'removeProperties':
         for (const key of action.keysToRemove) {
-          delete newState[key];
+          delete stateCopy[key];
         }
         break;
 
       case 'clear':
-        newState = {};
+        stateCopy = {};
         break;
 
       default:
-        return 'Err#1: Something went wrong :(';
+        throw new Error('Something went wrong');
     }
 
-    RESULT.push({ ...newState });
+    result.push({ ...stateCopy });
   }
 
-  return RESULT;
+  return result;
 }
 
 module.exports = transformStateWithClones;
