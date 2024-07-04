@@ -27,7 +27,7 @@ function modifyState(state, action) {
       return { ...state, ...action.extraData };
 
     case 'removeProperties':
-      const newState = { ...state }
+      const newState = { ...state };
 
       for (const key of action.keysToRemove) {
         delete newState[key];
@@ -39,7 +39,7 @@ function modifyState(state, action) {
       return {};
 
     default:
-      return state;
+      throw new Error('Undefined action type!');
   }
 }
 
