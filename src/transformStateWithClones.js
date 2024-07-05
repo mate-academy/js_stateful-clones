@@ -7,10 +7,14 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateCopy = { ...state };
   const stateCopyList = [];
 
   const oneAction = (task) => {
+    const stateCopy =
+      stateCopyList[0] !== undefined
+        ? { ...stateCopyList[stateCopyList.length - 1] }
+        : { ...state };
+
     switch (task.type) {
       case 'addProperties':
         Object.assign(stateCopy, task.extraData);
@@ -20,12 +24,16 @@ function transformStateWithClones(state, actions) {
         break;
       case 'clear':
         Object.keys(stateCopy).forEach((key) => delete stateCopy[key]);
+        break;
+      default:
+        Object.keys(stateCopy).forEach((key) => delete stateCopy[key]);
+        Object.assign(stateCopy, { error: `${task.type} is not available.` });
     }
 
-    stateCopyList.push({ ...stateCopy });
+    return stateCopy;
   };
 
-  actions.forEach(oneAction);
+  actions.forEach((task) => stateCopyList.push(oneAction(task)));
 
   return stateCopyList;
 }
