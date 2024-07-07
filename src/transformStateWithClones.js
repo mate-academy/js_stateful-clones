@@ -7,54 +7,48 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const propertiesOfActios = [];
+  const stateHistory = [];
   const stateCopy = JSON.parse(JSON.stringify(state));
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
         addProperties(stateCopy, action.extraData);
-        addToSolutionArray(propertiesOfActios, stateCopy);
         break;
 
       case 'removeProperties':
         removeProperties(stateCopy, action.keysToRemove);
-        addToSolutionArray(propertiesOfActios, stateCopy);
         break;
 
       case 'clear':
-        if (Object.keys(stateCopy).length === 0) {
-          addToSolutionArray(propertiesOfActios, stateCopy);
-          break;
-        } else {
-          clearProperties(stateCopy);
-          addToSolutionArray(propertiesOfActios, stateCopy);
-        }
+        clearProperties(stateCopy);
         break;
     }
+
+    addStateCloneToHistory(stateHistory, stateCopy);
   }
 
-  return propertiesOfActios;
+  return stateHistory;
 }
 
-function addProperties(stateCopy, extraData) {
-  Object.assign(stateCopy, extraData);
+function addProperties(currentState, extraData) {
+  Object.assign(currentState, extraData);
 }
 
-function removeProperties(stateCopy, keysToRemove) {
+function removeProperties(currentState, keysToRemove) {
   for (const key of keysToRemove) {
-    delete stateCopy[key];
+    delete currentState[key];
   }
 }
 
-function clearProperties(stateCopy) {
-  for (const key in stateCopy) {
-    delete stateCopy[key];
+function clearProperties(currentState) {
+  for (const key in currentState) {
+    delete currentState[key];
   }
 }
 
-function addToSolutionArray(result, stateCopy) {
-  result.push({ ...stateCopy });
+function addStateCloneToHistory(stateHistory, stateCopy) {
+  stateHistory.push({ ...stateCopy });
 }
 
 module.exports = transformStateWithClones;
