@@ -11,18 +11,24 @@ function transformStateWithClones(state, actions) {
   const stateHistory = [];
 
   for (let i = 0; i < actions.length; i++) {
-    if (actions[i].type === 'addProperties') {
-      for (const key in actions[i].extraData) {
-        transformedState[key] = actions[i].extraData[key];
-      }
-    } else if (actions[i].type === 'removeProperties') {
-      for (const key of actions[i].keysToRemove) {
-        delete transformedState[key];
-      }
-    } else {
-      for (const key in transformedState) {
-        delete transformedState[key];
-      }
+    switch (actions[i].type) {
+      case 'addProperties':
+        for (const key in actions[i].extraData) {
+          transformedState[key] = actions[i].extraData[key];
+        }
+        break;
+
+      case 'removeProperties':
+        for (const key of actions[i].keysToRemove) {
+          delete transformedState[key];
+        }
+        break;
+
+      default:
+        for (const key in transformedState) {
+          delete transformedState[key];
+        }
+        break;
     }
 
     stateHistory.push(structuredClone(transformedState));
