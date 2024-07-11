@@ -12,13 +12,12 @@ function transformStateWithClones(state, actions) {
   actions.forEach((action) => {
     const prevState =
       stateHistory[stateHistory.length - 1] || Object.assign({}, state);
-    const nextState = Object.assign({}, prevState);
+    let nextState = Object.assign({}, prevState);
 
     switch (action.type) {
       case 'clear':
-        stateHistory.push({});
-
-        return;
+        nextState = {}; // Create an empty object
+        break;
       case 'addProperties':
         Object.assign(nextState, action.extraData);
         break;
