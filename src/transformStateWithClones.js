@@ -10,26 +10,38 @@ function transformStateWithClones(state, actions) {
   const stateHistory = [];
   let currentState = { ...state };
 
+  function unexpectedActionType(message) {
+    stateHistory.push({ error: message });
+  }
+
   for (const action of actions) {
+    let newState = { ...currentState };
+
     switch (action.type) {
       case 'clear':
-        currentState = {};
+        newState = {};
         break;
 
       case 'addProperties':
-        currentState = { ...currentState, ...action.extraData };
+        newState = { ...newState, ...action.extraData };
         break;
 
       case 'removeProperties':
-        for (const key of action.keysToRemove) {
-          if (key in currentState) {
-            const { [key]: _, ...rest } = currentState;
+        let tempState = { ...newState };
 
-            currentState = rest;
-          }
+        for (const key of action.keysToRemove) {
+          const { [key]: unusedVariable, ...rest } = tempState;
+
+          tempState = rest;
         }
+        newState = tempState;
+        break;
+
+      default:
+        unexpectedActionType(`Unexpected action type: ${action.type}`);
         break;
     }
+    currentState = newState;
     stateHistory.push({ ...currentState });
   }
 
