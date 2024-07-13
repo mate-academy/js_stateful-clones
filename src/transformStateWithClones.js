@@ -13,7 +13,7 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     const { type = null, extraData = {}, keysToRemove = [] } = action;
 
-    const obj =
+    let obj =
       states.length === 0 ? { ...state } : { ...states[states.length - 1] };
 
     switch (type) {
@@ -23,23 +23,23 @@ function transformStateWithClones(state, actions) {
           ...extraData,
         };
 
-        states.push(newObj);
+        obj = newObj;
         break;
       case 'removeProperties':
         keysToRemove.forEach((element) => {
           delete obj[element];
         });
-        states.push(obj);
         break;
       case 'clear':
         Object.keys(obj).forEach((element) => {
           delete obj[element];
         });
-        states.push(obj);
         break;
       default:
         throw new Error(`Unknow type: ${type}`);
     }
+
+    states.push(obj);
   }
 
   return states;
