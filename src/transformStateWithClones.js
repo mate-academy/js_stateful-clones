@@ -7,28 +7,30 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let currentState = { ...state };
+  let stateCopy = { ...state };
   const stateHistory = [];
 
   for (const action of actions) {
     switch (action.type) {
       case 'clear':
-        currentState = {};
+        stateCopy = {};
         break;
       case 'addProperties':
-        currentState = { ...currentState, ...action.extraData };
+        stateCopy = { ...stateCopy, ...action.extraData };
         break;
       case 'removeProperties':
-        currentState = { ...currentState };
+        stateCopy = { ...stateCopy };
 
         for (const key of action.keysToRemove) {
-          delete currentState[key];
+          delete stateCopy[key];
         }
         break;
       default:
+        // eslint-disable-next-line no-console
+        console.error(`Unexpected action type: ${action.type}`);
         break;
     }
-    stateHistory.push(currentState);
+    stateHistory.push({ ...stateCopy });
   }
 
   return stateHistory;
