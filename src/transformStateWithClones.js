@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const stateHistory = [];
-  let currentState = state;
+  let currentState = { ...state };
 
   actions.forEach((action) => {
     let nextState;
@@ -24,7 +24,7 @@ function transformStateWithClones(state, actions) {
         nextState = { ...currentState };
 
         action.keysToRemove.forEach((key) => {
-          if (nextState.hasOwnProperty(key)) {
+          if (Object.prototype.hasOwnProperty.call(nextState, key)) {
             delete nextState[key];
           }
         });
@@ -35,7 +35,7 @@ function transformStateWithClones(state, actions) {
     }
 
     stateHistory.push(nextState);
-    currentState = nextState; // Update currentState for the next iteration
+    currentState = nextState;
   });
 
   return stateHistory;
