@@ -7,9 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateCopy = {};
-
-  Object.assign(stateCopy, state);
+  const stateCopy = { ...state };
 
   const modificationsHistory = [];
 
