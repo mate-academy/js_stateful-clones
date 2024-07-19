@@ -14,31 +14,31 @@ function transformStateWithClones(state, actions) {
     switch (true) {
       case action.type === 'addProperties':
         add(action.extraData);
+        updatedState.push({ ...tempObject });
         break;
       case action.type === 'removeProperties':
         remove(action.keysToRemove);
+        updatedState.push({ ...tempObject });
         break;
       case action.type === 'clear':
         clear();
+        updatedState.push({ ...tempObject });
         break;
     }
   }
 
   function add(data) {
     tempObject = { ...tempObject, ...data };
-    updatedState.push({ ...tempObject });
   }
 
   function remove(data) {
     for (const del of data) {
       delete tempObject[del];
     }
-    updatedState.push({ ...tempObject });
   }
 
   function clear() {
     tempObject = {};
-    updatedState.push({ ...tempObject });
   }
 
   return updatedState;
