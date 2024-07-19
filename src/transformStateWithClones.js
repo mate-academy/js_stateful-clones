@@ -8,18 +8,21 @@
  */
 function transformStateWithClones(state, actions) {
   const actionsArray = [];
-  const resultObject = { ...state };
+  const stateCopy = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        addProperties(resultObject, action.extraData, actionsArray);
+        addProperties(stateCopy, action.extraData, actionsArray);
         break;
       case 'removeProperties':
-        removeProperties(resultObject, action.keysToRemove, actionsArray);
+        removeProperties(stateCopy, action.keysToRemove, actionsArray);
         break;
       case 'clear':
-        clear(actionsArray, resultObject);
+        clear(actionsArray, stateCopy);
+        break;
+      default:
+        clear(actionsArray, stateCopy);
         break;
     }
   }
@@ -27,23 +30,29 @@ function transformStateWithClones(state, actions) {
   return actionsArray;
 }
 
-function clear(actionsArray, resultObject) {
-  for (const value in resultObject) {
-    delete resultObject[value];
+function clear(actionsArray, stateCopy) {
+  for (const value in stateCopy) {
+    delete stateCopy[value];
   }
-  actionsArray.push({ ...resultObject });
+  actionsArray.push({ ...stateCopy });
 }
 
-function addProperties(resultObject, extraData, actionsArray) {
-  Object.assign(resultObject, extraData);
-  actionsArray.push({ ...resultObject });
+function addProperties(stateCopy, extraData, actionsArray) {
+  const addCopy = {};
+
+  Object.assign(stateCopy, extraData);
+  Object.assign(addCopy, stateCopy);
+  actionsArray.push({ ...addCopy });
 }
 
-function removeProperties(resultObject, keysToRemove, actionsArray) {
+function removeProperties(stateCopy, keysToRemove, actionsArray) {
+  const removeCopy = {};
+
   for (const keyToRemove of keysToRemove) {
-    delete resultObject[keyToRemove];
+    delete stateCopy[keyToRemove];
   }
-  actionsArray.push({ ...resultObject });
+  Object.assign(removeCopy, stateCopy);
+  actionsArray.push({ ...removeCopy });
 }
 
 module.exports = transformStateWithClones;
