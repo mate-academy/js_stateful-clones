@@ -20,16 +20,18 @@ function transformStateWithClones(state, actions) {
         currentState = Object.assign({}, currentState, action.extraData);
         break;
       case 'removeProperties':
-        currentState = removeProp(currentState, action);
+        currentState = removeProperties(currentState, action.keysToRemove);
         break;
+      default:
+        return 'Error';
     }
-    history.push(currentState);
+    history.push({ ...currentState });
   }
 
-  function removeProp(obj, { keysToRemove }) {
+  function removeProperties(obj, keys) {
     const result = { ...obj };
 
-    for (const key of keysToRemove) {
+    for (const key of keys) {
       if (key in result) {
         delete result[key];
       }
