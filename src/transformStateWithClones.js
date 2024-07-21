@@ -11,12 +11,21 @@ function transformStateWithClones(state, actions) {
   let stateCopy = { ...state };
 
   for (const action of actions) {
-    if (action.type === 'addProperties') {
-      stateCopy = addProperties(stateCopy, action.extraData);
-    } else if (action.type === 'removeProperties') {
-      stateCopy = removeProperties(stateCopy, action.keysToRemove);
-    } else if (action.type === 'clear') {
-      stateCopy = clear(stateCopy);
+    switch (action.type) {
+      case 'addProperties':
+        stateCopy = addProperties(stateCopy, action.extraData);
+        break;
+
+      case 'removeProperties':
+        stateCopy = removeProperties(stateCopy, action.keysToRemove);
+        break;
+
+      case 'clear':
+        stateCopy = createEmptyState(stateCopy);
+        break;
+
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
     }
 
     stateCopies.push({ ...stateCopy });
@@ -42,7 +51,7 @@ function removeProperties(stateCopy, keysToRemove) {
   return updatedCopy;
 }
 
-function clear(stateCopy) {
+function createEmptyState(stateCopy) {
   return {};
 }
 
