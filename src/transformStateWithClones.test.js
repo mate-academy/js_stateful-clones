@@ -39,6 +39,7 @@ test('Should create a new object with multiple added properties', () => {
     .toEqual({});
 });
 
+
 test('Should combine old properties with added ones', () => {
   const state = {
     foo: 'bar', bar: 'foo',
