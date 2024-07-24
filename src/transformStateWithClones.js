@@ -29,6 +29,9 @@ function transformStateWithClones(state, actions) {
           delete stateClone[key];
         }
         break;
+
+      default:
+        throw new Error(`Wrong type`);
     }
 
     states.push({ ...stateClone });
