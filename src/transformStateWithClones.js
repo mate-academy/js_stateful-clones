@@ -8,6 +8,7 @@
  */
 
 function transformStateWithClones(state, actions) {
+
   const finMass = [];
   let stateCopy = { ...state };
 
