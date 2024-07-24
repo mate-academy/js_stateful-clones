@@ -9,7 +9,7 @@
 
 function transformStateWithClones(state, actions) {
   const finMass = [];
-  const stateCopy = { ...state };
+  let stateCopy = { ...state };
 
   for (const action in actions) {
     if (actions[action].type === 'addProperties') {
