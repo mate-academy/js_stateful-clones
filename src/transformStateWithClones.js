@@ -8,6 +8,10 @@
  */
 function transformStateWithClones(state, actions) {
   // write code here
+  global.structuredClone = (val) => {
+    return JSON.parse(JSON.stringify(val));
+  };
+
   let tempState = structuredClone(state);
 
   const afterStates = [];
