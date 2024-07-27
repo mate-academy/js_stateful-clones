@@ -9,9 +9,6 @@
 function transformStateWithClones(state, actions) {
   const stateArray = [];
 
-  // stateArray.push({ ...state });
-
-  // console.log(newState, actions);
   let last = { ...state };
 
   for (const el of actions) {
