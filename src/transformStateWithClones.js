@@ -11,8 +11,10 @@ function transformStateWithClones(state, actions) {
 
   let copyState = { ...state };
 
-  for (const el of actions) {
-    switch (el.type) {
+  for (const action of actions) {
+    const { type, ...... } = action;
+  
+    switch (type) {
       case 'clear':
         stateArray.push({});
         break;
