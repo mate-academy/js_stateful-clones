@@ -16,7 +16,7 @@ function transformStateWithClones(state, actions) {
         copy = {};
         break;
       case 'addProperties':
-        copy = { ...action.extraData };
+        copy = { ...copy, ...action.extraData };
         break;
       case 'removeProperties':
         copy = { ...copy };
