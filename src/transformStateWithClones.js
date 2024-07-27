@@ -9,48 +9,51 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 function transformStateWithClones(state, actions) {
   const result = [];
+  const objWithAddedProps = (obj, extraData) =>
+    Object.assign({}, obj, extraData);
+  const stateCopyWithRemovedProps = (obj) => Object.assign({}, obj);
 
   for (const item of actions) {
-    if (item.type === 'addProperties') {
-      // if our 'result' arr has no therefore we use state obj
-      if (result.length === 0) {
-        const objWithAddedProps = Object.assign({}, state, item.extraData);
+    switch (item.type) {
+      case 'addProperties':
+        // if our 'result' arr has no therefore we use state obj
+        if (!result.length) {
+          result.push(objWithAddedProps(state, item.extraData));
+        } else {
+          // if our 'result' arr has last item then we use last item
+          result.push(
+            objWithAddedProps(result[result.length - 1], item.extraData),
+          );
+        }
+        break;
 
-        result.push(objWithAddedProps);
-      } else {
-        // if our 'result' arr has last item then we use last item
-        const objWithAddedProps = Object.assign(
-          {},
-          result[result.length - 1],
-          item.extraData,
-        );
+      case 'removeProperties':
+        // if our 'result' arr has no therefore we use state obj
+        let objCopyWithRemovedProps;
 
-        result.push(objWithAddedProps);
-      }
-    }
+        if (!result.length) {
+          objCopyWithRemovedProps = stateCopyWithRemovedProps(state);
 
-    if (item.type === 'removeProperties') {
-      let objWithRemovedProps;
-      // if our 'result' arr has no therefore we use state obj
+          // if our 'result' arr has last item then we use last item
+        } else {
+          objCopyWithRemovedProps = stateCopyWithRemovedProps(
+            result[result.length - 1],
+          );
+        }
 
-      if (result.length === 0) {
-        objWithRemovedProps = Object.assign({}, state);
+        for (const key in item.keysToRemove) {
+          const propKeyToRemove = item.keysToRemove[key];
 
-        // if our 'result' arr has last item then we use last item
-      } else {
-        objWithRemovedProps = Object.assign({}, result[result.length - 1]);
-      }
+          delete objCopyWithRemovedProps[propKeyToRemove];
+        }
+        result.push(objCopyWithRemovedProps);
+        break;
 
-      for (const key in item.keysToRemove) {
-        const propKeyToRemove = item.keysToRemove[key];
-
-        delete objWithRemovedProps[propKeyToRemove];
-      }
-      result.push(objWithRemovedProps);
-    }
-
-    if (item.type === 'clear') {
-      result.push({});
+      case 'clear':
+        result.push({});
+        break;
+      default:
+        console.log('Ocureed error , please fix it');
     }
   }
 
