@@ -25,6 +25,7 @@ function transformStateWithClones(state, actions) {
         clearProperties(massiveToReturn, stateCopy);
         break;
     }
+    massiveToReturn.push({ ...stateCopy });
   }
 
   return massiveToReturn;
@@ -32,21 +33,18 @@ function transformStateWithClones(state, actions) {
 
 function addProperties(massiveToReturn, stateCopy, extraData) {
   Object.assign(stateCopy, extraData);
-  massiveToReturn.push({ ...stateCopy });
 }
 
 function removeProperties(massiveToReturn, stateCopy, keysToRemove) {
   for (const key of keysToRemove) {
     delete stateCopy[key];
   }
-  massiveToReturn.push({ ...stateCopy });
 }
 
 function clearProperties(massiveToReturn, stateCopy) {
   for (const key in stateCopy) {
     delete stateCopy[key];
   }
-  massiveToReturn.push({ ...stateCopy });
 }
 
 module.exports = transformStateWithClones;
