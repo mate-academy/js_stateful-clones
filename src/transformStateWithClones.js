@@ -26,6 +26,11 @@ function transformStateWithClones(state, actions) {
         clearProperties(stateCopy);
         stateHistory.push({ ...stateCopy });
         break;
+
+      default:
+        // eslint-disable-next-line no-console
+        console.error(`Unknown action type: ${action.type}`);
+        break;
     }
   }
 
