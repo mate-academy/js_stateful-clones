@@ -6,39 +6,6 @@
  *
  * @return {Object[]}
  */
-const state = {
-  foo: 'bar',
-  name: 'Jim',
-  another: 'one',
-};
-
-console.log(
-  transformStateWithClones(state, [
-    {
-      type: 'removeProperties',
-      keysToRemove: ['another'],
-    },
-    { type: 'clear' },
-    { type: 'clear' },
-    { type: 'clear' },
-    {
-      type: 'addProperties',
-      extraData: { yet: 'another property' },
-    },
-    { type: 'clear' },
-    {
-      type: 'addProperties',
-      extraData: {
-        foo: 'bar',
-        name: 'Jim',
-      },
-    },
-    {
-      type: 'removeProperties',
-      keysToRemove: ['name', 'hello'],
-    },
-  ]),
-);
 
 function transformStateWithClones(state, actions) {
   let stateClone = { ...state };
