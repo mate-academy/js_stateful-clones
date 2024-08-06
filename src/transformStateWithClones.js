@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 
-function transformStateWithClones(state, actions) {
+function transformStateWithClones(state = {}, actions) {
   const stateHistory = [];
 
   for (const actionObj of actions) {
@@ -28,7 +28,6 @@ function transformStateWithClones(state, actions) {
         stateHistory.push({ ...state });
         break;
       default:
-        console.log('Error');
         return 1;
     }
   }
