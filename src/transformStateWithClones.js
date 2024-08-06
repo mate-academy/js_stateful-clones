@@ -7,38 +7,29 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  function deepClone(obj) {
-    return JSON.parse(JSON.stringify(obj));
-}
+    let currentState = { ...state };
+    const stateHistory = [];
 
-let currentState = deepClone(state);
-const stateHistory = [];
+    actions.forEach(action => {
+        switch (action.type) {
+            case 'clear':
+                currentState = {};
+                break;
+            case 'addProperties':
+                currentState = { ...currentState, ...action.extraData };
+                break;
+            case 'removeProperties':
+                action.keysToRemove.forEach(key => {
+                    delete currentState[key];
+                });
+                break;
+            default:
+                break;
+        }
+        stateHistory.push({ ...currentState });
+    });
 
-for (const action of actions) {
-    switch (action.type) {
-        case 'clear':
-            currentState = {};
-            break;
-        case 'addProperties':
-            currentState = {
-                ...currentState,
-                ...action.extraData,
-            };
-            break;
-        case 'removeProperties':
-            currentState = { ...currentState };
-            for (const key of action.keysToRemove) {
-                delete currentState[key];
-            }
-            break;
-        default:
-            throw new Error(`Unknown action type: ${action.type}`);
-    }
-
-    stateHistory.push(deepClone(currentState));
-}
-
-return stateHistory;
+    return stateHistory;
 }
 
 module.exports = transformStateWithClones;
