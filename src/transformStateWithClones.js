@@ -22,9 +22,7 @@ function transformStateWithClones(state, actions) {
         const { keysToRemove } = action;
 
         for (const key of keysToRemove) {
-          if (currentState.hasOwnProperty(key)) {
-            delete currentState[key];
-          }
+          delete currentState[key];
         }
 
         break;
