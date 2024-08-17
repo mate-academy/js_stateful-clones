@@ -9,7 +9,7 @@
 function transformStateWithClones(state, actions) {
   // write code here
   const result = [];
-  const clone = structuredClone(state);
+  const clone = global.structuredClone(state);
 
   for (const action of actions) {
     switch (action.type) {
