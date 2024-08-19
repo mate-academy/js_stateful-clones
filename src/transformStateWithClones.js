@@ -1,13 +1,32 @@
 'use strict';
 
 /**
- * @param {Object} state
- * @param {Object[]} actions
+ * @param {objetoect} state
+ * @param {objetoect[]} actions
  *
- * @return {Object[]}
+ * @return {objetoect[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
+  let objeto = { ...state };
+  const novo = [];
+
+  for (const action of actions) {
+    const { type, extraData, keysToRemove } = action;
+
+    if (type === 'addProperties') {
+        objeto = { ...objeto, ...extraData };
+    } else if (type === 'removeProperties') {
+      for (const key of keysToRemove) {
+        delete objeto[key];
+      }
+    } else {
+      objeto = {};
+    }
+    
+    novo.push({ ...objeto });
+  }
+
+  return novo;
 }
 
 module.exports = transformStateWithClones;
