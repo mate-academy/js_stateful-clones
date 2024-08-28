@@ -27,7 +27,7 @@ function transformStateWithClones(state, actions) {
         }
         break;
       default:
-        throw new Error('Parameter is not a number!');
+        throw Error('Action is not defined!');
     }
     history.push({ ...stateCopy });
   }
