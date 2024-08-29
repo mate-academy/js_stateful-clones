@@ -8,7 +8,7 @@
  */
 
 function transformStateWithClones(state, actions) {
-  const stateCopy = { ...state };
+  let stateCopy = { ...state };
   const history = [];
 
   for (const action of actions) {
@@ -22,9 +22,7 @@ function transformStateWithClones(state, actions) {
         }
         break;
       case 'clear':
-        for (const stateCopyKey in stateCopy) {
-          delete stateCopy[stateCopyKey];
-        }
+        stateCopy = {};
         break;
       default:
         throw Error('Action is not defined!');
