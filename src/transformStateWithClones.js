@@ -33,10 +33,10 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    statesArr.push({ ...tempState });
+    statesHistory.push({ ...tempState });
   }
 
-  return statesArr;
+  return statesHistory;
 }
 
 module.exports = transformStateWithClones;
