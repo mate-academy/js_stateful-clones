@@ -27,7 +27,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw new Error('Error');
+        console.log('Wrong action type');
     }
 
     stateHistory.push({ ...stateCopy });
