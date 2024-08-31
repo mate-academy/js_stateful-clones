@@ -25,8 +25,12 @@ function transformStateWithClones(state, actions) {
         }
         break;
 
-      default:
+      case 'clear':
         stateCopy = {};
+        break;
+
+      default:
+        throw new Error('Unexpected parameter!');
     }
 
     states.push({ ...stateCopy });
