@@ -20,8 +20,6 @@ function transformStateWithClones(state, actions) {
         currentState = { ...currentState, ...action.extraData };
         break;
       case 'removeProperties':
-        currentState = { ...currentState };
-
         action.keysToRemove.forEach((key) => {
           delete currentState[key];
         });
