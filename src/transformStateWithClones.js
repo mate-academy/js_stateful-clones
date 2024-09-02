@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   // write code here
-  const arrayWithObjects = [];
+  const stateHistory = [];
   let cloneState = { ...state };
 
   for (const action of actions) {
@@ -25,18 +25,29 @@ function transformStateWithClones(state, actions) {
         cloneState = removeProperties(cloneState, action.keysToRemove);
 
         break;
+
       case 'clear':
         cloneState = {};
 
         break;
+
+      default:
+        stateHistory.push({
+          error: `Unknown action type: ${action.type}`,
+          state: cloneState,
+        });
+
+        return stateHistory;
     }
-    arrayWithObjects.push({ ...cloneState });
+    stateHistory.push({ ...cloneState });
   }
 
-  return arrayWithObjects;
+  return stateHistory;
 }
 
-function removeProperties(newObject, keysToRemove) {
+function removeProperties(originalObject, keysToRemove) {
+  const newObject = { ...originalObject };
+
   for (const key of keysToRemove) {
     delete newObject[key];
   }
