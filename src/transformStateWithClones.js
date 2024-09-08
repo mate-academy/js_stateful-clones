@@ -11,26 +11,25 @@ function transformStateWithClones(state, actions) {
   const stateHistory = [];
 
   // Zaczynamy od klonowania początkowego stanu
-  let currentState = { ...state };
+  let stateCopy = { ...state };
 
   // Iterujemy po każdej akcji
   for (const action of actions) {
     switch (action.type) {
       case 'clear':
         // Tworzymy nowy pusty obiekt stanu
-        currentState = {};
+        stateCopy = {};
         break;
 
       case 'addProperties':
         // Dodajemy nowe właściwości do sklonowanego stanu
-        currentState = { ...currentState, ...action.extraData };
+        stateCopy = { ...stateCopy, ...action.extraData };
         break;
 
       case 'removeProperties':
-        // Klonujemy stan i usuwamy wskazane klucze
-        currentState = { ...currentState };
+        // Usuwamy wskazane klucze z bieżącego stanu
         for (const key of action.keysToRemove) {
-          delete currentState[key];
+          delete stateCopy[key];
         }
         break;
 
@@ -39,7 +38,7 @@ function transformStateWithClones(state, actions) {
     }
 
     // Dodajemy sklonowany i zmodyfikowany stan do historii
-    stateHistory.push({ ...currentState });
+    stateHistory.push({ ...stateCopy });
   }
 
   return stateHistory;
