@@ -9,11 +9,11 @@
 function transformStateWithClones(state, actions) {
   const newState = [];
   let stateCopy = Object.assign({}, state);
-  for (let i = 0; i < actions.length; i++) {
-    const { type, extraData, keysToRemove } = actions[i];
+  for (let action in actions) {
+    const { type, extraData, keysToRemove } = actions[action];
 
-    if (i > 0) {
-      stateCopy = Object.assign({}, newState[i - 1]);
+    if (action > 0) {
+      stateCopy = Object.assign({}, newState[action - 1]);
     }
 
     let currentItem = {};
