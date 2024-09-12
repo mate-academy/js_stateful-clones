@@ -17,8 +17,8 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        for (const key of action.keysToRemove) {
-          delete stateCopy[key];
+        for (const property of action.keysToRemove) {
+          delete stateCopy[property];
         }
         break;
 
@@ -27,7 +27,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        throw new Error('Invalid action type');
     }
 
     stateHistory.push({ ...stateCopy });
