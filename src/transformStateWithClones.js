@@ -12,7 +12,7 @@ function transformStateWithClones(state, actions) {
   let referenceState = { ...state };
 
   for (const action of actions) {
-    const copy = { ...referenceState };
+    const stateCopy = { ...referenceState };
     const { type } = action;
 
     switch (type) {
@@ -20,11 +20,9 @@ function transformStateWithClones(state, actions) {
         const { extraData } = action;
 
         for (const [key, value] of Object.entries(extraData)) {
-          copy[key] = value;
+          stateCopy[key] = value;
         }
 
-        stateHistory.push(copy);
-        referenceState = { ...copy };
         break;
       }
 
@@ -32,20 +30,23 @@ function transformStateWithClones(state, actions) {
         const { keysToRemove } = action;
 
         for (const key of keysToRemove) {
-          delete copy[key];
+          delete stateCopy[key];
         }
 
-        stateHistory.push(copy);
-        referenceState = { ...copy };
         break;
       }
 
       case 'clear': {
-        stateHistory.push({});
-        referenceState = {};
+        Object.keys(stateCopy).forEach((key) => {
+          delete stateCopy[key];
+        });
+
         break;
       }
     }
+
+    stateHistory.push(stateCopy);
+    referenceState = { ...stateCopy };
   }
 
   return stateHistory;
