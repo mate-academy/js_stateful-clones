@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const result = [];
+  const stateHistory = [];
 
   let referenceState = { ...state };
 
@@ -23,7 +23,7 @@ function transformStateWithClones(state, actions) {
           copy[key] = value;
         }
 
-        result.push(copy);
+        stateHistory.push(copy);
         referenceState = { ...copy };
         break;
       }
@@ -35,20 +35,20 @@ function transformStateWithClones(state, actions) {
           delete copy[key];
         }
 
-        result.push(copy);
+        stateHistory.push(copy);
         referenceState = { ...copy };
         break;
       }
 
       case 'clear': {
-        result.push({});
+        stateHistory.push({});
         referenceState = {};
         break;
       }
     }
   }
 
-  return result;
+  return stateHistory;
 }
 
 module.exports = transformStateWithClones;
