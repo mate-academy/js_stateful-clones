@@ -12,19 +12,17 @@ function transformStateWithClones(state, actions) {
   actions.forEach((action) => {
     switch (action.type) {
       case 'addProperties':
-        const StateBfAdd = { ...(newStates[newStates.length - 1] || state) };
+        const previousArrayState = { ...(newStates.at(-1) ?? state) };
 
-        newStates.push({ ...StateBfAdd, ...action.extraData });
+        newStates.push({ ...previousArrayState, ...action.extraData });
         break;
       case 'removeProperties':
-        const stateBfRemove = { ...(newStates[newStates.length - 1] || state) };
+        const previousState = { ...(newStates.at(-1) ?? state) };
 
         action.keysToRemove.forEach((key) => {
-          if (Object.keys(stateBfRemove).includes(key)) {
-            delete stateBfRemove[key];
-          }
+          delete previousState[key];
         });
-        newStates.push({ ...stateBfRemove });
+        newStates.push({ ...previousState });
         break;
       case 'clear':
         newStates.push({});
