@@ -6,8 +6,39 @@
  *
  * @return {Object[]}
  */
+
 function transformStateWithClones(state, actions) {
-  // write code here
+  const arr = [];
+  let stateCopy = { ...state };
+
+  for (const action of actions) {
+    stateCopy = { ...stateCopy };
+
+    switch (action.type) {
+      case 'addProperties': {
+        stateCopy = Object.assign(stateCopy, action.extraData);
+
+        break;
+      }
+
+      case 'removeProperties': {
+        for (const key of action.keysToRemove) {
+          delete stateCopy[key];
+        }
+
+        break;
+      }
+
+      case 'clear': {
+        stateCopy = {};
+
+        break;
+      }
+    }
+    arr.push(stateCopy);
+  }
+
+  return arr;
 }
 
 module.exports = transformStateWithClones;
