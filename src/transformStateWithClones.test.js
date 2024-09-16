@@ -214,6 +214,7 @@ test('Should handle multiple types', () => {
     },
   ]))
     .toEqual([
+
       {
         foo: 'bar', bar: 'foo', name: 'Jim', hello: 'world',
       },
