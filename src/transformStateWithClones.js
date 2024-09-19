@@ -13,7 +13,6 @@ function transformStateWithClones(state, actions) {
   for (let index = 0; index < actions.length; index++) {
     const action = actions[index];
     const type = action.type;
-    const keys = Object.keys(stateCopy);
 
     switch (type) {
       case 'addProperties':
@@ -29,10 +28,15 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
+        const keys = Object.keys(stateCopy);
+
         for (let i = 0; i < keys.length; i++) {
           delete stateCopy[keys[i]];
         }
         stateHistory.push({});
+        break;
+      default:
+        stateHistory.push({ error: 'type-error' });
     }
   }
 
