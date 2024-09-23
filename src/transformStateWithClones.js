@@ -23,7 +23,7 @@ function transformStateWithClones(state, actions) {
 
           Object.assign(stateClone, extraData);
 
-          results.push({ ...stateClone });
+          addToArray(results, stateClone);
         }
         break;
 
@@ -35,7 +35,7 @@ function transformStateWithClones(state, actions) {
             delete stateClone[key];
           }
 
-          results.push({ ...stateClone });
+          addToArray(results, stateClone);
         }
         break;
 
@@ -44,7 +44,7 @@ function transformStateWithClones(state, actions) {
           delete stateClone[key];
         }
 
-        results.push({ ...stateClone });
+        addToArray(results, stateClone);
         break;
     }
   }
@@ -53,3 +53,7 @@ function transformStateWithClones(state, actions) {
 }
 
 module.exports = transformStateWithClones;
+
+function addToArray(array, object) {
+  array.push({ ...object });
+}
