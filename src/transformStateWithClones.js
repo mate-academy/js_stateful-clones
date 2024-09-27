@@ -27,22 +27,25 @@ const clearState = (state, res) => {
 
 function transformStateWithClones(state, actions) {
   const newState = { ...state };
-  const res = [];
+  const statesHistory = [];
 
   actions.forEach((action) => {
     switch (action.type) {
       case 'addProperties':
-        return addProperties(newState, action.extraData, res);
+        return addProperties(newState, action.extraData, statesHistory);
 
       case 'removeProperties':
-        return removeProperty(newState, action.keysToRemove, res);
+        return removeProperty(newState, action.keysToRemove, statesHistory);
+
+      case 'clear':
+        return clearState(newState, statesHistory);
 
       default:
-        return clearState(newState, res);
+        throw new Error('Unexpected action type');
     }
   });
 
-  return res;
+  return statesHistory;
 }
 
 module.exports = transformStateWithClones;
