@@ -7,22 +7,22 @@
  * @return {Object[]}
  */
 
-const addProperties = (state, properties, res) => {
+const addProperties = (state, properties, statesHistory) => {
   Object.assign(state, properties);
-  res.push({ ...state });
+  statesHistory.push({ ...state });
 };
 
-const removeProperty = (state, keysToRemove, res = []) => {
+const removeProperty = (state, keysToRemove, statesHistory = []) => {
   keysToRemove.forEach((key) => {
     delete state[key];
   });
-  res.push({ ...state });
+  statesHistory.push({ ...state });
 };
 
-const clearState = (state, res) => {
+const clearState = (state, statesHistory) => {
   Object.keys(state).forEach((key) => delete state[key]);
 
-  res.push({ ...state });
+  statesHistory.push({ ...state });
 };
 
 function transformStateWithClones(state, actions) {
