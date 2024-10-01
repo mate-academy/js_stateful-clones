@@ -8,27 +8,34 @@
 */
 function transformStateWithClones(state, actions) {
 const stateHistory = [];
+// deep-cloning the initial state
+let currentState = structuredClone(state);
+
 actions.forEach((action) => {
 switch (action.type) {
 case 'addProperties':
-const addState = structuredClone(state);
+  // clone the current state and add the new props
+currentState = structuredClone(currentState);
 Object.keys(action.extraData).forEach(key => {
 addState[key] = action.extraData[key];
 });
-stateHistory.push(addState);
+stateHistory.push(currentState);
 break;
 
 case 'removeProperties':
-const removeState = structuredClone(state);
+  // clone the current state and remove the specified keys
+currentState = structuredClone(currentState);
 for (const key of action.keysToRemove) {
 delete removeState[key];
 };
-stateHistory.push(removeState);
+stateHistory.push(currentState);
 break;
 
 case 'clear':
-const clearState = {};
-stateHistory.push(clearState);
+  // replace current state with an empty object
+currentState = {};
+stateHistory.push(currentState);
+break;
 };
 });
 return stateHistory;
