@@ -27,8 +27,7 @@ stateHistory.push(removeState);
 break;
 
 case 'clear':
-const clearState = structuredClone(state);
-Object.keys(state).forEach(key => delete state[key]);
+const clearState = {};
 stateHistory.push(clearState);
 };
 });
