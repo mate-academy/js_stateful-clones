@@ -17,7 +17,7 @@ case 'addProperties':
   // clone the current state and add the new props
 currentState = structuredClone(currentState);
 Object.keys(action.extraData).forEach(key => {
-addState[key] = action.extraData[key];
+currentState[key] = action.extraData[key];
 });
 stateHistory.push(currentState);
 break;
@@ -26,7 +26,7 @@ case 'removeProperties':
   // clone the current state and remove the specified keys
 currentState = structuredClone(currentState);
 for (const key of action.keysToRemove) {
-delete removeState[key];
+delete currentState[key];
 };
 stateHistory.push(currentState);
 break;
