@@ -22,7 +22,7 @@ function transformStateWithClones(state, actions) {
         copy = { ...copy, ...action.extraData };
         break;
       case 'removeProperties':
-        actions.keysToRemove.forEach((key) => {
+        action.keysToRemove.forEach((key) => {
           delete copy[key];
         });
         break;
