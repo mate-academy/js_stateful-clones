@@ -45,19 +45,19 @@ function transformStateWithClones(state, actions) {
 
       case 'clear':
         if (arrayResults.length === 0) {
-          const newStates = { ...state };
+          const newState = { ...state };
 
-          for (const keys in newStates) {
-            delete newStates[keys];
+          for (const key in newState) {
+            delete newState[key];
           }
-          arrayResults.push(newStates);
+          arrayResults.push(newState);
         } else {
-          const newStates = { ...arrayResults[arrayResults.length - 1] };
+          const newState = { ...arrayResults[arrayResults.length - 1] };
 
-          for (const keys in newStates) {
-            delete newStates[keys];
+          for (const key in newState) {
+            delete newState[key];
           }
-          arrayResults.push(newStates);
+          arrayResults.push(newState);
         }
         break;
     }
