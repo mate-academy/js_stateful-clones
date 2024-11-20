@@ -1,13 +1,20 @@
 'use strict';
 
-/**
- * @param {Object} state
- * @param {Object[]} actions
- *
- * @return {Object[]}
- */
-function transformStateWithClones(state, actions) {
-  // write code here
-}
+function transformStateWithClones(initialState, actions) {
+  return actions.reduce((stateHistory, { type, extraData, keysToRemove }) => {
+    const prevState = stateHistory[stateHistory.length - 1] || initialState;
+    let newState;
 
-module.exports = transformStateWithClones;
+    switch (type) {
+      case 'clear':
+        newState = {};
+        break;
+      case 'addProperties':
+        newState = Object.assign({}, prevState, extraData);
+        break;
+      // ... rest of the code remains the same ...}
+    }
+
+    return stateHistory.concat(newState);
+  }, []);
+}
