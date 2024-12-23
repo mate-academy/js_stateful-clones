@@ -30,9 +30,6 @@ function transformStateWithClones(state, actions) {
           delete currentState[key];
         }
         break;
-
-      default:
-        throw new Error(`Неизвестный тип действия: ${action.type}`);
     }
 
     states.push(currentState);
