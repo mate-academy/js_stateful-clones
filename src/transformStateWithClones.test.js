@@ -16,7 +16,7 @@ test('Should create a new object with a single added property', () => {
 
   expect(state)
     .toEqual({});
-});
+}); 
 
 test('Should create a new object with multiple added properties', () => {
   const state = {};
