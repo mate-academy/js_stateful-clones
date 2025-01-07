@@ -7,30 +7,42 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateHistory = [];
-  let currentState = { ...state }; 
-
-  for (const action of actions) {
-    switch (action.type) {
-      case 'clear':
-        currentState = {};
-        break;
-      case 'addProperties':
-        currentState = { ...currentState, ...action.extraData }; 
-        break;
-      case 'removeProperties':
-        currentState = { ...currentState }; 
-        for (const key of action.keysToRemove) {
-          delete currentState[key]; 
-        }
-        break;
-      default:
-        throw new Error(`Unknown action type: ${action.type}`);
-    }
-    stateHistory.push(currentState); 
+  if (state === undefined || actions === undefined) {
+    return;
   }
 
-  return stateHistory;
+  const tmpState = structuredClone(state);
+  const historyState = [];
+
+  for (let i = 0; i < actions.length; i++) {
+    if (actions[i].type === 'addProperties') {
+      for (const addkey in actions[i].extraData) {
+        const newKey = { [addkey]: actions[i].extraData[addkey] };
+
+        Object.assign(tmpState, newKey);
+      }
+    } else if (actions[i].type === 'removeProperties') {
+      for (let j = 0; j < actions[i].keysToRemove.length; j++) {
+        const remKey = actions[i].keysToRemove[j];
+
+        try {
+          if (Object.hasOwn(tmpState, remKey)) {
+            delete tmpState[remKey];
+          }
+        } catch (e) {}
+      }
+    } else if (actions[i].type === 'clear') {
+      for (const key in tmpState) {
+        delete tmpState[key];
+      }
+    }
+
+    const tmpObj = structuredClone(tmpState);
+
+    historyState.push(tmpObj);
+  }
+
+  return historyState;
 }
 
 module.exports = transformStateWithClones;
