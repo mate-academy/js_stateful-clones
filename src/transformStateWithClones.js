@@ -7,70 +7,46 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const resultStates = [];
-  let currentState = { ...state }; // Создаем копию начального состояния
+  const results = [];
+  const stateCopy = { ...state };
 
   for (const action of actions) {
-    if (action.type === 'addProperties') {
-      // Добавляем новые свойства
-      currentState = { ...currentState, ...action.extraData };
+    switch (action.type) {
+      case 'addProperties':
+        addProperties(stateCopy, action.extraData);
+        break;
+
+      case 'removeProperties':
+        removeProperties(stateCopy, action.keysToRemove);
+        break;
+
+      case 'clear':
+        clear(stateCopy);
+        break;
+
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
     }
-
-    if (action.type === 'removeProperties') {
-      // Удаляем указанные ключи
-      const { keysToRemove } = action;
-
-      currentState = { ...currentState }; // Создаем копию
-
-      for (const key of keysToRemove) {
-        delete currentState[key];
-      }
-    }
-
-    if (action.type === 'clear') {
-      // Полностью очищаем состояние
-      currentState = {};
-    }
-
-    // Добавляем текущее состояние в массив результатов
-    resultStates.push(currentState);
+    results.push({ ...stateCopy });
   }
 
-  return resultStates;
+  return results;
 }
 
-// function transformStateWithClones(state, actions) {
-//   const results = [];
-//   let currentState = { ...state }; // Створюємо копію початкового стану
+function addProperties(state, extraData) {
+  Object.assign(state, extraData);
+}
 
-//   for (const action of actions) {
-//     switch (action.type) {
-//       case 'clear':
-//         currentState = {}; // Створюємо новий об'єкт
-//         break;
+function removeProperties(state, keysToRemove) {
+  for (const key of keysToRemove) {
+    delete state[key];
+  }
+}
 
-//       case 'addProperties':
-//         currentState = { ...currentState, ...action.extraData };
-//         break;
-
-//       case 'removeProperties':
-//         const { keysToRemove } = action;
-
-//         currentState = { ...currentState }; // Створюємо копію
-
-//         for (const key of keysToRemove) {
-//           delete currentState[key];
-//         }
-//         break;
-
-//       default:
-//         throw new Error(`Unknown action type: ${action.type}`);
-//     }
-
-//     results.push(currentState); // Додаємо новий стан до результатів
-//   }
-
-//   return results;
-// }
+function clear(state) {
+  for (const key in state) {
+    delete state[key];
+  }
+}
 
 module.exports = transformStateWithClones;
