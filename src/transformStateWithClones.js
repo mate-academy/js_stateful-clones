@@ -7,72 +7,44 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let newState = [state];
+  const stateHistory = [];
+  let changeable = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        newState = addProperties(newState, action.extraData);
+        stateHistory.push(addProperties(changeable, action.extraData));
+        changeable = { ...stateHistory[stateHistory.length - 1] };
         break;
       case 'removeProperties':
-        newState = removeProperties(newState, action.keysToRemove);
+        stateHistory.push(removeProperties(changeable, action.keysToRemove));
+        changeable = { ...stateHistory[stateHistory.length - 1] };
         break;
       case 'clear':
-        newState = clearObj(newState);
+        stateHistory.push(clearObj());
+        changeable = { ...stateHistory[stateHistory.length - 1] };
         break;
-
-      default:
-        throw new Error(`Unknown action type: ${action.type}`);
     }
+  }
+
+  return stateHistory;
+}
+
+function addProperties(state, extraData) {
+  return { ...state, ...extraData };
+}
+
+function removeProperties(state, keysToRemove) {
+  const newState = { ...state };
+
+  for (const key of keysToRemove) {
+    delete newState[key];
   }
 
   return newState;
 }
 
-function addProperties(state, extraData) {
-  if (Object.keys(state[0]).length === 0) {
-    return [{ ...extraData }];
-  }
-
-  if (state.length === 1) {
-    return [{ ...state[0], ...extraData }];
-  }
-
-  return [...state, { ...state[state.length - 1], ...extraData }];
-}
-
-function removeProperties(state, keysToRemove) {
-  if (state.length === 1) {
-    const lastItem = { ...state[state.length - 1] };
-
-    // Remove specified keys
-    keysToRemove.forEach((key) => {
-      delete lastItem[key];
-    });
-
-    if (Object.keys(lastItem).length === 0) {
-      return [{}];
-    } else {
-      return [lastItem];
-    }
-  }
-
-  const newItem = { ...state[state.length - 1] };
-
-  // Remove specified keys
-  keysToRemove.forEach((key) => {
-    delete newItem[key];
-  });
-
-  // Return a new state array with the updated object
-  return [...state, newItem];
-}
-
-function clearObj(state) {
-  if (state.length === 1) {
-    return [{}];
-  }
-
-  return [...state, {}]; // Append an empty object
+function clearObj() {
+  return {};
 }
 module.exports = transformStateWithClones;
