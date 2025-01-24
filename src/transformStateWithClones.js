@@ -7,7 +7,6 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
   let currentState = { ...state };
   const stateHistory = [];
 
@@ -28,9 +27,10 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        throw new Error(`Невідомий тип: ${action.type}`);
+        throw new Error(`Unknown type: ${action.type}`);
     }
 
+    // Додаємо копію поточного стану після обробки дії
     stateHistory.push({ ...currentState });
   });
 
