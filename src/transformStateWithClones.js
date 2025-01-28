@@ -31,8 +31,8 @@ function transformStateWithClones(state, actions) {
       default:
         throw new Error(`Unknown action type: ${action.type}`);
     }
-    // eslint-disable-next-line max-len
-    stateHistory.push(currentState); // Зберігаємо поточний стан після кожної дії
+    // Зберігаємо копію поточного стану після обробки кожної дії
+    stateHistory.push({ ...currentState });
   });
 
   return stateHistory;
