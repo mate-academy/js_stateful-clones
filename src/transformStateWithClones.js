@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   let currentState = { ...state };
-  return actions.map(({ type, extraData, keysToRemove }) => {
+  return actions.map(({ type, extraData = {}, keysToRemove = [] }) => {
       if (type === 'clear') currentState = {};
       if (type === 'addProperties') currentState = { ...currentState, ...extraData };
       if (type === 'removeProperties') keysToRemove.forEach(key => delete currentState[key]);
@@ -17,12 +17,11 @@ function transformStateWithClones(state, actions) {
 }
 
 // Пример использования:
-const initialState = { a: 1, b: 2, c: 3 };
+const initialState = { foo: 'bar', bar: 'foo' };
 const actions = [
-  { type: 'addProperties', extraData: { d: 4, e: 5 } },
-  { type: 'removeProperties', keysToRemove: ['a', 'c'] },
-  { type: 'clear' },
-  { type: 'addProperties', extraData: { x: 10 } }
+  { type: 'addProperties', extraData: { name: 'Jim', hello: 'world' } },
+  { type: 'removeProperties', keysToRemove: ['bar', 'hello'] },
+  { type: 'addProperties', extraData: { another: 'one' } }
 ];
 
 console.log(transformStateWithClones(initialState, actions));
