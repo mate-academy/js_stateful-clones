@@ -11,20 +11,26 @@
     "test:only": "mate-scripts test",
     "update": "mate-scripts update",
     "postinstall": "npm run update",
-    "test": "npm run lint && npm run test:only"
+    "test": "npm run lint && npm run test:only",
+    "build": "react-scripts build",
+    "deploy": "gh-pages -d build"
   },
   "author": "Mate academy",
   "license": "GPL-3.0",
   "devDependencies": {
     "@mate-academy/eslint-config": "latest",
-    "@mate-academy/scripts": "^1.8.6",
+    "@mate-academy/scripts": "^1.9.12",
     "eslint": "^8.57.0",
     "eslint-plugin-jest": "^28.6.0",
     "eslint-plugin-node": "^11.1.0",
+    "gh-pages": "^6.3.0",
     "jest": "^29.7.0",
     "prettier": "^3.3.2"
   },
   "mateAcademy": {
     "projectType": "javascript"
+  },
+  "dependencies": {
+    "react-scripts": "^3.0.1"
   }
 }
