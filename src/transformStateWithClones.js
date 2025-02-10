@@ -18,7 +18,6 @@ function transformStateWithClones(state, actions) {
           stateClon[key] = action.extraData[key];
         }
 
-        STATE_STEPS_ARR.push({ ...stateClon });
         break;
       }
 
@@ -27,13 +26,11 @@ function transformStateWithClones(state, actions) {
           delete stateClon[key];
         }
 
-        STATE_STEPS_ARR.push({ ...stateClon });
         break;
       }
 
       case `clear`: {
         stateClon = {};
-        STATE_STEPS_ARR.push({ ...stateClon });
         break;
       }
 
@@ -41,6 +38,8 @@ function transformStateWithClones(state, actions) {
         break;
       }
     }
+
+    STATE_STEPS_ARR.push({ ...stateClon });
   }
 
   return STATE_STEPS_ARR;
