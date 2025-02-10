@@ -33,21 +33,3 @@ function transformStateWithClones(state, actions) {
 }
 
 module.exports = transformStateWithClones;
-
-
-const stateHistory = transformStateWithClones(state, [
-  {
-    type: 'addProperties',
-    extraData: { name: 'Jim', hello: 'world' },
-  },
-  {
-    type: 'removeProperties',
-    keysToRemove: ['bar', 'hello'],
-  },
-  {
-    type: 'addProperties',
-    extraData: { another: 'one' },
-  },
-]);
-
-console.log(stateHistory);
