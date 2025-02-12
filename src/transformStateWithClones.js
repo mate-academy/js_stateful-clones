@@ -7,26 +7,35 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateDuplicate = structuredClone(state);
   const result = [];
+  const stateDuplicate = { ...state };
 
   for (const action of actions) {
     const { type, extraData, keysToRemove } = action;
 
-    if (type === 'addProperties') {
-      Object.assign(stateDuplicate, extraData);
-    } else if (type === 'removeProperties') {
-      for (const key of keysToRemove) {
-        if (Object.hasOwn(stateDuplicate, key)) {
+    switch (type) {
+      case 'addProperties':
+        Object.assign(stateDuplicate, extraData);
+        break;
+
+      case 'removeProperties':
+        for (const key of keysToRemove) {
+          if (Object.hasOwn(stateDuplicate, key)) {
+            delete stateDuplicate[key];
+          }
+        }
+        break;
+
+      case 'clear':
+        for (const key of Object.keys(stateDuplicate)) {
           delete stateDuplicate[key];
         }
-      }
-    } else if (type === 'clear') {
-      for (const key of Object.keys(stateDuplicate)) {
-        delete stateDuplicate[key];
-      }
+        break;
+
+      default:
+        break;
     }
-    result.push(structuredClone(stateDuplicate));
+    result.push({ ...stateDuplicate });
   }
 
   return result;
