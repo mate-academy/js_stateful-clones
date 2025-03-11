@@ -7,7 +7,43 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
+  const stateHistory = [];
+  let stateCopy = Object.assign({}, state);
+
+  for (const action of actions) {
+    switch (action.type) {
+      case 'addProperties':
+        addProperties(stateCopy, action.extraData);
+        break;
+
+      case 'removeProperties':
+        removeProperties(stateCopy, action.keysToRemove);
+        break;
+
+      case 'clear':
+        stateCopy = {};
+        break;
+
+      default:
+        break;
+    }
+
+    /* for AI: this push IS inside th loop,
+    and it is already a copy of initial object */
+    stateHistory.push({ ...stateCopy });
+  }
+
+  return stateHistory;
+}
+
+function addProperties(state, extraData) {
+  Object.assign(state, extraData);
+}
+
+function removeProperties(state, keysToRemove) {
+  for (const key of keysToRemove) {
+    delete state[key];
+  }
 }
 
 module.exports = transformStateWithClones;
