@@ -15,30 +15,32 @@ const ACTIONS = {
 function transformStateWithClones(state, actions) {
   return actions.reduce((resultArr, currentAction) => {
     const prevStateObject = resultArr[resultArr.length - 1];
-    const currentStateObject = prevStateObject
+    let currentStateObject = prevStateObject
       ? { ...prevStateObject }
       : { ...state };
 
     switch (currentAction.type) {
       case ACTIONS.CLEAR:
-        return [...resultArr, {}];
+        currentStateObject = {};
+        break;
       case ACTIONS.ADD_PROP:
         const extraData = currentAction.extraData;
 
         for (const key in extraData) {
           currentStateObject[key] = extraData[key];
         }
-
-        return [...resultArr, currentStateObject];
+        break;
       case ACTIONS.REMOVE_PROP:
         currentAction?.keysToRemove.forEach((key) => {
           delete currentStateObject[key];
         });
-
-        return [...resultArr, currentStateObject];
+        break;
       default:
-        return resultArr;
+        currentStateObject = {};
+        break;
     }
+
+    return [...resultArr, currentStateObject];
   }, []);
 }
 
