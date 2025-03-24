@@ -23,10 +23,12 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        for (const key in stateCopy) {
-          delete stateCopy[key];
-        }
+        Object.keys(stateCopy).forEach((key) => delete stateCopy[key]);
         break;
+
+      default:
+        // eslint-disable-next-line no-console
+        console.warn(`Unknown action type: ${action.type}`);
     }
 
     stateHistory.push({ ...stateCopy });
