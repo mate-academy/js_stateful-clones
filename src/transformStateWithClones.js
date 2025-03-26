@@ -26,7 +26,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        for (let j = 0; j < action.keysToRemove; j++) {
+        for (let j = 0; j < action.keysToRemove.length; j++) {
           const remove = action.keysToRemove[j];
 
           if (Object.hasOwn(workState, remove)) {
