@@ -15,16 +15,21 @@ function transformStateWithClones(state, actions) {
   const history = [];
 
   for (const action of actions) {
-    if (action.type === CLEAR_COMMAND) {
-      currentState = {};
-    } else if (action.type === ADD_PROPERTIES_COMMAND) {
-      currentState = { ...currentState, ...action.extraData };
-    } else if (action.type === REMOVE_PROPERTIES_COMMAND) {
-      currentState = { ...currentState };
+    switch (action.type) {
+      case CLEAR_COMMAND:
+        currentState = {};
+        break;
+      case ADD_PROPERTIES_COMMAND:
+        currentState = { ...currentState, ...action.extraData };
+        break;
+      case REMOVE_PROPERTIES_COMMAND:
+        currentState = { ...currentState };
 
-      for (const key of action.keysToRemove) {
-        delete currentState[key];
-      }
+        for (const key of action.keysToRemove) {
+          delete currentState[key];
+        }
+
+        break;
     }
 
     history.push({ ...currentState });
