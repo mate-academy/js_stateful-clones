@@ -9,7 +9,7 @@
 function transformStateWithClones(state, actions) {
   // write code here
   let newState = { ...state };
-  const nobyt = [];
+  const finalState = [];
 
   for (let i = 0; i < actions.length; i++) {
     if (actions[i].type === 'addProperties') {
@@ -28,11 +28,12 @@ function transformStateWithClones(state, actions) {
       newState = {};
     }
 
-    nobyt.push(newState);
+    finalState.push({ ...newState });
   }
 
-  return nobyt;
+  return finalState;
 }
+
 module.exports = transformStateWithClones;
 
 /*
