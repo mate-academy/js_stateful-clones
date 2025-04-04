@@ -7,7 +7,9 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  return actions.map((action) => performAction({ ...state }, action));
+  const clonedState = { ...state };
+
+  return actions.map((action) => performAction(clonedState, action));
 }
 
 /**
