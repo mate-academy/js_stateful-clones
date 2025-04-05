@@ -1,5 +1,12 @@
-// eslint-disable-next-line no-unused-vars
-function ransformStateWithClones(state, actions) {
+'use strict';
+
+/**
+ * @param {Object} state
+ * @param {Object[]} actions
+ *
+ * @return {Object[]}
+ */
+function transformStateWithClones(state, actions) {
   const results = [];
   let stateCopy = { ...state };
 
@@ -8,6 +15,7 @@ function ransformStateWithClones(state, actions) {
       case 'addProperties':
         stateCopy = { ...stateCopy, ...action.extraData };
         break;
+
       case 'removeProperties':
         stateCopy = { ...stateCopy };
 
@@ -15,6 +23,7 @@ function ransformStateWithClones(state, actions) {
           delete stateCopy[key];
         }
         break;
+
       case 'clear':
         stateCopy = {};
         break;
@@ -25,3 +34,5 @@ function ransformStateWithClones(state, actions) {
 
   return results;
 }
+
+module.exports = transformStateWithClones;
