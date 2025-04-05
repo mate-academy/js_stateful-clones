@@ -1,5 +1,6 @@
 'use strict';
 
+/* коментар 1 */
 /**
  * @param {Object} state
  * @param {Object[]} actions
