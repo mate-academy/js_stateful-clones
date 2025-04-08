@@ -7,6 +7,10 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
+  if (!Array.isArray(actions)) {
+    throw new Error('Actions must be an array');
+  }
+
   const stateHistory = [];
   let currentState = { ...state };
 
@@ -19,12 +23,16 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'addProperties':
-        Object.assign(newState, action.extraData);
+        if (action.extraData && typeof action.extraData === 'object') {
+          Object.assign(newState, action.extraData);
+        }
         break;
 
       case 'removeProperties':
-        for (const key of action.keysToRemove) {
-          delete newState[key];
+        if (Array.isArray(action.keysToRemove)) {
+          for (const key of action.keysToRemove) {
+            delete newState[key];
+          }
         }
         break;
     }
