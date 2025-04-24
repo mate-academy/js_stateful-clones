@@ -7,7 +7,23 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
+  const massive = [];
+  let newState = { ...state };
+
+  for (const obj of actions) {
+    if (obj.type === 'addProperties') {
+      newState = { ...newState, ...obj.extraData };
+    } else if (obj.type === 'removeProperties') {
+      for (const key of obj.keysToRemove) {
+        delete newState[key];
+      }
+    } else if (obj.type === 'clear') {
+      newState = {};
+    }
+    massive.push({ ...newState });
+  }
+
+  return massive;
 }
 
 module.exports = transformStateWithClones;
