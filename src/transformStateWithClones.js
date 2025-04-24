@@ -32,7 +32,7 @@ function transformStateWithClones(state, actions) {
         throw new Error(`Unknown action type: '${act.type}'`);
     }
 
-    allStates.push(copyState);
+    allStates.push({ ...copyState });
   }
 
   return allStates;
