@@ -28,9 +28,10 @@ function transformStateWithClones(state, actions) {
 
       case 'clear':
         newState = {};
-        massive.push({ ...newState });
         break;
     }
+
+    massive.push({ ...newState });
   }
 
   return massive;
