@@ -15,9 +15,6 @@ function transformStateWithClones(state, actions) {
 
     if (action.type === 'addProperties') {
       Object.assign(stateClone, action.extraData);
-      result.push(stateClone);
-      state2 = stateClone;
-      continue;
     }
 
     if (action.type === 'removeProperties') {
