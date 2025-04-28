@@ -10,6 +10,8 @@ Write a `transformStateWithClones` function that takes a `state` object and an `
 applies each action to the previos `state` to calculate the next state,
 and returns an array with states recieved after each action.
 
+
+
 Each `action` is an object describing `state` changes. Depending on a value of its `type` property you should do the next:
 - `clear` - create an empty state object;
 - `addProperties` - add all `key: value` pairs given in `extraData` property to the new `state`;
