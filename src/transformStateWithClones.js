@@ -6,6 +6,8 @@
  *
  * @return {Object[]}
  */
+
+/// This function
 function transformStateWithClones(state, actions) {
   let stateClone = { ...state };
   const stateHistory = [];
