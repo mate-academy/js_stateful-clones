@@ -60,7 +60,7 @@ const stateHistory = transformStateWithClones(state, [
   {
     type: 'addProperties',
     extraData: { yet: 'another property' },
-  }
+  },
   { type: 'clear' },
   {
     type: 'addProperties',
