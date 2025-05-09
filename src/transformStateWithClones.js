@@ -23,48 +23,35 @@
 //     extraData: { foo: 'bar', name: 'Jim' },
 //   },
 // ];
-let obj = {};
 
 function transformStateWithClones(state, actions) {
   const arr = [];
+  let currentState = { ...state };
 
   for (const action of actions) {
-    obj = { ...state };
+    let obj = { ...currentState };
 
     switch (action.type) {
       case 'addProperties':
-        addProperties(state, action.extraData);
+        Object.assign(obj, action.extraData);
 
         break;
       case 'removeProperties':
-        removeProperties(state, action.keysToRemove);
+        for (const key of action.keysToRemove) {
+          delete obj[key];
+        }
 
         break;
       case 'clear':
-        clear(state);
+        obj = {};
 
         break;
     }
     arr.push(obj);
+    currentState = obj;
   }
 
   return arr;
-}
-
-function addProperties(state, extraData) {
-  Object.assign(obj, extraData);
-}
-
-function removeProperties(state, keysToRemove) {
-  for (const key of keysToRemove) {
-    delete obj[key];
-  }
-}
-
-function clear(state) {
-  for (const key in state) {
-    delete obj[key];
-  }
 }
 
 module.exports = transformStateWithClones;
