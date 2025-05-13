@@ -11,6 +11,7 @@
 function transformStateWithClones(state, actions) {
   let stateClone = { ...state };
   const stateHistory = [];
+  // please work yes
 
   for (const action of actions) {
     if (action.type === 'addProperties') {
