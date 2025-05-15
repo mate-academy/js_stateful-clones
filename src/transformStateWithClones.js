@@ -9,9 +9,11 @@
 function transformStateWithClones(state, actions) {
   // write code here
   const result = [];
-  const cloneState = structuredClone(state);
+  let currentState = structuredClone(state);
 
   for (const action of actions) {
+    const cloneState = structuredClone(currentState);
+
     switch (action.type) {
       case 'addProperties':
         addProperties(cloneState, action.extraData);
@@ -26,7 +28,8 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    result.push(structuredClone(cloneState));
+    result.push(cloneState);
+    currentState = cloneState;
   }
 
   return result;
