@@ -7,6 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
+  const history = [];
   let currentState = { ...state };
 
   for (const action of actions) {
@@ -34,10 +35,11 @@ function transformStateWithClones(state, actions) {
       default:
         break;
     }
+    history.push(nextState);
     currentState = nextState;
   }
 
-  return [currentState];
+  return history;
 }
 
 module.exports = transformStateWithClones;
