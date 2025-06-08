@@ -26,7 +26,7 @@ function transformStateWithClones(state, actions) {
         currentState = {};
         break;
     }
-    history.push(currentState);
+    history.push(JSON.parse(JSON.stringify(currentState)));
   }
 
   return history;
