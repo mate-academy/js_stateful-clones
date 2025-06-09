@@ -27,10 +27,11 @@ function transformStateWithClones(state, actions) {
       currentState = newState;
     }
 
-    history.push(currentState);
+    history.push({ ...currentState });
   }
 
   return history;
 }
 
 module.exports = transformStateWithClones;
+
