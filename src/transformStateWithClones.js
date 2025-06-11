@@ -7,24 +7,28 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
-  let currentState = { ...state }; // Cria uma cópia do estado inicial
+  let stateCopy = { ...state }; // Cria uma cópia do estado inicial
   const history = [];
 
   actions.forEach((action) => {
-    if (action.type === 'addProperties') {
-      // Adiciona ou atualiza propriedades no estado
-      currentState = { ...currentState, ...action.extraData };
-    } else if (action.type === 'removeProperties') {
-      currentState = Object.fromEntries(
-        Object.entries(currentState).filter(
-          ([key]) => !action.keysToRemove.includes(key),
-        ),
-      ); // Remove propriedades
-    } else if (action.type === 'clear') {
-      currentState = {}; // Limpa o estado
+    switch (action.type) {
+      case 'addProperties':
+        stateCopy = { ...stateCopy, ...action.extraData };
+        break;
+      case 'removeProperties':
+        stateCopy = Object.fromEntries(
+          Object.entries(stateCopy).filter(
+            ([key]) => !action.keysToRemove.includes(key),
+          ),
+        );
+        break;
+      case 'clear':
+        stateCopy = {};
+        break;
+      default:
+      // console.log(`Ação desconhecida: ${action.type}`);
     }
-    history.push(currentState); // Armazena o estado atualizado no histórico
+    history.push({ ...stateCopy }); // Adiciona uma cópia do estado ao histórico
   });
 
   return history;
