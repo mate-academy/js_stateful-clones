@@ -7,7 +7,32 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateCopy = structuredClone(state);
+  const stateHistory = [];
+  let stateCopy = structuredClone(state);
+
+  const addProperties = (obj) => {
+    const newState = structuredClone(stateCopy);
+
+    Object.keys(obj).forEach((key) => {
+      newState[key] = obj[key];
+    });
+
+    stateCopy = newState;
+  };
+
+  const removeProperties = (obj) => {
+    const newState = structuredClone(stateCopy);
+
+    Object.keys(obj).forEach((key) => {
+      delete newState[key];
+    });
+
+    stateCopy = newState;
+  };
+
+  const clear = () => {
+    stateCopy = {};
+  };
 
   actions.forEach((el) => {
     switch (el.type) {
@@ -20,27 +45,11 @@ function transformStateWithClones(state, actions) {
       default:
         clear();
     }
+
+    stateHistory.push(stateCopy);
   });
 
-  const addProperties = (obj) => {
-    Object.keys(obj).forEach((key) => {
-      stateCopy[key] = obj[key];
-    });
-
-    return stateCopy;
-  };
-
-  const removeProperties = (obj) => {
-    Object.keys(obj).forEach((key) => {
-      delete stateCopy[key];
-    });
-
-    return stateCopy;
-  };
-
-  const clear = () => {
-    return {};
-  };
+  return stateHistory;
 }
 
 module.exports = transformStateWithClones;
