@@ -20,10 +20,10 @@ function transformStateWithClones(state, actions) {
     stateCopy = newState;
   };
 
-  const removeProperties = (obj) => {
+  const removeProperties = (keys) => {
     const newState = structuredClone(stateCopy);
 
-    Object.keys(obj).forEach((key) => {
+    keys.forEach((key) => {
       delete newState[key];
     });
 
