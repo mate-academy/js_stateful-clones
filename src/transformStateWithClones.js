@@ -26,15 +26,14 @@ function transformStateWithClones(state, actions) {
     },
   };
 
-  const statesHistory = actions.reduce(
-    (states, action) => {
-      states.push(actionsObj[action.type](states.at(-1), action));
+  const statesHistory = [state];
 
-      return states;
-    },
-    [state],
-  );
+  for (const action of actions) {
+    const prevState = statesHistory.at(-1);
+    const newState = actionsObj[action.type](prevState, action);
 
+    statesHistory.push(newState);
+  }
   statesHistory.shift();
 
   return statesHistory;
