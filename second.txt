@@ -1,0 +1,33 @@
+/*
+
+function transformStateWithClones(state, actions) {
+  const newState = { ...state };
+
+  actions.forEach((action) => {
+    if (action.type === 'addProperties') {
+      Object.assign(newState, action.payload);
+    }
+
+    if (action.type === 'removeProperties') {
+      Object.keys(action.payload).forEach((key) => {
+        delete newState[key];
+      });
+    }
+
+    if (action.type === 'clear') {
+      Object.keys(newState).forEach((key) => {
+        delete newState[key];
+      });
+    }
+  });
+
+  return newState;
+}
+
+transformStateWithClones({ foo: 'bar', bar: 'foo' }, [
+  { type: 'removeProperties', payload: { bar: 'foo' } },
+]);
+
+module.exports = transformStateWithClones;
+
+*/
