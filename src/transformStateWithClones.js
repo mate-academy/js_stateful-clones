@@ -15,22 +15,20 @@ function transformStateWithClones(state, actions) {
       Object.keys(elem.extraData).forEach((extraKey) => {
         currentState[extraKey] = elem.extraData[extraKey];
       });
-      resultArray.push({ ...currentState });
     }
 
     if (elem.type === 'removeProperties') {
       elem.keysToRemove.forEach((removeKey) => {
         delete currentState[removeKey];
       });
-      resultArray.push({ ...currentState });
     }
 
     if (elem.type === 'clear') {
       Object.keys(currentState).forEach((key) => {
         delete currentState[key];
       });
-      resultArray.push({ ...currentState });
     }
+    resultArray.push({ ...currentState });
   });
 
   return resultArray;
