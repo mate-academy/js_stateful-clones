@@ -49,9 +49,8 @@ function transformStateWithClones(initialState, actions) {
     if (action.type === 'addProperties') {
       currentState = { ...currentState, ...action.extraData };
     } else if (action.type === 'removeProperties') {
-      action.keysToRemove.forEach((key, value) => {
+      action.keysToRemove.forEach((key) => {
         if (currentState[key] !== undefined) {
-          currentState = { ...currentState };
           delete currentState[key];
         }
       });
@@ -60,6 +59,7 @@ function transformStateWithClones(initialState, actions) {
     }
 
     results.push(currentState);
+    currentState = { ...currentState };
   }
 
   return results;
