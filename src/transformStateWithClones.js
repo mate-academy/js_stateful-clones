@@ -51,12 +51,12 @@ function transformStateWithClones(initialState, actions) {
     } else if (action.type === 'removeProperties') {
       action.keysToRemove.forEach((key, value) => {
         if (currentState[key] !== undefined) {
-          currentState = { ...currentState};
+          currentState = { ...currentState };
           delete currentState[key];
         }
       });
     } else if (action.type === 'clear') {
-      currentState = {}
+      currentState = {};
     }
 
     results.push(currentState);
@@ -64,6 +64,5 @@ function transformStateWithClones(initialState, actions) {
 
   return results;
 }
-
 
 module.exports = transformStateWithClones;
