@@ -12,9 +12,9 @@ function transformStateWithClones(state, actions) {
   const clone = { ...state };
   const clones = [];
 
-  let act = false;
-
   for (const action of actions) {
+    let act = false;
+
     if (action.type === 'addProperties') {
       Object.assign(clone, action.extraData);
       act = true;
