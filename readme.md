@@ -21,6 +21,8 @@ Example 1:
 
 ```js
 const state = {
+  name: 'Jim',
+  hello: 'world',
   foo: 'bar',
   bar: 'foo',
 };
