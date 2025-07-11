@@ -1,6 +1,4 @@
-// 'use strict';
-
-// const { act } = require("react");
+'use strict';
 
 /**
  * @param {Object} state
