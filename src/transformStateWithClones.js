@@ -32,7 +32,7 @@ function transformStateWithClones(state, actions) {
         throw new Error(`Unknown action type: ${action.type}`);
     }
 
-    stateHistory.push(curState);
+    stateHistory.push({ ...curState });
   }
 
   return stateHistory;
