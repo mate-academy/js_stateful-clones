@@ -7,8 +7,8 @@
 ## Task description:
 
 Write a `transformStateWithClones` function that takes a `state` object and an `actions` array,
-applies each action to the previos `state` to calculate the next state,
-and returns an array with states recieved after each action.
+applies each action to the previous `state` to calculate the next state,
+and returns an array with states received after each action.
 
 Each `action` is an object describing `state` changes. Depending on a value of its `type` property you should do the next:
 - `clear` - create an empty state object;
