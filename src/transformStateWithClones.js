@@ -23,9 +23,6 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         clearProps(copyState);
         break;
-      default:
-        states.push({});
-        continue;
     }
     states.push({ ...copyState });
   }
