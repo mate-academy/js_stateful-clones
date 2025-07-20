@@ -1,5 +1,7 @@
 'use strict';
 
+const { clearProps, removeProps, addProps } = require('./stransformOperations');
+
 /**
  * @param {Object} state
  * @param {Object[]} actions
@@ -7,7 +9,25 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
+  const states = [];
+  const copyState = structuredClone(state);
+
+  for (const action of actions) {
+    switch (action.type) {
+      case 'addProperties':
+        addProps(copyState, action['extraData']);
+        break;
+      case 'removeProperties':
+        removeProps(copyState, action['keysToRemove']);
+        break;
+      case 'clear':
+        clearProps(copyState);
+        break;
+    }
+    states.push(structuredClone(copyState));
+  }
+
+  return states;
 }
 
 module.exports = transformStateWithClones;
