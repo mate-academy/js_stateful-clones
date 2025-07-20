@@ -24,7 +24,7 @@ function transformStateWithClones(state, actions) {
         clearProps(copyState);
         break;
     }
-    states.push({ ...copyState });
+    states.push(structuredClone(copyState));
   }
 
   return states;
