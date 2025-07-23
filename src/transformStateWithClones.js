@@ -6,7 +6,7 @@
  *
  * @return {Object[]}
  */
-function transformStateWithClones(state, actions) {
+function transformState(state, actions) {
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
@@ -30,6 +30,6 @@ function transformStateWithClones(state, actions) {
         break;
     }
   }
-module.exports = transformStateWithClones;
+module.exports = transformState;
 }
 
