@@ -15,13 +15,9 @@ function transformStateWithClones(state, actions) {
 
     if (act.type === 'clear') {
       currentState = {};
-    }
-
-    if (act.type === 'addProperties') {
+    } else if (act.type === 'addProperties') {
       currentState = Object.assign(nextState, act.extraData);
-    }
-
-    if (act.type === 'removeProperties') {
+    } else if (act.type === 'removeProperties') {
       act.keysToRemove.forEach((el) => delete nextState[el]);
       currentState = nextState;
     }
