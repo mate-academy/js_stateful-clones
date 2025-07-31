@@ -26,4 +26,4 @@ function transformStateWithClones(state, actions) {
   return arr;
 }
 
-module.exports = transformStateWithClones
+module.exports = transformStateWithClones;
