@@ -5,7 +5,8 @@ function transformStateWithClones(state, actions) {
 
   for (let i = 0; i < actions.length; i++) {
     if (actions[i].type === 'addProperties') {
-      let suporte = Object.assign({}, state, actions[i].extraData); 
+      let prev = i === 0 ? { ...state } : { ...arr[i - 1] };
+      let suporte = Object.assign({}, prev, actions[i].extraData); 
       arr[i] = suporte;
 
     } else if (actions[i].type === 'removeProperties') {
