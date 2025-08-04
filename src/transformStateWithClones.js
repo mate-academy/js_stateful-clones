@@ -19,17 +19,13 @@ function transformStateWithClones(state, actions) {
 
     if (actions[i]['type'] === 'clear') {
       transformedState[i] = {};
-    }
-
-    if (actions[i]['type'] === 'addProperties') {
+    } else if (actions[i]['type'] === 'addProperties') {
       transformedState[i] = Object.assign(
         {},
         transformedState[i],
         actions[i]['extraData'],
       );
-    }
-
-    if (actions[i]['type'] === 'removeProperties') {
+    } else {
       for (const key of actions[i]['keysToRemove']) {
         delete transformedState[i][key];
       }
