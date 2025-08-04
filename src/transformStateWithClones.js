@@ -12,7 +12,7 @@ function transformStateWithClones(state, actions) {
 
   for (let i = 0; i < actions.length; i++) {
     if (i === 0) {
-      transformedState[i] = state;
+      transformedState[i] = { ...state };
     }
 
     if (i > 0) {
