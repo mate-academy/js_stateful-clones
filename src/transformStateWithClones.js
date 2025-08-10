@@ -7,6 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
+  // eslint-disable-next-line prettier/prettier
   const result = [];
   let current = { ...state };
 
