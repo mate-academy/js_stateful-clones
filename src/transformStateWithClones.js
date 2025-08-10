@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 'use strict';
 
 /**
@@ -6,8 +7,8 @@
  *
  * @return {Object[]}
  */
+// eslint-disable-next-line no-unused-vars
 function transformStateWithClones(state, actions) {
-  // eslint-disable-next-line prettier/prettier
   const result = [];
   let current = { ...state };
 
@@ -16,29 +17,22 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         current = {};
         break;
-
-      case 'addProperties': {
-        const extra = action.extraData || {};
-
-        current = { ...current, ...extra };
+      case 'addProperties':
+        current = { ...current, ...(action.extraData || {}) };
         break;
-      }
 
-      case 'removeProperties': {
-        const keys = action.keysToRemove || [];
+      case 'removeProperties':
+        const keys = Array.isArray(action.keysToRemove)
+          ? action.keysToRemove
+          : [];
         const next = { ...current };
-        // eslint-disable-next-line padding-line-between-statements
+
         for (const k of keys) {
           delete next[k];
         }
         current = next;
         break;
-      }
-
-      default:
-        current = { ...current };
     }
-
     result.push({ ...current });
   }
 
