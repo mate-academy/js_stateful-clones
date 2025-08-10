@@ -8,17 +8,13 @@
  */
 function transformStateWithClones(state, actions) {
   const history = [];
-  const copy = { ...state }; // копія state
-  let currentState = { ...copy };
+  let currentState = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        const addCopy = { ...currentState };
-        const addProperti = Object.assign({}, addCopy, action.extraData);
+        currentState = { ...currentState, ...action.extraData };
 
-        currentState = addProperti;
-        history.push(addProperti);
         break;
 
       case 'removeProperties':
@@ -28,16 +24,21 @@ function transformStateWithClones(state, actions) {
           delete removeCopy[key];
         }
         currentState = removeCopy;
-        history.push(removeCopy);
+
         break;
 
       case 'clear':
         const clearCopy = {};
 
         currentState = clearCopy;
-        history.push(clearCopy);
+
+        break;
+
+      default:
+        // Можна кинути помилку або залишити порожньо
         break;
     }
+    history.push(currentState);
   }
 
   return history;
