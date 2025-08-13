@@ -24,7 +24,8 @@ function transformStateWithClones(state, actions) {
         }
       }
     }
-    history.push(currentState);
+    // esta função faz uma cópia profunda (deep clone) do objeto curretState
+    history.push(structuredClone(currentState));
   }
 
   return history;
