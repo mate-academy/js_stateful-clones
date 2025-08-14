@@ -75,3 +75,15 @@ console.log(stateHistory);
 //   { foo: 'bar', name: 'Jim' },
 // ]
 ```
+
+
+Напишіть функцію `transformStateWithClones`, яка приймає об'єкт `state` і масив `actions`,
+застосовує кожну дію до попереднього `state`, щоб обчислити наступний стан,
+і повертає масив зі станами, отриманими після кожної дії.
+
+Кожна `action` є об'єктом, що описує зміни `state`. Залежно від значення властивості `type`, ви повинні виконати наступне:
+- `clear` — створити порожній об'єкт стану;
+- `addProperties` — додати всі пари `key: value`, задані у властивості `extraData`, до нового `state`;
+- `removeProperties` — видалити всі ключі, задані в масиві `keysToRemove`, зі стану `state`. (ігнорувати неіснуючі)
+
+Translated with DeepL.com (free version)
