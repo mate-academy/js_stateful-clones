@@ -39,8 +39,6 @@ function transformStateWithClones(state, actions) {
 
     states.push(structuredClone(stateCopy));
     stateCopy = Object.assign({}, states[states.length - 1]);
-
-    console.log(stateCopy);
   }
 
   return states;
