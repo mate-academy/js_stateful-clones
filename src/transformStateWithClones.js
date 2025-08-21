@@ -6,7 +6,7 @@
  *
  * @return {Object[]}
  */
-function transformStateWithstateClones(state, actions) {
+function transformStateWithClones(state, actions) {
   const stateClones = [];
   const stateClone = { ...state };
 
@@ -49,4 +49,4 @@ function clearState(stateClone) {
   }
 }
 
-module.exports = transformStateWithstateClones;
+module.exports = transformStateWithClones;
