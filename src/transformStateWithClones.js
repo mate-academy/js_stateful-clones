@@ -6,34 +6,47 @@
  *
  * @return {Object[]}
  */
-function transformStateWithClones(state, actions) {
-  const clones = [];
-  const clone = { ...state };
+function transformStateWithstateClones(state, actions) {
+  const stateClones = [];
+  const stateClone = { ...state };
 
   for (const { type, extraData, keysToRemove } of actions) {
-    if (type === 'addProperties') {
-      Object.assign(clone, extraData);
-      clones.push({ ...clone });
-    }
+    switch (type) {
+      case 'addProperties':
+        addProperties(stateClone, extraData);
+        stateClones.push({ ...stateClone });
+        break;
 
-    if (type === 'removeProperties') {
-      for (const key of keysToRemove) {
-        if (key in clone) {
-          delete clone[key];
-        }
-      }
-      clones.push({ ...clone });
-    }
+      case 'removeProperties':
+        removeProperties(stateClone, keysToRemove);
+        stateClones.push({ ...stateClone });
+        break;
 
-    if (type === 'clear') {
-      for (const key in clone) {
-        delete clone[key];
-      }
-      clones.push({ ...clone });
+      case 'clear':
+        clearState(stateClone);
+        stateClones.push({ ...stateClone });
     }
   }
 
-  return clones;
+  return stateClones;
 }
 
-module.exports = transformStateWithClones;
+function addProperties(stateClone, extraData) {
+  Object.assign(stateClone, extraData);
+}
+
+function removeProperties(stateClone, keysToRemove) {
+  for (const key of keysToRemove) {
+    if (key in stateClone) {
+      delete stateClone[key];
+    }
+  }
+}
+
+function clearState(stateClone) {
+  for (const key in stateClone) {
+    delete stateClone[key];
+  }
+}
+
+module.exports = transformStateWithstateClones;
