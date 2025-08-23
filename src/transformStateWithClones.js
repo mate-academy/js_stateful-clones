@@ -34,6 +34,8 @@ function transformStateWithClones(state, actions) {
         }
         break;
       }
+      default:
+        break;
     }
     arrayResult.push({ ...stateCopy });
   }
