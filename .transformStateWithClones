@@ -1,0 +1,53 @@
+function transformStateWithClones(initialState, actionsArr) {
+  const states = [];
+  let prevState = { ...initialState }; // start with a shallow clone
+
+  actionsArr.forEach(action => {
+    let nextState;
+
+    switch (action.type) {
+      case 'clear':
+        nextState = {};
+        break;
+
+      case 'addProperties':
+        nextState = { ...prevState, ...(action.extraData || {}) };
+        break;
+
+      case 'removeProperties':
+        nextState = { ...prevState };
+        (action.keysToRemove || []).forEach(key => {
+          delete nextState[key];
+        });
+        break;
+
+      default:
+        nextState = { ...prevState };
+        break;
+    }
+
+    states.push(nextState);
+    prevState = nextState; // next iteration uses this as previous state
+  });
+
+  return states;
+}
+
+// Example usage:
+const initialState = { a: 1, b: 2 };
+const actions = [
+  { type: 'addProperties', extraData: { c: 3 } },
+  { type: 'removeProperties', keysToRemove: ['a'] },
+  { type: 'clear' },
+];
+
+const result = transformStateWithClones(initialState, actions);
+console.log(result);
+// Output:
+// [
+//   { a: 1, b: 2, c: 3 },
+//   { b: 2, c: 3 },
+//   {}
+// ]
+
+console.log(initialState); // { a: 1, b: 2 }  — initial state untouched
