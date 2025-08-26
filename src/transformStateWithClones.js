@@ -8,27 +8,65 @@
  */
 
 function transformStateWithClones(state, actions) {
-  return actions.reduce((acc, action) => {
-    const prev = acc.length ? acc[acc.length - 1] : state;
-    let next;
+  return actions.reduce(function (history, action, index) {
+    const previousState =
+      history.length > 0 ? history[history.length - 1] : state;
+    let nextState;
 
-    if (action.type === 'clear') {
-      next = {};
-    } else if (action.type === 'addProperties') {
-      next = { ...prev, ...(action.extraData || {}) };
-    } else if (action.type === 'removeProperties') {
-      const ban = new Set(action.keysToRemove || []);
-
-      next = Object.fromEntries(
-        Object.entries(prev).filter(([k]) => !ban.has(k)),
-      );
-    } else {
-      next = { ...prev };
+    if (typeof action !== 'object' || action === null) {
+      throw new Error('Action at index ' + index + ' must be an object');
     }
 
-    acc.push(next);
+    switch (action.type) {
+      case 'clear':
+        nextState = {};
+        break;
 
-    return acc;
+      case 'addProperties':
+        if (
+          typeof action.extraData !== 'object' ||
+          action.extraData === null ||
+          Array.isArray(action.extraData)
+        ) {
+          throw new Error(
+            'extraData at index ' + index + ' must be a plain object',
+          );
+        }
+        nextState = {};
+
+        for (const key in previousState) {
+          nextState[key] = previousState[key];
+        }
+
+        for (const key in action.extraData) {
+          nextState[key] = action.extraData[key];
+        }
+        break;
+
+      case 'removeProperties':
+        if (!Array.isArray(action.keysToRemove)) {
+          throw new Error(
+            'keysToRemove at index ' + index + ' must be an array',
+          );
+        }
+        nextState = {};
+
+        for (const key in previousState) {
+          if (!action.keysToRemove.includes(key)) {
+            nextState[key] = previousState[key];
+          }
+        }
+        break;
+
+      default:
+        throw new Error(
+          'Unknown action.type at index ' + index + ': ' + action.type,
+        );
+    }
+
+    history.push(nextState);
+
+    return history;
   }, []);
 }
 
