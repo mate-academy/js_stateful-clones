@@ -16,7 +16,6 @@ function transformStateWithClones(state, actions) {
         for (const key in action.extraData) {
           newObject[key] = action.extraData[key];
         }
-        result.push(newObject);
         newObject = { ...newObject };
         break;
 
@@ -24,7 +23,6 @@ function transformStateWithClones(state, actions) {
         for (const key of action.keysToRemove) {
           delete newObject[key];
         }
-        result.push(newObject);
         newObject = { ...newObject };
         break;
 
@@ -32,10 +30,13 @@ function transformStateWithClones(state, actions) {
         for (const key in newObject) {
           delete newObject[key];
         }
-        result.push(newObject);
         newObject = { ...newObject };
         break;
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
     }
+
+    result.push({ ...newObject });
   }
 
   return result;
