@@ -11,21 +11,26 @@ function transformStateWithClones(state, actions) {
   let currentState = { ...state };
 
   for (const action of actions) {
-    if (action.type === 'clear') {
-      currentState = {};
-    }
+    switch (action.type) {
+      case 'clear':
+        currentState = {};
+        break;
 
-    if (action.type === 'addProperties') {
-      currentState = { ...currentState, ...action.extraData };
-    }
+      case 'addProperties':
+        currentState = { ...currentState, ...action.extraData };
+        break;
 
-    if (action.type === 'removeProperties') {
-      const newState = { ...currentState };
+      case 'removeProperties':
+        const newState = { ...currentState };
 
-      for (const key of action.keysToRemove) {
-        delete newState[key];
-      }
-      currentState = newState;
+        for (const key of action.keysToRemove) {
+          delete newState[key];
+        }
+        currentState = newState;
+        break;
+
+      default:
+        throw new Error(`Unsupported action type: ${action.type}`);
     }
     HISTORY.push(currentState);
   }
