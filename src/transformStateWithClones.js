@@ -3,12 +3,11 @@
 /**
  * @param {Object} state
  * @param {Object[]} actions
- *
  * @return {Object[]}
  */
-  function transformStateWithClones(state, actions) {
+function transformStateWithClones(state, actions) {
   const result = [];
-  let currentState = { ...state }; // clone initial state
+  let currentState = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
@@ -21,22 +20,24 @@
         break;
 
       case 'removeProperties':
-        currentState = { ...currentState }; // clone before mutation
-        for (const key of action.keysToRemove) {
-          delete currentState[key];
+        const updatedState = {};
+
+        for (const key in currentState) {
+          if (!action.keysToRemove.includes(key)) {
+            updatedState[key] = currentState[key];
+          }
         }
+        currentState = updatedState;
         break;
 
       default:
-        // ignore unknown action types
-        break;
+        throw new Error(`Unknown action type: ${action.type}`);
     }
 
-    result.push({ ...currentState }); // push a clone of the new state
+    result.push({ ...currentState });
   }
 
   return result;
 }
-
 
 module.exports = transformStateWithClones;
