@@ -38,7 +38,7 @@ const stateHistory = transformStateWithClones(state, [
     type: 'addProperties',
     extraData: { another: 'one' },
   },
-]);
+] = objs);
 
 console.log(stateHistory);
 // [
