@@ -7,31 +7,42 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let newState = { ...state };
+  let stateCopy = { ...state };
   const arrWithStates = [];
 
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        newState = { ...newState, ...action.extraData };
+        if (
+          !action.extraData ||
+          typeof action.extraData !== 'object' ||
+          Array.isArray(action.extraData)
+        ) {
+          throw new Error('Invalid extraData for addProperties');
+        }
+        stateCopy = { ...stateCopy, ...action.extraData };
         break;
 
       case 'removeProperties':
-        newState = { ...newState };
+        stateCopy = { ...stateCopy };
+
+        if (!Array.isArray(action.keysToRemove)) {
+          throw new Error('Invalid keysToRemove for removeProperties');
+        }
 
         for (const key of action.keysToRemove) {
-          delete newState[key];
+          delete stateCopy[key];
         }
         break;
 
       case 'clear':
-        newState = {};
+        stateCopy = {};
         break;
 
       default:
         throw new Error('Unknown action type: ...');
     }
-    arrWithStates.push({ ...newState });
+    arrWithStates.push({ ...stateCopy });
   }
 
   return arrWithStates;
