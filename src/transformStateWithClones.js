@@ -9,31 +9,44 @@
 function transformStateWithClones(state, actions) {
   const arrayClones = [];
 
-  let objectClone = Object.assign({}, state);
+  let currentState = Object.assign({}, state);
 
   for (const action of actions) {
-    if (action.type === 'addProperties') {
-      const cloneAddingProperties = Object.assign(
-        {},
-        objectClone,
-        action.extraData,
-      );
+    switch (action.type) {
+      case 'addProperties':
+        const extraData =
+          action.extraData && typeof action.extraData === 'object'
+            ? action.extraData
+            : {};
 
-      arrayClones.push(cloneAddingProperties);
-      objectClone = cloneAddingProperties;
-    } else if (action.type === 'removeProperties') {
-      const cloneRemovedProperties = Object.assign({}, objectClone);
+        const cloneAddingProperties = Object.assign(
+          {},
+          currentState,
+          extraData,
+        );
 
-      for (const item of action.keysToRemove) {
-        delete cloneRemovedProperties[item];
-      }
+        currentState = cloneAddingProperties;
+        break;
 
-      arrayClones.push(cloneRemovedProperties);
-      objectClone = cloneRemovedProperties;
-    } else if (action.type === 'clear') {
-      arrayClones.push({});
-      objectClone = {};
+      case 'removeProperties':
+        const cloneRemovedProperties = Object.assign({}, currentState);
+        const keys = Array.isArray(action.keysToRemove)
+          ? action.keysToRemove
+          : [];
+
+        for (const item of keys) {
+          delete cloneRemovedProperties[item];
+        }
+
+        currentState = cloneRemovedProperties;
+        break;
+      case 'clear':
+        currentState = {};
+        break;
+      default:
+        throw new Error('Unknown action type: ' + action.type);
     }
+    arrayClones.push(Object.assign({}, currentState));
   }
 
   return arrayClones;
