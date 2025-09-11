@@ -40,7 +40,7 @@ function transformStateWithClones(state, actions) {
         currentState = { ...currentState };
     }
 
-    history.push(currentState);
+    history.push({ ...currentState });
   }
 
   return history;
