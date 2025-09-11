@@ -14,7 +14,6 @@ function transformStateWithClones(state, actions) {
     switch (action.type) {
       case 'addProperties':
         newState = { ...newState, ...action.extraData };
-        arrWithStates.push(newState);
         break;
 
       case 'removeProperties':
@@ -23,13 +22,16 @@ function transformStateWithClones(state, actions) {
         for (const key of action.keysToRemove) {
           delete newState[key];
         }
-        arrWithStates.push(newState);
         break;
 
       case 'clear':
         newState = {};
-        arrWithStates.push(newState);
+        break;
+
+      default:
+        throw new Error('Unknown action type: ...');
     }
+    arrWithStates.push({ ...newState });
   }
 
   return arrWithStates;
