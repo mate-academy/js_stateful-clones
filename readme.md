@@ -18,7 +18,7 @@ Each `action` is an object describing `state` changes. Depending on a value of i
 **IMPORTANT!** DON'T modify the initial `state` object in any way!
 
 Example 1:
-
+      
 ```js
 const state = {
   foo: 'bar',
