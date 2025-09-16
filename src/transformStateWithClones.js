@@ -8,6 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   let currentState = { ...state };
+
   const stateHistory = [];
 
   for (const action of actions) {
@@ -17,17 +18,22 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'addProperties':
-        currentState = {
-          ...currentState,
-          ...action.extraData,
-        };
+        if (action.extraData && typeof action.extraData === 'object') {
+          currentState = {
+            ...currentState,
+            ...action.extraData,
+          };
+        }
         break;
 
       case 'removeProperties':
-        currentState = { ...currentState }; // Clonar antes de deletar
+        if (Array.isArray(action.keysToRemove)) {
+          // Faz uma cópia antes de deletar propriedades
+          currentState = { ...currentState };
 
-        for (const key of action.keysToRemove) {
-          delete currentState[key];
+          for (const key of action.keysToRemove) {
+            delete currentState[key];
+          }
         }
         break;
 
@@ -35,7 +41,7 @@ function transformStateWithClones(state, actions) {
         break;
     }
 
-    stateHistory.push(currentState);
+    stateHistory.push({ ...currentState });
   }
 
   return stateHistory;
