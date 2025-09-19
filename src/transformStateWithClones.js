@@ -17,19 +17,24 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'addProperties':
-        currentState = { ...currentState, ...action.extraData };
+        currentState = { ...currentState, ...(action.extraData || {}) };
         break;
 
       case 'removeProperties':
         currentState = { ...currentState };
 
-        for (const key of action.keysToRemove) {
-          delete currentState[key];
+        if (Array.isArray(action.keysToRemove)) {
+          for (const key of action.keysToRemove) {
+            delete currentState[key];
+          }
         }
         break;
+
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
     }
 
-    history.push(currentState);
+    history.push({ ...currentState });
   }
 
   return history;
