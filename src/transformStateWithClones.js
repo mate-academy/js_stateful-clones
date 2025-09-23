@@ -23,6 +23,8 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         clonedState = clearProperties(clonedState);
         break;
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
     }
     clonedStates.push(clonedState);
   }
@@ -49,13 +51,7 @@ function removeProperties(state, properties) {
 }
 
 function clearProperties(state) {
-  const clonedState = { ...state };
-
-  for (const prop in state) {
-    delete clonedState[prop];
-  }
-
-  return clonedState;
+  return {};
 }
 
 module.exports = transformStateWithClones;
