@@ -25,16 +25,12 @@ function transformStateWithClones(state, actions) {
   }*/
 
   for (const action of actions) {
-    console.log(action.type, action.extraData);
-
     if (action.type === 'addProperties') {
       for (const key in action.extraData) {
         state[key] = action.extraData[key];
       }
     }
   }
-
-  console.log(state);
 }
 
 module.exports = transformStateWithClones;
