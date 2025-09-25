@@ -13,8 +13,15 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     switch (action.type) {
       case 'addProperties':
-        if (typeof action.extraData === 'object') {
+        if (
+          action.extraData &&
+          typeof action.extraData === 'object' &&
+          !Array.isArray(action.extraData)
+        ) {
           for (const key in action.extraData) {
+            if (Object.assign(stateCopy, action.extraData) === true) {
+              continue;
+            }
             stateCopy[key] = action.extraData[key];
           }
         }
@@ -29,6 +36,8 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         stateCopy = {};
         break;
+      default:
+        throw new Error('Unknown action type: ' + action.type);
     }
 
     history.push({ ...stateCopy });
