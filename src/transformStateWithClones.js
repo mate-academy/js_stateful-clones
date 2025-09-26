@@ -7,12 +7,12 @@
  * @return {Object[]}
  */
 
-const state = {
+const Objstate = {
   foo: 'bar',
   bar: 'foo',
 };
 
-const stateHistory = transformStateWithClones(state, [
+const stateHistory = transformStateWithClones(Objstate, [
   {
     type: 'addProperties',
     extraData: { name: 'Jim', hello: 'world' },
