@@ -12,7 +12,7 @@ const Objstate = {
   bar: 'foo',
 };
 
-const stateHistory = transformStateWithClones(Objstate, [
+transformStateWithClones(Objstate, [
   {
     type: 'addProperties',
     extraData: { name: 'Jim', hello: 'world' },
