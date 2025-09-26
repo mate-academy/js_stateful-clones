@@ -32,7 +32,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        throw new Error(`Unknown action type at step ${step}: ${step.type}`);
     }
 
     results.push({ ...newState });
