@@ -34,7 +34,7 @@ const stateHistory = transformStateWithClones(Objstate, [
   },
 ]);
 
-console.log(stateHistory);
+
 
 function transformStateWithClones(state, actions) {
   const history = [];
