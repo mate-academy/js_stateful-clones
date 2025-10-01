@@ -31,15 +31,17 @@ function transformStateWithClones(state, actions) {
           delete removed[key];
         }
         result.push(removed);
+        newState = removed;
         break;
 
       case 'clear':
         const clear = { ...newState };
 
-        for (const key in state) {
+        for (const key in clear) {
           delete clear[key];
         }
         result.push(clear);
+        newState = clear;
         break;
     }
   }
