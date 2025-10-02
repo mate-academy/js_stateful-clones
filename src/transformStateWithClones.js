@@ -18,10 +18,16 @@ function transformStateWithClones(state, actions) {
     } else if (action.type === 'removeProperties') {
       currentState = { ...currentState };
 
-      for (const key of action.keysToRemove) {
-        delete currentState[key];
+      if (Array.isArray(action.keysToRemove)) {
+        for (const key of action.keysToRemove) {
+          delete currentState[key];
+        }
       }
+    } else {
+      // Default case: unknown action type, keep current state unchanged
+      currentState = { ...currentState };
     }
+
     stateHistory.push(currentState);
   }
 
