@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const stateHistory = [];
-  const stateCopy = { ...state };
+  let stateCopy = { ...state };
   // write code here
 
   for (const action of actions) {
@@ -25,9 +25,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        for (const key in stateCopy) {
-          delete stateCopy[key];
-        }
+        stateCopy = {};
         break;
       default:
         throw new Error(`Unknown action type: ${action.type}`);
