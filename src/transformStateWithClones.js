@@ -1,23 +1,40 @@
+'use strict';
+
+/**
+ * @param {Object} state
+ * @param {Object[]} actions
+ *
+ * @return {Object[]}
+ */
 function transformStateWithClones(state, actions) {
-  let currentState = { ...state };
+  let stateCopy = { ...state };
   const result = [];
 
   for (const action of actions) {
-    if (action.type === 'clear') {
-      currentState = {};
-    } else if (action.type === 'addProperties') {
-      currentState = { ...currentState, ...action.extraData };
-    } else if (action.type === 'removeProperties') {
-      currentState = Object.fromEntries(
-        Object.entries(currentState).filter(([key]) => !action.keysToRemove.includes(key))
-      );
+    switch (action.type) {
+      case 'clear':
+        stateCopy = {};
+        break;
+      case 'addProperties':
+        stateCopy = { ...stateCopy, ...action.extraData };
+        break;
+      case 'removeProperties':
+        for (const key of action.keysToRemove) {
+          delete stateCopy[key];
+        }
+        break;
+      default:
+        // Nieznany typ akcji – nie zmieniamy stanu
+        break;
     }
 
-    result.push({ ...currentState });
+    // pushujemy sklonowany stan do tablicy
+    result.push({ ...stateCopy });
   }
 
   return result;
 }
 
 module.exports = transformStateWithClones;
+
 
