@@ -7,51 +7,51 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let current = clone(state);
+  let stateCopy = Object.assign({}, state);
   const history = [];
+  const list = Array.isArray(actions) ? actions : [];
 
-  for (let i = 0; i < (actions ? actions.length : 0); i++) {
-    const action = actions[i] || {};
+  for (let i = 0; i < list.length; i++) {
+    const action = list[i] || {};
+    const type = action.type;
 
-    switch (action.type) {
+    switch (type) {
       case 'clear': {
-        current = {};
+        stateCopy = {};
         break;
       }
 
       case 'addProperties': {
-        const extra = action?.extraData || {};
+        const extra = (action && action.extraData) || {};
 
-        current = { ...current, ...extra };
+        stateCopy = Object.assign({}, stateCopy, extra);
         break;
       }
 
       case 'removeProperties': {
-        const toRemove = new Set(action?.keysToRemove || []);
+        const toRemoveArr = (action && action.keysToRemove) || [];
+        const toRemove = new Set(toRemoveArr);
         const next = {};
 
-        for (const key in current) {
+        for (const key in stateCopy) {
           if (
-            Object.prototype.hasOwnProperty.call(current, key) &&
+            Object.prototype.hasOwnProperty.call(stateCopy, key) &&
             !toRemove.has(key)
           ) {
-            next[key] = current[key];
+            next[key] = stateCopy[key];
           }
         }
-        current = next;
+        stateCopy = next;
         break;
       }
       default:
-        break;
+        throw new Error('Unknown action type:' + type);
     }
-    history.push(clone(current));
+
+    history.push(Object.assign({}, stateCopy));
   }
 
   return history;
-}
-
-function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
 }
 
 module.exports = transformStateWithClones;
