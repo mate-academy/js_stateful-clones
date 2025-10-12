@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   const result = [];
-  let currentState = { ...state }; // створюємо клон початкового стану
+  let currentState = { ...state };
 
   for (const action of actions) {
     if (action.type === 'addProperties') {
@@ -23,7 +23,7 @@ function transformStateWithClones(state, actions) {
       currentState = {};
     }
 
-    result.push({ ...currentState }); // додаємо клон поточного стану
+    result.push({ ...currentState });
   }
 
   return result;
