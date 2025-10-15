@@ -27,7 +27,9 @@ function transformStateWithClones(state, actions) {
       case RMV_TYPE:
         newState = { ...currentState };
 
-        for (const key of action.keysToRemove) {
+        const keys = action.keysToRemove || [];
+
+        for (const key of keys) {
           delete newState[key];
         }
         break;
