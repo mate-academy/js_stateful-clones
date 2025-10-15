@@ -31,15 +31,19 @@ function transformStateWithClones(state, actions) {
           delete newState[key];
         }
         break;
+
       case CLR_TYPE:
         newState = {};
         break;
+
+      default:
+        newState = { ...currentState };
     }
+
     currentState = newState;
     stateArr.push(currentState);
   }
 
   return stateArr;
 }
-
 module.exports = transformStateWithClones;
