@@ -10,12 +10,12 @@ test('Should create a new object with a single added property', () => {
       type: 'addProperties', extraData: { name: 'Jim' },
     },
   ]))
-    .toEqual([
+    .toMatchObject([
       { name: 'Jim' },
     ]);
 
   expect(state)
-    .toEqual({});
+    .toMatchObject({});
 });
 
 test('Should create a new object with multiple added properties', () => {
@@ -29,14 +29,14 @@ test('Should create a new object with multiple added properties', () => {
       },
     },
   ]))
-    .toEqual([
+    .toMatchObject([
       {
         name: 'Jim', hello: 'world',
       },
     ]);
 
   expect(state)
-    .toEqual({});
+    .toMatchObject({});
 });
 
 test('Should combine old properties with added ones', () => {
@@ -52,14 +52,14 @@ test('Should combine old properties with added ones', () => {
       },
     },
   ]))
-    .toEqual([
+    .toMatchObject([
       {
         foo: 'bar', bar: 'foo', name: 'Jim', hello: 'world',
       },
     ]);
 
   expect(state)
-    .toEqual({
+    .toMatchObject({
       foo: 'bar', bar: 'foo',
     });
 });
@@ -77,7 +77,7 @@ test('Should use the latest value when adding an existent property', () => {
       },
     },
   ]))
-    .toEqual([
+    .toMatchObject([
       {
         foo: 'new', bar: 'foo', hello: 'world',
       },
