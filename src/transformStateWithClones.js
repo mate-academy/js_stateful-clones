@@ -7,32 +7,32 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let currentState = { ...state };
+  let stateCopy = { ...state };
   const history = [];
 
   for (const action of actions) {
     switch (action.type) {
       case 'clear':
-        currentState = {};
+        stateCopy = {};
         break;
 
       case 'addProperties':
-        currentState = { ...currentState, ...action.extraData };
+        stateCopy = { ...stateCopy, ...action.extraData };
         break;
 
       case 'removeProperties':
-        currentState = Object.fromEntries(
-          Object.entries(currentState).filter(
+        stateCopy = Object.fromEntries(
+          Object.entries(stateCopy).filter(
             ([key]) => !action.keysToRemove.includes(key),
           ),
         );
         break;
 
       default:
-        break;
+        throw new Error(`Unknown action type: ${action.type}`);
     }
 
-    history.push({ ...currentState });
+    history.push({ ...stateCopy });
   }
 
   return history;
