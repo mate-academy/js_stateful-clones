@@ -37,11 +37,11 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        throw new Error(`Unknown action type: ${action.type}`);
     }
 
     history.push({ ...stateCopy });
-    prevState = { ...stateCopy }; // оновлюємо попередній стан
+    prevState = { ...stateCopy };
   }
 
   return history;
