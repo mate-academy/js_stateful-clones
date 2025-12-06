@@ -8,26 +8,35 @@
  */
 function transformStateWithClones(state, actions) {
   const history = [];
-  let current = JSON.parse(JSON.stringify(state)); // deep clone
+  let current = { ...state }; // shallow clone is enough
 
   for (const action of actions) {
-    let nextState = JSON.parse(JSON.stringify(current)); // deep clone again
+    let nextState = { ...current }; // clone before applying changes
 
-    if (action.type === 'addProperties') {
-      for (const key in action.extraData) {
-        nextState[key] = action.extraData[key];
-      }
-    } else if (action.type === 'removeProperties') {
-      for (const key of action.keysToRemove) {
-        delete nextState[key];
-      }
-    } else if (action.type === 'clear') {
-      nextState = {};
+    switch (action.type) {
+      case 'addProperties':
+        for (const key in action.extraData) {
+          nextState[key] = action.extraData[key];
+        }
+        break;
+
+      case 'removeProperties':
+        for (const key of action.keysToRemove) {
+          delete nextState[key];
+        }
+        break;
+
+      case 'clear':
+        nextState = {};
+        break;
+
+      default:
+        // Checklist requirement: handle unexpected types
+        break;
     }
 
-    history.push(nextState);
-
-    current = nextState; // move forward
+    history.push({ ...nextState }); // store independent clone
+    current = nextState;
   }
 
   return history;
