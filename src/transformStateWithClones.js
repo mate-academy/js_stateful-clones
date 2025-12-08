@@ -37,7 +37,7 @@ function transformStateWithClones(state, actions) {
         throw new Error('ERROR');
     }
 
-    history.push(currentState);
+    history.push({ ...currentState });
     stateCopy = { ...currentState };
   }
 
