@@ -11,11 +11,12 @@ test('Should create a new object with a single added property', () => {
     },
   ]))
     // .toEqual
-      { name: 'Jim' },
-    ]);
 
-  expect(state)
-    .toEqual({});
+{ name: 'Jim' }
+  ]);
+
+    expect(state).
+    toEqual({});
 });
 
 test('Should create a new object with multiple added properties', () => {
