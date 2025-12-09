@@ -26,8 +26,7 @@ function executeAction(state, { type, extraData, keysToRemove }) {
   switch (type) {
     case 'addProperties':
       Object.assign(newState, state, extraData);
-
-      return newState;
+      break;
 
     case 'removeProperties':
       Object.assign(newState, state);
@@ -35,15 +34,16 @@ function executeAction(state, { type, extraData, keysToRemove }) {
       for (const key of keysToRemove) {
         delete newState[key];
       }
-
-      return newState;
+      break;
 
     case 'clear':
-      return {};
+      break;
 
     default:
-      return { ...state };
+      Object.assign(newState, state);
   }
+
+  return newState;
 }
 
 module.exports = transformStateWithClones;
