@@ -26,7 +26,6 @@ function transformStateWithClones(state, actions) {
         for (const key of action.keysToRemove) {
           delete currentState[key];
         }
-        break;
     }
 
     result.push(currentState);
