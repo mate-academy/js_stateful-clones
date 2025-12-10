@@ -15,6 +15,8 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         currentState = {};
         break;
+      default:
+        throw new Error();
 
       case 'addProperties':
         currentState = { ...currentState, ...action.extraData };
