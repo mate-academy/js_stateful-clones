@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   let currentState = { ...state };
-  const results = [];
+  const RESULT = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -25,12 +25,15 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         currentState = {};
         break;
+
+      default:
+        break;
     }
 
-    results.push({ ...currentState });
+    RESULT.push({ ...currentState });
   }
 
-  return results;
+  return RESULT;
 }
 
 module.exports = transformStateWithClones;
