@@ -28,6 +28,9 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         currentState = clearPropertiesImmutable();
         break;
+
+      default:
+        break;
     }
 
     HISTORY.push(currentState);
