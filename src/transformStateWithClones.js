@@ -1,22 +1,33 @@
 function transformStateWithClones(state, actions) {
-  let currentState = { ...state };
+  let currentState = { ...state }; // clone inicial para não alterar o original
   const history = [];
 
   for (const action of actions) {
+    // sempre começar com um clone do estado atual
     let newState = { ...currentState };
 
-    if (action.type === 'clear') {
-      newState = {};
-    }
+    switch (action.type) {
+      case 'clear':
+        newState = {}; // zera tudo
+        break;
 
-    if (action.type === 'addProperties') {
-      newState = { ...newState, ...action.extraData };
-    }
+      case 'addProperties':
+        // merge mantendo imutabilidade
+        newState = { ...newState, ...action.extraData };
+        break;
 
-    if (action.type === 'removeProperties') {
-      for (const key of action.keysToRemove) {
-        delete newState[key];
-      }
+      case 'removeProperties':
+        // remove cada chave solicitada (se existir)
+        for (const key of action.keysToRemove || []) {
+          delete newState[key];
+        }
+        break;
+
+      default:
+        // Ação desconhecida: mantemos o estado atual (mas salvamos um clone)
+        // Isso satisfaz o requisito do case default sem alterar state original.
+        newState = { ...currentState };
+        break;
     }
 
     history.push(newState);
