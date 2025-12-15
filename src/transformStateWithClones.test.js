@@ -10,12 +10,9 @@ test('Should create a new object with a single added property', () => {
       type: 'addProperties', extraData: { name: 'Jim' },
     },
   ]))
-    // .toEqual
+    .toEqual([{ name: 'Jim' }]);
 
-{ name: 'Jim' }
-  ]);
-
-    expect(state).
+  expect(state).
     toEqual({});
 });
 
