@@ -1,40 +1,55 @@
-function transformStateWithClones(state, actions) {
-  let currentState = { ...state }; // clone inicial para não alterar o original
+/**
+ * @param {object} state
+ * @param {object[]} actions
+ *
+ * @returns {object[]}
+ */
+const transformStateWithClones = (state, actions) => {
   const history = [];
+  let historyIndex = 0;
+  let currentState = {};
 
-  for (const action of actions) {
-    // sempre começar com um clone do estado atual
-    let newState = { ...currentState };
+  for (const key in state) {
+    currentState[key] = state[key];
+  }
 
-    switch (action.type) {
-      case 'clear':
-        newState = {}; // zera tudo
-        break;
+  for (let i = 0; i < actions.length; i++) {
+    const action = actions[i];
+    const nextState = {};
 
-      case 'addProperties':
-        // merge mantendo imutabilidade
-        newState = { ...newState, ...action.extraData };
-        break;
+    if (action.type === 'clear') {
+      // Objeto vazio
+    } else if (action.type === 'addProperties') {
+      for (const key in currentState) {
+        nextState[key] = currentState[key];
+      }
 
-      case 'removeProperties':
-        // remove cada chave solicitada (se existir)
-        for (const key of action.keysToRemove || []) {
-          delete newState[key];
+      for (const key in action.extraData) {
+        nextState[key] = action.extraData[key];
+      }
+    } else if (action.type === 'removeProperties') {
+      for (const key in currentState) {
+        let shouldRemove = false;
+
+        for (let j = 0; j < action.keysToRemove.length; j++) {
+          if (action.keysToRemove[j] === key) {
+            shouldRemove = true;
+            break;
+          }
         }
-        break;
 
-      default:
-        // Ação desconhecida: mantemos o estado atual (mas salvamos um clone)
-        // Isso satisfaz o requisito do case default sem alterar state original.
-        newState = { ...currentState };
-        break;
+        if (!shouldRemove) {
+          nextState[key] = currentState[key];
+        }
+      }
     }
 
-    history.push(newState);
-    currentState = newState;
+    currentState = nextState;
+    history[historyIndex] = nextState;
+    historyIndex++;
   }
 
   return history;
-}
+};
 
 module.exports = transformStateWithClones;
