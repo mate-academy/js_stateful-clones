@@ -1,0 +1,7 @@
+Start-Process : Не удается выполнить команду из-за следующей ошибки: Не удается найти указанный файл.
+строка:1 знак:1
++ Start-Process -Filepath 'C:\Users\corey\OneDrive\Documents\workspace\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException
+    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand
+ 
