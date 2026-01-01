@@ -12,7 +12,7 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     const type = action.type;
     const lastChangedObject = resultedArray.at(-1) || state;
-    const resultObject = Object.assign(resultObject, lastChangedObject);
+    let resultObject = Object.assign({}, lastChangedObject);
 
     switch (type) {
       case 'addProperties': {
