@@ -12,19 +12,20 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     const type = action.type;
     const lastChangedObject = resultedArray.at(-1) || state;
-    let resultObject = {};
+    const resultObject = Object.assign(resultObject, lastChangedObject);
 
     switch (type) {
       case 'addProperties': {
-        Object.assign(resultObject, lastChangedObject, action.extraData);
+        Object.assign(resultObject, action.extraData);
         break;
       }
 
       case 'removeProperties': {
-        removeProperties(action, lastChangedObject, resultObject);
+        removeProperties(action, resultObject);
         break;
       }
       case 'clear':
+        resultObject = {};
         break;
 
       default:
@@ -39,9 +40,7 @@ function transformStateWithClones(state, actions) {
 
 module.exports = transformStateWithClones;
 
-function removeProperties(action, previousState, resultObject) {
-  Object.assign(resultObject, previousState);
-
+function removeProperties(action, resultObject) {
   action.keysToRemove.forEach((key) => {
     delete resultObject[key];
   });
