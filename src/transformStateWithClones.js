@@ -28,8 +28,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        resultObject = undefined;
-        break;
+        throw new Error(`Unknown action type: ${type}`);
     }
 
     resultedArray.push(resultObject);
@@ -40,8 +39,8 @@ function transformStateWithClones(state, actions) {
 
 module.exports = transformStateWithClones;
 
-function removeProperties(action, clone, resultObject) {
-  Object.assign(resultObject, clone);
+function removeProperties(action, previousState, resultObject) {
+  Object.assign(resultObject, previousState);
 
   action.keysToRemove.forEach((key) => {
     delete resultObject[key];
