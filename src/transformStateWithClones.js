@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   // eslint-disable-next-line no-undef
-  let stateCopy = { ...initialState };
+  let stateCopy = { ...state };
   const history = [];
 
   for (const action of actions) {
