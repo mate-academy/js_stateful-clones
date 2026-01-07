@@ -17,7 +17,6 @@ function transformStateWithClones(state, actions) {
 
         currentState = nextState;
 
-        history.push(Object.assign({}, currentState));
         break;
       case 'removeProperties':
         const stateCopy = Object.assign({}, currentState);
@@ -27,14 +26,19 @@ function transformStateWithClones(state, actions) {
         }
 
         currentState = stateCopy;
-        history.push(Object.assign({}, currentState));
+
         break;
 
       case 'clear':
         currentState = {};
-        history.push(Object.assign({}, currentState));
+
         break;
+
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
     }
+
+    history.push(Object.assign({}, currentState));
   }
 
   return history;
