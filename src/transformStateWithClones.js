@@ -12,21 +12,22 @@
  *
  * @return {Object[]} - масив станів після кожної дії
  */
+'use strict';
+
+/**
+ * @param {Object} state
+ * @param {Object[]} actions
+ *
+ * @return {Object[]}
+ */
 function transformStateWithClones(state, actions) {
   const history = [];
-
   let currentState = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
-      case 'clear':
-        break;
-
       case 'addProperties':
-        currentState = {
-          ...currentState,
-          ...action.extraData,
-        };
+        currentState = { ...currentState, ...action.extraData };
         break;
 
       case 'removeProperties':
@@ -36,6 +37,10 @@ function transformStateWithClones(state, actions) {
           delete currentState[key];
         }
         break;
+
+      case 'clear':
+        currentState = {};
+        break;
     }
 
     history.push(currentState);
@@ -43,5 +48,7 @@ function transformStateWithClones(state, actions) {
 
   return history;
 }
+
+module.exports = transformStateWithClones;
 
 module.exports = transformStateWithClones;
