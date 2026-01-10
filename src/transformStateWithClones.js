@@ -6,20 +6,6 @@
  *
  * @return {Object[]}
  */
-/**
- * @param {Object} state - початковий об'єкт
- * @param {Object[]} actions - масив дій
- *
- * @return {Object[]} - масив станів після кожної дії
- */
-'use strict';
-
-/**
- * @param {Object} state
- * @param {Object[]} actions
- *
- * @return {Object[]}
- */
 function transformStateWithClones(state, actions) {
   const history = [];
   let currentState = { ...state };
@@ -41,6 +27,9 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         currentState = {};
         break;
+
+      default:
+        break;
     }
 
     history.push(currentState);
@@ -48,7 +37,5 @@ function transformStateWithClones(state, actions) {
 
   return history;
 }
-
-module.exports = transformStateWithClones;
 
 module.exports = transformStateWithClones;
