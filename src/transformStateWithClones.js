@@ -28,6 +28,8 @@ function transformStateWithClones(state, actions) {
         }
         currentState = nextState;
         break;
+      default:
+        throw new Error(`Unsupported action type: ${action.type}`);
     }
     result.push(currentState);
   }
