@@ -6,38 +6,42 @@
  *
  * @return {Object[]}
  */
+/**
+ * @param {Object} state - початковий об'єкт
+ * @param {Object[]} actions - масив дій
+ *
+ * @return {Object[]} - масив станів після кожної дії
+ */
 function transformStateWithClones(state, actions) {
+  const history = [];
+
+  let currentState = { ...state };
+
   for (const action of actions) {
     switch (action.type) {
+      case 'clear':
+        break;
+
       case 'addProperties':
-        addProperties(state, action.extraData);
+        currentState = {
+          ...currentState,
+          ...action.extraData,
+        };
         break;
 
       case 'removeProperties':
-        removeProperties(state, action.keysToRemove);
-        break;
+        currentState = { ...currentState };
 
-      case 'clear':
-        clearProperties(state);
+        for (const key of action.keysToRemove) {
+          delete currentState[key];
+        }
         break;
     }
-  }
-}
 
-function addProperties(state, extraData) {
-  Object.assign(state, extraData);
-}
-
-function removeProperties(state, keysToRemove) {
-  for (const key of keysToRemove) {
-    delete state[key];
+    history.push(currentState);
   }
-}
 
-function clearProperties(state) {
-  for (const key in state) {
-    delete state[key];
-  }
+  return history;
 }
 
 module.exports = transformStateWithClones;
