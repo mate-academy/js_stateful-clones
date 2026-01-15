@@ -27,6 +27,10 @@ function transformStateWithClones(state, actions) {
           delete nextState[key];
         }
         break;
+      default:
+        throw new Error(
+          `Sorry, please provide the valid action. Your ${action.type} is unknown`,
+        );
     }
 
     states.push(nextState);
