@@ -1,11 +1,5 @@
 'use strict';
 
-/**
- * @param {Object} state
- * @param {Object[]} actions
- *
- * @return {Object[]}
- */
 function transformStateWithClones(state, actions) {
   const result = [];
   let currentState = { ...state };
@@ -13,18 +7,23 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     let nextState = { ...currentState };
 
-    if (action.type === 'addProperties') {
-      Object.assign(nextState, action.extraData);
-    }
+    switch (action.type) {
+      case 'addProperties':
+        Object.assign(nextState, action.extraData);
+        break;
 
-    if (action.type === 'removeProperties') {
-      for (const key of action.keysToRemove) {
-        delete nextState[key];
-      }
-    }
+      case 'removeProperties':
+        for (const key of action.keysToRemove) {
+          delete nextState[key];
+        }
+        break;
 
-    if (action.type === 'clear') {
-      nextState = {};
+      case 'clear':
+        nextState = {};
+        break;
+
+      default:
+        break;
     }
 
     result.push(nextState);
