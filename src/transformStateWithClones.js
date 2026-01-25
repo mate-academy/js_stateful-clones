@@ -9,7 +9,7 @@
 function transformStateWithClones(state, actions) {
   // write code here
   let currentState = { ...state };
-  const history = [];
+  const stateHistory = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -25,17 +25,22 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        currentState = { ...currentState };
+        const stateCopy = { ...currentState };
 
         action.keysToRemove.forEach((key) => {
-          delete currentState[key];
+          delete stateCopy[key];
         });
+        currentState = stateCopy;
         break;
+
+      default:
+        currentState = { ...currentState };
     }
-    history.push(currentState);
+
+    stateHistory.push(currentState);
   }
 
-  return history;
+  return stateHistory;
 }
 
 module.exports = transformStateWithClones;
