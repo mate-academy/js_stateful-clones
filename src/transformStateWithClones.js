@@ -34,6 +34,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
+      // error handling / fallback
         newState = { ...currentState };
         break;
     }
