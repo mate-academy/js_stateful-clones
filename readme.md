@@ -4,18 +4,18 @@
 
 **Read [the guideline](https://github.com/mate-academy/js_task-guideline/blob/master/README.md) before start**
 
-## Task description:
+## Опис завдання:
 
-Write a `transformStateWithClones` function that takes a `state` object and an `actions` array,
-applies each action to the previos `state` to calculate the next state,
-and returns an array with states recieved after each action.
+Напишіть функцію `transformStateWithClones`, яка приймає об'єкт `state` та масив `actions`,
+застосовує кожну дію до попереднього `state` для обчислення наступного стану,
+та повертає масив зі станами, отриманими після кожної дії.
 
-Each `action` is an object describing `state` changes. Depending on a value of its `type` property you should do the next:
-- `clear` - create an empty state object;
-- `addProperties` - add all `key: value` pairs given in `extraData` property to the new `state`;
-- `removeProperties` - remove all keys given in the `keysToRemove` array from the `state`. (ignore not existing)
+Кожна `action` - це об'єкт, що описує зміни `state`. Залежно від значення її властивості `type` ви повинні зробити наступне:
+- `clear` - створити порожній об'єкт стану;
+- `addProperties` - додати всі пари `key: value`, надані у властивості `extraData`, до нового `state`;
+- `removeProperties` - видалити всі ключі, надані в масиві `keysToRemove`, зі `state`. (ігнорувати неіснуючі)
 
-**IMPORTANT!** DON'T modify the initial `state` object in any way!
+**ВАЖЛИВО!** НЕ модифікуйте початковий об'єкт `state` будь-яким чином!
 
 Example 1:
 
