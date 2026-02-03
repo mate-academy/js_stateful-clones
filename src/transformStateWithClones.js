@@ -7,24 +7,38 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
+  // Primeiro crie um array vazia
   const history = [];
-
+  // Aqui clonei todo o objeto para a varial currentState
   let currentState = { ...state };
 
+  // um loop para percorrer toda a actions e clonar apenas o que quero
   for (const action of actions) {
     const { type, extraData, keysToRemove } = action;
 
-    if (type === 'clear') {
-      currentState = {};
-    } else if (type === 'addProperties') {
-      currentState = { ...currentState, ...extraData };
-    } else if (type === 'removeProperties') {
-      currentState = { ...currentState };
+    switch (type) {
+      case 'clear':
+        currentState = {};
 
-      for (const key of keysToRemove) {
-        delete currentState[key];
-      }
+        break;
+
+      case 'addProperties':
+        currentState = { ...currentState, ...extraData };
+
+        break;
+
+      case 'removeProperties':
+        currentState = { ...currentState };
+
+        for (const key of keysToRemove) {
+          delete currentState[key];
+        }
+
+        break;
+      default:
+        break;
     }
+
     history.push(currentState);
   }
 
