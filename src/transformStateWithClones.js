@@ -35,8 +35,6 @@ function transformStateWithClones(state, actions) {
       }
 
       default:
-        // Se aparecer um tipo desconhecido, mantém o estado (ou poderia lançar erro,
-        // mas geralmente os testes não pedem isso).
         nextState = { ...currentState };
     }
 
