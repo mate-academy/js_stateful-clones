@@ -8,6 +8,7 @@
  */
 function transformStateWithClones(states, actions) {
   // write code here
+
   const hystory = [];
   const stateCopy = { ...states };
 
