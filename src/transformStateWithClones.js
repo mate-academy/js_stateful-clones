@@ -6,29 +6,30 @@
  *
  * @return {Object[]}
  */
-
 function transformStateWithClones(states, actions) {
   // write code here
   const hystory = [];
-  const tempor = { ...states };
+  const stateCopy = { ...states };
 
   for (const i of actions) {
-    if (i.type === 'addProperties') {
-      Object.assign(tempor, i.extraData);
-    }
+    switch (i.type) {
+      case 'addProperties':
+        Object.assign(stateCopy, i.extraData);
+        break;
 
-    if (i.type === 'removeProperties') {
-      for (const t of i.keysToRemove) {
-        delete tempor[t];
-      }
-    }
+      case 'removeProperties':
+        for (const t of i.keysToRemove) {
+          delete stateCopy[t];
+        }
+        break;
 
-    if (i.type === 'clear') {
-      for (const key in tempor) {
-        delete tempor[key];
-      }
+      case 'clear':
+        for (const key in stateCopy) {
+          delete stateCopy[key];
+        }
+        break;
     }
-    hystory.push({ ...tempor });
+    hystory.push({ ...stateCopy });
   }
 
   return hystory;
