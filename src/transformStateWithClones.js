@@ -7,11 +7,11 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let curentState = { ...state };
+  let currentState = { ...state };
   const stateHistory = [];
 
   for (const action of actions) {
-    let nextState = { ...curentState };
+    let nextState = { ...currentState };
 
     switch (action.type) {
       case 'addProperties':
@@ -25,16 +25,15 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'clear':
-        for (const key in nextState) {
-          if (Object.hasOwn(nextState, key)) {
-            delete nextState[key];
-          }
-        }
+        nextState = {};
         break;
+
+      default:
+        continue;
     }
 
-    curentState = nextState;
-    stateHistory.push(curentState);
+    currentState = nextState;
+    stateHistory.push(currentState);
   }
 
   return stateHistory;
