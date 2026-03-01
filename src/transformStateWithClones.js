@@ -45,7 +45,7 @@ function removeProperties(state, keysToRemove) {
   }
 
   for (const keyToRemove of keysToRemove) {
-    if (state[keyToRemove]) {
+    if (keyToRemove in state) {
       delete state[keyToRemove];
     }
   }
