@@ -24,6 +24,7 @@ function transformStateWithClones(state, actions) {
         clear(stateCopy);
         break;
     }
+    history.push(structuredClone(stateCopy));
   }
 
   return history;
