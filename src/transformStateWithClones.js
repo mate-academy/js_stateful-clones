@@ -7,6 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
+  const history = [];
   const stateCopy = structuredClone(state);
 
   for (const action of actions) {
@@ -21,10 +22,11 @@ function transformStateWithClones(state, actions) {
 
       case 'clear':
         clear(stateCopy);
+        break;
     }
   }
 
-  return stateCopy;
+  return history;
 }
 
 function addProperties(target, source) {
