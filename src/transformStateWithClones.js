@@ -8,7 +8,7 @@
  */
 function transformStateWithClones(state, actions) {
   let current = { ...state };
-  let history = [];
+  const history = [];
 
   for (const action of actions) {
     switch (action.type) {
@@ -25,7 +25,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        break;
+        throw new Error(`Unknown action type: ${action.type}`);
     }
     history.push(current);
   }
@@ -38,13 +38,13 @@ function addProperties(target, source) {
 }
 
 function removeProperties(target, source) {
-  const copy = { ...target };
+  const stateCopy = { ...target };
 
   for (const key of source) {
-    delete copy[key];
+    delete stateCopy[key];
   }
 
-  return copy;
+  return stateCopy;
 }
 
 function clear() {
