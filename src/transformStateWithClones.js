@@ -12,6 +12,7 @@ function transformStateWithClones(state, actions) {
 
   for (const action of actions) {
     const { type } = action;
+
     switch (type) {
       case 'addProperties':
         const { extraData } = action;
@@ -31,8 +32,9 @@ function transformStateWithClones(state, actions) {
           delete currentState[key];
         }
         break;
-      
-      default: currentState = {...currentState};
+
+      default:
+        currentState = { ...currentState };
     }
     result.push(currentState);
   }
