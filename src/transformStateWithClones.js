@@ -7,11 +7,6 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const ACTIONS = ['addProperties', 'removeProperties', 'clear'];
-  const ADD_IDX = 0;
-  const RMV_IDX = 1;
-  const CLR_IDX = 2;
-
   const stateHistory = [];
   let currentState = { ...state };
 
@@ -20,13 +15,13 @@ function transformStateWithClones(state, actions) {
     let newState = { ...currentState };
 
     switch (type) {
-      case ACTIONS[ADD_IDX]:
+      case 'addProperties':
         for (const key in action.extraData) {
           newState[key] = action.extraData[key];
         }
         break;
 
-      case ACTIONS[RMV_IDX]:
+      case 'removeProperties':
         for (const key of action.keysToRemove) {
           if (key in newState) {
             delete newState[key];
@@ -34,12 +29,12 @@ function transformStateWithClones(state, actions) {
         }
         break;
 
-      case ACTIONS[CLR_IDX]:
+      case 'clear':
         newState = {};
         break;
 
       default:
-        return;
+        break;
     }
     stateHistory.push(newState);
     currentState = { ...newState };
