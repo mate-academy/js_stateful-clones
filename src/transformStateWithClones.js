@@ -23,8 +23,12 @@ function transformStateWithClones(state, actions) {
         removeProperties(stateCopy, keysToRemove);
         break;
 
-      default:
+      case 'clear':
         clearProperties(stateCopy);
+        break;
+
+      default:
+        break;
     }
 
     stateHistory.push({ ...stateCopy });
