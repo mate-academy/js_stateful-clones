@@ -33,8 +33,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        // Помилку видавать тести не дають (і преттіер)
-        break;
+        throw new Error('Action type is invalid');
     }
 
     res.push(stateClone);
