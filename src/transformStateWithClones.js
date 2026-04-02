@@ -10,33 +10,30 @@
 function transformStateWithClones(state, actions) {
   // write code here
   const stateHistory = [];
-  let currentState = { ...state };
+  const currentState = { ...state };
 
   for (const action of actions) {
-    const newState = { ...currentState };
-
     switch (action.type) {
       case 'addProperties':
-        Object.assign(newState, action.extraData);
+        Object.assign(currentState, action.extraData);
         break;
 
       case 'removeProperties':
         for (const key of action.keysToRemove) {
-          delete newState[key];
+          delete currentState[key];
         }
         break;
 
       case 'clear':
-        for (const key in newState) {
-          delete newState[key];
+        for (const key in currentState) {
+          delete currentState[key];
         }
         break;
 
       default:
         throw new Error('Type of action not found');
     }
-    stateHistory.push(newState);
-    currentState = newState;
+    stateHistory.push(Object.assign({}, currentState));
   }
 
   return stateHistory;
