@@ -1,0 +1,35 @@
+[33m06e5d74[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mzadanie[m[33m, [m[1;31morigin/zadanie[m[33m)[m Solution
+[33m7aa3e8a[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m Update test.yml
+[33m1056caf[m Merge pull request #3690 from mate-academy/node20
+[33m47d457c[m add latest deps
+[33m869c1da[m Update readme.md
+[33md4d0dcd[m update jest
+[33mec96566[m Merge pull request #3311 from mykhalenych/feature/prettier
+[33m2700277[m feature/prettier changed .prettierignore
+[33mde80757[m feature/prettier added prettier, updated packages
+[33m6ac267e[m Update package.json
+[33m244fac0[m Update readme.md
+[33m4244c2f[m Update readme.md
+[33m78959be[m Update checklist.md
+[33m81c7deb[m Update checklist.md
+[33mb0423e1[m Update checklist.md
+[33m295a2a9[m Merge pull request #805 from mate-academy/solaryasha-patch-1
+[33mb3ceded[m Update checklist.md
+[33m147e939[m Update checklist.md
+[33m61f04b5[m Create checklist.md
+[33m7d27d9f[m Merge pull request #519 from mate-academy/description-changes
+[33mdcaf581[m Made minor changes to the description
+[33m141b128[m Changed the task description
+[33m48f8bd1[m Changed the task description
+[33m1baa5bb[m Merge pull request #164 from mate-academy/mate-scripts-update
+[33m1630181[m migrate to mate-scripts
+[33m245b0d7[m Update readme.md
+[33m4e07068[m Update transformStateWithClones.js
+[33m075ad1e[m Update readme.md
+[33mf544bc1[m Update readme.md
+[33m4a0679b[m Update transformStateWithClones.js
+[33mab8da08[m Merge pull request #56 from danheim/eslint-gitignore
+[33m27de017[m remove .eslintignore, fix errors
+[33m068347d[m add .eslintignore, add vscode to gitignore
+[33md2a5cad[m Tests and description were updated
+[33m511a478[m Initial commit
