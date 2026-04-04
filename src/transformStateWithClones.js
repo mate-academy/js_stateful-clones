@@ -39,6 +39,7 @@ function addProperties(currentState, extraData) {
 
 function removeProperties(currentState, keysToRemove) {
   const newState = { ...currentState };
+
   for (const key of keysToRemove) {
     delete newState[key];
   }
