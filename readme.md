@@ -75,3 +75,28 @@ console.log(stateHistory);
 //   { foo: 'bar', name: 'Jim' },
 // ]
 ```
+
+   
+      null: 1,
+      undefined: 0,
+      false: 1,
+      NaN: 0,
+      const: 1,
+      0: 1
+      1: 1,
+      [1-2]: 1,
+      [-3]: 1,
+      _my_name: 1,
+      my-name: 1,
+      my name: 0,
+      myName: 1,
+      MyName: 0,
+      $$$: 1,
+      $-$-$: 1,
+      _: 1,
+
+ user._,
+  user.1,
+  user.A,
+  user.my-name,
+  user.$
