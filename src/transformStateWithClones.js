@@ -10,6 +10,10 @@ function transformStateWithClones(state, actions) {
   const results = [];
   let currentState = { ...state };
 
+  if (actions.length === 0) {
+    return [];
+  }
+
   for (const action of actions) {
     switch (action.type) {
       case 'clear':
@@ -27,6 +31,8 @@ function transformStateWithClones(state, actions) {
           delete currentState[key];
         }
         break;
+      default:
+        currentState = { ...currentState };
     }
 
     results.push({ ...currentState });
