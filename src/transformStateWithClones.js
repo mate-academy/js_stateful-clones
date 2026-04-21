@@ -21,13 +21,13 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties': {
-        const nextState = { ...currentState };
+        const filteredState = { ...currentState };
 
         for (const key of action.keysToRemove) {
-          delete nextState[key];
+          delete filteredState[key];
         }
 
-        currentState = nextState;
+        currentState = filteredState;
         break;
       }
 
@@ -35,7 +35,9 @@ function transformStateWithClones(state, actions) {
         throw new Error(`Unknown action type: ${action.type}`);
     }
 
-    result.push({ ...currentState });
+    const stateCopy = { ...currentState };
+
+    result.push(stateCopy);
   }
 
   return result;
