@@ -27,6 +27,8 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         Object.keys(stateCopy).forEach((key) => delete stateCopy[key]);
         break;
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
     }
     result.push(stateCopy);
   }
