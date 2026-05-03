@@ -8,27 +8,33 @@
  */
 function transformpreStateWithClones(state, actions) {
   // write code here
-  const preState = { ...state };
+  const stateCopy = { ...state };
   const result = [];
 
   for (const action of actions) {
-    if (action.type === 'addProperties') {
-      Object.assign(preState, action.extraData);
+    switch (action.type) {
+      case 'addProperties':
+        Object.assign(stateCopy, action.extraData);
+        break;
+
+      case 'removeProperties':
+        for (const key of action.keysToRemove) {
+          delete stateCopy[key];
+        }
+        break;
+
+      case 'clear':
+        for (const key in stateCopy) {
+          delete stateCopy[key];
+        }
+        break;
+
+      default:
+        // tratamento para tipo desconhecido
+        break;
     }
 
-    if (action.type === 'removeProperties') {
-      for (const key of action.keysToRemove) {
-        delete preState[key];
-      }
-    }
-
-    if (action.type === 'clear') {
-      for (const key in preState) {
-        delete preState[key];
-      }
-    }
-
-    result.push({ ...preState });
+    result.push({ ...stateCopy });
   }
 
   return result;
