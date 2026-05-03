@@ -1,12 +1,12 @@
 'use strict';
 
 /**
- * @param {Object} preState
+ * @param {Object} State
  * @param {Object[]} actions
  *
  * @return {Object[]}
  */
-function transformpreStateWithClones(state, actions) {
+function transformStateWithClones(state, actions) {
   // write code here
   const stateCopy = { ...state };
   const result = [];
@@ -39,4 +39,4 @@ function transformpreStateWithClones(state, actions) {
 
   return result;
 }
-module.exports = transformpreStateWithClones;
+module.exports = transformStateWithClones;
