@@ -1,13 +1,36 @@
 'use strict';
 
 /**
- * @param {Object} state
+ * @param {Object} preState
  * @param {Object[]} actions
  *
  * @return {Object[]}
  */
-function transformStateWithClones(state, actions) {
+function transformpreStateWithClones(state, actions) {
   // write code here
-}
+  const preState = { ...state };
+  const result = [];
 
-module.exports = transformStateWithClones;
+  for (const action of actions) {
+    if (action.type === 'addProperties') {
+      Object.assign(preState, action.extraData);
+    }
+
+    if (action.type === 'removeProperties') {
+      for (const key of action.keysToRemove) {
+        delete preState[key];
+      }
+    }
+
+    if (action.type === 'clear') {
+      for (const key in preState) {
+        delete preState[key];
+      }
+    }
+
+    result.push({ ...preState });
+  }
+
+  return result;
+}
+module.exports = transformpreStateWithClones;
