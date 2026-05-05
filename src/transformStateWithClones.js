@@ -16,12 +16,12 @@ function transformStateWithClones(state, actions) {
       currentState = {};
     }
 
-    else if (action.type === 'addProperties') {
+    if (action.type === 'addProperties') {
       currentState = { ...currentState, ...action.extraData };
     }
 
 
-    else if (action.type === 'removeProperties') {
+    if (action.type === 'removeProperties') {
 
       currentState = { ...currentState };
       for (const key of action.keysToRemove) {
@@ -34,8 +34,5 @@ function transformStateWithClones(state, actions) {
 
   return result;
 }
-
-module.exports = transformStateWithClones;
-
 
 module.exports = transformStateWithClones;
