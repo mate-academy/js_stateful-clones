@@ -6,42 +6,38 @@
  *
  * @return {Object[]}
  */
-function transformStateWithClones(state, actions) {
+const transformStateWithClones = (state, actions) => {
   const history = [];
   let currentState = state;
 
   actions.forEach((action) => {
-    let newState;
+    let stateCopy = { ...currentState };
 
     switch (action.type) {
       case 'addProperties':
-        // Створюємо клон і додаємо дані
-        newState = { ...currentState, ...action.extraData };
+        stateCopy = { ...stateCopy, ...action.extraData };
         break;
 
       case 'removeProperties':
-        // Створюємо клон і видаляємо дані
-        newState = { ...currentState };
-
         action.keysToRemove.forEach((key) => {
-          delete newState[key];
+          delete stateCopy[key];
         });
+        break;
 
-        break;
       case 'clear':
-        // Створюємо порожній об'єкт
-        newState = {};
+        stateCopy = {};
         break;
+
+      default:
+        // [Checklist #3]: Явно обробляємо помилку для невідомих типів дій
+        throw new Error(`Unknown action type: ${action.type}`);
     }
 
-    // Пушимо клон в історію
-    history.push(newState);
-
-    // Оновлюємо поточний стан, щоб наступна дія відштовхувалася вже від нього!
-    currentState = newState;
+    history.push(stateCopy);
+    currentState = stateCopy;
   });
 
   return history;
-}
+};
 
 module.exports = transformStateWithClones;
