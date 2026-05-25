@@ -1,13 +1,38 @@
-'use strict';
-
-/**
- * @param {Object} state
- * @param {Object[]} actions
- *
- * @return {Object[]}
- */
 function transformStateWithClones(state, actions) {
-  // write code here
+  const stateHistory = [];
+  let currentState = { ...state };
+
+  actions.forEach(action => {
+    currentState = { ...currentState };
+
+    switch (action.type) {
+      case 'addProperties':
+        currentState = {
+          ...currentState,
+          ...action.extraData,
+        };
+        break;
+
+      case 'removeProperties':
+        action.keysToRemove.forEach(key => {
+          delete currentState[key];
+        });
+        break;
+
+      case 'clear':
+        currentState = {};
+        break;
+
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
+    }
+
+    stateHistory.push(currentState);
+  });
+
+  return stateHistory;
 }
 
-module.exports = transformStateWithClones;
+module.exports = {
+  transformStateWithClones,
+};
