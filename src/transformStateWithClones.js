@@ -2,7 +2,7 @@ function transformStateWithClones(state, actions) {
   const stateHistory = [];
   let currentState = { ...state };
 
-  actions.forEach(action => {
+  actions.forEach((action) => {
     currentState = { ...currentState };
 
     switch (action.type) {
@@ -14,7 +14,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        action.keysToRemove.forEach(key => {
+        action.keysToRemove.forEach((key) => {
           delete currentState[key];
         });
         break;
@@ -33,6 +33,4 @@ function transformStateWithClones(state, actions) {
   return stateHistory;
 }
 
-module.exports = {
-  transformStateWithClones,
-};
+module.exports = transformStateWithClones;
