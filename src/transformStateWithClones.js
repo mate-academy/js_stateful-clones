@@ -12,7 +12,7 @@ const transformStateWithClones = (state, action) => {
 
   for (let i = 0; i < action.length; i++) {
     let clonedState = { ...currentState };
-
+    //switch
     switch (action[i].type) {
       case 'addProperties':
         clonedState = {
