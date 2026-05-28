@@ -27,6 +27,8 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         history = {};
         break;
+      default:
+        break;
     }
     fullHistory.push(history);
     prev = history;
