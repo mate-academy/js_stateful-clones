@@ -6,28 +6,38 @@
  *
  * @return {Object[]}
  */
+
+function deleteEntry(action, stateCopy) {
+  for (const entry of Object.entries(action)) {
+    for (const value of entry[1]) {
+      delete stateCopy[value];
+    }
+  }
+}
+
 function transformStateWithClones(state, actions) {
   const allStates = [];
-  let copy = { ...state };
+  let stateCopy = { ...state };
 
   for (const action of actions) {
-    for (const entry of Object.entries(action)) {
-      if (entry[0] === 'extraData') {
-        Object.assign(copy, entry[1]);
-      }
+    switch (action.type) {
+      case 'addProperties':
+        Object.assign(stateCopy, action.extraData);
+        break;
 
-      if (entry[0] === 'keysToRemove') {
-        for (let i = 0; i < entry[1].length; i++) {
-          delete copy[entry[1][i]];
-        }
-      }
+      case 'removeProperties':
+        deleteEntry(action, stateCopy);
+        break;
 
-      if (entry[1] === 'clear') {
-        copy = {};
-      }
+      case 'clear':
+        stateCopy = {};
+        break;
+
+      default:
+        return 'Error. Something went wrong.';
     }
 
-    allStates.push({ ...copy });
+    allStates.push({ ...stateCopy });
   }
 
   return allStates;
