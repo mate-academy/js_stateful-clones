@@ -15,17 +15,12 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         currentstate = {};
         break;
-    }
-
-    switch (action.type) {
       case 'addProperties':
         currentstate = {
           ...currentstate,
           ...action.extraData,
         };
-    }
-
-    switch (action.type) {
+        break;
       case 'removeProperties':
         const currentStateCopy = { ...currentstate };
 
@@ -33,6 +28,9 @@ function transformStateWithClones(state, actions) {
           delete currentStateCopy[needtodelete];
         }
         currentstate = currentStateCopy;
+        break;
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
     }
 
     story.push({ ...currentstate });
