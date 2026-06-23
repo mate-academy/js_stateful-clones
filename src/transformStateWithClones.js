@@ -39,6 +39,10 @@ function transformStateWithClones(state, actions) {
 
       case 'clear':
         clear(copyState);
+        break;
+
+      default:
+        return `${action.type} is incorrect and does not meet the requirements`;
     }
 
     resultArr.push(structuredClone(copyState));
