@@ -37,7 +37,7 @@ function transformStateWithClones(state, actions) {
         removeProperties(copyState, action.keysToRemove);
         break;
 
-      default:
+      case 'clear':
         clear(copyState);
     }
 
