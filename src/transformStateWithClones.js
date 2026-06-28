@@ -20,9 +20,6 @@ function transformStateWithClones(state, actions) {
 
           stateCopy[addKey] = addData[key];
         }
-
-        result.push({ ...stateCopy });
-
         break;
       }
 
@@ -32,20 +29,20 @@ function transformStateWithClones(state, actions) {
         for (const element of removeData) {
           delete stateCopy[element];
         }
-
-        result.push({ ...stateCopy });
-
         break;
       }
 
       case 'clear': {
         stateCopy = {};
-
-        result.push({ ...stateCopy });
-
         break;
       }
+
+      default: {
+        throw new Error(`Unknown action type: ${action.type}`);
+      }
     }
+
+    result.push({ ...stateCopy });
   }
 
   return result;
