@@ -21,12 +21,11 @@ function transformStateWithClones(state, actions) {
         break;
       case 'removeProperties':
         for (const key of action.keysToRemove) {
-              delete stateCopy[key];
+          delete stateCopy[key];
         }
         break;
       default:
         throw new Error();
-        break;
     }
 
     stateHistory.push({ ...stateCopy });
