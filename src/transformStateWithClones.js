@@ -8,27 +8,33 @@
  */
 function transformStateWithClones(state, actions) {
   const history = [];
-  let currentState = { ...state };
+  let currentStateReference = state;
 
   for (const action of actions) {
+    let nextState = { ...currentStateReference };
+
     switch (action.type) {
       case 'clear':
-        currentState = {};
+        nextState = {};
         break;
 
       case 'addProperties':
-        currentState = { ...currentState, ...action.extraData };
+        nextState = { ...nextState, ...action.extraData };
         break;
 
       case 'removeProperties':
-        currentState = { ...currentState };
-
         for (const key of action.keysToRemove) {
-          delete currentState[key];
+          delete nextState[key];
         }
         break;
+
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
     }
-    history.push(currentState);
+
+    history.push(nextState);
+
+    currentStateReference = nextState;
   }
 
   return history;
