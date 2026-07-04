@@ -7,3 +7,7 @@ node_modules
 
 # MacOS
 .DS_Store
+
+test.yml
+package-lock.json
+package.json
