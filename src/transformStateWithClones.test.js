@@ -231,10 +231,13 @@ test('Should handle multiple types', () => {
     });
 });
 
+
 test('Should handle a long list of types', () => {
   const state = {
     foo: 'bar', name: 'Jim', another: 'one',
   };
+
+
 
   expect(transformStateWithClones(state, [
     {
