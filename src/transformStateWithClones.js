@@ -17,14 +17,19 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        for (const key of action.keysToRemove) {
-          delete stateCopy[key];
-        }
+        const keysToRemove = new Set(action.keysToRemove);
+
+        stateCopy = Object.fromEntries(
+          Object.entries(stateCopy).filter(([key]) => !keysToRemove.has(key)),
+        );
         break;
 
       case 'clear':
         stateCopy = {};
         break;
+
+      default:
+        throw new Error(`Unhandled action type: ${action.type}`);
     }
 
     states.push({ ...stateCopy });
