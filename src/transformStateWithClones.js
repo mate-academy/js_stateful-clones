@@ -13,14 +13,16 @@ function transformStateWithClones(state, actions) {
         };
         break;
       case 'removeProperties':
-        for (const key of action.keysToRemove) {
-          if (currentState.hasOwnProperty(key)) {
-            delete currentState[key];
-          }
-        }
+        currentState = Object.fromEntries(
+          Object.entries(currentState).filter(
+            ([key]) => !action.keysToRemove.includes(key),
+          ),
+        );
         break;
       case 'clear':
         currentState = {};
+        break;
+      default:
         break;
     }
 
