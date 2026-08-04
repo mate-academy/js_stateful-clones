@@ -6,24 +6,28 @@ function transformStateWithClones(state, actions) {
   const RESULT_OUTPUT = [];
 
   for (const ACTION of actions) {
-    if (ACTION.type === 'removeProperties') {
-      for (const KEY in stateClone) {
-        for (const DATA_KEY of ACTION.keysToRemove) {
-          if (DATA_KEY === KEY) {
-            delete stateClone[KEY];
+    switch (ACTION.type) {
+      case 'removeProperties':
+        for (const KEY in stateClone) {
+          for (const DATA_KEY of ACTION.keysToRemove) {
+            if (DATA_KEY === KEY) {
+              delete stateClone[KEY];
+            }
           }
         }
-      }
-    }
+        break;
 
-    if (ACTION.type === 'clear') {
-      stateClone = {};
-    }
+      case 'clear':
+        stateClone = {};
+        break;
 
-    if (ACTION.type === 'addProperties') {
-      stateClone = { ...stateClone, ...ACTION.extraData };
-    }
+      case 'addProperties':
+        stateClone = { ...stateClone, ...ACTION.extraData };
+        break;
 
+      default:
+        throw new Error('Delete your PC or give me a normal action type');
+    }
     RESULT_OUTPUT.push({ ...stateClone });
   }
 
