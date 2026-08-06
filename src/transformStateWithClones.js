@@ -14,7 +14,7 @@ function transformStateWithClones(state, actions) {
     switch (action.type) {
       case 'addProperties':
         for (const [key, value] of Object.entries(action.extraData)) {
-          newState[key] = value;
+          newState = { ...newState, [key]: value };
         }
         break;
       case 'removeProperties':
@@ -25,6 +25,8 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         newState = {};
         break;
+      default:
+        return 'Wrong action type';
     }
 
     stateHistory.push({ ...newState });
