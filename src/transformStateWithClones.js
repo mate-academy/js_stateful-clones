@@ -19,16 +19,13 @@ function transformStateWithClones(state, actions) {
         };
         break;
 
-      case 'removeProperties': {
-        const newState = { ...stateCopy };
+      case 'removeProperties':
+        stateCopy = { ...stateCopy };
 
         for (const key of action.keysToRemove) {
-          delete newState[key];
+          delete stateCopy[key];
         }
-
-        stateCopy = newState;
         break;
-      }
 
       case 'clear':
         stateCopy = {};
@@ -44,4 +41,5 @@ function transformStateWithClones(state, actions) {
   return result;
 }
 
+module.exports = transformStateWithClones;
 module.exports = transformStateWithClones;
