@@ -26,6 +26,8 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         newState = {};
         break;
+      default:
+        throw new Error('Invalid action');
     }
 
     stateHistory.push(newState);
