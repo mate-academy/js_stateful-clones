@@ -11,10 +11,12 @@ function transformStateWithClones(state, actions) {
 
   return actions.map((action) => {
     switch (action.type) {
+      // Replace the current state with a new empty object.
       case 'clear':
         currentState = {};
         break;
 
+      // Add or overwrite the provided properties without mutating the state.
       case 'addProperties':
         currentState = {
           ...currentState,
@@ -22,6 +24,7 @@ function transformStateWithClones(state, actions) {
         };
         break;
 
+      // Remove the requested properties from a clone of the current state.
       case 'removeProperties': {
         const newState = { ...currentState };
 
@@ -32,6 +35,9 @@ function transformStateWithClones(state, actions) {
         currentState = newState;
         break;
       }
+
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
     }
 
     return currentState;
