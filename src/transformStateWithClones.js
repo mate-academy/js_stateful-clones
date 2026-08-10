@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
+  // write code hereg
 }
 
 module.exports = transformStateWithClones;
