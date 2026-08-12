@@ -34,7 +34,7 @@ function transformStateWithClones(state, actions) {
       }
 
       default: {
-        break;
+        throw new Error(`Unexpected action type: "${action.type}"`);
       }
     }
 
