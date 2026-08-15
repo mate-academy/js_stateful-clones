@@ -23,6 +23,9 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         clearProperties(currentState);
         break;
+
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
     }
 
     result.push({ ...currentState });
