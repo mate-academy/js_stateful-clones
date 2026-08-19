@@ -7,11 +7,11 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  const stateCopyes = [];
+  const stateCopies = [];
 
   for (const action of actions) {
-    const stateCopy = stateCopyes.length
-      ? { ...stateCopyes[stateCopyes.length - 1] }
+    const stateCopy = stateCopies.length
+      ? { ...stateCopies[stateCopies.length - 1] }
       : { ...state };
 
     switch (action.type) {
@@ -30,12 +30,14 @@ function transformStateWithClones(state, actions) {
           delete stateCopy[propertyName];
         }
         break;
+      case 'default':
+        return state;
     }
 
-    stateCopyes.push(stateCopy);
+    stateCopies.push(stateCopy);
   }
 
-  return stateCopyes;
+  return stateCopies;
 }
 
 module.exports = transformStateWithClones;
