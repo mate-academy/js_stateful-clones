@@ -8,9 +8,12 @@
  */
 function transformStateWithClones(state, actions) {
   const stateHistory = [];
-  const stateStep = { ...state };
 
   for (const object of actions) {
+    const stateStep = stateHistory.length
+      ? { ...stateHistory[stateHistory.length - 1] }
+      : { ...state };
+
     switch (object.type) {
       case 'addProperties': {
         const properties = object.extraData;
