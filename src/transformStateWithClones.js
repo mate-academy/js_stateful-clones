@@ -30,8 +30,9 @@ function transformStateWithClones(state, actions) {
           delete stateCopy[propertyName];
         }
         break;
-      case 'default':
-        return state;
+      default:
+        // Unknown action type - do nothing
+        break;
     }
 
     stateCopies.push(stateCopy);
