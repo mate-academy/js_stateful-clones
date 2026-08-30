@@ -23,6 +23,8 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         clear(newState);
         break;
+      default:
+        throw new Error('Unknown action type: ...');
     }
 
     result.push({ ...newState }); // Щоб додати в масив
