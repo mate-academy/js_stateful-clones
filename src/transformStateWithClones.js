@@ -19,7 +19,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'addProperties':
-        Object.assign({}, currentState, action.extraData);
+        currentState = Object.assign({}, currentState, action.extraData);
         break;
 
       case 'removeProperties':
