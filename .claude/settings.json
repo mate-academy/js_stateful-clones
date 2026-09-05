@@ -1,0 +1,18 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/pre-push-check.sh",
+            "if": "Bash(git push*)",
+            "timeout": 180,
+            "statusMessage": "Running npm test and npm run lint before push..."
+          }
+        ]
+      }
+    ]
+  }
+}
