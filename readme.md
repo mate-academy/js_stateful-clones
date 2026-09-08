@@ -74,4 +74,5 @@ console.log(stateHistory);
 //   {},
 //   { foo: 'bar', name: 'Jim' },
 // ]
+
 ```
