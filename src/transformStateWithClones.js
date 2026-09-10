@@ -7,7 +7,7 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  let currentState = state;
+  let currentState = { ...state };
 
   return actions.map((action) => {
     switch (action.type) {
