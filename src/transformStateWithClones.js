@@ -26,9 +26,14 @@ function transformStateWithClones(state, actions) {
 
       case 'removeProperties':
         for (const key of action.keysToRemove) {
-          delete estadoAtual[key];
+          const { [key]: _, ...rest } = estadoAtual;
+
+          estadoAtual = rest;
         }
         break;
+
+      default:
+        throw new Error('Unknown action type');
     }
 
     armario.push({ ...estadoAtual });
