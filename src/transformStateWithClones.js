@@ -22,24 +22,21 @@ function transformStateWithClones(state, actions) {
         }
         break;
       case 'removeProperties':
-        if (!i) {
-          currentCopy = { ...state };
-        } else {
-          currentCopy = { ...result[i - 1] };
-        }
-        actions[i].keysToRemove.map((x) => delete currentCopy[x]);
+        currentCopy = i ? { ...result[i - 1] } : { ...state };
+
+        actions[i].keysToRemove.forEach((x) => delete currentCopy[x]);
 
         break;
 
       case 'clear':
-        if (!i) {
-          currentCopy = { ...state };
-        } else {
-          currentCopy = { ...result[i - 1] };
-        }
-        Object.keys(currentCopy).map((x) => delete currentCopy[x]);
+        currentCopy = i ? { ...result[i - 1] } : { ...state };
+
+        Object.keys(currentCopy).forEach((x) => delete currentCopy[x]);
 
         break;
+
+      default:
+        continue;
     }
     result.push({ ...currentCopy });
   }
