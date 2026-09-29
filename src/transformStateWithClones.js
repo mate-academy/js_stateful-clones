@@ -28,6 +28,8 @@ function transformStateWithClones(state, actions) {
         currentState = {};
         clones.push(currentState);
         break;
+      default:
+        clones.push(`Unknown action type: ${object.type}`);
     }
   }
 
