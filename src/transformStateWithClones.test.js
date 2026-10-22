@@ -7,7 +7,7 @@ test('Should create a new object with a single added property', () => {
 
   expect(transformStateWithClones(state, [
     {
-      operation: 'addProperties', properties: { name: 'Jim' },
+      type: 'addProperties', extraData: { name: 'Jim' },
     },
   ]))
     .toEqual([
@@ -23,8 +23,8 @@ test('Should create a new object with multiple added properties', () => {
 
   expect(transformStateWithClones(state, [
     {
-      operation: 'addProperties',
-      properties: {
+      type: 'addProperties',
+      extraData: {
         name: 'Jim', hello: 'world',
       },
     },
@@ -46,8 +46,8 @@ test('Should combine old properties with added ones', () => {
 
   expect(transformStateWithClones(state, [
     {
-      operation: 'addProperties',
-      properties: {
+      type: 'addProperties',
+      extraData: {
         name: 'Jim', hello: 'world',
       },
     },
@@ -71,8 +71,8 @@ test('Should use the latest value when adding an existent property', () => {
 
   expect(transformStateWithClones(state, [
     {
-      operation: 'addProperties',
-      properties: {
+      type: 'addProperties',
+      extraData: {
         foo: 'new', hello: 'world',
       },
     },
@@ -94,7 +94,7 @@ test('Should create an empty object when removing the last property', () => {
 
   expect(transformStateWithClones(state, [
     {
-      operation: 'removeProperties', properties: ['foo'],
+      type: 'removeProperties', keysToRemove: ['foo'],
     },
   ]))
     .toEqual([{}]);
@@ -110,7 +110,7 @@ test('Should create an object without removed properties', () => {
 
   expect(transformStateWithClones(state, [
     {
-      operation: 'removeProperties', properties: ['hello', 'foo', 'name'],
+      type: 'removeProperties', keysToRemove: ['hello', 'foo', 'name'],
     },
   ]))
     .toEqual([
@@ -130,7 +130,7 @@ test('Should create the same state when removing no properties', () => {
 
   expect(transformStateWithClones(state, [
     {
-      operation: 'removeProperties', properties: [],
+      type: 'removeProperties', keysToRemove: [],
     },
   ]))
     .toEqual([
@@ -152,7 +152,7 @@ test('Should not fail when removing not existing property', () => {
 
   expect(transformStateWithClones(state, [
     {
-      operation: 'removeProperties', properties: ['test', 'bar'],
+      type: 'removeProperties', keysToRemove: ['test', 'bar'],
     },
   ]))
     .toEqual([
@@ -173,7 +173,7 @@ test('Should create an empty object after clear', () => {
   };
 
   expect(transformStateWithClones(state, [
-    { operation: 'clear' },
+    { type: 'clear' },
   ]))
     .toEqual([{}]);
 
@@ -187,30 +187,30 @@ test('Should not fails when calling clear for an empty state', () => {
   const state = {};
 
   transformStateWithClones(state, [
-    { operation: 'clear' },
+    { type: 'clear' },
   ]);
 
   expect(state)
     .toEqual({});
 });
 
-test('Should handle multiple operations', () => {
+test('Should handle multiple types', () => {
   const state = {
     foo: 'bar', bar: 'foo',
   };
 
   expect(transformStateWithClones(state, [
     {
-      operation: 'addProperties',
-      properties: {
+      type: 'addProperties',
+      extraData: {
         name: 'Jim', hello: 'world',
       },
     },
     {
-      operation: 'removeProperties', properties: ['bar', 'hello'],
+      type: 'removeProperties', keysToRemove: ['bar', 'hello'],
     },
     {
-      operation: 'addProperties', properties: { another: 'one' },
+      type: 'addProperties', extraData: { another: 'one' },
     },
   ]))
     .toEqual([
@@ -231,30 +231,30 @@ test('Should handle multiple operations', () => {
     });
 });
 
-test('Should handle a long list of operations', () => {
+test('Should handle a long list of types', () => {
   const state = {
     foo: 'bar', name: 'Jim', another: 'one',
   };
 
   expect(transformStateWithClones(state, [
     {
-      operation: 'removeProperties', properties: ['another'],
+      type: 'removeProperties', keysToRemove: ['another'],
     },
-    { operation: 'clear' },
-    { operation: 'clear' },
-    { operation: 'clear' },
+    { type: 'clear' },
+    { type: 'clear' },
+    { type: 'clear' },
     {
-      operation: 'addProperties', properties: { yet: 'another property' },
+      type: 'addProperties', extraData: { yet: 'another property' },
     },
-    { operation: 'clear' },
+    { type: 'clear' },
     {
-      operation: 'addProperties',
-      properties: {
+      type: 'addProperties',
+      extraData: {
         foo: 'bar', name: 'Jim',
       },
     },
     {
-      operation: 'removeProperties', properties: ['name', 'hello'],
+      type: 'removeProperties', keysToRemove: ['name', 'hello'],
     },
   ]))
     .toEqual([
