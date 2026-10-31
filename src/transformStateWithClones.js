@@ -21,11 +21,11 @@ function transformStateWithClones(state, actions) {
         break;
 
       case 'removeProperties':
-        current = { ...current };
-
-        for (const key of action.keysToRemove) {
-          delete current[key];
-        }
+        current = Object.fromEntries(
+          Object.entries(current).filter(
+            ([key]) => !action.keysToRemove.includes(key),
+          ),
+        );
         break;
 
       default:
