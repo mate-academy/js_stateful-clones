@@ -19,7 +19,9 @@ function transformStateWithClones(state, actions) {
         stateCopy = { ...stateCopy };
 
         for (const key of action.keysToRemove) {
-          delete stateCopy[key];
+          const { [key]: deletedKey, ...rest } = stateCopy;
+
+          stateCopy = rest;
         }
         break;
       case 'clear':
