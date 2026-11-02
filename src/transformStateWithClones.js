@@ -25,6 +25,9 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         stateCopy = {};
         break;
+
+      default:
+        break;
     }
 
     res.push({ ...stateCopy });
