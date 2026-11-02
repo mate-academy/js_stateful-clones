@@ -1,5 +1,3 @@
-'use strict';
-
 function transformStateWithClones(state, actions) {
   let currentState = { ...state };
   const stateHistory = [];
@@ -26,6 +24,9 @@ function transformStateWithClones(state, actions) {
           }
         }
         break;
+
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
     }
 
     // Push a fresh copy of the current state into the history array
