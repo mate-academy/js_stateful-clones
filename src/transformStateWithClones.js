@@ -1,14 +1,7 @@
 'use strict';
 
-/**
- * @param {Object} state
- * @param {Object[]} actions
- *
- * @return {Object[]}
- */
 function transformStateWithClones(state, actions) {
   const history = [];
-
   let currentState = state;
 
   for (const action of actions) {
@@ -33,7 +26,7 @@ function transformStateWithClones(state, actions) {
       }
 
       default:
-        break;
+        throw new Error(`Unknown action type: ${action.type}`);
     }
 
     history.push(currentState);
