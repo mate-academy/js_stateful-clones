@@ -30,6 +30,9 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         currentState = {};
         break;
+
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
     }
 
     history.push(currentState);
@@ -38,4 +41,4 @@ function transformStateWithClones(state, actions) {
   return history;
 }
 
-module.exports = transformStateWithClones;
+export { transformStateWithClones };
