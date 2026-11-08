@@ -8,9 +8,11 @@
  */
 function transformStateWithClones(state, actions) {
   const result = [];
-  const STATE_CLONE = { ...state };
+  let currentState = state;
 
   for (let i = 0; i < actions.length; i++) {
+    const STATE_CLONE = { ...currentState };
+
     switch (actions[i].type) {
       case 'addProperties':
         for (const key of Object.keys(actions[i].extraData)) {
@@ -38,6 +40,8 @@ function transformStateWithClones(state, actions) {
       default:
         throw new Error(`Unknown action type: ${actions[i].type}`);
     }
+
+    currentState = STATE_CLONE;
   }
 
   return result;
