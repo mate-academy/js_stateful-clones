@@ -41,4 +41,4 @@ function transformStateWithClones(state, actions) {
   return history;
 }
 
-export { transformStateWithClones };
+module.exports = transformStateWithClones;
