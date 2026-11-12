@@ -17,12 +17,10 @@ function transformStateWithClones(state, actions) {
     switch (action.type) {
       case 'clear':
         currentState = {};
-        states.push(currentState);
         break;
 
       case 'addProperties':
         currentState = { ...currentState, ...action.extraData };
-        states.push(currentState);
         break;
 
       case 'removeProperties':
@@ -31,12 +29,12 @@ function transformStateWithClones(state, actions) {
         for (const key of action.keysToRemove) {
           delete currentState[key];
         }
-        states.push(currentState);
         break;
 
       default:
-        throw new Error('unknown type' + action.type);
+        throw new Error('unknown type: ' + action.type);
     }
+    states.push(currentState);
   }
 
   return states;
