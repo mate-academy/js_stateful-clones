@@ -1,7 +1,6 @@
 'use strict';
 
-const { act } = require('react');
-
+// const { act } = require('react');
 /**
  * @param {Object} state
  * @param {Object[]} actions
@@ -9,27 +8,31 @@ const { act } = require('react');
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
+  const newState = [];
+
+  let i = 0;
+
   for (const action of actions) {
-    switch (action.type) {
-      case 'addProperties':
-        Object.assign(state, action.extraData);
-        break;
+    newState[i] = i === 0 ? { ...state } : { ...newState[i - 1] };
 
-      case 'removeProperties':
-        for (const key of action.keysToRemove) {
-          delete state[key];
-        }
-        break;
-
-      case 'clear':
-        for (const key in state) {
-          delete state[key];
-        }
-        break;
+    if (action.type === 'addProperties') {
+      Object.assign(newState[i], action.extraData);
     }
+
+    if (action.type === 'removeProperties') {
+      for (const key of action.keysToRemove) {
+        delete newState[i][key];
+      }
+    }
+
+    if (action.type === 'clear') {
+      newState[i] = {};
+    }
+
+    i++;
   }
 
-  return state;
+  return newState;
 }
 
 module.exports = transformStateWithClones;
