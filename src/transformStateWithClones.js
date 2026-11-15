@@ -14,22 +14,22 @@ function transformStateWithClones(state, action) {
     switch (i.type) {
       case 'addProperties':
         currentState = { ...currentState, ...i.extraData };
-        stateHistory.push({ ...currentState });
+
         break;
       case 'removeProperties':
         i.keysToRemove.forEach((k) => {
           delete currentState[k];
         });
-        stateHistory.push({ ...currentState });
 
         break;
       case 'clear':
         currentState = {};
-        stateHistory.push(currentState);
+
         break;
       default:
         throw new Error(`Error`);
     }
+    stateHistory.push({ ...currentState });
   });
 
   return stateHistory;
