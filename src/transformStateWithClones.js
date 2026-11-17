@@ -28,8 +28,8 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         currentState = {};
         break;
-      default:
-        break;
+      /* default:
+        break; */
     }
     results.push(currentState);
   }
