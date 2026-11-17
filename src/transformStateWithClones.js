@@ -1,4 +1,5 @@
 
+/
 /**
  * @param {Object} state
  * @param {Object[]} actions
@@ -28,6 +29,9 @@ function transformStateWithClones(state, actions) {
           delete newState[key];
         }
         break;
+
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
     }
 
     results.push(newState);
@@ -38,3 +42,4 @@ function transformStateWithClones(state, actions) {
 }
 
 module.exports = transformStateWithClones;
+
