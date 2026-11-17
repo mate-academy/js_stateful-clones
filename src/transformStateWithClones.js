@@ -28,8 +28,8 @@ function transformStateWithClones(state, actions) {
       case 'clear':
         currentState = {};
         break;
-      /* default:
-        break; */
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
     }
     results.push(currentState);
   }
