@@ -24,10 +24,13 @@ function transformStateWithClones(state, actions) {
         }
         break;
 
-      case 'clear':
-        currentState = {};
-        break;
-    }
+case 'clear':
+  currentState = {};
+  break;
+
+default:
+  throw new Error('Unsupported action type');
+}
 
     stateHistory.push(currentState);
   }
