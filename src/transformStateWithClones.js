@@ -7,7 +7,37 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // write code here
+  const arrayOfStates = [];
+  let objectClone = { ...state };
+
+  for (const currentAction of actions) {
+    objectClone = { ...objectClone };
+
+    switch (currentAction.type) {
+      case 'addProperties':
+        for (const key in currentAction.extraData) {
+          objectClone[key] = currentAction.extraData[key];
+        }
+        break;
+
+      case 'removeProperties':
+        for (const key of currentAction.keysToRemove) {
+          delete objectClone[key];
+        }
+        break;
+
+      case 'clear':
+        objectClone = {};
+        break;
+
+      default:
+        throw new Error(`Unsupported action type: ${currentAction.type}`);
+    }
+
+    arrayOfStates.push(objectClone);
+  }
+
+  return arrayOfStates;
 }
 
 module.exports = transformStateWithClones;
